@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.BookingManagement
+namespace PetClinic.Pages.PetManagement
 {
     public class EditModel : PageModel
     {
@@ -20,25 +20,22 @@ namespace PetClinic.Pages.BookingManagement
         }
 
         [BindProperty]
-        public Booking Booking { get; set; } = default!;
+        public Pet Pet { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null || _context.Pets == null)
             {
                 return NotFound();
             }
 
-            var booking =  await _context.Bookings.FirstOrDefaultAsync(m => m.BookingId == id);
-            if (booking == null)
+            var pet =  await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
+            if (pet == null)
             {
                 return NotFound();
             }
-            Booking = booking;
-           ViewData["DoctorId"] = new SelectList(_context.Users, "UserId", "Password");
-           ViewData["DoctorShiftId"] = new SelectList(_context.DoctorShifts, "DoctorShiftId", "DoctorShiftId");
-           ViewData["PetId"] = new SelectList(_context.Pets, "PetId", "PetId");
-           ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId");
+            Pet = pet;
+           ViewData["CustomerId"] = new SelectList(_context.Users, "UserId", "Password");
             return Page();
         }
 
@@ -51,7 +48,7 @@ namespace PetClinic.Pages.BookingManagement
                 return Page();
             }
 
-            _context.Attach(Booking).State = EntityState.Modified;
+            _context.Attach(Pet).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +56,7 @@ namespace PetClinic.Pages.BookingManagement
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookingExists(Booking.BookingId))
+                if (!PetExists(Pet.PetId))
                 {
                     return NotFound();
                 }
@@ -72,9 +69,9 @@ namespace PetClinic.Pages.BookingManagement
             return RedirectToPage("./Index");
         }
 
-        private bool BookingExists(int id)
+        private bool PetExists(int id)
         {
-          return (_context.Bookings?.Any(e => e.BookingId == id)).GetValueOrDefault();
+          return (_context.Pets?.Any(e => e.PetId == id)).GetValueOrDefault();
         }
     }
 }

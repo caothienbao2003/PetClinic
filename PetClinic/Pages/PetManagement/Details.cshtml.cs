@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.BookingManagement
+namespace PetClinic.Pages.PetManagement
 {
     public class DetailsModel : PageModel
     {
@@ -18,23 +18,23 @@ namespace PetClinic.Pages.BookingManagement
             _context = context;
         }
 
-      public Booking Booking { get; set; } = default!; 
+      public Pet Pet { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null || _context.Pets == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FirstOrDefaultAsync(m => m.BookingId == id);
-            if (booking == null)
+            var pet = await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
+            if (pet == null)
             {
                 return NotFound();
             }
             else 
             {
-                Booking = booking;
+                Pet = pet;
             }
             return Page();
         }

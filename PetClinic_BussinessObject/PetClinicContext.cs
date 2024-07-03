@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace PetClinicBussinessObject
 {
-    public partial class ClinicPetContext : DbContext
+    public partial class PetClinicContext : DbContext
     {
-        public ClinicPetContext()
+        public PetClinicContext()
         {
         }
 
-        public ClinicPetContext(DbContextOptions<ClinicPetContext> options)
+        public PetClinicContext(DbContextOptions<PetClinicContext> options)
             : base(options)
         {
         }
@@ -42,7 +42,7 @@ namespace PetClinicBussinessObject
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=12345;Database=ClinicPet;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=12345;Database=PetClinic;TrustServerCertificate=True");
             }
         }
 
@@ -59,22 +59,22 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Doctor)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("FK__Bookings__Doctor__5812160E");
+                    .HasConstraintName("FK__Bookings__Doctor__32E0915F");
 
                 entity.HasOne(d => d.DoctorShift)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.DoctorShiftId)
-                    .HasConstraintName("FK__Bookings__Doctor__59063A47");
+                    .HasConstraintName("FK__Bookings__Doctor__33D4B598");
 
                 entity.HasOne(d => d.Pet)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.PetId)
-                    .HasConstraintName("FK__Bookings__PetId__571DF1D5");
+                    .HasConstraintName("FK__Bookings__PetId__31EC6D26");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.ServiceId)
-                    .HasConstraintName("FK__Bookings__Servic__59FA5E80");
+                    .HasConstraintName("FK__Bookings__Servic__34C8D9D1");
             });
 
             modelBuilder.Entity<Cage>(entity =>
@@ -93,7 +93,7 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Doctor)
                     .WithMany(p => p.DoctorShifts)
                     .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("FK__DoctorShi__Docto__4F7CD00D");
+                    .HasConstraintName("FK__DoctorShi__Docto__2A4B4B5E");
             });
 
             modelBuilder.Entity<EmployeeShift>(entity =>
@@ -105,7 +105,7 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.EmployeeShifts)
                     .HasForeignKey(d => d.EmployeeId)
-                    .HasConstraintName("FK__EmployeeS__Emplo__4CA06362");
+                    .HasConstraintName("FK__EmployeeS__Emplo__276EDEB3");
             });
 
             modelBuilder.Entity<Feedback>(entity =>
@@ -113,12 +113,12 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Booking)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.BookingId)
-                    .HasConstraintName("FK__Feedbacks__Booki__5DCAEF64");
+                    .HasConstraintName("FK__Feedbacks__Booki__38996AB5");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Feedbacks__Custo__5CD6CB2B");
+                    .HasConstraintName("FK__Feedbacks__Custo__37A5467C");
             });
 
             modelBuilder.Entity<Hospitalize>(entity =>
@@ -130,17 +130,17 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Cage)
                     .WithMany(p => p.Hospitalizes)
                     .HasForeignKey(d => d.CageId)
-                    .HasConstraintName("FK__Hospitali__CageI__6383C8BA");
+                    .HasConstraintName("FK__Hospitali__CageI__3E52440B");
 
                 entity.HasOne(d => d.Doctor)
                     .WithMany(p => p.Hospitalizes)
                     .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("FK__Hospitali__Docto__6477ECF3");
+                    .HasConstraintName("FK__Hospitali__Docto__3F466844");
 
                 entity.HasOne(d => d.Pet)
                     .WithMany(p => p.Hospitalizes)
                     .HasForeignKey(d => d.PetId)
-                    .HasConstraintName("FK__Hospitali__PetId__628FA481");
+                    .HasConstraintName("FK__Hospitali__PetId__3D5E1FD2");
             });
 
             modelBuilder.Entity<HospitalizeLog>(entity =>
@@ -148,20 +148,20 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.HospitalizeLogDetails)
                     .WithMany(p => p.HospitalizeLogs)
                     .HasForeignKey(d => d.HospitalizeLogDetailsId)
-                    .HasConstraintName("FK__Hospitali__Hospi__6A30C649");
+                    .HasConstraintName("FK__Hospitali__Hospi__44FF419A");
             });
 
             modelBuilder.Entity<HospitalizeLogDetail>(entity =>
             {
                 entity.HasKey(e => e.HospitalizeLogDetailsId)
-                    .HasName("PK__Hospital__4AEF8CF5A706E7B9");
+                    .HasName("PK__Hospital__4AEF8CF5F4208D68");
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Hospitalize)
                     .WithMany(p => p.HospitalizeLogDetails)
                     .HasForeignKey(d => d.HospitalizeId)
-                    .HasConstraintName("FK__Hospitali__Hospi__6754599E");
+                    .HasConstraintName("FK__Hospitali__Hospi__4222D4EF");
             });
 
             modelBuilder.Entity<Invoice>(entity =>
@@ -171,17 +171,17 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Booking)
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.BookingId)
-                    .HasConstraintName("FK__Invoices__Bookin__7D439ABD");
+                    .HasConstraintName("FK__Invoices__Bookin__5812160E");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Invoices__Custom__7C4F7684");
+                    .HasConstraintName("FK__Invoices__Custom__571DF1D5");
 
                 entity.HasOne(d => d.MedicalRecord)
                     .WithMany(p => p.Invoices)
                     .HasForeignKey(d => d.MedicalRecordId)
-                    .HasConstraintName("FK__Invoices__Medica__7E37BEF6");
+                    .HasConstraintName("FK__Invoices__Medica__59063A47");
             });
 
             modelBuilder.Entity<MedicalRecord>(entity =>
@@ -189,17 +189,17 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Booking)
                     .WithMany(p => p.MedicalRecords)
                     .HasForeignKey(d => d.BookingId)
-                    .HasConstraintName("FK__MedicalRe__Booki__778AC167");
+                    .HasConstraintName("FK__MedicalRe__Booki__52593CB8");
 
                 entity.HasOne(d => d.Doctor)
                     .WithMany(p => p.MedicalRecords)
                     .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("FK__MedicalRe__Docto__787EE5A0");
+                    .HasConstraintName("FK__MedicalRe__Docto__534D60F1");
 
                 entity.HasOne(d => d.Prescription)
                     .WithMany(p => p.MedicalRecords)
                     .HasForeignKey(d => d.PrescriptionId)
-                    .HasConstraintName("FK__MedicalRe__Presc__797309D9");
+                    .HasConstraintName("FK__MedicalRe__Presc__5441852A");
             });
 
             modelBuilder.Entity<Medicine>(entity =>
@@ -211,7 +211,7 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.MedicineType)
                     .WithMany(p => p.Medicines)
                     .HasForeignKey(d => d.MedicineTypeId)
-                    .HasConstraintName("FK__Medicines__Medic__6EF57B66");
+                    .HasConstraintName("FK__Medicines__Medic__49C3F6B7");
             });
 
             modelBuilder.Entity<MedicineType>(entity =>
@@ -228,7 +228,7 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Pets)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Pets__CustomerId__52593CB8");
+                    .HasConstraintName("FK__Pets__CustomerId__2D27B809");
             });
 
             modelBuilder.Entity<PetHealth>(entity =>
@@ -242,12 +242,12 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Pet)
                     .WithMany(p => p.PetHealths)
                     .HasForeignKey(d => d.PetId)
-                    .HasConstraintName("FK__PetHealth__PetId__06CD04F7");
+                    .HasConstraintName("FK__PetHealth__PetId__619B8048");
 
                 entity.HasOne(d => d.VaccinationRecords)
                     .WithMany(p => p.PetHealths)
                     .HasForeignKey(d => d.VaccinationRecordsId)
-                    .HasConstraintName("FK__PetHealth__Vacci__07C12930");
+                    .HasConstraintName("FK__PetHealth__Vacci__628FA481");
             });
 
             modelBuilder.Entity<Prescription>(entity =>
@@ -255,18 +255,18 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.PrescriptionDetails)
                     .WithMany(p => p.Prescriptions)
                     .HasForeignKey(d => d.PrescriptionDetailsId)
-                    .HasConstraintName("FK__Prescript__Presc__74AE54BC");
+                    .HasConstraintName("FK__Prescript__Presc__4F7CD00D");
             });
 
             modelBuilder.Entity<PrescriptionDetail>(entity =>
             {
                 entity.HasKey(e => e.PrescriptionDetailsId)
-                    .HasName("PK__Prescrip__33A5686D2EB588FE");
+                    .HasName("PK__Prescrip__33A5686D7459C451");
 
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.PrescriptionDetails)
                     .HasForeignKey(d => d.MedicineId)
-                    .HasConstraintName("FK__Prescript__Medic__71D1E811");
+                    .HasConstraintName("FK__Prescript__Medic__4CA06362");
             });
 
             modelBuilder.Entity<Service>(entity =>
@@ -298,7 +298,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<VaccinationDetail>(entity =>
             {
                 entity.HasKey(e => e.VaccinationDetailsId)
-                    .HasName("PK__Vaccinat__AF6C0E5DC78ED3B3");
+                    .HasName("PK__Vaccinat__AF6C0E5D62AD7D7C");
 
                 entity.Property(e => e.NextDueDate).HasColumnType("datetime");
 
@@ -309,18 +309,18 @@ namespace PetClinicBussinessObject
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.VaccinationDetails)
                     .HasForeignKey(d => d.MedicineId)
-                    .HasConstraintName("FK__Vaccinati__Medic__01142BA1");
+                    .HasConstraintName("FK__Vaccinati__Medic__5BE2A6F2");
             });
 
             modelBuilder.Entity<VaccinationRecord>(entity =>
             {
                 entity.HasKey(e => e.VaccinationRecordsId)
-                    .HasName("PK__Vaccinat__DA8EB31C1C9606F5");
+                    .HasName("PK__Vaccinat__DA8EB31C864CC7D6");
 
                 entity.HasOne(d => d.VaccinationDetails)
                     .WithMany(p => p.VaccinationRecords)
                     .HasForeignKey(d => d.VaccinationDetailsId)
-                    .HasConstraintName("FK__Vaccinati__Vacci__03F0984C");
+                    .HasConstraintName("FK__Vaccinati__Vacci__5EBF139D");
             });
 
             OnModelCreatingPartial(modelBuilder);

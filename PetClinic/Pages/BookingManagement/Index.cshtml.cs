@@ -11,11 +11,11 @@ namespace PetClinic.Pages.BookingManagement
 {
     public class IndexModel : PageModel
     {
-        private readonly PetClinicBussinessObject.ClinicPetContext _context;
+        private readonly PetClinicBussinessObject.PetClinicContext _context;
 
-        public IndexModel(PetClinicBussinessObject.ClinicPetContext context)
+        public IndexModel()
         {
-            _context = context;
+            _context = new PetClinicContext();
         }
 
         public IList<Booking> Booking { get;set; } = default!;

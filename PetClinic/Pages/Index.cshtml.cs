@@ -1,46 +1,46 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 
 namespace PetClinic.Pages
 {
     public class IndexModel : PageModel
     {
-		//private readonly ILogger<IndexModel> _logger;
+		[BindProperty]
+		public string userName {  get; set; }
+		[BindProperty]
+		public string password { get; set; }
 
-		//public IndexModel(ILogger<IndexModel> logger)
-		//{
-		//	_logger = logger;
-		//}
+		private IUserSerivce userSerivce;
 
-		//[BindProperty]
-		//public string userName { get; set; }
-  //      [BindProperty]
-  //      public string password { get; set; }
+		public IndexModel(IUserSerivce _userSerivce)
+		{
+			userSerivce = _userSerivce;
+		}
 
-  //      private IUserService userService;
+		public void OnGet() 
+		{
+			
+		}
 
-		//public IndexModel(IUserService _userService)
-		//{
-		//	userService = _userService;
-		//}
+		public void OnPost() 
+		{
+            
+        }
 
-  //      public void OnGet()
-  //      {
-
-  //      }
-
-  //      public void OnPost()
-  //      {
-		//	if (userService.isUser(userName, password))
-		//	{
-  //              Response.Redirect("Privacy");
-		//	}
-  //          else
-  //          {
-		//		Response.Redirect("Error");
-		//	}
-  //      }
-    }
+		public void OnPostLogin()
+		{
+            User user = userSerivce.GetUser(userName, password);
+            if (user != null)
+            {
+                Response.Redirect("Privacy");
+            }
+            else
+            {
+                Response.Redirect("Error");
+            }
+        }
+	}
 }

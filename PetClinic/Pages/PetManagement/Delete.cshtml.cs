@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.BookingManagement
+namespace PetClinic.Pages.PetManagement
 {
     public class DeleteModel : PageModel
     {
@@ -19,40 +19,40 @@ namespace PetClinic.Pages.BookingManagement
         }
 
         [BindProperty]
-      public Booking Booking { get; set; } = default!;
+      public Pet Pet { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null || _context.Pets == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FirstOrDefaultAsync(m => m.BookingId == id);
+            var pet = await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
 
-            if (booking == null)
+            if (pet == null)
             {
                 return NotFound();
             }
             else 
             {
-                Booking = booking;
+                Pet = pet;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Bookings == null)
+            if (id == null || _context.Pets == null)
             {
                 return NotFound();
             }
-            var booking = await _context.Bookings.FindAsync(id);
+            var pet = await _context.Pets.FindAsync(id);
 
-            if (booking != null)
+            if (pet != null)
             {
-                Booking = booking;
-                _context.Bookings.Remove(Booking);
+                Pet = pet;
+                _context.Pets.Remove(Pet);
                 await _context.SaveChangesAsync();
             }
 

@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.BookingManagement
+namespace PetClinic.Pages.PetManagement
 {
     public class CreateModel : PageModel
     {
-		private readonly PetClinicBussinessObject.PetClinicContext _context;
+        private readonly PetClinicBussinessObject.PetClinicContext _context;
 
         public CreateModel(PetClinicBussinessObject.PetClinicContext context)
         {
@@ -20,26 +20,23 @@ namespace PetClinic.Pages.BookingManagement
 
         public IActionResult OnGet()
         {
-        ViewData["DoctorId"] = new SelectList(_context.Users, "UserId", "UserId");
-        ViewData["DoctorShiftId"] = new SelectList(_context.DoctorShifts, "DoctorShiftId", "DoctorShiftId");
-        ViewData["PetId"] = new SelectList(_context.Pets, "PetId", "PetId");
-        ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId");
+        ViewData["CustomerId"] = new SelectList(_context.Users, "UserId", "Password");
             return Page();
         }
 
         [BindProperty]
-        public Booking Booking { get; set; } = default!;
+        public Pet Pet { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
+          if (!ModelState.IsValid || _context.Pets == null || Pet == null)
             {
                 return Page();
             }
 
-            _context.Bookings.Add(Booking);
+            _context.Pets.Add(Pet);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
