@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace PetClinicBussinessObject
+{
+    public partial class Hospitalize
+    {
+        public Hospitalize()
+        {
+            HospitalizeLogDetails = new HashSet<HospitalizeLogDetail>();
+        }
+
+        public int HospitalizeId { get; set; }
+        public int? PetId { get; set; }
+        public int? CageId { get; set; }
+        public int? DoctorId { get; set; }
+        public DateTime? InTime { get; set; }
+        public DateTime? OutTime { get; set; }
+
+        public virtual Cage? Cage { get; set; }
+        public virtual User? Doctor { get; set; }
+        public virtual Pet? Pet { get; set; }
+        public virtual ICollection<HospitalizeLogDetail> HospitalizeLogDetails { get; set; }
+    }
+}
