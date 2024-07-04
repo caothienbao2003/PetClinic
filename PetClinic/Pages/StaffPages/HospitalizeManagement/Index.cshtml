@@ -1,0 +1,67 @@
+﻿@page
+@using PetClinic.Pages.StaffPages.HospitializeManagement
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].InTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].OutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].ActiveStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Cage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Hospitalize) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OutTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cage.CageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pet.PetId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.HospitalizeId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.HospitalizeId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.HospitalizeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

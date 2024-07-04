@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace PetClinicBussinessObject
 {
-	public enum BookingStatus
+	public enum ActiveStatus
+	{
+		Active,
+		InActive
+	}
+
+    public enum BookingStatus
 	{
 		Confirmed,
 		Pending
@@ -17,4 +23,10 @@ namespace PetClinicBussinessObject
 		Paid,
 		Unpaid
 	}
+
+	public enum CageStatus
+    {
+        Available,
+        Occupied
+    }
 }
