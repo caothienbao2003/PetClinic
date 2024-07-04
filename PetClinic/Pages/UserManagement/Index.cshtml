@@ -14,46 +14,47 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Username)
+                @Html.DisplayNameFor(model => model.userList[0].Username)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Password)
+                @Html.DisplayNameFor(model => model.userList[0].Password)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].PhoneNumber)
+                @Html.DisplayNameFor(model => model.userList[0].PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Address)
+                @Html.DisplayNameFor(model => model.userList[0].Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Email)
+                @Html.DisplayNameFor(model => model.userList[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Image)
+                @Html.DisplayNameFor(model => model.userList[0].Image)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Gender)
+                @Html.DisplayNameFor(model => model.userList[0].Gender)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Rank)
+                @Html.DisplayNameFor(model => model.userList[0].Rank)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].DoctorCapacity)
+                @Html.DisplayNameFor(model => model.userList[0].DoctorCapacity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Salary)
+                @Html.DisplayNameFor(model => model.userList[0].Salary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Role)
+                @Html.DisplayNameFor(model => model.userList[0].Role)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].ActiveStatus)
+                @Html.DisplayNameFor(model => model.userList[0].ActiveStatus)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.User) {
+        @foreach (var item in Model.userList)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
