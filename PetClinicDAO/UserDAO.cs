@@ -1,4 +1,5 @@
-﻿using PetClinicBussinessObject;
+﻿using Microsoft.EntityFrameworkCore;
+using PetClinicBussinessObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace PetClinicDAO
 
         public User GetUser(string username, string password)
         {
-            return context.Users.FirstOrDefault(u => u.Username == username && u.Password == password)!;
+            return context.Users.Include(p => p.Pets).FirstOrDefault(u => u.Username == username && u.Password == password)!;
         }
     }
 }

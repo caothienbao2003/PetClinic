@@ -12,18 +12,9 @@ namespace PetClinicRepository
     public class BookingRepository : IBookingRepository
     {
         public List<Booking> GetAll() => BookingDAO.Instance.GetAll();
-		public void AddBooking(int? petID, int? doctorId, int? shiftId, int? serviceId, DateTime? bookingDate)
+		public void Add(Booking booking)
 		{
-			Booking newBooking = new Booking();
-			newBooking.PetId = petID;
-			newBooking.DoctorId = doctorId;
-			newBooking.ShiftId = shiftId;
-			newBooking.ServiceId = serviceId;
-			newBooking.BookingDate = bookingDate;
-			newBooking.PaymentStatus = BookingPaymentStatus.Unpaid.ToString();
-			newBooking.Status = BookingStatus.Pending.ToString();
-
-			BookingDAO.Instance.Add(newBooking);
+			BookingDAO.Instance.Add(booking);
 		}
 	}
 }

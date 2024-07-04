@@ -6,43 +6,44 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.BookingManagement
 {
     public class CreateModel : PageModel
     {
-        private readonly PetClinicBussinessObject.PetClinicContext _context;
-
-        public CreateModel(PetClinicBussinessObject.PetClinicContext context)
+        private IBookingService bookingService;
+        private IPetService petService;
+        public CreateModel(IBookingService _bookingService)
         {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-        ViewData["DoctorId"] = new SelectList(_context.Users, "UserId", "Password");
-        ViewData["PetId"] = new SelectList(_context.Pets, "PetId", "PetId");
-        ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId");
-        ViewData["ShiftId"] = new SelectList(_context.Shifts, "ShiftId", "ShiftId");
-            return Page();
+            bookingService = _bookingService;
         }
 
         [BindProperty]
         public Booking Booking { get; set; } = default!;
-        
+
+        public void OnGet()
+        {
+
+        }
+
+        public void OnPost()
+        {
+            bookingService.Add(Booking);
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
-            {
-                return Page();
-            }
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //  if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
+        //    {
+        //        return Page();
+        //    }
 
-            _context.Bookings.Add(Booking);
-            await _context.SaveChangesAsync();
+        //    _context.Bookings.Add(Booking);
+        //    await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
-        }
+        //    return RedirectToPage("./Index");
+        //}
     }
 }

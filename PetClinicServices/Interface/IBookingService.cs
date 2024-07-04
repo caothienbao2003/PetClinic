@@ -10,5 +10,6 @@ namespace PetClinicServices.Interface
     public interface IBookingService
     {
         public List<Booking> GetAll();
+        public void Add(Booking booking);
     }
 }

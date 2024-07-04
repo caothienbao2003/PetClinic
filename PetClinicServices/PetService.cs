@@ -16,7 +16,7 @@ namespace PetClinicServices
 
         public PetService()
         {
-            if(petRepository == null)
+            if (petRepository == null)
             {
                 petRepository = new PetRepository();
             }
