@@ -16,8 +16,8 @@ namespace PetClinicBussinessObject
         public int? EmployeeId { get; set; }
         public int? NoOfOccupation { get; set; }
         public string? Status { get; set; }
-        public string? ActiveStatus { get; set; }
-        public string? Type { get; set; }
+        public int? ActiveStatus { get; set; }
+        public int? Type { get; set; }
 
         public virtual User? Employee { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }

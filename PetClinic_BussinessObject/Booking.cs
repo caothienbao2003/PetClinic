@@ -18,8 +18,8 @@ namespace PetClinicBussinessObject
         public int? ShiftId { get; set; }
         public int? ServiceId { get; set; }
         public DateTime? BookingDate { get; set; }
-        public string? PaymentStatus { get; set; }
-        public string? Status { get; set; }
+        public int? PaymentStatus { get; set; }
+        public int? Status { get; set; }
 
         public virtual User? Doctor { get; set; }
         public virtual Pet? Pet { get; set; }

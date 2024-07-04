@@ -14,7 +14,7 @@ namespace PetClinicBussinessObject
         public DateTime? DateTime { get; set; }
         public string? Description { get; set; }
         public int? HospitalizeId { get; set; }
-        public string? ActiveStatus { get; set; }
+        public int? ActiveStatus { get; set; }
 
         public virtual Hospitalize? Hospitalize { get; set; }
         public virtual ICollection<HospitalizeLog> HospitalizeLogs { get; set; }

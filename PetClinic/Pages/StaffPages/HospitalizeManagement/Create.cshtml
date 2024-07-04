@@ -1,0 +1,52 @@
+﻿@page 
+@using PetClinic.Pages.StaffPages.HospitializeManagement
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Hospitalize</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.PetId" class="control-label"></label>
+                <select asp-for="Hospitalize.PetId" class ="form-control" asp-items="ViewBag.PetId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.CageId" class="control-label"></label>
+                <select asp-for="Hospitalize.CageId" class ="form-control" asp-items="ViewBag.CageId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.DoctorId" class="control-label"></label>
+                <select asp-for="Hospitalize.DoctorId" class ="form-control" asp-items="ViewBag.DoctorId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.InTime" class="control-label"></label>
+                <input asp-for="Hospitalize.InTime" class="form-control" />
+                <span asp-validation-for="Hospitalize.InTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.OutTime" class="control-label"></label>
+                <input asp-for="Hospitalize.OutTime" class="form-control" />
+                <span asp-validation-for="Hospitalize.OutTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
