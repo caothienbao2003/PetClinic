@@ -21,7 +21,7 @@ namespace PetClinic.Pages.UserManagement
 
         public List<User> userList { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             if (userList != null)
             {
