@@ -58,7 +58,7 @@ namespace PetClinicDAO
                 return;
             }
 
-            context.Bookings.Update(cage);
+            context.Cages.Update(cage);
             context.SaveChanges();
         }
     }
