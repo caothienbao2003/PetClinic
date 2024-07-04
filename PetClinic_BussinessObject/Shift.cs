@@ -3,22 +3,23 @@ using System.Collections.Generic;
 
 namespace PetClinicBussinessObject
 {
-    public partial class DoctorShift
+    public partial class Shift
     {
-        public DoctorShift()
+        public Shift()
         {
             Bookings = new HashSet<Booking>();
         }
 
-        public int DoctorShiftId { get; set; }
+        public int ShiftId { get; set; }
         public string? ShiftName { get; set; }
         public string? Time { get; set; }
+        public int? EmployeeId { get; set; }
         public int? NoOfOccupation { get; set; }
-        public int? DoctorId { get; set; }
         public string? Status { get; set; }
-        public int? EmployeeShiftId { get; set; }
+        public string? ActiveStatus { get; set; }
+        public string? Type { get; set; }
 
-        public virtual User? Doctor { get; set; }
+        public virtual User? Employee { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
     }
 }

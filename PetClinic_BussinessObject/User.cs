@@ -8,13 +8,12 @@ namespace PetClinicBussinessObject
         public User()
         {
             Bookings = new HashSet<Booking>();
-            DoctorShifts = new HashSet<DoctorShift>();
-            EmployeeShifts = new HashSet<EmployeeShift>();
             Feedbacks = new HashSet<Feedback>();
             Hospitalizes = new HashSet<Hospitalize>();
             Invoices = new HashSet<Invoice>();
             MedicalRecords = new HashSet<MedicalRecord>();
             Pets = new HashSet<Pet>();
+            Shifts = new HashSet<Shift>();
         }
 
         public int UserId { get; set; }
@@ -29,14 +28,14 @@ namespace PetClinicBussinessObject
         public int? DoctorCapacity { get; set; }
         public decimal? Salary { get; set; }
         public int Role { get; set; }
+        public string? ActiveStatus { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual ICollection<DoctorShift> DoctorShifts { get; set; }
-        public virtual ICollection<EmployeeShift> EmployeeShifts { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Hospitalize> Hospitalizes { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
         public virtual ICollection<Pet> Pets { get; set; }
+        public virtual ICollection<Shift> Shifts { get; set; }
     }
 }
