@@ -8,16 +8,9 @@ namespace PetClinic.Pages
 {
     public class IndexModel : PageModel
     {
-		[BindProperty]
-		public string userName {  get; set; }
-		[BindProperty]
-		public string password { get; set; }
-
-		private IUserSerivce userSerivce;
-
-		public IndexModel(IUserSerivce _userSerivce)
+		public IndexModel()
 		{
-			userSerivce = _userSerivce;
+
 		}
 
 		public void OnGet() 
@@ -28,19 +21,6 @@ namespace PetClinic.Pages
 		public void OnPost() 
 		{
             
-        }
-
-		public void OnPostLogin()
-		{
-            User user = userSerivce.GetUser(userName, password);
-            if (user != null)
-            {
-                Response.Redirect("Privacy");
-            }
-            else
-            {
-                Response.Redirect("Error");
-            }
         }
 	}
 }
