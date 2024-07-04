@@ -12,5 +12,6 @@ namespace PetClinicRepository.Interface
         public User GetUser(string userName, string password);
 
         public List<User> GetAllUsers();
+        public User GetUserById(int id);
 	}
 }
