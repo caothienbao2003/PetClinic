@@ -35,5 +35,32 @@ namespace PetClinicDAO
         {
             return context.Bookings.ToList();
         }
+
+        public Booking? GetBookingById(int id)
+		{
+			return context.Bookings.Find(id);
+		}
+
+        public void Add(Booking booking)
+		{
+            if(GetBookingById(booking.BookingId) != null)
+            {
+                return;
+            }
+
+			context.Bookings.Add(booking);
+			context.SaveChanges();
+		}
+
+		public void Update(Booking booking)
+		{
+            if(GetBookingById(booking.BookingId) == null)
+            {
+                return;
+            }
+
+			context.Bookings.Update(booking);
+			context.SaveChanges();
+		}
     }
 }
