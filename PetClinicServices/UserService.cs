@@ -21,7 +21,13 @@ namespace PetClinicServices
                 userRepository = new UserRepository();
             }
         }
-        public User GetUser(string userName, string password)
+
+		public List<User> GetAllUsers()
+		{
+			return userRepository.GetAllUsers();
+		}
+
+		public User GetUser(string userName, string password)
         {
             return userRepository.GetUser(userName, password);
         }

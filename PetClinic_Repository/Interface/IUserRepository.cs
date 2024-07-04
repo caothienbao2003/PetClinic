@@ -10,5 +10,7 @@ namespace PetClinicRepository.Interface
     public interface IUserRepository
     {
         public User GetUser(string userName, string password);
-    }
+
+        public List<User> GetAllUsers();
+	}
 }

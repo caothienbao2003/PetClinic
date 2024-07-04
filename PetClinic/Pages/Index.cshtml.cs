@@ -6,10 +6,10 @@ using PetClinicServices.Interface;
 
 namespace PetClinic.Pages
 {
-    public class IndexModel : PageModel
-    {
+	public class IndexModel : PageModel
+	{
 		[BindProperty]
-		public string userName {  get; set; }
+		public string userName { get; set; }
 		[BindProperty]
 		public string password { get; set; }
 
@@ -20,27 +20,29 @@ namespace PetClinic.Pages
 			userSerivce = _userSerivce;
 		}
 
-		public void OnGet() 
+		public void OnGet()
 		{
-			
+
 		}
 
-		public void OnPost() 
+		public void OnPost()
 		{
-            
-        }
+
+		}
 
 		public void OnPostLogin()
 		{
-            User user = userSerivce.GetUser(userName, password);
-            if (user != null)
-            {
-                Response.Redirect("Privacy");
-            }
-            else
-            {
-                Response.Redirect("Error");
-            }
-        }
+			User user = userSerivce.GetUser(userName, password);
+			if (user.Role == 0)
+			{
+				Response.Redirect(Url.Page("/UserManagement/Index"));
+			}
+			else
+			{
+				Response.Redirect(Url.Page("/Error"));
+			}
+		}
+
+
 	}
 }
