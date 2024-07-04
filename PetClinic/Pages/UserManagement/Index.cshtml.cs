@@ -23,10 +23,7 @@ namespace PetClinic.Pages.UserManagement
 
         public void OnGet()
         {
-            if (userList != null)
-            {
-				userList = userSerivce.GetAllUsers();
-            }
+			userList = userSerivce.GetAllUsers();
         }
     }
 }
