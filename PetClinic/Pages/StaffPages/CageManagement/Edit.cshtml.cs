@@ -25,7 +25,7 @@ namespace PetClinic.Pages.StaffPages.CageManagement
 
         public List<SelectListItem> StatusOptions { get; set; } = new List<SelectListItem>();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             if (id == null)
             {
@@ -48,7 +48,7 @@ namespace PetClinic.Pages.StaffPages.CageManagement
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
