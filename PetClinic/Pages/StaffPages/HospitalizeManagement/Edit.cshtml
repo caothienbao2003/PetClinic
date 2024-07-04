@@ -1,0 +1,61 @@
+﻿@page
+@using PetClinic.Pages.StaffPages.HospitializeManagement
+@model EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Hospitalize</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Hospitalize.HospitalizeId" />
+            <div class="form-group">
+                <label asp-for="Hospitalize.PetId" class="control-label"></label>
+                <select asp-for="Hospitalize.PetId" class="form-control" asp-items="ViewBag.PetId"></select>
+                <span asp-validation-for="Hospitalize.PetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.CageId" class="control-label"></label>
+                <select asp-for="Hospitalize.CageId" class="form-control" asp-items="ViewBag.CageId"></select>
+                <span asp-validation-for="Hospitalize.CageId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.DoctorId" class="control-label"></label>
+                <select asp-for="Hospitalize.DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+                <span asp-validation-for="Hospitalize.DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.InTime" class="control-label"></label>
+                <input asp-for="Hospitalize.InTime" class="form-control" />
+                <span asp-validation-for="Hospitalize.InTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.OutTime" class="control-label"></label>
+                <input asp-for="Hospitalize.OutTime" class="form-control" />
+                <span asp-validation-for="Hospitalize.OutTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.ActiveStatus" class="control-label"></label>
+                <input asp-for="Hospitalize.ActiveStatus" class="form-control" />
+                <span asp-validation-for="Hospitalize.ActiveStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

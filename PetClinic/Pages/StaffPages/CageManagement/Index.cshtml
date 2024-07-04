@@ -1,0 +1,51 @@
+﻿@page
+@model PetClinic.Pages.StaffPages.CageManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cage[0].CageId)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Cage[0].Status)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Cage[0].ActiveStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Cage) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveStatus)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CageId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CageId">Details</a> |
+                @*<a asp-page="./Delete" asp-route-id="@item.CageId">Delete</a> |S*@
+                <a asp-page="/StaffPages/HospitalizeManagement/Create" asp-route-CageId="@item.CageId">Hospitalize</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

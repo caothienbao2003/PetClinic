@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace PetClinicServices.Interface
 {
-    public interface IUserSerivce
+    public interface ICageService
     {
-        public User GetUser(string username, string password);
-
-        public List<User> GetAllUsers();
-	}
+        public List<Cage> GetAll(); 
+        public Cage? GetCageById(int id);
+        public void Add(Cage cage);
+        public void Update(Cage cage);
+    }
 }

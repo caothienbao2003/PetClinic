@@ -35,5 +35,8 @@ namespace PetClinicDAO
         {
             return context.Users.Include(p => p.Pets).FirstOrDefault(u => u.Username == username && u.Password == password)!;
         }
-    }
+
+        public List<User> GetAllUsers() => context.Users.ToList();
+
+	}
 }
