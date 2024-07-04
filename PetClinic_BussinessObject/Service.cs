@@ -14,7 +14,7 @@ namespace PetClinicBussinessObject
         public string? ServiceName { get; set; }
         public decimal? Price { get; set; }
         public string? ServiceDescription { get; set; }
-        public string? ActiveStatus { get; set; }
+        public int? ActiveStatus { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
     }

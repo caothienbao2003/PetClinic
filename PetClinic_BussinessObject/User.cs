@@ -27,8 +27,8 @@ namespace PetClinicBussinessObject
         public string? Rank { get; set; }
         public int? DoctorCapacity { get; set; }
         public decimal? Salary { get; set; }
-        public int Role { get; set; }
-        public string? ActiveStatus { get; set; }
+        public int? Role { get; set; }
+        public int? ActiveStatus { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }

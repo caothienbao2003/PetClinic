@@ -16,7 +16,7 @@ namespace PetClinicBussinessObject
         public string? MedicineUnit { get; set; }
         public string? MedicineDescription { get; set; }
         public int? MedicineTypeId { get; set; }
-        public string? ActiveStatus { get; set; }
+        public int? ActiveStatus { get; set; }
 
         public virtual MedicineType? MedicineType { get; set; }
         public virtual ICollection<PrescriptionDetail> PrescriptionDetails { get; set; }

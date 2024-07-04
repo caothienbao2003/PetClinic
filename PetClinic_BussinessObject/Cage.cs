@@ -12,7 +12,7 @@ namespace PetClinicBussinessObject
 
         public int CageId { get; set; }
         public string? Status { get; set; }
-        public string? ActiveStatus { get; set; }
+        public int? ActiveStatus { get; set; }
 
         public virtual ICollection<Hospitalize> Hospitalizes { get; set; }
     }

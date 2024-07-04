@@ -16,7 +16,7 @@ namespace PetClinicBussinessObject
         public int? DoctorId { get; set; }
         public DateTime? InTime { get; set; }
         public DateTime? OutTime { get; set; }
-        public string? ActiveStatus { get; set; }
+        public int? ActiveStatus { get; set; }
 
         public virtual Cage? Cage { get; set; }
         public virtual User? Doctor { get; set; }
