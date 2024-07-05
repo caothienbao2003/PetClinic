@@ -27,16 +27,22 @@ namespace PetClinic.Pages.BookingManagement
 
         [BindProperty]
         public Booking Booking { get; set; } = default!;
+        [BindProperty]
+        public DateTime MinDate { get; set; }
 
         public void OnGet()
         {
-            
-            string userIdString = HttpContext.Session.GetString("UserId");
-            int userId = int.Parse(userIdString);
-            CurrentUser = userService.GetUserById(userId);
 
-            PetList = CurrentUser.Pets.ToList();
-            ViewData["PetId"] = new SelectList(PetList, "PetId", "PetName");
+            MinDate = DateTime.Now.AddDays(1);
+            string userIdString = HttpContext.Session.GetString("UserId");
+            if (userIdString != null)
+            {
+                int userId = int.Parse(userIdString);
+                CurrentUser = userService.GetUserById(userId);
+                PetList = CurrentUser.Pets.ToList();
+                ViewData["PetId"] = new SelectList(PetList, "PetId", "PetName");
+            }
+
         }
 
         public void OnPost()

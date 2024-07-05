@@ -26,6 +26,11 @@ namespace PetClinic.Pages
         public void OnPostLogin()
         {
             User user = userSerivce.GetUser(userName, password);
+            if (user == null)
+            {
+                Response.Redirect("/Error");
+                return;
+            }
 
             HttpContext.Session.SetString("UserId", user.UserId.ToString());
             HttpContext.Session.SetString("Role", user.Role.ToString());
