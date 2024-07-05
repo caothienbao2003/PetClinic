@@ -6,29 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.StaffPages.HospitializeManagement
 {
     public class IndexModel : PageModel
     {
-        private readonly PetClinicContext context;
+        private readonly IHospitalizeService hospitalizeService;
 
-        public IndexModel()
+        public IndexModel(IHospitalizeService _hospitalizeService)
         {
-            context = new PetClinicContext();
+            hospitalizeService = _hospitalizeService;
         }
 
         public IList<Hospitalize> Hospitalize { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            if (context.Hospitalizes != null)
-            {
-                Hospitalize = await context.Hospitalizes
-                .Include(h => h.Cage)
-                .Include(h => h.Doctor)
-                .Include(h => h.Pet).ToListAsync();
-            }
+            Hospitalize = hospitalizeService.GetAllHospitalize();
+                //Hospitalize = await context.Hospitalizes
+                //.Include(h => h.Cage)
+                //.Include(h => h.Doctor)
+                //.Include(h => h.Pet).ToListAsync();
         }
     }
 }

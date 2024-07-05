@@ -30,7 +30,7 @@ namespace PetClinicDAO
             }
         }
 
-        public List<Cage> GetAll()
+        public List<Cage> GetAllCage()
         {
             return context.Cages.ToList();
         }
@@ -40,7 +40,7 @@ namespace PetClinicDAO
             return context.Cages.Find(id);
         }
 
-        public void Add(Cage cage)
+        public void AddCage(Cage cage)
         {
             if (GetCageById(cage.CageId) != null)
             {
@@ -51,7 +51,7 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public void Update(Cage cage)
+        public void UpdateCage(Cage cage)
         {
             if (GetCageById(cage.CageId) == null)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace PetClinicBussinessObject
 {
@@ -40,8 +41,15 @@ namespace PetClinicBussinessObject
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=12345;Database=PetClinic;TrustServerCertificate=True");
+                if (!optionsBuilder.IsConfigured)
+                {
+                    var config = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile("appsettings.json").Build();
+                    var connectionString = config.GetConnectionString("SqlServer");
+
+                    optionsBuilder.UseSqlServer(connectionString);
+                }
             }
         }
 
@@ -70,11 +78,6 @@ namespace PetClinicBussinessObject
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.ShiftId)
                     .HasConstraintName("FK__Bookings__ShiftI__300424B4");
-            });
-
-            modelBuilder.Entity<Cage>(entity =>
-            {
-                entity.Property(e => e.Status).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Feedback>(entity =>
@@ -123,7 +126,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<HospitalizeLogDetail>(entity =>
             {
                 entity.HasKey(e => e.HospitalizeLogDetailsId)
-                    .HasName("PK__Hospital__4AEF8CF53F41DC79");
+                    .HasName("PK__Hospital__4AEF8CF5759702AA");
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
 
@@ -230,7 +233,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<PrescriptionDetail>(entity =>
             {
                 entity.HasKey(e => e.PrescriptionDetailsId)
-                    .HasName("PK__Prescrip__33A5686D2B99ED4E");
+                    .HasName("PK__Prescrip__33A5686DA7931531");
 
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.PrescriptionDetails)
@@ -248,8 +251,6 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<Shift>(entity =>
             {
                 entity.Property(e => e.ShiftName).HasMaxLength(255);
-
-                entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.Property(e => e.Time).HasMaxLength(50);
 
@@ -281,7 +282,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<VaccinationDetail>(entity =>
             {
                 entity.HasKey(e => e.VaccinationDetailsId)
-                    .HasName("PK__Vaccinat__AF6C0E5D6C0999E2");
+                    .HasName("PK__Vaccinat__AF6C0E5D56E99631");
 
                 entity.Property(e => e.NextDueDate).HasColumnType("datetime");
 
@@ -298,7 +299,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<VaccinationRecord>(entity =>
             {
                 entity.HasKey(e => e.VaccinationRecordsId)
-                    .HasName("PK__Vaccinat__DA8EB31C323B77DB");
+                    .HasName("PK__Vaccinat__DA8EB31CD7234713");
 
                 entity.HasOne(d => d.VaccinationDetails)
                     .WithMany(p => p.VaccinationRecords)

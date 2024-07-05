@@ -9,9 +9,9 @@ namespace PetClinicServices.Interface
 {
     public interface ICageService
     {
-        public List<Cage> GetAll(); 
+        public List<Cage> GetAllCage(); 
         public Cage? GetCageById(int id);
-        public void Add(Cage cage);
-        public void Update(Cage cage);
+        public void AddCage(Cage cage);
+        public void UpdateCage(Cage cage);
     }
 }

@@ -29,14 +29,14 @@ namespace PetClinic.Pages.StaffPages.CageManagement
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
           if (!ModelState.IsValid || Cage == null)
             {
                 return Page();
             }
 
-            cageService.Add(Cage);
+            cageService.AddCage(Cage);
 
             return RedirectToPage("./Index");
         }

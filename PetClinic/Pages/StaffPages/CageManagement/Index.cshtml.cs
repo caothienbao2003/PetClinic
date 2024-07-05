@@ -25,7 +25,7 @@ namespace PetClinic.Pages.StaffPages.CageManagement
 
         public void OnGet()
         {
-            Cage = cageService.GetAll();
+            Cage = cageService.GetAllCage();
         }
     }
 }

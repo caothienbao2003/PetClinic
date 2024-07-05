@@ -62,7 +62,7 @@ namespace PetClinic.Pages.StaffPages.CageManagement
                 {
                     existingCage.Status = Cage.Status;
                     existingCage.ActiveStatus = Cage.ActiveStatus;
-                    cageService.Update(existingCage);
+                    cageService.UpdateCage(existingCage);
                 }
             }
             catch (DbUpdateConcurrencyException)

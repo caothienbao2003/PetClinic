@@ -11,13 +11,12 @@ namespace PetClinicRepository
 {
     public class CageRepository : ICageRepository
     {
-        public List<Cage> GetAll() => CageDAO.Instance.GetAll();
+        public List<Cage> GetAllCage() => CageDAO.Instance.GetAllCage();
 
         public Cage? GetCageById(int id) => CageDAO.Instance.GetCageById(id);
 
-        public void Add(Cage cage) => CageDAO.Instance.Add(cage);
+        public void AddCage(Cage cage) => CageDAO.Instance.AddCage(cage);
 
-
-        public void Update(Cage cage) => CageDAO.Instance.Update(cage);
+        public void UpdateCage(Cage cage) => CageDAO.Instance.UpdateCage(cage);
     }
 }
