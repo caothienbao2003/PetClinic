@@ -15,7 +15,7 @@ namespace PetClinicRepository
 
 		public User GetUser(string userName, string password) => UserDAO.Instance.GetUser(userName, password);
 	
-        
+        public User GetUserById(int id) => UserDAO.Instance.GetUserById(id);
 
 	}
 }
