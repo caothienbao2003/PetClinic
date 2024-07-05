@@ -31,5 +31,10 @@ namespace PetClinicServices
         {
             return userRepository.GetUser(userName, password);
         }
+
+        public User GetUserById(int userId)
+        {
+            return userRepository.GetUserById(userId);
+        }
     }
 }

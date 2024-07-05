@@ -13,37 +13,35 @@ namespace PetClinic.Pages.BookingManagement
     public class CreateModel : PageModel
     {
         private IBookingService bookingService;
-        private IPetService petService;
-        public CreateModel(IBookingService _bookingService)
+        private IUserSerivce userService;
+        public CreateModel(IBookingService _bookingService, IUserSerivce _userService)
         {
             bookingService = _bookingService;
+            userService = _userService;
         }
+
+        [BindProperty]
+        public User CurrentUser { get; set; } = default!;
+        [BindProperty]
+        public List<Pet> PetList { get; set; }
 
         [BindProperty]
         public Booking Booking { get; set; } = default!;
 
         public void OnGet()
         {
+            
+            string userIdString = HttpContext.Session.GetString("UserId");
+            int userId = int.Parse(userIdString);
+            CurrentUser = userService.GetUserById(userId);
 
+            PetList = CurrentUser.Pets.ToList();
+            ViewData["PetId"] = new SelectList(PetList, "PetId", "PetName");
         }
 
         public void OnPost()
         {
             bookingService.Add(Booking);
         }
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //  if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
-        //    {
-        //        return Page();
-        //    }
-
-        //    _context.Bookings.Add(Booking);
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToPage("./Index");
-        //}
     }
 }

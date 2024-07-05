@@ -38,5 +38,9 @@ namespace PetClinicDAO
 
         public List<User> GetAllUsers() => context.Users.ToList();
 
+        public User GetUserById(int id)
+        {
+            return context.Users.FirstOrDefault(u => u.UserId == id)!;
+        }
 	}
 }
