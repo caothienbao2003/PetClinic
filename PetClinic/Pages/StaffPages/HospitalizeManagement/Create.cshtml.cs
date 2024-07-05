@@ -25,14 +25,18 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
             petService = _petService;
         }
 
+        [BindProperty(SupportsGet = true)]
+        public int? CageId { get; set; }
+
         public IActionResult OnGet(int? cageId)
         {
-            ViewData["CageId"] = new SelectList(cageService.GetAllCage(), "CageId", "CageId");
+
             ViewData["DoctorId"] = new SelectList(userSerivce.GetAllUsers(), "UserId", "Username");
             ViewData["PetId"] = new SelectList(petService.GetAll(), "PetId", "PetName");
 
             if (cageId.HasValue)
             {
+                CageId = cageId;
                 Hospitalize = new Hospitalize { CageId = cageId.Value };
             }
 
@@ -51,17 +55,28 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
                 return Page();
             }
 
+            Hospitalize.InTime = DateTime.Now;
+
             hospitalizeService.AddHospitalize(Hospitalize);
 
-            var cage = cageService.GetCageById(hospitalizeService.GetHospitalizeById(Hospitalize.HospitalizeId).CageId.Value);
+            var hospitalizeFromDb = hospitalizeService.GetHospitalizeById(Hospitalize.HospitalizeId);
+            if (hospitalizeFromDb == null || !hospitalizeFromDb.CageId.HasValue)
+            {
+                // Handle the case where the Hospitalize or CageId is null
+                ModelState.AddModelError(string.Empty, "Unable to find hospitalize record or cage.");
+                return Page();
+            }
+
+            var cage = cageService.GetCageById(hospitalizeFromDb.CageId.Value);
 
             if (cage != null)
             {
-                cage.Status = 1;
+                cage.CageEnumStatus = CageStatus.Occupied;
+                cage.ActiveEnumStatus = ActiveStatus.Active;
                 cageService.UpdateCage(cage);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/StaffPages/CageManagement/Index");
         }
     }
 }

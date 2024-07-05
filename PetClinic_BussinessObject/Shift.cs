@@ -7,19 +7,16 @@ namespace PetClinicBussinessObject
     {
         public Shift()
         {
-            Bookings = new HashSet<Booking>();
+            Schedules = new HashSet<Schedule>();
         }
 
         public int ShiftId { get; set; }
         public string? ShiftName { get; set; }
-        public string? Time { get; set; }
-        public int? EmployeeId { get; set; }
-        public int? NoOfOccupation { get; set; }
-        public int? Status { get; set; }
+        public TimeSpan? StartTime { get; set; }
+        public TimeSpan? EndTime { get; set; }
         public int? ActiveStatus { get; set; }
-        public int? Type { get; set; }
+        public int? ShiftType { get; set; }
 
-        public virtual User? Employee { get; set; }
-        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }

@@ -48,13 +48,13 @@
                 @Html.DisplayFor(modelItem => item.ActiveStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cage.CageId)
+                @Html.DisplayFor(modelItem => item.Cage!.CageId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor.Password)
+                @Html.DisplayFor(modelItem => item.Doctor!.Username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pet.PetId)
+                @Html.DisplayFor(modelItem => item.Pet!.PetName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.HospitalizeId">Edit</a> |

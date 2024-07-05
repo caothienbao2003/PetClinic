@@ -19,7 +19,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
             hospitalizeService = _hospitalizeService;
         }
 
-        public IList<Hospitalize> Hospitalize { get; set; } = default!;
+        public List<Hospitalize> Hospitalize { get; set; } = default!;
 
         public void OnGet()
         {

@@ -18,7 +18,7 @@ namespace PetClinic.Pages.UserManagement
             _context = context;
         }
 
-      public User User { get; set; } = default!; 
+        public User User { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

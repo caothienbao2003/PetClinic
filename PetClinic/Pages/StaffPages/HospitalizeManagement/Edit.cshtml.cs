@@ -29,7 +29,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
         [BindProperty]
         public Hospitalize Hospitalize { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             if (id == null)
             {
@@ -50,7 +50,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {

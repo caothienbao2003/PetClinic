@@ -14,13 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].BookingDate)
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Status)
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].Doctor)
@@ -32,7 +32,7 @@
                 @Html.DisplayNameFor(model => model.BookingList[0].Service)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Shift)
+                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
             </th>
             <th></th>
         </tr>
@@ -41,13 +41,13 @@
 @foreach (var item in Model.BookingList) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BookingDate)
+                @Html.DisplayFor(modelItem => item.BookingAt)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PaymentStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.BookingStatus)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Doctor.Password)
@@ -59,7 +59,7 @@
                 @Html.DisplayFor(modelItem => item.Service.ServiceId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Shift.ShiftId)
+                @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |

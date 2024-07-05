@@ -1,4 +1,5 @@
-﻿using PetClinicBussinessObject;
+﻿using Microsoft.EntityFrameworkCore;
+using PetClinicBussinessObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace PetClinicDAO
 
         public List<Hospitalize> GetAllHospitalize()
         {
-            return context.Hospitalizes.ToList();
+            return context.Hospitalizes.Include(c => c.Cage).Include(d => d.Doctor).Include(p => p.Pet).ToList();
         }
 
         public Hospitalize? GetHospitalizeById(int id)

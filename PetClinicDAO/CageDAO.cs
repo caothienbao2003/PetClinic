@@ -11,7 +11,7 @@ namespace PetClinicDAO
     {
         private readonly PetClinicContext context;
 
-        private static CageDAO instance;
+        private static CageDAO? instance;
 
         public CageDAO()
         {

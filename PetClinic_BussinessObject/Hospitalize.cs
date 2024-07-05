@@ -7,7 +7,7 @@ namespace PetClinicBussinessObject
     {
         public Hospitalize()
         {
-            HospitalizeLogDetails = new HashSet<HospitalizeLogDetail>();
+            HospitalizeLogs = new HashSet<HospitalizeLog>();
         }
 
         public int HospitalizeId { get; set; }
@@ -21,6 +21,6 @@ namespace PetClinicBussinessObject
         public virtual Cage? Cage { get; set; }
         public virtual User? Doctor { get; set; }
         public virtual Pet? Pet { get; set; }
-        public virtual ICollection<HospitalizeLogDetail> HospitalizeLogDetails { get; set; }
+        public virtual ICollection<HospitalizeLog> HospitalizeLogs { get; set; }
     }
 }
