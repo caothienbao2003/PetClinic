@@ -13,10 +13,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.BookingDate)
+            @Html.DisplayNameFor(model => model.Booking.BookingAt)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.BookingDate)
+            @Html.DisplayFor(model => model.Booking.BookingAt)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Booking.PaymentStatus)
@@ -25,10 +25,10 @@
             @Html.DisplayFor(model => model.Booking.PaymentStatus)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.Status)
+            @Html.DisplayNameFor(model => model.Booking.BookingStatus)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.Status)
+            @Html.DisplayFor(model => model.Booking.BookingStatus)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Booking.Doctor)
@@ -49,10 +49,10 @@
             @Html.DisplayFor(model => model.Booking.Service.ServiceId)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.Shift)
+            @Html.DisplayNameFor(model => model.Booking.ScheduleId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Booking.Shift.ShiftId)
+            @Html.DisplayFor(model => model.Booking.Schedule.ScheduleId)
         </dd>
     </dl>
     

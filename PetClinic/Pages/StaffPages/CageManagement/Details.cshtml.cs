@@ -6,28 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.StaffPages.CageManagement
 {
     public class DetailsModel : PageModel
     {
-        private readonly PetClinicContext context;
+        private readonly ICageService cageService;
 
-        public DetailsModel()
+        public DetailsModel(ICageService _cageService)
         {
-            context = new PetClinicContext();
+            cageService = _cageService;
         }
 
-      public Cage Cage { get; set; } = default!; 
+        public Cage Cage { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || context.Cages == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var cage = await context.Cages.FirstOrDefaultAsync(m => m.CageId == id);
+            var cage = cageService.GetCageById((int)id);
+
             if (cage == null)
             {
                 return NotFound();

@@ -8,6 +8,7 @@ namespace PetClinicBussinessObject
         public Service()
         {
             Bookings = new HashSet<Booking>();
+            MedicalRecords = new HashSet<MedicalRecord>();
         }
 
         public int ServiceId { get; set; }
@@ -17,5 +18,6 @@ namespace PetClinicBussinessObject
         public int? ActiveStatus { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }
