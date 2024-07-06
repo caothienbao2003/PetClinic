@@ -9,7 +9,7 @@ namespace PetClinicServices.Interface
 {
     public interface IUserSerivce
     {
-        public User GetUser(string username, string password);
+        public User GetUser(string email, string password);
 
         public List<User> GetAllUsers();
         public User GetUserById(int id);

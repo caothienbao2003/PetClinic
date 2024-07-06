@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using PetClinicBussinessObject;
 using PetClinicServices;
 using PetClinicServices.Interface;
 
@@ -7,6 +9,11 @@ builder.Services.AddScoped<IUserSerivce, UserService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICageService, CageService>();
+
+//Explicitly register db context
+builder.Services.AddDbContext<PetClinicContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic")));
+
 
 builder.Services.AddSession();
 // Add services to the container.

@@ -1,0 +1,30 @@
+﻿@page
+@model RegisterModel
+@{
+}
+
+<div class="text-center">
+    <h2 class="display-4">REGISTER</h2>
+    <form method="post">
+        <label>User Name</label>
+        <input type="text" asp-for="userName" />
+        <br />
+        <label>Password</label>
+        <input type="password" asp-for="password" />
+        <br />
+        <label>Phone</label>
+        <input type="password" asp-for="phoneNumber" />
+        <br />
+        <label>Address</label>
+        <input type="password" asp-for="address" />
+        <br />
+        <label>Email</label>
+        <input type="password" asp-for="email" />
+        <br />
+        <label>Gender</label>
+        <input type="password" asp-for="gender" />
+        <br />
+        <input type="submit" asp-page-handler="Register" value="Register" />
+    </form>
+</div>
+

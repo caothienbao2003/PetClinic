@@ -31,9 +31,9 @@ namespace PetClinicDAO
             }
         }
 
-        public User GetUser(string username, string password)
+        public User GetUser(string email, string password)
         {
-            return context.Users.Include(p => p.Pets).FirstOrDefault(u => u.Username == username && u.Password == password)!;
+            return context.Users.Include(p => p.Pets).FirstOrDefault(u => u.Email == email && u.Password == password)!;
         }
 
         public List<User> GetAllUsers() => context.Users.ToList();

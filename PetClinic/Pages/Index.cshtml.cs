@@ -32,9 +32,14 @@ namespace PetClinic.Pages
 
 		public void OnPostLogin()
 		{
-			Response.Redirect("/Login");
+			Response.Redirect("Authentication/Login");
 		}
 
+        public void OnPostRegister()
+		{
+			Response.Redirect("Authentication/CustomerRegister");
+        }
 
-	}
+
+    }
 }

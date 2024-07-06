@@ -9,7 +9,7 @@ namespace PetClinicRepository.Interface
 {
     public interface IUserRepository
     {
-        public User GetUser(string userName, string password);
+        public User GetUser(string email, string password);
 
         public List<User> GetAllUsers();
         public User GetUserById(int id);

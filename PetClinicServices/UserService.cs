@@ -27,9 +27,9 @@ namespace PetClinicServices
 			return userRepository.GetAllUsers();
 		}
 
-		public User GetUser(string userName, string password)
+		public User GetUser(string email, string password)
         {
-            return userRepository.GetUser(userName, password);
+            return userRepository.GetUser(email, password);
         }
 
         public User GetUserById(int userId)

@@ -13,7 +13,7 @@ namespace PetClinicRepository
     {
 		public List<User> GetAllUsers() => UserDAO.Instance.GetAllUsers();
 
-		public User GetUser(string userName, string password) => UserDAO.Instance.GetUser(userName, password);
+		public User GetUser(string email, string password) => UserDAO.Instance.GetUser(email, password);
 	
         public User GetUserById(int id) => UserDAO.Instance.GetUserById(id);
 
