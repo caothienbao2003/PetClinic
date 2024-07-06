@@ -22,9 +22,9 @@ namespace PetClinicServices
             }
         }
 
-        public List<Cage> GetAll()
+        public List<Cage> GetAllCage()
         {
-            return cageRepository.GetAll();
+            return cageRepository.GetAllCage();
         }
 
         public Cage? GetCageById(int id)
@@ -32,14 +32,14 @@ namespace PetClinicServices
             return cageRepository.GetCageById(id);
         }
 
-        public void Add(Cage cage)
+        public void AddCage(Cage cage)
         {
-            cageRepository.Add(cage);
+            cageRepository.AddCage(cage);
         }
 
-        public void Update(Cage cage)
+        public void UpdateCage(Cage cage)
         {
-            cageRepository.Update(cage);
+            cageRepository.UpdateCage(cage);
         }
     }
 }

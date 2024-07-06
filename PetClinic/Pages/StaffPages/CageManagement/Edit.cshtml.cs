@@ -39,11 +39,12 @@ namespace PetClinic.Pages.StaffPages.CageManagement
             }
             Cage = cage;
 
-            StatusOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Available", Text = "Available" },
-                new SelectListItem { Value = "Occupied", Text = "Occupied" }
-            };
+            StatusOptions = Enum.GetValues(typeof(CageStatus)).Cast<CageStatus>()
+                           .Select(e => new SelectListItem
+                           {
+                               Value = ((int)e).ToString(),
+                               Text = e.ToString()
+                           }).ToList();
 
             return Page();
         }
@@ -60,9 +61,8 @@ namespace PetClinic.Pages.StaffPages.CageManagement
                 var existingCage = cageService.GetCageById(Cage.CageId);
                 if (existingCage != null)
                 {
-                    existingCage.Status = Cage.Status;
-                    existingCage.ActiveStatus = Cage.ActiveStatus;
-                    cageService.Update(existingCage);
+                    existingCage.CageStatus = Cage.CageStatus;
+                    cageService.UpdateCage(existingCage);
                 }
             }
             catch (DbUpdateConcurrencyException)

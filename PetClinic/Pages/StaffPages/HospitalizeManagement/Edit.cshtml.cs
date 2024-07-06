@@ -7,54 +7,60 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.StaffPages.HospitializeManagement
 {
     public class EditModel : PageModel
     {
-        private readonly PetClinicContext context;
+        private readonly IHospitalizeService hospitalizeService;
+        private readonly IUserSerivce userSerivce;
+        private readonly ICageService cageService;
+        private readonly IPetService petService;
 
-        public EditModel()
+        public EditModel(IHospitalizeService _hospitalizeService, IUserSerivce _userSerivce, ICageService _cageService, IPetService _petService)
         {
-            context = new PetClinicContext();
+            hospitalizeService = _hospitalizeService;
+            userSerivce = _userSerivce;
+            cageService = _cageService;
+            petService = _petService;
         }
 
         [BindProperty]
         public Hospitalize Hospitalize { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || context.Hospitalizes == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var hospitalize = await context.Hospitalizes.FirstOrDefaultAsync(m => m.HospitalizeId == id);
+            var hospitalize = hospitalizeService.GetHospitalizeById(id.Value);
             if (hospitalize == null)
             {
                 return NotFound();
             }
             Hospitalize = hospitalize;
-            ViewData["CageId"] = new SelectList(context.Cages, "CageId", "CageId");
-            ViewData["DoctorId"] = new SelectList(context.Users, "UserId", "UserId");
-            ViewData["PetId"] = new SelectList(context.Pets, "PetId", "PetId");
+            ViewData["CageId"] = new SelectList(cageService.GetAllCage(), "CageId", "CageId");
+            ViewData["DoctorId"] = new SelectList(userSerivce.GetAllUsers(), "UserId", "Username");
+            ViewData["PetId"] = new SelectList(petService.GetAll(), "PetId", "PetName");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            context.Attach(Hospitalize).State = EntityState.Modified;
 
             try
             {
-                await context.SaveChangesAsync();
+                var existingHospitalize = hospitalizeService.GetHospitalizeById(Hospitalize.HospitalizeId);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,7 +79,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
 
         private bool HospitalizeExists(int id)
         {
-            return (context.Hospitalizes?.Any(e => e.HospitalizeId == id)).GetValueOrDefault();
+            return (hospitalizeService.GetHospitalizeById(id)) != null;
         }
     }
 }

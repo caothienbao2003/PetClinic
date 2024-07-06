@@ -38,4 +38,11 @@ namespace PetClinicBussinessObject
         Staff,
         Doctor
     }
+
+    public enum CageStatus
+    {
+        Occupied,
+        Available
+    }
+
 }

@@ -6,27 +6,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.StaffPages.HospitializeManagement
 {
     public class CreateModel : PageModel
     {
-        private readonly PetClinicContext context;
+        private readonly IHospitalizeService hospitalizeService;
+        private readonly IUserSerivce userSerivce;
+        private readonly ICageService cageService;
+        private readonly IPetService petService;
 
-        public CreateModel()
+        public CreateModel(IHospitalizeService _hospitalizeService, IUserSerivce _userSerivce, ICageService _cageService, IPetService _petService)
         {
-            context = new PetClinicContext();
+            hospitalizeService = _hospitalizeService;
+            userSerivce = _userSerivce;
+            cageService = _cageService;
+            petService = _petService;
         }
 
-        public IActionResult OnGet(int? CageId)
-        {
-            ViewData["CageId"] = new SelectList(context.Cages, "CageId", "CageId");
-            ViewData["DoctorId"] = new SelectList(context.Users, "UserId", "UserId");
-            ViewData["PetId"] = new SelectList(context.Pets, "PetId", "PetId");
+        [BindProperty(SupportsGet = true)]
+        public int? CageId { get; set; }
 
-            if (CageId.HasValue)
+        public IActionResult OnGet(int? cageId)
+        {
+
+            ViewData["DoctorId"] = new SelectList(userSerivce.GetAllUsers(), "UserId", "Username");
+            ViewData["PetId"] = new SelectList(petService.GetAll(), "PetId", "PetName");
+
+            if (cageId.HasValue)
             {
-                Hospitalize = new Hospitalize { CageId = CageId.Value };
+                CageId = cageId;
+                Hospitalize = new Hospitalize { CageId = cageId.Value };
             }
 
             return Page();
@@ -37,25 +48,35 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
-            if (!ModelState.IsValid || context.Hospitalizes == null || Hospitalize == null)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            context.Hospitalizes.Add(Hospitalize);
+            Hospitalize.InTime = DateTime.Now;
 
-            var cage = await context.Cages.FindAsync(Hospitalize.CageId);
-            if(cage != null)
+            hospitalizeService.AddHospitalize(Hospitalize);
+
+            var hospitalizeFromDb = hospitalizeService.GetHospitalizeById(Hospitalize.HospitalizeId);
+            if (hospitalizeFromDb == null || !hospitalizeFromDb.CageId.HasValue)
             {
-                cage.Status = "Occupied";
-                context.Cages.Update(cage);
+                // Handle the case where the Hospitalize or CageId is null
+                ModelState.AddModelError(string.Empty, "Unable to find hospitalize record or cage.");
+                return Page();
             }
 
-            await context.SaveChangesAsync();
+            var cage = cageService.GetCageById(hospitalizeFromDb.CageId.Value);
 
-            return RedirectToPage("./Index");
+            if (cage != null)
+            {
+                cage.CageEnumStatus = CageStatus.Occupied;
+                cage.ActiveEnumStatus = ActiveStatus.Active;
+                cageService.UpdateCage(cage);
+            }
+
+            return RedirectToPage("/StaffPages/CageManagement/Index");
         }
     }
 }
