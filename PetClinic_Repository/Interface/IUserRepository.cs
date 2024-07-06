@@ -13,5 +13,7 @@ namespace PetClinicRepository.Interface
 
         public List<User> GetAllUsers();
         public User GetUserById(int id);
-	}
+
+        public void AddUser(User newUser);
+    }
 }

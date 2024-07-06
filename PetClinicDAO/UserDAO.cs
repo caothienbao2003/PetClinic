@@ -42,5 +42,19 @@ namespace PetClinicDAO
         {
             return context.Users.FirstOrDefault(u => u.UserId == id)!;
         }
-	}
+
+        public void AddUser(User newUser)
+        {
+            try
+            {
+                context.Users.Add(newUser);
+                context.SaveChanges(); // Save changes to the database
+            }
+            catch (Exception ex)
+            {
+                // Handle exception appropriately (log, rethrow, etc.)
+                throw new Exception("Failed to add user.", ex);
+            }
+        }
+    }
 }

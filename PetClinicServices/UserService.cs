@@ -36,5 +36,11 @@ namespace PetClinicServices
         {
             return userRepository.GetUserById(userId);
         }
+
+        public async Task<User> AddUser(User newUser)
+        {
+            userRepository.AddUser(newUser);
+            return newUser;
+        }
     }
 }
