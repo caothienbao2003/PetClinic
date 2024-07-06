@@ -25,15 +25,15 @@ namespace PetClinic.Pages
 
         public void OnPostLogin()
         {
-            User user = userSerivce.GetUser(userName, password);
-            if (user != null)
-            {
-                Response.Redirect("Privacy");
-            }
-            else
-            {
-                Response.Redirect("Error");
-            }
-        }
+			User user = userSerivce.GetUser(userName, password);
+			if (user.Role == 1 && user != null)
+			{
+				Response.Redirect("/UserManagement/Index");
+			}
+			else
+			{
+				Response.Redirect("/Error");
+			}
+		}
     }
 }

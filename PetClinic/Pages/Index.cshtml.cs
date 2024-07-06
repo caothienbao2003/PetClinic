@@ -32,15 +32,7 @@ namespace PetClinic.Pages
 
 		public void OnPostLogin()
 		{
-			User user = userSerivce.GetUser(userName, password);
-			if (user.Role == 1)
-			{
-				Response.Redirect("/UserManagement/Index");
-			}
-			else
-			{
-				Response.Redirect("/Error");
-			}
+			Response.Redirect("/Login");
 		}
 
 
