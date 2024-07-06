@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
+using PetClinicServices;
 using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Authentication
@@ -12,11 +13,11 @@ namespace PetClinic.Pages.Authentication
         [BindProperty]
         public string password { get; set; }
 
-        private IUserSerivce userSerivce;
+        private IUserService userService;
 
-        public LoginModel(IUserSerivce _userSerivce)
+        public LoginModel(IUserService _userSerivce)
         {
-            userSerivce = _userSerivce;
+            userService = _userSerivce;
         }
 
         public void OnGet()
@@ -28,32 +29,37 @@ namespace PetClinic.Pages.Authentication
             var adminEmail = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Email").Value;
             var adminPassword = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Password").Value;
 
-            User user = userSerivce.GetUser(email, password);
+            if (email.Equals(adminEmail) && password.Equals(adminPassword))
+            {
+                Response.Redirect("/UserManagement/Index");
+                return;
+            }
+
+            User user = userService.GetUser(email, password);
+
+            if (user == null)
+            {
+                Response.Redirect("/Authentication/Login");
+                return;
+            }
+
             HttpContext.Session.SetString("UserId", user.UserId.ToString());
             HttpContext.Session.SetString("Role", user.Role.ToString());
 
-            if (email.Equals(adminEmail)) //admin
+            switch (user.Role)
             {
-                if (adminPassword.Equals(password))
-                {
-                    Response.Redirect("/UserManagement/Index");
-                }
-            }
-            else if (user.Role == 0 && user != null) //customer
-            {
-                Response.Redirect("Privacy");
-            }
-            else if (user.Role == 1 && user != null) //staff
-            {
-                Response.Redirect("/BookingManagement/Index");
-            }
-            else if (user.Role == 2 && user != null) //doctor
-            {
-                Response.Redirect("/PetManagement/Index");
-            }
-            else
-            {
-                Response.Redirect("/Error");
+                case 0: // Customer
+                    Response.Redirect("/Privacy");
+                    break;
+                case 1: // Staff
+                    Response.Redirect("/BookingManagement/Index");
+                    break;
+                case 2: // Doctor
+                    Response.Redirect("/PetManagement/Index");
+                    break;
+                default:
+                    Response.Redirect("/Error");
+                    break;
             }
         }
     }

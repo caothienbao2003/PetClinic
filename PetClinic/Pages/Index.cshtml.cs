@@ -13,9 +13,9 @@ namespace PetClinic.Pages
 		[BindProperty]
 		public string password { get; set; }
 
-		private IUserSerivce userSerivce;
+		private IUserService userSerivce;
 
-		public IndexModel(IUserSerivce _userSerivce)
+		public IndexModel(IUserService _userSerivce)
 		{
 			userSerivce = _userSerivce;
 		}

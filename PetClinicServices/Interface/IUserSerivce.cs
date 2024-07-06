@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetClinicServices.Interface
 {
-    public interface IUserSerivce
+    public interface IUserService
     {
         public User GetUser(string email, string password);
 

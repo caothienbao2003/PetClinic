@@ -13,8 +13,8 @@ namespace PetClinic.Pages.BookingManagement
     public class CreateModel : PageModel
     {
         private IBookingService bookingService;
-        private IUserSerivce userService;
-        public CreateModel(IBookingService _bookingService, IUserSerivce _userService)
+        private IUserService userService;
+        public CreateModel(IBookingService _bookingService, IUserService _userService)
         {
             bookingService = _bookingService;
             userService = _userService;

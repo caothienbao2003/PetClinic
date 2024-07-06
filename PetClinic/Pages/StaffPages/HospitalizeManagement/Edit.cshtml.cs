@@ -14,11 +14,11 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
     public class EditModel : PageModel
     {
         private readonly IHospitalizeService hospitalizeService;
-        private readonly IUserSerivce userSerivce;
+        private readonly IUserService userSerivce;
         private readonly ICageService cageService;
         private readonly IPetService petService;
 
-        public EditModel(IHospitalizeService _hospitalizeService, IUserSerivce _userSerivce, ICageService _cageService, IPetService _petService)
+        public EditModel(IHospitalizeService _hospitalizeService, IUserService _userSerivce, ICageService _cageService, IPetService _petService)
         {
             hospitalizeService = _hospitalizeService;
             userSerivce = _userSerivce;

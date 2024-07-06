@@ -12,9 +12,9 @@ namespace PetClinic.Pages.UserManagement
 {
     public class IndexModel : PageModel
     {
-        private readonly IUserSerivce userSerivce;
+        private readonly IUserService userSerivce;
 
-		public IndexModel(IUserSerivce _userSerivce)
+		public IndexModel(IUserService _userSerivce)
         {
             userSerivce = _userSerivce;
 		}

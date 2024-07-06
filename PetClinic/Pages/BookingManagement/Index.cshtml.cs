@@ -13,14 +13,14 @@ namespace PetClinic.Pages.BookingManagement
     public class IndexModel : PageModel
     {
         private IBookingService bookingService;
-        private IUserSerivce userService;
+        private IUserService userService;
 
         [BindProperty]
         public List<Booking> BookingList { get; set; } = default!;
         [BindProperty]
         public User CurrentUser { get; set; } = default!;
 
-        public IndexModel(IBookingService _bookingService, IUserSerivce _userService)
+        public IndexModel(IBookingService _bookingService, IUserService _userService)
         {
             bookingService = _bookingService;
             userService = _userService;

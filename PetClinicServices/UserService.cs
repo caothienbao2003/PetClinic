@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PetClinicServices
 {
-    public class UserService : IUserSerivce
+    public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
 
