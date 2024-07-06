@@ -22,11 +22,12 @@ namespace PetClinic.Pages.Authentication
         public string gender { get; set; }
 
         private readonly IUserService _userService;
-
-        public CustomerRegisterModel(IUserService userService)
+		private readonly ILogger<CustomerRegisterModel> _logger;
+		public CustomerRegisterModel(IUserService userService, ILogger<LoginModel> logger)
         {
             _userService = userService;
-        }
+			_logger = logger;
+		}
 
         public void OnGet()
         {
@@ -44,7 +45,18 @@ namespace PetClinic.Pages.Authentication
                 return Page();
             }
 
-            var newUser = new User
+			if (string.IsNullOrEmpty(email) 
+                || string.IsNullOrEmpty(password)
+				|| string.IsNullOrEmpty(phoneNumber)
+				|| string.IsNullOrEmpty(address)
+				|| string.IsNullOrEmpty(email)
+				|| string.IsNullOrEmpty(gender))
+			{
+				_logger.LogWarning("Information is empty");
+				return Page();
+			}
+
+			var newUser = new User
             {
                 Username = userName,
                 Password = password,
@@ -54,6 +66,8 @@ namespace PetClinic.Pages.Authentication
                 Gender = gender,
                 Role = 0 //0 is the role for a customer
             };
+
+
 
             _userService.AddUser(newUser); // Assuming AddUser is a method in IUserService to add a user
 
