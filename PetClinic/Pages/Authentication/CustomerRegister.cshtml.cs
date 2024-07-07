@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 using System.Net;
+using System.Security.Claims;
 
 namespace PetClinic.Pages.Authentication
 {
@@ -38,23 +40,12 @@ namespace PetClinic.Pages.Authentication
 
         }
 
-        public IActionResult OnPostRegister()
+        public void OnPostRegister()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+				return;
             }
-
-			if (string.IsNullOrEmpty(email) 
-                || string.IsNullOrEmpty(password)
-				|| string.IsNullOrEmpty(phoneNumber)
-				|| string.IsNullOrEmpty(address)
-				|| string.IsNullOrEmpty(email)
-				|| string.IsNullOrEmpty(gender))
-			{
-				_logger.LogWarning("Information is empty");
-				return Page();
-			}
 
 			var newUser = new User
             {
@@ -69,7 +60,31 @@ namespace PetClinic.Pages.Authentication
 
             _userService.AddUser(newUser); // Assuming AddUser is a method in IUserService to add a user
 
-            return RedirectToPage("/Authentication/Login");
+            RedirectToPage("/Authentication/Login");
         }
-    }
+
+		// Handle external login
+		public IActionResult OnGetExternalLogin(string provider)
+		{
+			var redirectUrl = Url.Page("./Login", pageHandler: "ExternalLoginCallback");
+			var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+			return new ChallengeResult(provider, properties);
+		}
+
+		// Handle external login callback
+		public async Task<IActionResult> OnGetExternalLoginCallback()
+		{
+			var authResult = await HttpContext.AuthenticateAsync();
+			if (!authResult.Succeeded)
+			{
+				_logger.LogWarning("External authentication failed");
+				return RedirectToPage("/Error");
+			}
+
+			string email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
+			_logger.LogInformation("OAuth login with email: {email}", email);
+
+			return RedirectToPage("/Privacy");
+		}
+	}
 }

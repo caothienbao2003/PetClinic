@@ -16,10 +16,13 @@
 			<div class="form-group">
 				<label>Email</label>
 				<input type="text" asp-for="email" class="form-control" />
+				<span asp-validation-for="email" class="text-danger"></span>
 			</div>
+
 			<div class="form-group">
 				<label>Password</label>
 				<input type="password" asp-for="password" class="form-control" />
+				<span asp-validation-for="password" class="text-danger"></span>
 			</div>
 
 			<div class="form-group form-submit-button">
@@ -29,12 +32,14 @@
 		</form>
 	</div>
 
+	</br>
+	
 	<div class="register-link">
 		<label>Or&nbsp;</label><a asp-page="CustomerRegister">Register</a>
 	</div>
-
-	</br></br></br>
-
+	</br>
+	<hr />
+	</br>
 	<div class="form-group form-submit-button">
 		<a class="btn btn-primary" asp-page-handler="ExternalLogin" asp-route-provider="Google">Login with Google</a>
 	</div>
