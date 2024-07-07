@@ -24,11 +24,9 @@ namespace PetClinic.Pages.Authentication
         public string gender { get; set; }
 
         private readonly IUserService _userService;
-		private readonly ILogger<CustomerRegisterModel> _logger;
-		public CustomerRegisterModel(IUserService userService, ILogger<CustomerRegisterModel> logger)
+		public CustomerRegisterModel(IUserService userService)
         {
             _userService = userService;
-			_logger = logger;
 		}
 
         public void OnGet()
@@ -58,7 +56,7 @@ namespace PetClinic.Pages.Authentication
                 Role = 0 //0 is the role for a customer
             };
 
-            _userService.AddUser(newUser); // Assuming AddUser is a method in IUserService to add a user
+            _userService.AddUser(newUser);
 
             RedirectToPage("/Authentication/Login");
         }
@@ -77,12 +75,10 @@ namespace PetClinic.Pages.Authentication
 			var authResult = await HttpContext.AuthenticateAsync();
 			if (!authResult.Succeeded)
 			{
-				_logger.LogWarning("External authentication failed");
 				return RedirectToPage("/Error");
 			}
 
 			string email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
-			_logger.LogInformation("OAuth login with email: {email}", email);
 
 			return RedirectToPage("/Privacy");
 		}
