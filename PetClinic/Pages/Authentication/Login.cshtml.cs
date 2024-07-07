@@ -27,8 +27,8 @@ namespace PetClinic.Pages.Authentication
 			_logger = logger;
 		}
 
-		
-		public IActionResult OnPostLogin()
+
+		public void OnPostLogin()
 		{
 			_logger.LogInformation("Login attempt with email: {email}", email);
 
@@ -37,45 +37,43 @@ namespace PetClinic.Pages.Authentication
 
 			if (email == adminEmail && password == adminPassword)
 			{
-				return Redirect("/UserManagement/Index");
+				Response.Redirect("/UserManagement/Index");
 			}
 
 			if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
 			{
 				_logger.LogWarning("Email or Password is empty");
-				return Page();
+				Response.Redirect("/Login");
 			}
 
 			User user;
-			try
-			{
-				user = userService.GetUser(email, password);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Error getting user from userService");
-				return RedirectToPage("/Error");
-			}
+			user = userService.GetUser(email, password);
 
 			if (user == null)
 			{
 				_logger.LogWarning("Invalid email or password for email: {email}", email);
-				return Page();
+				Response.Redirect("/Login");
 			}
 
 			HttpContext.Session.SetString("UserId", user.UserId.ToString());
 			HttpContext.Session.SetString("Role", user.Role.ToString());
 
-			switch (user.Role)
+
+			if (user.Role == 0)
 			{
-				case 0: // Customer
-					return Redirect("/Privacy");
-				case 1: // Staff
-					return Redirect("/BookingManagement/Index");
-				case 2: // Doctor
-					return Redirect("/PetManagement/Index");
-				default:
-					return Redirect("/Error");
+				Response.Redirect("/Privacy");
+			}
+			else if (user.Role == 1)
+			{
+				Response.Redirect("/BookingManagement/Index");
+			}
+			else if (user.Role == 2)
+			{
+				Response.Redirect("/PetManagement/Index");
+			}
+			else
+			{
+				Response.Redirect("/Error");
 			}
 		}
 
@@ -89,13 +87,11 @@ namespace PetClinic.Pages.Authentication
 				return RedirectToPage("/Error");
 			}
 
-			// Handle user registration or login based on OAuth info
 			string email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
 			_logger.LogInformation("OAuth login with email: {email}", email);
 
-			// Proceed with user registration or login logic based on retrieved email
 
-			return Redirect("/Privacy"); // Example redirect after OAuth login
+			return Redirect("/Privacy");
 		}
 
 		public IActionResult OnGetAccessDenied()
@@ -103,5 +99,32 @@ namespace PetClinic.Pages.Authentication
 			return RedirectToPage("/Error");
 		}
 		*/
+		// Handle external login
+		public IActionResult OnGetExternalLogin(string provider)
+		{
+			var redirectUrl = Url.Page("./Login", pageHandler: "ExternalLoginCallback");
+			var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+			return new ChallengeResult(provider, properties);
+		}
+
+		// Handle external login callback
+		public async Task<IActionResult> OnGetExternalLoginCallback()
+		{
+			var authResult = await HttpContext.AuthenticateAsync();
+			if (!authResult.Succeeded)
+			{
+				_logger.LogWarning("External authentication failed");
+				return RedirectToPage("/Error");
+			}
+
+			string email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
+			_logger.LogInformation("OAuth login with email: {email}", email);
+
+			// Additional logic to sign in the user with the local application.
+			// ...
+
+			return Redirect("/Privacy");
+		}
+
 	}
 }

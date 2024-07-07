@@ -23,7 +23,7 @@ namespace PetClinic.Pages.Authentication
 
         private readonly IUserService _userService;
 		private readonly ILogger<CustomerRegisterModel> _logger;
-		public CustomerRegisterModel(IUserService userService, ILogger<LoginModel> logger)
+		public CustomerRegisterModel(IUserService userService, ILogger<CustomerRegisterModel> logger)
         {
             _userService = userService;
 			_logger = logger;
@@ -66,8 +66,6 @@ namespace PetClinic.Pages.Authentication
                 Gender = gender,
                 Role = 0 //0 is the role for a customer
             };
-
-
 
             _userService.AddUser(newUser); // Assuming AddUser is a method in IUserService to add a user
 

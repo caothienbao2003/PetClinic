@@ -3,6 +3,7 @@ using PetClinicBussinessObject;
 using PetClinicServices;
 using PetClinicServices.Interface;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,19 +18,20 @@ builder.Services.AddDbContext<PetClinicContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic")));
 
 
-/*
+
 // Add authentication services
 builder.Services.AddAuthentication(options =>
 {
-	options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 	options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
-.AddGoogle(options =>
-{
-	options.ClientId = "851158419909-3sdgr7v1se9jfv421fgfi03llmokniia.apps.googleusercontent.com";
-	options.ClientSecret = "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";
-});
-*/
+	.AddCookie()
+	.AddGoogle(options =>
+	{
+		options.ClientId = builder.Configuration.GetSection("GoogleKeys:ClientId").Value;
+		options.ClientSecret = builder.Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+	});
+
 
 // Add authorization, routing, and Razor Pages
 builder.Services.AddAuthorization();
