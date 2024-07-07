@@ -31,7 +31,13 @@ builder.Services.AddAuthentication(options =>
 		options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
 		options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 	});
-
+	/*
+	.AddGoogle(options =>
+	 {
+		 options.ClientId = builder.Configuration.GetSection("Authentication:Google:ClientId").Values;
+		 options.ClientSecret = builder.Configuration.GetSection("Authentication:Google:ClientSecret").Values;
+	 });
+	*/
 
 // Add authorization, routing, and Razor Pages
 builder.Services.AddAuthorization();
