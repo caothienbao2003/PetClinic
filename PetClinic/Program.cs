@@ -15,7 +15,7 @@ builder.Services.AddScoped<IHospitalizeService, HospitalizeService>();
 
 //Explicitly register db context
 builder.Services.AddDbContext<PetClinicContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic")));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic")));
 
 
 
@@ -28,15 +28,15 @@ builder.Services.AddAuthentication(options =>
 	.AddCookie()
 	.AddGoogle(options =>
 	{
-		options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-		options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+		 options.ClientId = builder.Configuration.GetSection("Authentication:Google:ClientId").Value;
+		 options.ClientSecret = builder.Configuration.GetSection("Authentication:Google:ClientSecret").Value;
 	});
 	/*
 	.AddGoogle(options =>
-	 {
-		 options.ClientId = builder.Configuration.GetSection("Authentication:Google:ClientId").Values;
-		 options.ClientSecret = builder.Configuration.GetSection("Authentication:Google:ClientSecret").Values;
-	 });
+	{
+		options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+		options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+	});
 	*/
 
 // Add authorization, routing, and Razor Pages
@@ -58,9 +58,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
