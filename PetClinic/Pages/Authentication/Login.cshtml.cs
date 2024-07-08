@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PetClinicBussinessObject;
+using PetClinicDAO;
 using PetClinicServices;
 using PetClinicServices.Interface;
 using System.Security.Claims;
@@ -28,21 +29,17 @@ namespace PetClinic.Pages.Authentication
 
 		public void OnPostLogin()
 		{
-			var adminEmail = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Email").Value;
-			var adminPassword = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Password").Value;
+			bool isAdmin = userService.IsAdmin(new() { Email = email, Password = password });
 
-			if (email == adminEmail)
+			if (isAdmin)
 			{
-				if (password == adminPassword)
-				{
-					Response.Redirect("/UserManagement/Index");
-				}
+				Response.Redirect("/UserManagement/Index");
 			}
 			else
 			{
-				User user = userService.GetUser(email, password);
+				User user = userService.GetUserByEmail(email);
 
-				if (user != null)
+				if (user != null && DAOUtilities.Instance.VerifyPassword(password, user.Password))
 				{
 					HttpContext.Session.SetString("UserId", user.UserId.ToString());
 					HttpContext.Session.SetString("Role", user.Role.ToString());
@@ -65,12 +62,8 @@ namespace PetClinic.Pages.Authentication
 					return;
 				}
 			}
-
-
 		}
 
-
-		// Handle external login
 		public async Task<IActionResult> OnGetExternalLogin(string provider)
 		{
 			var redirectUrl = Url.Page("./Login", pageHandler: "ExternalLoginCallback");
@@ -78,7 +71,6 @@ namespace PetClinic.Pages.Authentication
 			return new ChallengeResult(provider, properties);
 		}
 
-		// Handle external login callback
 		public async Task<IActionResult> OnGetExternalLoginCallback()
 		{
 			var authResult = await HttpContext.AuthenticateAsync();

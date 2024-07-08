@@ -42,5 +42,25 @@ namespace PetClinicServices
             userRepository.AddUser(newUser);
             return newUser;
         }
-    }
+
+		public bool IsAdmin(User user)
+		{
+			return userRepository.IsAdmin(user);
+		}
+
+        public User GetUserByEmail(string email)
+        {
+            return userRepository.GetUserByEmail(email);
+        }
+
+		public string GeneratePasswordResetToken(User user)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<bool> ResetPasswordAsync(string email, string token, string newPassword)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

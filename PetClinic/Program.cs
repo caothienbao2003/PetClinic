@@ -14,10 +14,17 @@ builder.Services.AddScoped<ICageService, CageService>();
 builder.Services.AddScoped<IHospitalizeService, HospitalizeService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IShiftService, ShiftService>();
+builder.Services.AddScoped<IEmailService>(provider => 
+        new EmailService("smtp.your-email-provider.com", 587, "your-email@example.com", "your-email-password"));
+
+
 
 //Explicitly register db context
 builder.Services.AddDbContext<PetClinicContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic")));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic"builder.Services.AddScoped<IEmailService>(provider => 
+        new EmailService("smtp.your-email-provider.com", 587, "your-email@example.com", "your-email-password"));
+
+)));
 
 
 
