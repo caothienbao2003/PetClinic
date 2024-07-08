@@ -5,34 +5,83 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 
-<h4>Booking</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<style>
+    .booking-container {
+        margin: 20px;
+    }
+
+    .booking-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .calendar-container,
+    .slots-container,
+    .doctors-container {
+        margin-bottom: 20px;
+    }
+
+    .available-slots button {
+        margin: 5px;
+    }
+
+    .form-container {
+        margin-top: 30px;
+    }
+</style>
+
+<div class="booking-container">
+    <h1 class="booking-header">Booking</h1>
+
+    <div class="row">
+        <div class="col-md-6 calendar-container">
+            <h4>Select Date</h4>
+            <input asp-for="Booking.BookingAt" class="form-control" type="date" min="@Model.MinDate.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="Booking.BookingAt" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 slots-container">
+            <h4>Available slots</h4>
+            <div class="available-slots">
+                @foreach (var shift in Model.ShiftList)
+                {
+                    <button class="btn @(Model.Booking.ScheduleId == shift.ShiftId ? "btn-success" : "btn-light")" type="button"
+                            onclick="document.getElementById('Booking_ScheduleId').value = '@shift.ShiftId';">
+                        @shift.StartTime
+                    </button>
+                }
+            </div>
+            <input type="hidden" id="Booking_ScheduleId" asp-for="Booking.ScheduleId" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 doctors-container">
+            <h4>Available Doctor</h4>
+            <div class="available-doctors">
+                @foreach (var doctor in Model.DoctorList)
+                {
+                    <button class="btn @(Model.Booking.DoctorId == doctor.UserId ? "btn-success" : "btn-light")" type="button"
+                            onclick="document.getElementById('Booking_DoctorId').value = '@doctor.UserId';">
+                        @doctor.Username
+                    </button>
+                }
+            </div>
+            <input type="hidden" id="Booking_DoctorId" asp-for="Booking.DoctorId" />
+        </div>
+    </div>
+
+    <div class="form-container">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Booking.PetId" class="control-label"></label>
-                <select asp-for="Booking.PetId" class ="form-control" asp-items="ViewBag.PetId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Booking.DoctorId" class="control-label"></label>
-                <select asp-for="Booking.DoctorId" class ="form-control" asp-items="ViewBag.DoctorId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Booking.ScheduleId" class="control-label"></label>
-                <select asp-for="Booking.ScheduleId" class="form-control" asp-items="ViewBag.ShiftId"></select>
+                <select asp-for="Booking.PetId" class="form-control" asp-items="ViewBag.PetId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Booking.ServiceId" class="control-label"></label>
-                <select asp-for="Booking.ServiceId" class ="form-control" asp-items="ViewBag.ServiceId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Booking.BookingAt" class="control-label"></label>
-                <input asp-for="Booking.BookingAt" class="form-control" type="date" min="@Model.MinDate.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="Booking.BookingAt" class="text-danger"></span>
+                <select asp-for="Booking.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Booking.PaymentStatus" class="control-label"></label>
@@ -49,12 +98,14 @@
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
+    <div>
+        <a asp-page="Index">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

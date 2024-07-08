@@ -12,6 +12,8 @@ builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICageService, CageService>();
 builder.Services.AddScoped<IHospitalizeService, HospitalizeService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IShiftService, ShiftService>();
 
 //Explicitly register db context
 builder.Services.AddDbContext<PetClinicContext>(options =>
