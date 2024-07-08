@@ -28,15 +28,13 @@ namespace PetClinic.Pages.Authentication
 
 		public void OnPostLogin()
 		{
-			var adminEmail = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Email").Value;
-			var adminPassword = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Password").Value;
+			bool isAdmin = userService.IsAdmin(new() { Email = email, Password = password });
 
-			if (email == adminEmail)
+			
+
+			if (isAdmin)
 			{
-				if (password == adminPassword)
-				{
-					Response.Redirect("/UserManagement/Index");
-				}
+				Response.Redirect("/UserManagement/Index");
 			}
 			else
 			{

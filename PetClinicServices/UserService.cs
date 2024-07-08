@@ -42,5 +42,10 @@ namespace PetClinicServices
             userRepository.AddUser(newUser);
             return newUser;
         }
-    }
+
+		public bool IsAdmin(User user)
+		{
+			return userRepository.IsAdmin(user);
+		}
+	}
 }

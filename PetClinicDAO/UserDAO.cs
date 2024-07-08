@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PetClinicBussinessObject;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,13 +50,32 @@ namespace PetClinicDAO
             try
             {
                 context.Users.Add(newUser);
-                context.SaveChanges(); // Save changes to the database
+                context.SaveChanges(); 
             }
             catch (Exception ex)
             {
-                // Handle exception appropriately (log, rethrow, etc.)
                 throw new Exception("Failed to add user.", ex);
             }
         }
+
+        public bool IsAdmin(User user)
+        {
+			try
+			{
+				var adminEmail = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Email").Value;
+				var adminPassword = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AdminCredentials:Password").Value;
+
+				if (user.Email == adminEmail && user.Password == adminPassword)
+				{
+					return true;
+				}
+
+				return false;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+		}
     }
 }
