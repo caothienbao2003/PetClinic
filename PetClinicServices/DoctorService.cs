@@ -1,4 +1,6 @@
 ﻿using PetClinicBussinessObject;
+using PetClinicRepository;
+using PetClinicRepository.Interface;
 using PetClinicServices.Interface;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,12 @@ namespace PetClinicServices
 {
     public class DoctorService : IDoctorService
     {
-        public List<User> GetAllDoctors()
+        private IDoctorRepository doctorRepository;
+        public DoctorService()
         {
-            throw new NotImplementedException();
+            doctorRepository = new DoctorRepository();
         }
+
+        public List<User> GetAllDoctors() => doctorRepository.GetAllDoctors();
     }
 }

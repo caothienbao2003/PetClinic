@@ -56,5 +56,13 @@ namespace PetClinicDAO
                 throw new Exception("Failed to add user.", ex);
             }
         }
-    }
+
+        public List<User> GetUserListWithRole(UserRole userRole)
+        {
+            return context.Users
+                .Where(u => u.Role == (int) userRole)
+                .Include(u => u.Pets)
+                .ToList();
+        }
+    } 
 }

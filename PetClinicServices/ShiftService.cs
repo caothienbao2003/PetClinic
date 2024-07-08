@@ -1,4 +1,7 @@
 ﻿using PetClinicBussinessObject;
+using PetClinicDAO;
+using PetClinicRepository;
+using PetClinicRepository.Interface;
 using PetClinicServices.Interface;
 using System;
 using System.Collections.Generic;
@@ -10,9 +13,14 @@ namespace PetClinicServices
 {
     public class ShiftService : IShiftService
     {
-        public List<Shift> GetAllShifts()
+        private IShiftRepository shiftRepo;
+        public ShiftService()
         {
-            throw new NotImplementedException();
+            if (shiftRepo == null)
+            {
+                shiftRepo = new ShiftRepository();
+            }
         }
+        public List<Shift> GetAllShifts() => shiftRepo.GetAllShifts();
     }
 }
