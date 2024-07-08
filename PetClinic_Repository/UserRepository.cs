@@ -21,6 +21,8 @@ namespace PetClinicRepository
 
         public bool IsAdmin(User user) => UserDAO.Instance.IsAdmin(user);
 
+        public User GetUserByEmail(string email) => UserDAO.Instance.GetUserByEmail(email);
 
-	}
+
+    }
 }

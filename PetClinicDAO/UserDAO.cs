@@ -45,6 +45,11 @@ namespace PetClinicDAO
             return context.Users.FirstOrDefault(u => u.UserId == id)!;
         }
 
+        public User GetUserByEmail(string email) 
+        { 
+            return context.Users.FirstOrDefault(u => u.Email == email)!; 
+        }
+
         public void AddUser(User newUser)
         {
             try

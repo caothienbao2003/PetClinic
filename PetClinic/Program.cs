@@ -12,6 +12,10 @@ builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICageService, CageService>();
 builder.Services.AddScoped<IHospitalizeService, HospitalizeService>();
+builder.Services.AddScoped<IEmailService>(provider => 
+        new EmailService("smtp.your-email-provider.com", 587, "your-email@example.com", "your-email-password"));
+
+
 
 //Explicitly register db context
 builder.Services.AddDbContext<PetClinicContext>(options =>

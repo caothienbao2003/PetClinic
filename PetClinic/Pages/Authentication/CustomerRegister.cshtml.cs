@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
+using PetClinicDAO;
 using PetClinicServices.Interface;
 using System.Net;
 using System.Security.Claims;
@@ -48,7 +49,7 @@ namespace PetClinic.Pages.Authentication
 			var newUser = new User
             {
                 Username = userName,
-                Password = password,
+                Password = DAOUtilities.Instance.HashPassword(password),
                 PhoneNumber = phoneNumber,
                 Address = address,
                 Email = email,
