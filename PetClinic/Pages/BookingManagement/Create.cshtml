@@ -46,7 +46,7 @@
             <div class="available-slots">
                 @foreach (var shift in Model.ShiftList)
                 {
-                    <button class="btn @(Model.Booking.ScheduleId == shift.ShiftId ? "btn-success" : "btn-light")" type="button"
+                    <button class="btn btn-success" type="button"
                             onclick="document.getElementById('Booking_ScheduleId').value = '@shift.ShiftId';">
                         @shift.StartTime
                     </button>
@@ -62,7 +62,7 @@
             <div class="available-doctors">
                 @foreach (var doctor in Model.DoctorList)
                 {
-                    <button class="btn @(Model.Booking.DoctorId == doctor.UserId ? "btn-success" : "btn-light")" type="button"
+                    <button class="btn-light" type="button"
                             onclick="document.getElementById('Booking_DoctorId').value = '@doctor.UserId';">
                         @doctor.Username
                     </button>

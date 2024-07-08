@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
+using PetClinicDAO;
 
 namespace PetClinic.Pages.BookingManagement
 {
@@ -15,8 +16,8 @@ namespace PetClinic.Pages.BookingManagement
     {
         private IBookingService bookingService;
         private IUserService userService;
-        private IShiftService shiftService;  // Assuming there's a service for shifts
-        private IDoctorService doctorService;  // Assuming there's a service for doctors
+        private IShiftService shiftService;
+        private IDoctorService doctorService;
 
         public CreateModel(IBookingService _bookingService, IUserService _userService, IShiftService _shiftService, IDoctorService _doctorService)
         {
@@ -51,8 +52,9 @@ namespace PetClinic.Pages.BookingManagement
                 ViewData["PetId"] = new SelectList(PetList, "PetId", "PetName");
 
                 // Fetch available shifts and doctors
-                ShiftList = shiftService.GetAllShifts().ToList();
-                DoctorList = doctorService.GetAllDoctors().ToList();
+                //ShiftList = shiftService.GetAllShifts();
+                ShiftList = ShiftDAO.Instance.GetAllShifts();
+                DoctorList = doctorService.GetAllDoctors();
                 ViewData["ShiftId"] = new SelectList(ShiftList, "ShiftId", "ShiftTime");
                 ViewData["DoctorId"] = new SelectList(DoctorList, "DoctorId", "DoctorName");
             }

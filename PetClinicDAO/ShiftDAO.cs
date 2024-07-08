@@ -11,7 +11,7 @@ namespace PetClinicDAO
     {
         private readonly PetClinicContext context;
 
-        private static ShiftDAO instance;
+        private static ShiftDAO? instance;
 
         public ShiftDAO()
         {
