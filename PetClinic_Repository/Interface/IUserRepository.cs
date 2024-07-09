@@ -15,5 +15,9 @@ namespace PetClinicRepository.Interface
         public User GetUserById(int id);
 
         public void AddUser(User newUser);
+
+        public bool IsAdmin(User user);
+
+        public User GetUserByEmail(string email);
     }
 }

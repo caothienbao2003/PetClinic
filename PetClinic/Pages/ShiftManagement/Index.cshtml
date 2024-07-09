@@ -1,0 +1,60 @@
+﻿@page
+@model PetClinic.Pages.ShiftManager.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShiftList[0].ShiftName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShiftList[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShiftList[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShiftList[0].ActiveStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShiftList[0].ShiftType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ShiftList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShiftName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShiftType)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ShiftId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ShiftId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ShiftId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
