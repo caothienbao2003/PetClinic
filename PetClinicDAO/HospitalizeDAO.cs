@@ -13,6 +13,7 @@ namespace PetClinicDAO
         private readonly PetClinicContext context;
 
         private static HospitalizeDAO instance;
+        private object _context;
 
         public HospitalizeDAO()
         {
@@ -66,6 +67,18 @@ namespace PetClinicDAO
         public List<HospitalizeLog> GetLogListByHospitalizeId(int id)
         {
             return context.HospitalizeLogs.Where(h => h.HospitalizeId == id).ToList();
+        }
+
+        public void AddHospitalizeLog(HospitalizeLog log)
+        {
+            context.HospitalizeLogs.Add(log);
+            context.SaveChanges();
+        }
+
+        public void UpdateHospitalizeLog(HospitalizeLog log)
+        {
+            context.HospitalizeLogs.Update(log);
+            context.SaveChanges();
         }
     }
 }

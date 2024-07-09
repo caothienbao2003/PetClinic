@@ -19,5 +19,8 @@ namespace PetClinicRepository.Interface
         public bool IsAdmin(User user);
 
         public User GetUserByEmail(string email);
-    }
+
+        public List<User> GetUserListWithRole(UserRole userRole);
+
+	}
 }

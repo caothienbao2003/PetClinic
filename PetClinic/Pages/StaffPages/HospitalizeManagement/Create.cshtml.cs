@@ -31,7 +31,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
         public IActionResult OnGet(int? cageId)
         {
 
-            ViewData["DoctorId"] = new SelectList(userSerivce.GetAllUsers(), "UserId", "Username");
+            ViewData["DoctorId"] = new SelectList(userSerivce.GetUserListWithRole(UserRole.Doctor), "UserId", "FirstName");
             ViewData["PetId"] = new SelectList(petService.GetAll(), "PetId", "PetName");
 
             if (cageId.HasValue)

@@ -4,41 +4,38 @@
     ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
 }
 
-<h1>Index</h1>
+<h1>History Log</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet!.PetName)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet!.PetAge)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetAge)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet!.PetType)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].InTime)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].InTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].OutTime)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].OutTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].Doctor)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Doctor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalize[0].ActiveStatus)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].ActiveStatus)
             </th>
             
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Hospitalize)
+        @foreach (var item in Model.Hospitalizes)
         {
             <tr>
                 <td>
@@ -57,25 +54,69 @@
                     @Html.DisplayFor(modelItem => item.OutTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Doctor!.Username)
+                    @Html.DisplayFor(modelItem => item.Doctor!.FirstName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActiveStatus)
                 </td>
                 
                 <td>
-                    <a asp-page="./HospitalizeLog" asp-route-HospitalizeId="@item.HospitalizeId">Logs</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.HospitalizeId">Delete</a>
+                    <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> Logs </a>
+                    @*<a asp-page="./Delete" asp-route-id="@item.HospitalizeId"> Delete </a>*@
                     @if (item.OutTime == null)
                     {
-                        <form method="post">
+                        <form method="post" asp-page-handler="EndHospitalize">
                             <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
+                            <input type="hidden" name="CageId" value="@Model.CageId" />
                             <input type="submit" value="End Hospitalize" class="btn btn-primary" />
                         </form>
                     }
 
                 </td>
             </tr>
+            <tr class="collapse" id="collapseLog_@item.HospitalizeId">
+                <td colspan="7">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>DateTime</th>
+                                <th>Description</th>
+                                <th>ActiveStatus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var log in item.HospitalizeLogs)
+                            {
+                                <tr>
+                                    <td>@log.DateTime</td>
+                                    <td>@log.Description</td>
+                                    <td>@log.ActiveStatus</td>
+                                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (item.OutTime == null)
+                    {
+                        <form method="post" asp-page-handler="CreateLog">
+                            <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
+                            <input type="hidden" name="CageId" value="@Model.CageId" />
+                            <div class="form-group">
+                                <label for="Description">Description</label>
+                                <input type="text" name="Description" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Add Log" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    }
+                    
+                </td>
+            </tr>
+        
         }
     </tbody>
 </table>
+<div>
+    <a asp-page="Index">Back to Cage List</a>
+</div>

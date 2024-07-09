@@ -62,5 +62,10 @@ namespace PetClinicServices
 		{
 			throw new NotImplementedException();
 		}
+
+		public List<User> GetUserListWithRole(UserRole userRole)
+		{
+			return userRepository.GetUserListWithRole(userRole);
+		}
 	}
 }

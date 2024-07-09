@@ -16,11 +16,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CageId" />
             <div class="form-group">
-                <label asp-for="Hospitalize.PetId" class="control-label"></label>
+                <label asp-for="Hospitalize.PetId" class="control-label">Pet Name</label>
                 <select asp-for="Hospitalize.PetId" class ="form-control" asp-items="ViewBag.PetId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Hospitalize.DoctorId" class="control-label"></label>
+                <label asp-for="Hospitalize.DoctorId" class="control-label">Doctor Name</label>
                 <select asp-for="Hospitalize.DoctorId" class ="form-control" asp-items="ViewBag.DoctorId"></select>
             </div>
             @*<div class="form-group">
@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="/StaffPages/CageManagement/Index">Back to Cage</a>
 </div>
 
 @section Scripts {

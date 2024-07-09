@@ -5,11 +5,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Cage Management</h1>
 
-<p>
+@*<p>
     <a asp-page="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.ActiveStatus)
             </td>*@
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.CageId">Edit</a> |
+                <a asp-page="./Edit" asp-route-id="@item.CageId">Edit Staus</a> |
                 <a asp-page="./Details" asp-route-id="@item.CageId">Details</a> |
                 <a asp-page="./HospitalizeList" asp-route-CageId="@item.CageId">Hospitalize List</a> |
                 @*<a asp-page="./Delete" asp-route-id="@item.CageId">Delete</a> |S*@

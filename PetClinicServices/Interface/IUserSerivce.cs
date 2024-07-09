@@ -20,7 +20,9 @@ namespace PetClinicServices.Interface
 
         public User GetUserByEmail(string email);
 
-        public string GeneratePasswordResetToken(User user);
+		public List<User> GetUserListWithRole(UserRole userRole);
+
+		public string GeneratePasswordResetToken(User user);
         public Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
     }
 }

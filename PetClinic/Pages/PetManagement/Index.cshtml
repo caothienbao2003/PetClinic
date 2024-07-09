@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.PetAge)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.Username)
+                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.PetId">Edit</a> |

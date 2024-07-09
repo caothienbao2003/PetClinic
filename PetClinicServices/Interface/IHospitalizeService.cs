@@ -15,5 +15,7 @@ namespace PetClinicServices.Interface
         public void UpdateHospitalize(Hospitalize hospitalize);
         public List<Hospitalize> GetListByCageId(int cageId);
         public List<HospitalizeLog> GetLogListByHospitalizeId(int hospitalizeId);
+        public void AddHospitalizeLog(HospitalizeLog log);
+        public void UpdateHospitalizeLog(HospitalizeLog log);
     }
 }
