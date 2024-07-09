@@ -1,0 +1,62 @@
+﻿@page
+@model PetClinic.Pages.DoctorPages.MedicalRecords.IndexModel
+
+@{
+    ViewData["Title"] = "Medical Record for Booking " + Model.BookingId;
+}
+
+<h1>Medical Record Details</h1>
+
+@if (Model.MedicalRecord != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicalRecord.MedicalRecordDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicalRecord.Booking)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicalRecord.Doctor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicalRecord.Prescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicalRecord.Service)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.MedicalRecord.MedicalRecordDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.MedicalRecord.Booking.BookingId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.MedicalRecord.Doctor.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.MedicalRecord.Prescription.PrescriptionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.MedicalRecord.Service.ServiceId)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@Model.MedicalRecord.MedicalRecordId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@Model.MedicalRecord.MedicalRecordId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@Model.MedicalRecord.MedicalRecordId">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No medical record found for this booking.</p>
+}

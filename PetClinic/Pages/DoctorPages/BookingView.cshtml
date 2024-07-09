@@ -1,0 +1,61 @@
+﻿@page
+@model PetClinic.Pages.DoctorPages.BookingViewModel
+@{
+    ViewData["Title"] = "Booking";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Pet.Customer.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Pet)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BookingList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet.Customer.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet.PetName)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.BookingAt)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.Shift.ShiftName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingStatus)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> |
+                    @*<a asp-page="./Details" asp-route-id="@item.BookingId">Delete</a>*@
+                    <a asp-page="/DoctorPages/MedicalRecords/Index" asp-route-bookid="@item.BookingId">Medical Records</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

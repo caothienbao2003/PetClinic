@@ -1,0 +1,36 @@
+﻿@page
+@model PetClinic.Pages.DoctorPages.MedicinePrescription.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Prescription[0].PrescriptionDetails)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Prescription) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrescriptionDetails.PrescriptionDetailsId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.PrescriptionId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PrescriptionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

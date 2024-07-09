@@ -33,7 +33,7 @@ namespace PetClinicDAO
 
         public List<Booking> GetAll()
         {
-            return context.Bookings.ToList();
+            return context.Bookings.Include(p => p.Pet).Include(d => d.Doctor).Include(s => s.Schedule).Include(s => s.Service).ToList();
         }
 
         public Booking? GetBookingById(int id)
