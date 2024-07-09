@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.StaffPages.HospitializeManagement
+namespace PetClinic.Pages.StaffPages.CageManagement
 {
-    public class IndexModel : PageModel
+    public class HospitalizeListModel : PageModel
     {
         private readonly IHospitalizeService hospitalizeService;
         private readonly ICageService cageService;
 
-        public IndexModel(IHospitalizeService _hospitalizeService, ICageService _cageService)
+        public HospitalizeListModel(IHospitalizeService _hospitalizeService, ICageService _cageService)
         {
             hospitalizeService = _hospitalizeService;
             cageService = _cageService;
         }
 
-        public List<Hospitalize> Hospitalize { get; set; } = default!;
-        public Hospitalize hospitalize { get; set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public int CageId { get; set; }
 
-        public IActionResult OnGet()
+        public List<Hospitalize> Hospitalize { get; set; } = default!;
+
+        public IActionResult OnGet(int cageId)
         {
-            Hospitalize = hospitalizeService.GetAllHospitalize();
+            CageId = cageId;
+            Hospitalize = hospitalizeService.GetListByCageId(CageId);
             return Page();
         }
 
@@ -46,7 +44,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
                 }
             }
 
-            return RedirectToPage();
+            return RedirectToPage("/StaffPages/CageManagement/Index");
         }
     }
 }

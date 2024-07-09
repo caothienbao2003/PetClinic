@@ -21,9 +21,9 @@
                 @Html.DisplayNameFor(model => model.Cage[0].CageStatus)
             </th>
             
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Cage[0].ActiveStatus)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -34,16 +34,25 @@
                 @Html.DisplayFor(modelItem => item.CageId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CageStatus)
+                @Html.DisplayFor(modelItem => item.CageEnumStatus)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ActiveStatus)
-            </td>
+            </td>*@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.CageId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.CageId">Details</a> |
+                <a asp-page="./HospitalizeList" asp-route-CageId="@item.CageId">Hospitalize List</a> |
                 @*<a asp-page="./Delete" asp-route-id="@item.CageId">Delete</a> |S*@
-                <a asp-page="/StaffPages/HospitalizeManagement/Create" asp-route-CageId="@item.CageId">Hospitalize</a>
+                @if (item.CageStatus == 0)
+                {
+                    <span>Already Hospitalized</span>
+                }
+                else
+                {
+                    <a asp-page="/StaffPages/HospitalizeManagement/Create" asp-route-CageId="@item.CageId">Hospitalize</a>
+                }
+
             </td>
         </tr>
 }

@@ -1,0 +1,81 @@
+﻿@page
+@model PetClinic.Pages.StaffPages.CageManagement.HospitalizeListModel
+@{
+    ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet!.PetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet!.PetAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Pet!.PetType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].InTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].OutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalize[0].ActiveStatus)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Hospitalize)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor!.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                </td>
+                
+                <td>
+                    <a asp-page="./HospitalizeLog" asp-route-HospitalizeId="@item.HospitalizeId">Logs</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.HospitalizeId">Delete</a>
+                    @if (item.OutTime == null)
+                    {
+                        <form method="post">
+                            <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
+                            <input type="submit" value="End Hospitalize" class="btn btn-primary" />
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

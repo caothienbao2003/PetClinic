@@ -1,0 +1,57 @@
+﻿@page
+@model PetClinic.Pages.StaffPages.CageManagement.HospitalizeLogModel
+@{
+    ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.HospitalizeId}";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HospitalizeLog[0].DateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HospitalizeLog[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HospitalizeLog[0].ActiveStatus)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HospitalizeLog)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                </td>
+
+                @*<td>
+                    <a asp-page="./Details" asp-route-id="@item.HospitalizeId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.HospitalizeId">Delete</a>
+                    @if (item.OutTime == null)
+                    {
+                        <form method="post">
+                            <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
+                            <input type="submit" value="End Hospitalize" class="btn btn-primary" />
+                        </form>
+                    }
+
+            </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

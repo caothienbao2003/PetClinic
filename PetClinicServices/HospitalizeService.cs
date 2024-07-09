@@ -42,5 +42,15 @@ namespace PetClinicServices
         {
             hospitalizeRepository.UpdateHospitalize(hospitalize);
         }
+
+        public List<Hospitalize> GetListByCageId(int cageId)
+        {
+            return hospitalizeRepository.GetListByCageId(cageId);
+        }
+
+        public List<HospitalizeLog> GetLogListByHospitalizeId(int hospitalizeId)
+        {
+            return hospitalizeRepository.GetLogListByHospitalizeId(hospitalizeId);
+        }
     }
 }

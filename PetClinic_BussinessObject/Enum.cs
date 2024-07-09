@@ -45,4 +45,9 @@ namespace PetClinicBussinessObject
         Available
     }
 
+    public enum HospitalizeStatus
+    {
+        Hide,
+        Show
+    }
 }

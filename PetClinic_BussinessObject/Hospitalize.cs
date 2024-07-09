@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetClinicBussinessObject
 {
@@ -22,5 +23,12 @@ namespace PetClinicBussinessObject
         public virtual User? Doctor { get; set; }
         public virtual Pet? Pet { get; set; }
         public virtual ICollection<HospitalizeLog> HospitalizeLogs { get; set; }
+
+        [NotMapped]
+        public HospitalizeStatus? HospitalizeEnumStatus
+        {
+            get { return (HospitalizeStatus?)ActiveStatus; }
+            set { ActiveStatus = (int?)value; }
+        }
     }
 }

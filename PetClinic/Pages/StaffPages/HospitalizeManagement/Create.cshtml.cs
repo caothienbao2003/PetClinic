@@ -57,22 +57,29 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
 
             Hospitalize.InTime = DateTime.Now;
 
+            if (CageId.HasValue)
+            {
+                Hospitalize.CageId = CageId.Value;
+            }
+
+            Hospitalize.HospitalizeEnumStatus = HospitalizeStatus.Show;
+
             hospitalizeService.AddHospitalize(Hospitalize);
 
             var hospitalizeFromDb = hospitalizeService.GetHospitalizeById(Hospitalize.HospitalizeId);
             if (hospitalizeFromDb == null || !hospitalizeFromDb.CageId.HasValue)
             {
-                // Handle the case where the Hospitalize or CageId is null
+                Console.WriteLine($"Unable to find hospitalize record with ID: {Hospitalize.HospitalizeId}");
                 ModelState.AddModelError(string.Empty, "Unable to find hospitalize record or cage.");
                 return Page();
             }
-
+            
             var cage = cageService.GetCageById(hospitalizeFromDb.CageId.Value);
 
             if (cage != null)
             {
                 cage.CageEnumStatus = CageStatus.Occupied;
-                cage.ActiveEnumStatus = ActiveStatus.Active;
+                cage.ActiveEnumStatus = ActiveStatus.Active;    
                 cageService.UpdateCage(cage);
             }
 
