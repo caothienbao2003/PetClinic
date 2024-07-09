@@ -13,9 +13,21 @@
 
 	<form method="post">
 		<div class="form-group">
-			<label>User Name</label>
-			<input type="text" asp-for="userName" class="form-control" />
-			<span asp-validation-for="userName" class="text-danger"></span>
+			<label>First Name</label>
+			<input type="text" asp-for="firstName" class="form-control" />
+			<span asp-validation-for="firstName" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Last Name</label>
+			<input type="text" asp-for="lastName" class="form-control" />
+			<span asp-validation-for="lastName" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Social Number</label>
+			<input type="text" asp-for="socialNumber" class="form-control" />
+			<span asp-validation-for="socialNumber" class="text-danger"></span>
 		</div>
 
 		<div class="form-group">

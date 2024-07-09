@@ -41,16 +41,12 @@ namespace PetClinicBussinessObject
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(GetConnectionString());
+                var config = new ConfigurationBuilder()
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", true, true).Build();
+                var connectionString = config.GetConnectionString("PetClinic");
+                optionsBuilder.UseSqlServer(connectionString);
             }
-        }
-
-        private string GetConnectionString()
-        {
-            IConfiguration config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true).Build();
-            var strConnection = config.GetConnectionString("PetClinic");
-            return strConnection;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -215,7 +211,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<PrescriptionDetail>(entity =>
             {
                 entity.HasKey(e => e.PrescriptionDetailsId)
-                    .HasName("PK__Prescrip__33A5686D5DADB250");
+                    .HasName("PK__Prescrip__33A5686D0214C663");
 
                 entity.Property(e => e.MedicineUnit).HasMaxLength(50);
 
@@ -262,19 +258,23 @@ namespace PetClinicBussinessObject
 
                 entity.Property(e => e.EmployeeSalary).HasColumnType("decimal(18, 2)");
 
+                entity.Property(e => e.FirstName).HasMaxLength(255);
+
                 entity.Property(e => e.Gender).HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(255);
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(20);
 
-                entity.Property(e => e.Username).HasMaxLength(255);
+                entity.Property(e => e.SocialNumber).HasMaxLength(12);
             });
 
             modelBuilder.Entity<VaccinationDetail>(entity =>
             {
                 entity.HasKey(e => e.VaccinationDetailsId)
-                    .HasName("PK__Vaccinat__AF6C0E5D5CE03700");
+                    .HasName("PK__Vaccinat__AF6C0E5DB766F5C9");
 
                 entity.Property(e => e.NextDueDate).HasColumnType("datetime");
 
@@ -291,7 +291,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<VaccinationRecord>(entity =>
             {
                 entity.HasKey(e => e.VaccinationRecordsId)
-                    .HasName("PK__Vaccinat__DA8EB31CDC95033B");
+                    .HasName("PK__Vaccinat__DA8EB31C13CA0F37");
 
                 entity.HasOne(d => d.VaccinationDetails)
                     .WithMany(p => p.VaccinationRecords)

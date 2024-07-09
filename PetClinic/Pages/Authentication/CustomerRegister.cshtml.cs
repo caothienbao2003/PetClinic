@@ -12,8 +12,12 @@ namespace PetClinic.Pages.Authentication
     public class CustomerRegisterModel : PageModel
     {
         [BindProperty]
-        public string userName { get; set; }
-        [BindProperty]
+        public string firstName { get; set; }
+		[BindProperty]
+		public string lastName { get; set; }
+		[BindProperty]
+		public string socialNumber { get; set; }
+		[BindProperty]
         public string password { get; set; }
         [BindProperty]
         public string phoneNumber { get; set; }
@@ -48,7 +52,9 @@ namespace PetClinic.Pages.Authentication
 
 			var newUser = new User
             {
-                Username = userName,
+                FirstName = firstName,
+				LastName = lastName,
+				SocialNumber = socialNumber,
                 Password = DAOUtilities.Instance.HashPassword(password),
                 PhoneNumber = phoneNumber,
                 Address = address,
