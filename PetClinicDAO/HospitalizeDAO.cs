@@ -12,8 +12,7 @@ namespace PetClinicDAO
     {
         private readonly PetClinicContext context;
 
-        private static HospitalizeDAO instance;
-        private object _context;
+        private static HospitalizeDAO? instance;
 
         public HospitalizeDAO()
         {

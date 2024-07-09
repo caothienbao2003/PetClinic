@@ -60,16 +60,20 @@
                     @Html.DisplayFor(modelItem => item.ActiveStatus)
                 </td>
                 
-                <td>
-                    <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> Logs </a>
+                <td>                  
                     @*<a asp-page="./Delete" asp-route-id="@item.HospitalizeId"> Delete </a>*@
                     @if (item.OutTime == null)
                     {
+                        <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> Enter current Log </a>
                         <form method="post" asp-page-handler="EndHospitalize">
                             <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
                             <input type="hidden" name="CageId" value="@Model.CageId" />
                             <input type="submit" value="End Hospitalize" class="btn btn-primary" />
                         </form>
+                    }
+                    else
+                    {
+                        <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> History Logs </a>
                     }
 
                 </td>
