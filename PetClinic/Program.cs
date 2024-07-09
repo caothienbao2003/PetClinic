@@ -21,10 +21,8 @@ builder.Services.AddScoped<IEmailService>(provider =>
 
 //Explicitly register db context
 builder.Services.AddDbContext<PetClinicContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic"builder.Services.AddScoped<IEmailService>(provider => 
-        new EmailService("smtp.your-email-provider.com", 587, "your-email@example.com", "your-email-password"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PetClinic")));
 
-)));
 
 
 
