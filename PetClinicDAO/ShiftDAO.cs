@@ -52,5 +52,10 @@ namespace PetClinicDAO
             context.Shifts.Remove(shift);
             context.SaveChanges();
         }
+
+        public List<Shift> GetAllShiftWithShiftType(ShiftType shiftType)
+        {
+            return context.Shifts.Where(st => st.ShiftType == (int)shiftType).ToList();
+        }
     }
 }

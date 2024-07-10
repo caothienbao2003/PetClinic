@@ -10,5 +10,7 @@ namespace PetClinicServices.Interface
     public interface IShiftService
     {
         public List<Shift> GetAllShifts();
+        public List<Shift> GetAllDoctorShifts();
+        public List<Shift> GetAllStaffShifts();
     }
 }

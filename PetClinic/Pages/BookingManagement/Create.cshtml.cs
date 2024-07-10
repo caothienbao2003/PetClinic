@@ -52,8 +52,8 @@ namespace PetClinic.Pages.BookingManagement
                 ViewData["PetId"] = new SelectList(PetList, "PetId", "PetName");
 
                 // Fetch available shifts and doctors
-                //ShiftList = shiftService.GetAllShifts();
-                ShiftList = ShiftDAO.Instance.GetAllShifts();
+                ShiftList = shiftService.GetAllShifts();
+                //ShiftList = ShiftDAO.Instance.GetAllShiftWithShiftType(ShiftType.Doctor);
                 DoctorList = doctorService.GetAllDoctors();
                 ViewData["ShiftId"] = new SelectList(ShiftList, "ShiftId", "ShiftTime");
                 ViewData["DoctorId"] = new SelectList(DoctorList, "DoctorId", "DoctorName");
