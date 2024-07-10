@@ -46,7 +46,13 @@ namespace PetClinicDAO
             return context.Pets.Include(p => p.Customer).FirstOrDefault(p => p.PetId == petId);
         }
 
-        public Pet RemovePet(int petId)
+        public void AddPet(Pet pet)
+        {
+            context.Pets.Add(pet);
+            context.SaveChanges();
+        }
+
+        public void RemovePet(int petId)
         {
             var pet = context.Pets.FirstOrDefault(p => p.PetId == petId);
             if (pet != null)
@@ -55,7 +61,16 @@ namespace PetClinicDAO
                 pet.ActiveEnumStatus = ActiveStatus.UnActive;
                 context.SaveChanges();
             }
-            return pet;
+        }
+
+        public void UpdatePet(Pet pet)
+        {
+            if(GetPetById(pet.PetId) == null)
+            {
+                return;
+            }
+            context.Pets.Update(pet);
+            context.SaveChanges();
         }
     }
 }

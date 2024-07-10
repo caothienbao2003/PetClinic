@@ -12,6 +12,8 @@ namespace PetClinicRepository.Interface
         public List<Pet> GetAll();
         public List<Pet> GetPetListByUserId(int userId);
         public Pet GetPetById(int petId);
-        public Pet RemovePet(int petId);
+        public void RemovePet(int petId);
+        public void AddPet(Pet pet);
+        public void UpdatePet(Pet pet);
     }
 }

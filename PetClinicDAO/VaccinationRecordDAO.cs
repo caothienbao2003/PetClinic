@@ -40,5 +40,15 @@ namespace PetClinicDAO
         {
             return context.VaccinationRecords.Include(v => v.VaccinationRecordsId).Include(v => v.VaccinationDetailsId).Include(v => v.VaccinationDetails).FirstOrDefault(v => v.VaccinationRecordsId == id)!;
         }
+
+        public void UpdateVaccinationDetails(VaccinationDetail vaccinationDetail)
+        {
+            if (GetVaccinationRecordByVaccinationRecordsId(vaccinationDetail.VaccinationDetailsId) == null)
+            {
+                return;
+            }
+            context.VaccinationDetails.Update(vaccinationDetail);
+            context.SaveChanges();
+        }
     }
 }
