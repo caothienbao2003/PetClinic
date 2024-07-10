@@ -26,5 +26,20 @@ namespace PetClinicServices
         {
             return petRepository.GetAll();
         }
+
+        public List<Pet> GetPetListByUserId(int userId)
+        {
+            return petRepository.GetPetListByUserId(userId);
+        }
+
+        public Pet GetPetById(int petId)
+        {
+            return petRepository.GetPetById(petId);
+        }
+
+        public Pet RemovePet(int petId)
+        {
+            return petRepository.RemovePet(petId);
+        }
     }
 }

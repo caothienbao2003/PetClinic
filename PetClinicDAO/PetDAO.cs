@@ -35,5 +35,27 @@ namespace PetClinicDAO
         {
             return context.Pets.Include(p => p.Customer).ToList();
         }
+
+        public List<Pet> GetPetListByUserId(int userId)
+        {
+            return context.Pets.Include(p => p.Customer).Where(p => p.CustomerId == userId).ToList();
+        }
+
+        public Pet GetPetById(int petId)
+        {
+            return context.Pets.Include(p => p.Customer).FirstOrDefault(p => p.PetId == petId);
+        }
+
+        public Pet RemovePet(int petId)
+        {
+            var pet = context.Pets.FirstOrDefault(p => p.PetId == petId);
+            if (pet != null)
+            {
+                //pet.ActiveStatus = 0;
+                pet.ActiveEnumStatus = ActiveStatus.UnActive;
+                context.SaveChanges();
+            }
+            return pet;
+        }
     }
 }
