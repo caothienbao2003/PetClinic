@@ -22,5 +22,9 @@ namespace PetClinicServices
             }
         }
         public List<Shift> GetAllShifts() => shiftRepo.GetAllShifts();
+
+        public List<Shift> GetAllDoctorShifts() => shiftRepo.GetAllDoctorShifts();
+
+        public List<Shift> GetAllStaffShifts() => shiftRepo.GetAllStaffShifts();
     }
 }
