@@ -15,10 +15,16 @@ namespace PetClinicServices.Interface
 
         public Pet GetPetById(int petId);
 
+        public List<PetHealth> GetPetHealthsList();
+
+        public PetHealth GetPetHealthByPetId(int petId);
+
         public void AddPet(Pet pet);
 
         public void RemovePet(int petId);
 
         public void UpdatePet(Pet pet);
+
+        public void UpdatePetHealth(PetHealth petHealth);
     }
 }
