@@ -43,11 +43,8 @@ namespace PetClinicDAO
 
         public void UpdateVaccinationDetails(VaccinationDetail vaccinationDetail)
         {
-            if (GetVaccinationRecordByVaccinationRecordsId(vaccinationDetail.VaccinationDetailsId) == null)
-            {
-                return;
-            }
             context.VaccinationDetails.Update(vaccinationDetail);
+            vaccinationDetail.Verification = false;
             context.SaveChanges();
         }
     }
