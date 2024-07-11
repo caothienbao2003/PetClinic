@@ -8,6 +8,10 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 
 <style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
     .booking-container {
         margin: 20px;
     }
@@ -15,6 +19,8 @@
     .booking-header {
         text-align: center;
         margin-bottom: 30px;
+        font-size: 36px;
+        color: #4CAF50;
     }
 
     .calendar-container,
@@ -23,12 +29,40 @@
         margin-bottom: 20px;
     }
 
-    .available-slots button {
+    .available-slots button, .available-doctors button {
         margin: 5px;
+        padding: 10px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
     }
+
+        .available-slots button:hover, .available-doctors button:hover {
+            background-color: #45a049;
+        }
 
     .form-container {
         margin-top: 30px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #4CAF50;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+    .information {
+        font-size: 24px;
+        color: #4CAF50;
+        margin-bottom: 20px;
     }
 </style>
 
@@ -46,9 +80,9 @@
             <div class="available-slots">
                 @foreach (var shift in Model.ShiftList)
                 {
-                    <button class="btn btn-success" type="button"
+                    <button class="btn" type="button"
                             onclick="document.getElementById('Booking_ScheduleId').value = '@shift.ShiftId';">
-                        @shift.StartTime
+                        @shift.StartTime - @shift.EndTime
                     </button>
                 }
             </div>
@@ -62,9 +96,9 @@
             <div class="available-doctors">
                 @foreach (var doctor in Model.DoctorList)
                 {
-                    <button class="btn-light" type="button"
+                    <button class="btn" type="button"
                             onclick="document.getElementById('Booking_DoctorId').value = '@doctor.UserId';">
-                        @doctor.FirstName
+                        Dr. @doctor.FirstName @doctor.LastName
                     </button>
                 }
             </div>
@@ -73,28 +107,41 @@
     </div>
 
     <div class="form-container">
+        <h4 class="information">Information</h4>
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Booking.PetId" class="control-label"></label>
+                <label asp-for="Booking.PetId" class="control-label">Pet Name</label>
                 <select asp-for="Booking.PetId" class="form-control" asp-items="ViewBag.PetId"></select>
+                <span asp-validation-for="Booking.PetId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Booking.ServiceId" class="control-label"></label>
-                <select asp-for="Booking.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+                <label asp-for="Booking.Pet.PetAge" class="control-label">Pet Age</label>
+                <input asp-for="Booking.Pet.PetAge" class="form-control" />
+                <span asp-validation-for="Booking.Pet.PetAge" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Booking.PaymentStatus" class="control-label"></label>
-                <input asp-for="Booking.PaymentStatus" class="form-control" />
-                <span asp-validation-for="Booking.PaymentStatus" class="text-danger"></span>
+                <label asp-for="Booking.Pet.PetType" class="control-label">Pet Type</label>
+                <input asp-for="Booking.Pet.PetType" class="form-control" />
+                <span asp-validation-for="Booking.Pet.PetType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Booking.BookingStatus" class="control-label"></label>
-                <input asp-for="Booking.BookingStatus" class="form-control" />
-                <span asp-validation-for="Booking.BookingStatus" class="text-danger"></span>
+                <label asp-for="Booking.Pet.CustomerId" class="control-label">Customer Name</label>
+                <input asp-for="Booking.Pet.CustomerId" class="form-control" />
+                <span asp-validation-for="Booking.Pet.CustomerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="Booking.Pet.Customer.Email" class="control-label">Email</label>
+                <input asp-for="Booking.Pet.Customer.Email" class="form-control" />
+                <span asp-validation-for="Booking.Pet.Customer.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.Pet.Customer.PhoneNumber" class="control-label">Phone Number</label>
+                <input asp-for="Booking.Pet.Customer.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Booking.Pet.Customer.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Next" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -103,4 +150,3 @@
         <a asp-page="Index">Back to List</a>
     </div>
 </div>
-}
