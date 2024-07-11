@@ -14,10 +14,6 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Pet.CustomerId" class="control-label"></label>
-                <select asp-for="Pet.CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="Pet.PetName" class="control-label"></label>
                 <input asp-for="Pet.PetName" class="form-control" />
                 <span asp-validation-for="Pet.PetName" class="text-danger"></span>

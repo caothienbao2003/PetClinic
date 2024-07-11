@@ -50,4 +50,10 @@ namespace PetClinicBussinessObject
         Hide,
         Show
     }
+
+    public enum VerifyStatus
+    {
+        Pending,
+        Verified
+    }
 }
