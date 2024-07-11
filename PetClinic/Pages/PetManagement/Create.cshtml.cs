@@ -6,22 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.PetManagement
 {
     public class CreateModel : PageModel
     {
-        private readonly PetClinicBussinessObject.PetClinicContext _context;
+        private readonly IPetService petService;
+        private int userId;
 
-        public CreateModel(PetClinicBussinessObject.PetClinicContext context)
+        public CreateModel(IPetService _petService)
         {
-            _context = context;
+            petService = _petService;
         }
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
-        ViewData["CustomerId"] = new SelectList(_context.Users, "UserId", "Password");
-            return Page();
+            string userIdString = HttpContext.Session.GetString("UserId");
+            if(userIdString == null)
+            {
+                userId = 0;
+            }
+            else
+            {
+                userId = int.Parse(userIdString);
+            }
         }
 
         [BindProperty]
@@ -29,17 +38,10 @@ namespace PetClinic.Pages.PetManagement
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public void OnPost()
         {
-          if (!ModelState.IsValid || _context.Pets == null || Pet == null)
-            {
-                return Page();
-            }
-
-            _context.Pets.Add(Pet);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            Pet.CustomerId = userId;
+            petService.AddPet(Pet);
         }
     }
 }
