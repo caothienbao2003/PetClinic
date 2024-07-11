@@ -44,7 +44,6 @@ namespace PetClinicDAO
         public void UpdateVaccinationDetails(VaccinationDetail vaccinationDetail)
         {
             context.VaccinationDetails.Update(vaccinationDetail);
-            vaccinationDetail.Verification = false;
             context.SaveChanges();
         }
     }
