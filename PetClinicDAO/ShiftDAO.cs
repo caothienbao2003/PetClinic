@@ -55,6 +55,7 @@ namespace PetClinicDAO
 
         public List<Shift> GetAllShiftWithShiftType(ShiftType shiftType)
         {
+            Console.WriteLine("Shift type: " +  shiftType);
             return context.Shifts.Where(st => st.ShiftType == (int)shiftType).ToList();
         }
     }

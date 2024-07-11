@@ -1,0 +1,138 @@
+﻿@page
+@model PetClinic.Pages.BookingManagement.ChooseDateModel
+@{
+    ViewData["Title"] = "Choose Date";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .select-date-container {
+        margin: 20px;
+    }
+
+    .select-date-header {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 36px;
+        color: #4CAF50;
+    }
+
+    .calendar-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .calendar {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+        .calendar td {
+            padding: 10px;
+            text-align: center;
+        }
+
+            .calendar td.available-date {
+                cursor: pointer;
+                background-color: #4CAF50;
+                color: white;
+                border-radius: 50%;
+            }
+
+                .calendar td.available-date:hover {
+                    background-color: #45a049;
+                }
+
+            .calendar td.selected-date {
+                background-color: #2196F3;
+                color: white;
+                border-radius: 50%;
+            }
+</style>
+
+<div class="select-date-container">
+    <h1 class="select-date-header">Choose Date</h1>
+
+    <div class="calendar-container">
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th colspan="7">@Model.SelectedDate.ToString("MMMM yyyy")</th>
+                </tr>
+                <tr>
+                    <th>Su</th>
+                    <th>Mo</th>
+                    <th>Tu</th>
+                    <th>We</th>
+                    <th>Th</th>
+                    <th>Fr</th>
+                    <th>Sa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var firstDayOfMonth = new DateTime(Model.SelectedDate.Year, Model.SelectedDate.Month, 1);
+                    var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+                    // Adjusting to start from the previous Sunday if needed
+                    var startDay = (int)firstDayOfMonth.DayOfWeek;
+                    var currentDate = firstDayOfMonth;
+
+                    // Move to the previous Sunday
+                    if (startDay != 0)
+                    {
+                        currentDate = currentDate.AddDays(-startDay);
+                    }
+
+                    while (currentDate <= lastDayOfMonth || currentDate.DayOfWeek != DayOfWeek.Sunday)
+                    {
+                        <tr>
+                            @for (var i = 0; i < 7; i++)
+                            {
+                                var isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == Model.SelectedDate.Month;
+                                var isSelectedDate = currentDate.Date == Model.SelectedDate.Date;
+                                <td class="@((isAvailableDate ? "available-date" : "") + (isSelectedDate ? " selected-date" : ""))"
+                                    onclick="selectDate('@currentDate.ToString("yyyy-MM-dd")')">
+                                    @(currentDate.Month == Model.SelectedDate.Month ? currentDate.Day.ToString() : "")
+                                </td>
+                                currentDate = currentDate.AddDays(1);
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <form method="post">
+            <input type="hidden" asp-for="SelectedDate" id="SelectedDate" />
+            <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+            <input type="submit" value="Next" class="btn btn-primary" />
+        </form>
+    </div>
+
+    <div>
+        <a asp-page="ChoosePet">Back to Choose Pet</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function selectDate(date) {
+            document.getElementById("SelectedDate").value = date;
+            document.querySelectorAll(".calendar td").forEach(td => {
+                td.classList.remove("selected-date");
+            });
+            document.querySelector(`[onclick="selectDate('${date}')"]`).classList.add("selected-date");
+        }
+    </script>
+}
