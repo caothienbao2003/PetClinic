@@ -13,7 +13,9 @@ namespace PetClinic.Pages.PetManagement
     public class CreateModel : PageModel
     {
         private readonly IPetService petService;
-        private int userId;
+
+        public int? userId = 0;
+        public string? userIdString;
 
         public CreateModel(IPetService _petService)
         {
@@ -22,10 +24,10 @@ namespace PetClinic.Pages.PetManagement
 
         public void OnGet()
         {
-            string userIdString = HttpContext.Session.GetString("UserId");
+            userIdString = HttpContext.Session.GetString("UserId");
             if(userIdString == null)
             {
-                userId = 0;
+                Response.Redirect("/Privacy");
             }
             else
             {
