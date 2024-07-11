@@ -23,8 +23,6 @@ namespace PetClinicRepository
 
         public void AddPet(Pet pet) => PetDAO.Instance.AddPet(pet);
 
-        public void AddPetToUserId(Pet pet, int userId) => PetDAO.Instance.AddPetToUserId(pet, userId);
-
         public void RemovePet(int petId) => PetDAO.Instance.RemovePet(petId);
 
         public void UpdatePet(Pet pet) => PetDAO.Instance.UpdatePet(pet);

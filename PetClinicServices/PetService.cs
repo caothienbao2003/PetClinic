@@ -52,11 +52,6 @@ namespace PetClinicServices
             petRepository.AddPet(pet);
         }
 
-        public void AddPetToUserId(Pet pet, int userId)
-        {
-            petRepository.AddPetToUserId(pet, userId);
-        }
-
         public void RemovePet(int petId)
         {
             petRepository.RemovePet(petId);

@@ -21,8 +21,6 @@ namespace PetClinicServices.Interface
 
         public void AddPet(Pet pet);
 
-        public void AddPetToUserId(Pet pet, int userId);
-
         public void RemovePet(int petId);
 
         public void UpdatePet(Pet pet);

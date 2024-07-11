@@ -62,17 +62,6 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public void AddPetToUserId(Pet pet, int userId)
-        {
-            var customer = context.Users.FirstOrDefault(c => c.UserId == userId);
-            if (customer != null)
-            {
-                pet.Customer = customer;
-                context.Pets.Add(pet);
-                context.SaveChanges();
-            }
-        }
-
         public void RemovePet(int petId)
         {
             var pet = context.Pets.FirstOrDefault(p => p.PetId == petId);
