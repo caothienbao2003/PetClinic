@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.DoctorPages.MedicalRecords
+namespace PetClinic.Pages.DoctorPages.Records
 {
     public class CreateModel : PageModel
     {
