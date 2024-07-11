@@ -35,5 +35,62 @@ namespace PetClinicDAO
         {
             return context.Pets.Include(p => p.Customer).ToList();
         }
+
+        public List<Pet> GetPetListByUserId(int userId)
+        {
+            return context.Pets.Include(p => p.Customer).Where(p => p.CustomerId == userId).ToList();
+        }
+
+        public Pet GetPetById(int petId)
+        {
+            return context.Pets.Include(p => p.Customer).FirstOrDefault(p => p.PetId == petId);
+        }
+
+        public List<PetHealth> GetPetHealthsList()
+        {
+            return context.PetHealths.ToList();
+        }
+
+        public PetHealth GetPetHealthByPetId(int petId)
+        {
+            return context.PetHealths.FirstOrDefault(p => p.PetId == petId);
+        }
+
+        public void AddPet(Pet pet)
+        {
+            context.Pets.Add(pet);
+            context.SaveChanges();
+        }
+
+        public void RemovePet(int petId)
+        {
+            var pet = context.Pets.FirstOrDefault(p => p.PetId == petId);
+            if (pet != null)
+            {
+                //pet.ActiveStatus = 0;
+                pet.ActiveEnumStatus = ActiveStatus.UnActive;
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdatePet(Pet pet)
+        {
+            if(GetPetById(pet.PetId) == null)
+            {
+                return;
+            }
+            context.Pets.Update(pet);
+            context.SaveChanges();
+        }
+
+        public void UpdatePetHealth(PetHealth petHealth)
+        {
+            if (GetPetHealthByPetId(petHealth.PetHealthId) == null)
+            {
+                return;
+            }
+            context.PetHealths.Update(petHealth);
+            context.SaveChanges();
+        }
     }
 }
