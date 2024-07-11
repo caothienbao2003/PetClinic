@@ -12,5 +12,9 @@ namespace PetClinicServices.Interface
         public List<MedicalRecord> GetMedicalRecordsList();
 
         public MedicalRecord GetMedicalRecordByBookingId(int id);
+
+        public void AddMedicalRecord(MedicalRecord medicalRecord);
+
+        public List<Service> GetServices();
     }
 }

@@ -14,5 +14,9 @@ namespace PetClinicRepository
         public List<MedicalRecord> GetMedicalRecordsList() => MedicalRecordDAO.Instance.GetMedicalRecordsList();
 
         public MedicalRecord GetMedicalRecordByBookingId(int id) => MedicalRecordDAO.Instance.GetMedicalRecordByBookingId(id);
+
+        public void AddMedicalRecord(MedicalRecord medicalRecord) => MedicalRecordDAO.Instance.AddMedicalRecord(medicalRecord);
+
+        public List<Service> GetServices() => MedicalRecordDAO.Instance.GetServices();
     }
 }

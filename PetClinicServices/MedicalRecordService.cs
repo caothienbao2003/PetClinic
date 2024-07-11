@@ -32,5 +32,14 @@ namespace PetClinicServices
             return medicalRecordRepository.GetMedicalRecordByBookingId(id);
         }
 
+        public void AddMedicalRecord(MedicalRecord medicalRecord)
+        {
+            medicalRecordRepository.AddMedicalRecord(medicalRecord);
+        }
+
+        public List<Service> GetServices()
+        {
+            return medicalRecordRepository.GetServices();
+        }
     }
 }

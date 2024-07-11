@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.DoctorPages.MedicalRecords
+namespace PetClinic.Pages.DoctorPages.Records
 {
     public class DeleteModel : PageModel
     {

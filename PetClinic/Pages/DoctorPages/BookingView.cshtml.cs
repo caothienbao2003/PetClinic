@@ -25,13 +25,15 @@ namespace PetClinic.Pages.DoctorPages
         public IActionResult OnGet()
         {
             BookingList = bookingService.GetAll();
-            string userIdString = HttpContext.Session.GetString("UserId");
+            //string userIdString = HttpContext.Session.GetString("UserId");
 
-            if (userIdString != null)
-            {
-                int userId = int.Parse(userIdString);
-                CurrentUser = userService.GetUserById(userId);
-            }
+            //if (userIdString != null)
+            //{
+            //    int userId = int.Parse(userIdString);
+            //    CurrentUser = userService.GetUserById(userId);
+            //}
+
+
 
             return Page();
         }
