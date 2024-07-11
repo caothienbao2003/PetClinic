@@ -15,6 +15,8 @@ builder.Services.AddScoped<IHospitalizeService, HospitalizeService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IShiftService, ShiftService>();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+builder.Services.AddScoped<IPetService, PetService>();
+
 builder.Services.AddScoped<IEmailService>(provider => 
         new EmailService("smtp.your-email-provider.com", 587, "your-email@example.com", "your-email-password"));
 

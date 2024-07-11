@@ -1,17 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.BookingManagement
 {
     public class ChoosePetModel : PageModel
     {
-        private readonly PetClinicContext context;
+        private IPetService petService;
+        private List<Pet> petList;
 
-        public ChoosePetModel(PetClinicContext _context)
+        public ChoosePetModel(IPetService _petService)
         {
-            context = _context;
+            petService = _petService;
         }
 
         [BindProperty]
@@ -19,14 +22,24 @@ namespace PetClinic.Pages.BookingManagement
 
         public void OnGet()
         {
-            ViewData["PetList"] = new SelectList(context.Pets, "PetId", "PetName");
+            string userIdString = HttpContext.Session.GetString("UserId");
+
+            if (userIdString != null)
+            {
+                int userId = int.Parse(userIdString);
+                petList = petService.GetPetListByUserId(userId);
+                ViewData["PetList"] = new SelectList(petList, "PetId", "PetName");
+            }
+
         }
 
         public void OnPost()
         {
-            ViewData["PetList"] = new SelectList(context.Pets, "PetId", "PetName");
-
-            TempData["SelectedPetId"] = SelectedPetId;
+            if (petList.IsNullOrEmpty())
+            {
+                ViewData["PetList"] = new SelectList(petList, "PetId", "PetName");
+                TempData["SelectedPetId"] = SelectedPetId;
+            }
 
             Response.Redirect("ChooseDate");
         }

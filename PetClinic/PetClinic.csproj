@@ -29,4 +29,8 @@
     <ProjectReference Include="..\PetClinicServices\PetClinicServices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\ScheduleManagement\" />
+  </ItemGroup>
+
 </Project>
