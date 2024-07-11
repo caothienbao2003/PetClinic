@@ -10,7 +10,6 @@ namespace PetClinic.Pages.BookingManagement
     public class ChoosePetModel : PageModel
     {
         private IPetService petService;
-        private List<Pet> petList;
 
         public ChoosePetModel(IPetService _petService)
         {
@@ -19,6 +18,8 @@ namespace PetClinic.Pages.BookingManagement
 
         [BindProperty]
         public int SelectedPetId { get; set; }
+        [BindProperty]
+        public List<Pet> PetList { get; set; }
 
         public void OnGet()
         {
@@ -27,17 +28,17 @@ namespace PetClinic.Pages.BookingManagement
             if (userIdString != null)
             {
                 int userId = int.Parse(userIdString);
-                petList = petService.GetPetListByUserId(userId);
-                ViewData["PetList"] = new SelectList(petList, "PetId", "PetName");
+                PetList = petService.GetPetListByUserId(userId);
+                ViewData["PetList"] = new SelectList(PetList, "PetId", "PetName");
             }
 
         }
 
         public void OnPost()
         {
-            if (petList.IsNullOrEmpty())
+            if (PetList.IsNullOrEmpty())
             {
-                ViewData["PetList"] = new SelectList(petList, "PetId", "PetName");
+                ViewData["PetList"] = new SelectList(PetList, "PetId", "PetName");
                 TempData["SelectedPetId"] = SelectedPetId;
             }
 
