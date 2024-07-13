@@ -67,7 +67,8 @@ namespace PetClinic.Pages.Authentication
 				Address = address,
 				Email = email,
 				Gender = gender,
-				Role = 0 //0 is the role for a customer
+				Role = 0, //0 is the role for a customer
+				ActiveStatus =  1
 			};
 
 			userService.AddUser(newUser);
