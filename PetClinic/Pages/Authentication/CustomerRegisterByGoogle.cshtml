@@ -12,7 +12,7 @@
 	<h2 class="text-center">REGISTER</h2>
 
 	<form method="post">
-			<input type="hidden" asp-for="email" class="form-control" />
+		<input type="hidden" asp-for="email" class="form-control" />
 
 
 		<div class="form-group">
@@ -29,15 +29,16 @@
 
 		<div class="form-group">
 			<label>Social Number</label>
-			<input type="text" asp-for="socialNumber" class="form-control" />
+			<input type="text" asp-for="socialNumber" class="form-control" pattern="[0-9]{9}" title="Enter a 9-digit Social Number" required />
 			<span asp-validation-for="socialNumber" class="text-danger"></span>
 		</div>
 
 		<div class="form-group">
 			<label>Phone</label>
-			<input type="text" asp-for="phoneNumber" class="form-control" />
+			<input type="text" asp-for="phoneNumber" class="form-control" pattern="[0-9]{10,12}" title="Enter a valid phone number (10-12 digits)" required />
 			<span asp-validation-for="phoneNumber" class="text-danger"></span>
 		</div>
+
 
 		<div class="form-group">
 			<label>Address</label>
