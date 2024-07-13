@@ -25,18 +25,27 @@ namespace PetClinic.Pages.Authentication
         public string address { get; set; }
         [BindProperty]
         public string email { get; set; }
-        [BindProperty]
+
+		[BindProperty]
+		public string errorLog { get; set; }
+
+		[BindProperty]
         public string gender { get; set; }
 
-        private readonly IUserService _userService;
-		public CustomerRegisterModel(IUserService userService)
+        private readonly IUserService userService;
+
+		
+		private readonly ILogger<CustomerRegisterModel> logger;
+
+		public CustomerRegisterModel(IUserService _userService, ILogger<CustomerRegisterModel> _logger)
         {
-            _userService = userService;
+			userService = _userService;
+			logger = _logger;
 		}
 
         public void OnGet()
         {
-        }
+		}
 
         public void OnPostAsync()
         {
@@ -45,27 +54,36 @@ namespace PetClinic.Pages.Authentication
 
         public void OnPostRegister()
         {
-            if (!ModelState.IsValid)
+			ModelState.Clear();
+
+			if (!ModelState.IsValid)
             {
 				return;
             }
-
-			var newUser = new User
+			User user = userService.GetUserByEmail(email);
+            if (user == null)
             {
-                FirstName = firstName,
-				LastName = lastName,
-				SocialNumber = socialNumber,
-                Password = DAOUtilities.Instance.HashPassword(password),
-                PhoneNumber = phoneNumber,
-                Address = address,
-                Email = email,
-                Gender = gender,
-                Role = 0 //0 is the role for a customer
-            };
+				var newUser = new User
+				{
+					FirstName = firstName,
+					LastName = lastName,
+					SocialNumber = socialNumber,
+					Password = DAOUtilities.Instance.HashPassword(password),
+					PhoneNumber = phoneNumber,
+					Address = address,
+					Email = email,
+					Gender = gender,
+					Role = 0 //0 is the role for a customer
+				};
 
-            _userService.AddUser(newUser);
+				userService.AddUser(newUser);
 
-            RedirectToPage("/Authentication/Login");
+				Response.Redirect("/Authentication/Login");
+			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, "Email already exists.");
+			}
         }
 
 		// Handle external login

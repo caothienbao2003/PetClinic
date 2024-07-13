@@ -7,6 +7,7 @@ using PetClinicBussinessObject;
 using PetClinicDAO;
 using PetClinicServices;
 using PetClinicServices.Interface;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -20,6 +21,8 @@ namespace PetClinic.Pages.Authentication
 		public string password { get; set; }
 
 		private readonly IUserService userService;
+
+
 
 		public LoginModel(IUserService _userService)
 		{
@@ -74,15 +77,34 @@ namespace PetClinic.Pages.Authentication
 		public async Task<IActionResult> OnGetExternalLoginCallback()
 		{
 			var authResult = await HttpContext.AuthenticateAsync();
+			
 			if (!authResult.Succeeded)
 			{
 				return RedirectToPage("/Error");
 			}
+			else
+			{
+				Console.WriteLine(authResult.Principal.FindFirstValue(ClaimTypes.Email));
+				string email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
 
-			string email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
+				User user = userService.GetUserByEmail(email);
 
-			return RedirectToPage("/Privacy");
+				Console.WriteLine(user == null);
+
+				if (user != null)
+				{
+					HttpContext.Session.SetString("UserId", user.UserId.ToString());
+					HttpContext.Session.SetString("Role", user.Role.ToString());
+
+					return RedirectToPage("/Privacy");
+				}
+				else
+				{
+					TempData["NewEmail"] = authResult.Principal.FindFirstValue(ClaimTypes.Email);
+					return RedirectToPage("/Authentication/CustomerRegisterByGoogle");
+				}
+				
+			}
 		}
-
 	}
 }
