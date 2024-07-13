@@ -36,7 +36,7 @@ namespace PetClinic.Pages.Authentication
 
 			if (isAdmin)
 			{
-				Response.Redirect("/UserManagement/Index");
+				Response.Redirect("/Admin/AdminHomePage");
 			}
 			else
 			{
