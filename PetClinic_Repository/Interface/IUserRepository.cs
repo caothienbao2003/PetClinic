@@ -22,5 +22,6 @@ namespace PetClinicRepository.Interface
 
         public List<User> GetUserListWithRole(UserRole userRole);
 
-	}
+        public void UpdateUser(User user);
+    }
 }
