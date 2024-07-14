@@ -12,6 +12,7 @@ namespace PetClinicServices.Interface
         public User GetUser(string email, string password);
 
         public List<User> GetAllUsers();
+
         public User GetUserById(int id);
 
         public Task<User> AddUser(User newUser);
@@ -23,6 +24,9 @@ namespace PetClinicServices.Interface
 		public List<User> GetUserListWithRole(UserRole userRole);
 
 		public string GeneratePasswordResetToken(User user);
+
         public Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
+
+        Task<User> UpdateUser(User user);
     }
 }

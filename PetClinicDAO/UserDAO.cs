@@ -90,5 +90,18 @@ namespace PetClinicDAO
                 .Include(u => u.Pets)
                 .ToList();
         }
+
+        public void UpdateUser(User user)
+        {
+            try
+            {
+                context.Users.Update(user);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     } 
 }
