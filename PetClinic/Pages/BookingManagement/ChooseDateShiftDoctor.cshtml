@@ -1,7 +1,7 @@
 ﻿@page
-@model PetClinic.Pages.BookingManagement.ChooseDateModel
+@model PetClinic.Pages.BookingManagement.ChooseDateShiftDoctorModel
 @{
-    ViewData["Title"] = "Choose Date";
+    ViewData["Title"] = "Choose Date, Shift, and Doctor";
 }
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
@@ -12,6 +12,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f8f9fa;
     }
+
 
     .select-date-container {
         margin: 40px auto;
@@ -135,6 +136,57 @@
             color: #45a049;
         }
 
+.choose-shift-container {
+        margin: 40px auto;
+        padding: 20px;
+        max-width: 600px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .slots-container, .doctors-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 30px;
+        justify-content: center;
+    }
+
+    .slot, .doctor {
+        flex: 0 0 calc(50% - 10px); /* Fixed width for consistent size */
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+        height: 60px; /* Fixed height for consistent size */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+        .slot.selected, .doctor.selected {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .doctor.unavailable {
+            background-color: #f0f0f0;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
 </style>
 
 <div class="select-date-container">
@@ -208,6 +260,37 @@
         <a asp-page="ChoosePet" class="back-link"><i class="fas fa-arrow-left"></i> Back to Choose Pet</a>
     </div>
 </div>
+<div class="choose-shift-container">
+    <h2 class="section-header">Available shifts</h2>
+    <div class="slots-container">
+        @foreach (var shift in Model.ShiftList)
+        {
+            <div class="slot" onclick="selectSlot(this, @shift.ShiftId)">
+                @string.Format("{0:hh\\:mm}", shift.StartTime) - @string.Format("{0:hh\\:mm}", shift.EndTime)
+            </div>
+        }
+    </div>
+
+    <h2 class="section-header">Available Doctor</h2>
+    <div class="doctors-container">
+        @foreach (var doctor in Model.DoctorList)
+        {
+            <div class="doctor" onclick="selectDoctor(this, @doctor.UserId)">
+                @doctor.FirstName @doctor.LastName
+            </div>
+        }
+    </div>
+
+    <div class="form-group text-center">
+        <form method="post">
+            <input type="hidden" asp-for="SelectedShiftId" id="SelectedShift" />
+            <input type="hidden" asp-for="SelectedDoctorId" id="SelectedDoctor" />
+            <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+            <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+            <input type="submit" value="Next" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -248,9 +331,9 @@
                 for (let i = 0; i < 7; i++) {
                     const isAvailableDate = currentDate >= new Date().setDate(new Date().getDate() + 1) && currentDate.getMonth() === newDate.getMonth();
                     html += `<td class="${isAvailableDate ? 'available-date' : 'unavailable-date'}"
-                                        onclick="${isAvailableDate ? `selectDate('${currentDate.toISOString().split('T')[0]}')` : ''}">
-                                        ${currentDate.getMonth() === newDate.getMonth() ? currentDate.getDate() : ''}
-                                    </td>`;
+                                                        onclick="${isAvailableDate ? `selectDate('${currentDate.toISOString().split('T')[0]}')` : ''}">
+                                                        ${currentDate.getMonth() === newDate.getMonth() ? currentDate.getDate() : ''}
+                                                    </td>`;
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
                 html += '</tr>';
@@ -264,5 +347,18 @@
         document.addEventListener("DOMContentLoaded", function () {
             updateCalendar(new Date());
         });
+
+        function selectSlot(element, shiftId) {
+            document.querySelectorAll(".slot").forEach(slot => slot.classList.remove("selected"));
+            element.classList.add("selected");
+            document.getElementById("SelectedShift").value = shiftId;
+        }
+
+        function selectDoctor(element, doctorId) {
+            if (element.classList.contains("unavailable")) return;
+            document.querySelectorAll(".doctor").forEach(doctor => doctor.classList.remove("selected"));
+            element.classList.add("selected");
+            document.getElementById("SelectedDoctor").value = doctorId;
+        }
     </script>
 }

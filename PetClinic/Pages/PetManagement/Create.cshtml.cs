@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
@@ -14,7 +15,7 @@ namespace PetClinic.Pages.PetManagement
     {
         private readonly IPetService petService;
 
-        public int? userId = 0;
+        public int userId = 0;
         public string? userIdString;
 
         public CreateModel(IPetService _petService)
@@ -24,8 +25,18 @@ namespace PetClinic.Pages.PetManagement
 
         public void OnGet()
         {
+            
+        }
+
+        [BindProperty]
+        public Pet Pet { get; set; } = default!;
+
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public void OnPost()
+        {
             userIdString = HttpContext.Session.GetString("UserId");
-            if(userIdString == null)
+            if (userIdString.IsNullOrEmpty())
             {
                 Response.Redirect("/Privacy");
             }
@@ -33,17 +44,12 @@ namespace PetClinic.Pages.PetManagement
             {
                 userId = int.Parse(userIdString);
             }
-        }
 
-        [BindProperty]
-        public Pet Pet { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public void OnPost()
-        {
             Pet.CustomerId = userId;
+            Pet.ActiveStatus = 1;
             petService.AddPet(Pet);
+
+            Response.Redirect("/PetManagement/Index");
         }
     }
 }
