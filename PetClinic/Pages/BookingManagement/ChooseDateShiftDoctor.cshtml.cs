@@ -55,15 +55,26 @@ namespace PetClinic.Pages.BookingManagement
                 return Page();
             }
 
+            if (Request.Form.ContainsKey("SelectedDate"))
+            {
+                SelectedDate = DateTime.Parse(Request.Form["SelectedDate"]);
+                LoadData(); // Load shifts and doctors based on the selected date
+                return Page();
+            }
+
             // Handle form submission logic here
             TempData["SelectedDate"] = SelectedDate;
             TempData["SelectedPetId"] = SelectedPetId;
+            TempData["SelectedShiftId"] = SelectedShiftId;
+            TempData["SelectedDoctorId"] = SelectedDoctorId;
 
             return RedirectToPage("/BookingManagement/ChooseDateAndShift", new { SelectedPetId, SelectedDate, SelectedShiftId, SelectedDoctorId });
         }
 
         private void LoadData()
         {
+            //ShiftList = _shiftService.GetShiftsByDate(SelectedDate);
+            //DoctorList = _doctorService.GetDoctorsByDate(SelectedDate);
             ShiftList = _shiftService.GetAllDoctorShifts();
             DoctorList = _doctorService.GetAllDoctors();
         }
