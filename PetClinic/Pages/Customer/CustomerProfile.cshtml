@@ -15,21 +15,6 @@
     <a asp-page="/Customer/CustomerHomePage"><button>Back to Home</button></a>
 </div>
 
-@* <main>
-    <h2>User Profile</h2>
-    <div class="profile-info">
-        <div class="avatar-container">
-            <img src="@Model.user.Image" alt="User Avatar" class="avatar">
-        </div>
-        <div class="profile-details">
-            <p><strong>Name:</strong> @Model.user.FirstName @Model.user.LastName</p>
-            <p><strong>Email:</strong> @Model.user.Email</p>
-            <p><strong>Address:</strong> @Model.user.Address</p>
-            <p><strong>Gender:</strong> @Model.user.Gender</p>
-        </div>
-    </div>
-</main> *@
-
 <h1>Customer Profile</h1>
 
 <div class="row">
@@ -54,53 +39,6 @@
     </div>
     <div class="profile-info" id="editProfileForm" style="display: none;">
         <h2>Edit Profile</h2>
-        @*<form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="user.UserId" />
-            <div class="form-group">
-                <label asp-for="user.Image" class="control-label">Profile Picture</label>
-                <input asp-for="user.Image" class="form-control" type="file" />
-                <span asp-validation-for="user.Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="user.FirstName" class="control-label">First Name</label>
-                <input asp-for="user.FirstName" class="form-control" />
-                <span asp-validation-for="user.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="user.LastName" class="control-label">Last Name</label>
-                <input asp-for="user.LastName" class="form-control" />
-                <span asp-validation-for="user.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="user.Email" class="control-label">Email</label>
-                <input asp-for="user.Email" class="form-control" />
-                <span asp-validation-for="user.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="user.Address" class="control-label">Address</label>
-                <input asp-for="user.Address" class="form-control" />
-                <span asp-validation-for="user.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="user.Gender" class="control-label">Gender</label>
-                <select asp-for="user.Gender" class="form-control">
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-                <span asp-validation-for="user.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="user.Password" class="control-label">Password</label>
-                <input asp-for="user.Password" class="form-control" />
-                <span asp-validation-for="user.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>*@
         <form method="post">
             <div class="form-group">
                 <label asp-for="user.Image" class="control-label">Profile Picture</label>

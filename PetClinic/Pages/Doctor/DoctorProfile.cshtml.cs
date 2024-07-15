@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
@@ -28,6 +29,37 @@ namespace PetClinic.Pages.Doctor
             {
                 user = userService.GetUserById(int.Parse(userId));
             }
+        }
+
+        public IActionResult OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            try
+            {
+                userService.UpdateUser(user);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.UserId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("./DoctorProfile");
+        }
+
+        private bool UserExists(int userId)
+        {
+            return userService.GetUserById(userId) != null;
         }
     }
 }
