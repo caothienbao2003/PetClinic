@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using PetClinicBussinessObject;
+using System.Threading.Tasks;
 
 namespace PetClinicServices.Interface
 {
-    public interface IVaccinationRecordService
+    public interface IVaccinationDetailService
     {
-        public List<VaccinationRecord> GetVaccinationRecordsList();
+        public List<VaccinationDetail> GetVaccinationDetailsList();
 
-        public VaccinationRecord GetVaccinationRecordByVaccinationRecordsId(int id);
+        public VaccinationDetail GetVaccinationDetailById(int vaccinationDetailId);
 
         public void UpdateVaccinationDetail(VaccinationDetail vaccinationDetail);
     }

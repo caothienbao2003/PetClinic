@@ -7,10 +7,10 @@ using PetClinicBussinessObject;
 
 namespace PetClinicRepository.Interface
 {
-    public interface IVaccinationRecordRepository
+    public interface IVaccinationDetailRepository
     {
-        public List<VaccinationRecord> GetVaccinationRecordsList();
-        public VaccinationRecord GetVaccinationRecordByVaccinationRecordsId(int id);
+        public List<VaccinationDetail> GetVaccinationDetailsList();
+        public VaccinationDetail GetVaccinationDetailById(int vaccinationDetailId);
         public void UpdateVaccinationDetail(VaccinationDetail vaccinationDetail);
     }
 }

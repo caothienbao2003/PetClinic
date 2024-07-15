@@ -1,0 +1,67 @@
+﻿@page
+@model PetClinic.Pages.VaccinationManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].VaccinationDetailsId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].MedicineId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].VaccinationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].NextDueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].VaccinatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].Verification)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.vaccinationDetailsList)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VaccinationDetailsId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedicineId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VaccinationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NextDueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VaccinatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Verification)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.VaccinationDetailsId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.VaccinationDetailsId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.VaccinationDetailsId">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

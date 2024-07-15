@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.VaccinationRecordManagement
+namespace PetClinic.Pages.VaccinationManagement
 {
     public class CreateModel : PageModel
     {
@@ -20,23 +20,23 @@ namespace PetClinic.Pages.VaccinationRecordManagement
 
         public IActionResult OnGet()
         {
-        ViewData["VaccinationDetailsId"] = new SelectList(_context.VaccinationDetails, "VaccinationDetailsId", "VaccinationDetailsId");
+        ViewData["MedicineId"] = new SelectList(_context.Medicines, "MedicineId", "MedicineId");
             return Page();
         }
 
         [BindProperty]
-        public VaccinationRecord VaccinationRecord { get; set; } = default!;
+        public VaccinationDetail VaccinationDetail { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.VaccinationRecords == null || VaccinationRecord == null)
+          if (!ModelState.IsValid || _context.VaccinationDetails == null || VaccinationDetail == null)
             {
                 return Page();
             }
 
-            _context.VaccinationRecords.Add(VaccinationRecord);
+            _context.VaccinationDetails.Add(VaccinationDetail);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

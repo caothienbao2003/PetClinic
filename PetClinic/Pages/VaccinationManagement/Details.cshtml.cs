@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.VaccinationRecordManagement
+namespace PetClinic.Pages.VaccinationManagement
 {
     public class DetailsModel : PageModel
     {
@@ -18,23 +18,23 @@ namespace PetClinic.Pages.VaccinationRecordManagement
             _context = context;
         }
 
-      public VaccinationRecord VaccinationRecord { get; set; } = default!; 
+      public VaccinationDetail VaccinationDetail { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.VaccinationRecords == null)
+            if (id == null || _context.VaccinationDetails == null)
             {
                 return NotFound();
             }
 
-            var vaccinationrecord = await _context.VaccinationRecords.FirstOrDefaultAsync(m => m.VaccinationRecordsId == id);
-            if (vaccinationrecord == null)
+            var vaccinationdetail = await _context.VaccinationDetails.FirstOrDefaultAsync(m => m.VaccinationDetailsId == id);
+            if (vaccinationdetail == null)
             {
                 return NotFound();
             }
             else 
             {
-                VaccinationRecord = vaccinationrecord;
+                VaccinationDetail = vaccinationdetail;
             }
             return Page();
         }

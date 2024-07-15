@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.VaccinationRecordManagement
+namespace PetClinic.Pages.VaccinationManagement
 {
     public class EditModel : PageModel
     {
@@ -20,22 +20,22 @@ namespace PetClinic.Pages.VaccinationRecordManagement
         }
 
         [BindProperty]
-        public VaccinationRecord VaccinationRecord { get; set; } = default!;
+        public VaccinationDetail VaccinationDetail { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.VaccinationRecords == null)
+            if (id == null || _context.VaccinationDetails == null)
             {
                 return NotFound();
             }
 
-            var vaccinationrecord =  await _context.VaccinationRecords.FirstOrDefaultAsync(m => m.VaccinationRecordsId == id);
-            if (vaccinationrecord == null)
+            var vaccinationdetail =  await _context.VaccinationDetails.FirstOrDefaultAsync(m => m.VaccinationDetailsId == id);
+            if (vaccinationdetail == null)
             {
                 return NotFound();
             }
-            VaccinationRecord = vaccinationrecord;
-           ViewData["VaccinationDetailsId"] = new SelectList(_context.VaccinationDetails, "VaccinationDetailsId", "VaccinationDetailsId");
+            VaccinationDetail = vaccinationdetail;
+           ViewData["MedicineId"] = new SelectList(_context.Medicines, "MedicineId", "MedicineId");
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace PetClinic.Pages.VaccinationRecordManagement
                 return Page();
             }
 
-            _context.Attach(VaccinationRecord).State = EntityState.Modified;
+            _context.Attach(VaccinationDetail).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace PetClinic.Pages.VaccinationRecordManagement
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VaccinationRecordExists(VaccinationRecord.VaccinationRecordsId))
+                if (!VaccinationDetailExists(VaccinationDetail.VaccinationDetailsId))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace PetClinic.Pages.VaccinationRecordManagement
             return RedirectToPage("./Index");
         }
 
-        private bool VaccinationRecordExists(int id)
+        private bool VaccinationDetailExists(int id)
         {
-          return (_context.VaccinationRecords?.Any(e => e.VaccinationRecordsId == id)).GetValueOrDefault();
+          return (_context.VaccinationDetails?.Any(e => e.VaccinationDetailsId == id)).GetValueOrDefault();
         }
     }
 }
