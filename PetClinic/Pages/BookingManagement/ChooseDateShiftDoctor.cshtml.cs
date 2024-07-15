@@ -7,13 +7,15 @@ namespace PetClinic.Pages.BookingManagement
 {
     public class ChooseDateShiftDoctorModel : PageModel
     {
-        private readonly IShiftService _shiftService;
-        private readonly IDoctorService _doctorService;
+        private readonly IShiftService shiftService;
+        private readonly IDoctorService doctorService;
+        private readonly IScheduleService scheduleService;
 
-        public ChooseDateShiftDoctorModel(IShiftService shiftService, IDoctorService doctorService)
+        public ChooseDateShiftDoctorModel(IShiftService _shiftService, IDoctorService _doctorService, IScheduleService _scheduleService)
         {
-            _shiftService = shiftService;
-            _doctorService = doctorService;
+            shiftService = _shiftService;
+            doctorService = _doctorService;
+            scheduleService = _scheduleService;
         }
 
         [BindProperty]
@@ -75,8 +77,8 @@ namespace PetClinic.Pages.BookingManagement
         {
             //ShiftList = _shiftService.GetShiftsByDate(SelectedDate);
             //DoctorList = _doctorService.GetDoctorsByDate(SelectedDate);
-            ShiftList = _shiftService.GetAllDoctorShifts();
-            DoctorList = _doctorService.GetAllDoctors();
+            ShiftList = shiftService.GetAllDoctorShifts();
+            DoctorList = doctorService.GetAllDoctors();
         }
     }
 }
