@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
+using PetClinicDAO;
 using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Customer
@@ -31,7 +32,7 @@ namespace PetClinic.Pages.Customer
             }
         }
 
-        public IActionResult OnPostUpdate()
+        public IActionResult OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -40,23 +41,11 @@ namespace PetClinic.Pages.Customer
 
             try
             {
-                var existingUser = userService.GetUserById(user.UserId);
-                if (existingUser != null)
-                {
-                    existingUser.Image = user.Image;
-                    existingUser.FirstName = user.FirstName;
-                    existingUser.LastName = user.LastName;
-                    existingUser.Email = user.Email;
-                    existingUser.Address = user.Address;
-                    existingUser.Password = user.Password;
-                    existingUser.Gender = user.Gender;
-
-                    userService.UpdateUser(existingUser);
-                }
+                userService.UpdateUser(user);
             }
-            catch(DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException)
             {
-                if(!UserExists(user.UserId))
+                if (!UserExists(user.UserId))
                 {
                     return NotFound();
                 }
