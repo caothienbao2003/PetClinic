@@ -18,6 +18,6 @@ namespace PetClinicRepository.Interface
         public void AddPet(Pet pet);
         public void UpdatePet(Pet pet);
         public void UpdatePetHealth(PetHealth petHealth);
-        public List<VaccinationRecord> GetVaccinationsByPetHealthId(int petHealthId);
+        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId);
     }
 }

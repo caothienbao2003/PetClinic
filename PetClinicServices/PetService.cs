@@ -67,9 +67,9 @@ namespace PetClinicServices
             petRepository.UpdatePetHealth(petHealth);
         }
 
-        public List<VaccinationRecord> GetVaccinationsByPetHealthId(int petHealthId)
+        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId)
         {
-            return petRepository.GetVaccinationsByPetHealthId(petHealthId);
+            return petRepository.GetVaccinationRecordByPetHealthId(petHealthId);
         }
     }
 }

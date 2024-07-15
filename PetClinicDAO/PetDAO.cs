@@ -93,15 +93,14 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public List<VaccinationRecord> GetVaccinationsByPetHealthId(int petHealthId)
+        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId)
         {
             var petHealth = context.PetHealths
                 .Include(ph => ph.VaccinationRecords)
+                .ThenInclude(vr => vr.VaccinationDetails)
                 .FirstOrDefault(ph => ph.PetHealthId == petHealthId);
 
-            return petHealth?.VaccinationRecords == null
-                ? new List<VaccinationRecord>()
-                : new List<VaccinationRecord> { petHealth.VaccinationRecords };
+            return petHealth?.VaccinationRecords!;
         }
     }
 }

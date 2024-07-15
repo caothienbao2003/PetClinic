@@ -47,47 +47,39 @@
                 <input type="text" class="form-control" value="@Model.PetHealthInfo.OverallHealth" readonly />
             </div>
 
-            <!-- Vaccination Records List -->
-            <h3>Vaccination Records</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Vaccination Record ID</th>
-                        <th>Vaccination Date</th>
-                        <th>Next Due Date</th>
-                        <th>Vaccinated At</th>
-                        <th>Medicine Name</th>
-                        <th>Medicine Description</th>
-                        <th>Medicine Type</th>
-                        <th>Verification</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var record in Model.VaccinationRecords)
-                    {
+            <!-- Vaccination Record -->
+            <h3>Vaccination Record</h3>
+            @if (Model.records != null)
+            {
+                <table class="table">
+                    <thead>
                         <tr>
-                            @if(record.VaccinationDetails != null)
-                            {
-                                <td>@record.VaccinationRecordsId</td>
-                                <td>@record.VaccinationDetails.VaccinationDate</td>
-                                <td>@record.VaccinationDetails.NextDueDate</td>
-                                <td>@record.VaccinationDetails.VaccinatedAt</td>
-                                @if (record.VaccinationDetails.Medicine != null)
-                                {
-                                    <td>@record.VaccinationDetails.Medicine.MedicineName</td>
-                                    <td>@record.VaccinationDetails.Medicine.MedicineDescription</td>
-                                    <td>@record.VaccinationDetails.Medicine.MedicineType?.MedicineTypeName</td>
-                                }
-                                <td>@record.VaccinationDetails.Verification</td>
-                            }
-                            else
-                            {
-                                <td>No details available</td>
-                            }
+                            <th>Vaccination Record ID</th>
+                            <th>Vaccination Date</th>
+                            <th>Next Due Date</th>
+                            <th>Vaccinated At</th>
+                            <th>Verification</th>
+                            <th>Medicine Name</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>@Model.records.VaccinationDetails!.VaccinationDetailsId</td>
+                            <td>@Model.records.VaccinationDetails.VaccinationDate</td>
+                            <td>@Model.records.VaccinationDetails.NextDueDate</td>
+                            <td>@Model.records.VaccinationDetails.VaccinatedAt</td>
+                            <td>@Model.records.VaccinationDetails.Verification</td>
+                            <td>@Model.records.VaccinationDetails.Medicine!.MedicineName</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No vaccination records available.</p>
+            }
 
             <!-- Medical Information -->
             <div class="form-group">

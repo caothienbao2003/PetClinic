@@ -43,7 +43,7 @@ namespace PetClinic.Pages.DoctorPages.MedicalRecords
         public PetHealth? PetHealthInfo { get; set; } = default!;
 
         [BindProperty]
-        public List<VaccinationRecord> VaccinationRecords { get; set; } = default!;
+        public VaccinationRecord records { get; set; } = default!;
 
         public IActionResult OnGet(int bookid)
         {
@@ -52,22 +52,27 @@ namespace PetClinic.Pages.DoctorPages.MedicalRecords
             var booking = bookingService.GetBookingById(bookid);
             Book = booking;
 
-            PetHealthInfo = petService.GetPetHealthByPetId(booking.PetId);
+            PetHealthInfo = petService.GetPetHealthByPetId(booking!.PetId);
 
-            VaccinationRecords = petService.GetVaccinationsByPetHealthId(PetHealthInfo.PetHealthId);
+            records = petService.GetVaccinationRecordByPetHealthId(PetHealthInfo.PetHealthId);
 
-            foreach (var record in VaccinationRecords)
+            if (PetHealthInfo?.VaccinationRecordsId != null)
             {
-                var detailedRecord = vaccinationRecordService.GetVaccinationRecordByVaccinationRecordsId(record.VaccinationRecordsId);
-                record.VaccinationDetails = detailedRecord?.VaccinationDetails;
-                if (record.VaccinationDetails != null)
-                {
-                    record.VaccinationDetails.Medicine = detailedRecord!.VaccinationDetails!.Medicine;
-                }
+                records = vaccinationRecordService.GetVaccinationRecordByVaccinationRecordsId(PetHealthInfo.VaccinationRecordsId.Value);
             }
 
+            //foreach (var record in records)
+            //{
+            //    var detailedRecord = vaccinationRecordService.GetVaccinationRecordByVaccinationRecordsId(record.VaccinationRecordsId);
+            //    record.VaccinationDetails = detailedRecord?.VaccinationDetails;
+            //    if (record.VaccinationDetails != null)
+            //    {
+            //        record.VaccinationDetails.Medicine = detailedRecord!.VaccinationDetails!.Medicine;
+            //    }
+            //}
+
             ViewData["DoctorId"] = new SelectList(userService.GetAllUsers(), "UserId", "FirstName");
-            ViewData["ServiceId"] = new SelectList(medicalRecordService.GetServices(), "ServiceId", "ServiceId");
+            ViewData["ServiceId"] = new SelectList(medicalRecordService.GetServices(), "ServiceId", "ServiceName");
             ViewData["PrescriptionId"] = new SelectList(_context.Prescriptions, "PrescriptionId", "PrescriptionId");
             return Page();
         }
