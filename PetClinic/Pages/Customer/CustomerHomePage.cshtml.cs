@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.Homepages
+namespace PetClinic.Pages.HomePages
 {
-    public class DoctorModel : PageModel
+    public class CustomerHomePageModel : PageModel
     {
         private readonly IUserService userService;
 
-        public DoctorModel(IUserService _userService)
+        public CustomerHomePageModel(IUserService _userService)
         {
             userService = _userService;
         }

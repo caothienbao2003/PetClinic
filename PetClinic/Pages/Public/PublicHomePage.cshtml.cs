@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PetClinic.Pages.HomePages
+namespace PetClinic.Pages.Public
 {
-    public class DoctorHomepageModel : PageModel
+    public class PublicHomePageModel : PageModel
     {
         public void OnGet()
         {

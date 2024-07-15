@@ -1,10 +1,6 @@
 ﻿@page
-@using System.Security.Claims
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@using PetClinicBussinessObject
-@model PetClinic.Pages.ProfilePages.ProfileModel
+@model PetClinic.Pages.Staff.StaffProfileModel
 @{
-    ViewData["Title"] = "User Profile";
 }
 
 <head>
@@ -16,22 +12,7 @@
 
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
-    @if(Model.user.Role == 0)
-    {
-        <a asp-page="/Homepages/Customer"><button>Back to Home</button></a>
-    }
-    else if (Model.user.Role == 1)
-    {
-        <a asp-page="/Homepages/Staff"><button>Back to Home</button></a>
-    }
-    else if (Model.user.Role == 2)
-    {
-        <a asp-page="/Homepages/Doctor"><button>Back to Home</button></a>
-    }
-    else
-    {
-        <a asp-page="/Homepages/Admin"><button>Back to Home</button></a>
-    }
+    <a asp-page="/Staff/StaffHomePage"><button>Back to Home</button></a>
 </div>
 
 <main>
@@ -43,7 +24,6 @@
         <div class="profile-details">
             <p><strong>Name:</strong> @Model.user.FirstName @Model.user.LastName</p>
             <p><strong>Email:</strong> @Model.user.Email</p>
-            <p><strong>Password:</strong> @Model.user.Password</p>
             <p><strong>Address:</strong> @Model.user.Address</p>
             <p><strong>Gender:</strong> @Model.user.Gender</p>
         </div>
