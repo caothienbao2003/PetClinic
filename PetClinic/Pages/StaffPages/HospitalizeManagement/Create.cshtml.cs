@@ -83,7 +83,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
                 cageService.UpdateCage(cage);
             }
 
-            return RedirectToPage("/StaffPages/CageManagement/Index");
+            return RedirectToPage("/StaffPages/HospitalizeManagement/Index");
         }
     }
 }

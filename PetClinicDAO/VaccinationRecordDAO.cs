@@ -33,12 +33,18 @@ namespace PetClinicDAO
 
         public List<VaccinationRecord> GetVaccinationRecordsList()
         {
-            return context.VaccinationRecords.Include(v => v.VaccinationRecordsId).Include(v => v.VaccinationDetailsId).Include(v => v.VaccinationDetails).ToList();
+            return context.VaccinationRecords.Include(v => v.VaccinationDetails).ToList();
         }
 
         public VaccinationRecord GetVaccinationRecordByVaccinationRecordsId(int id)
         {
-            return context.VaccinationRecords.Include(v => v.VaccinationRecordsId).Include(v => v.VaccinationDetailsId).Include(v => v.VaccinationDetails).FirstOrDefault(v => v.VaccinationRecordsId == id)!;
+            return context.VaccinationRecords.Include(v => v.VaccinationDetails).ThenInclude(m => m.Medicine).ThenInclude(m => m.MedicineType).FirstOrDefault(v => v.VaccinationRecordsId == id)!;
+        }
+
+        public void AddVaccinationRecord(VaccinationRecord vaccinationRecord)
+        {
+            context.VaccinationRecords.Add(vaccinationRecord);
+            context.SaveChanges();
         }
 
         public void UpdateVaccinationDetails(VaccinationDetail vaccinationDetail)

@@ -1,0 +1,126 @@
+﻿@page
+@model PetClinic.Pages.DoctorPages.MedicalRecords.CreateModel
+
+@{
+    ViewData["Title"] = "Create Medical Record for" + $" Booking {Model.BookId}";
+}
+
+<h1>Medical Record</h1>
+
+<h4>@ViewData["Title"]</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Pet Details -->
+            <div class="form-group">
+                <label asp-for="Book.Pet.PetName" class="control-label">Pet Name</label>
+                <input type="text" class="form-control" value="@Model.Book.Pet.PetName" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Pet.PetAge" class="control-label">Age</label>
+                <input type="text" class="form-control" value="@Model.Book.Pet.PetAge" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Pet.PetType" class="control-label">Type</label>
+                <input type="text" class="form-control" value="@Model.Book.Pet.PetType" readonly />
+            </div>
+
+            <!-- Pet Health Information -->
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.Conditions" class="control-label">Conditions</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.Conditions" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.Weight" class="control-label">Weight</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.Weight" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.WeightMeasurementDate" class="control-label">Weight Measurement Date</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.WeightMeasurementDate" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.OverallHealth" class="control-label">Overall Health</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.OverallHealth" readonly />
+            </div>
+
+            <!-- Vaccination Records List -->
+            <h3>Vaccination Records</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Vaccination Record ID</th>
+                        <th>Vaccination Date</th>
+                        <th>Next Due Date</th>
+                        <th>Vaccinated At</th>
+                        <th>Medicine Name</th>
+                        <th>Medicine Description</th>
+                        <th>Medicine Type</th>
+                        <th>Verification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in Model.VaccinationRecords)
+                    {
+                        <tr>
+                            @if(record.VaccinationDetails != null)
+                            {
+                                <td>@record.VaccinationRecordsId</td>
+                                <td>@record.VaccinationDetails.VaccinationDate</td>
+                                <td>@record.VaccinationDetails.NextDueDate</td>
+                                <td>@record.VaccinationDetails.VaccinatedAt</td>
+                                @if (record.VaccinationDetails.Medicine != null)
+                                {
+                                    <td>@record.VaccinationDetails.Medicine.MedicineName</td>
+                                    <td>@record.VaccinationDetails.Medicine.MedicineDescription</td>
+                                    <td>@record.VaccinationDetails.Medicine.MedicineType?.MedicineTypeName</td>
+                                }
+                                <td>@record.VaccinationDetails.Verification</td>
+                            }
+                            else
+                            {
+                                <td>No details available</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- Medical Information -->
+            <div class="form-group">
+                <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label"></label>
+                <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
+                <span asp-validation-for="MedicalRecord.MedicalRecordDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MedicalRecord.DoctorId" class="control-label"></label>
+                <select asp-for="MedicalRecord.DoctorId" class ="form-control" asp-items="ViewBag.DoctorId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MedicalRecord.ServiceId" class="control-label"></label>
+                <select asp-for="MedicalRecord.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MedicalRecord.PrescriptionId" class="control-label"></label>
+                <select asp-for="MedicalRecord.PrescriptionId" class ="form-control" asp-items="ViewBag.PrescriptionId"></select>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
