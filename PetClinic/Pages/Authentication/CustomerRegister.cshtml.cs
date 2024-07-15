@@ -9,64 +9,94 @@ using System.Security.Claims;
 
 namespace PetClinic.Pages.Authentication
 {
-    public class CustomerRegisterModel : PageModel
-    {
-        [BindProperty]
-        public string firstName { get; set; }
+	public class CustomerRegisterModel : PageModel
+	{
+		[BindProperty]
+		public string firstName { get; set; }
 		[BindProperty]
 		public string lastName { get; set; }
 		[BindProperty]
 		public string socialNumber { get; set; }
 		[BindProperty]
-        public string password { get; set; }
-        [BindProperty]
-        public string phoneNumber { get; set; }
-        [BindProperty]
-        public string address { get; set; }
-        [BindProperty]
-        public string email { get; set; }
-        [BindProperty]
-        public string gender { get; set; }
+		public string password { get; set; }
+		[BindProperty]
+		public string phoneNumber { get; set; }
+		[BindProperty]
+		public string address { get; set; }
+		[BindProperty]
+		public string email { get; set; }
 
-        private readonly IUserService _userService;
-		public CustomerRegisterModel(IUserService userService)
-        {
-            _userService = userService;
+		[BindProperty]
+		public string errorLog { get; set; }
+
+		[BindProperty]
+		public string gender { get; set; }
+
+		private readonly IUserService userService;
+
+
+		private readonly ILogger<CustomerRegisterModel> logger;
+
+		public CustomerRegisterModel(IUserService _userService, ILogger<CustomerRegisterModel> _logger)
+		{
+			userService = _userService;
+			logger = _logger;
 		}
 
-        public void OnGet()
-        {
-        }
+		public void OnGet()
+		{
+		}
 
-        public void OnPostAsync()
-        {
+		public void OnPostAsync()
+		{
 
-        }
+		}
 
-        public void OnPostRegister()
-        {
-            if (!ModelState.IsValid)
-            {
-				return;
-            }
+		public void OnPostRegister()
+		{
+			ModelState.Clear();
+			if (!ModelState.IsValid)
+			{
+				return; // Stay on the registration page with validation errors
+			}
 
-			var newUser = new User
-            {
-                FirstName = firstName,
-				LastName = lastName,
-				SocialNumber = socialNumber,
-                Password = DAOUtilities.Instance.HashPassword(password),
-                PhoneNumber = phoneNumber,
-                Address = address,
-                Email = email,
-                Gender = gender,
-                Role = 0 //0 is the role for a customer
-            };
+			User existingUser = userService.GetUserByEmail(email);
+			if (existingUser != null)
+			{
+				ModelState.AddModelError(string.Empty, "Email already exists.");
+				return; // Stay on the registration page with error message
+			}
 
-            _userService.AddUser(newUser);
+			try
+			{
+				// Proceed with registration
+				var newUser = new User
+				{
+					FirstName = firstName,
+					LastName = lastName,
+					SocialNumber = socialNumber,
+					Password = DAOUtilities.Instance.HashPassword(password),
+					PhoneNumber = phoneNumber,
+					Address = address,
+					Email = email,
+					Gender = gender,
+					Role = 0, // 0 is the role for a customer
+					ActiveStatus = 1
+				};
 
-            RedirectToPage("/Authentication/Login");
-        }
+				userService.AddUser(newUser);
+
+				Response.Redirect("/Authentication/Login");
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Error occurred while registering user.");
+				ModelState.AddModelError(string.Empty, "Error occurred while registering user.");
+				return; // Stay on the registration page with error message
+			}
+
+		}
+
 
 		// Handle external login
 		public IActionResult OnGetExternalLogin(string provider)

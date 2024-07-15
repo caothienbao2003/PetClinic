@@ -1,0 +1,113 @@
+﻿body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    position: fixed; /* Fix the header at the top */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.header-box-container {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.header-box {
+    text-align: center;
+    flex: 1;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    padding-right: 50px;
+}
+
+    .header-buttons button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+        .header-buttons button:hover {
+            background-color: #d32f2f;
+        }
+
+.container {
+    display: flex;
+    flex: 1;
+    margin-top: 80px; /* Adjust for the fixed header height */
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    height: calc(100vh - 100px); /* Adjust based on the height of your header and footer */
+    position: fixed; /* Keep the sidebar fixed */
+    top: 100px; /* Height of the header */
+}
+
+    .sidebar nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        .sidebar nav ul li {
+            margin: 15px 0;
+        }
+
+            .sidebar nav ul li a {
+                text-decoration: none;
+                color: #333;
+                display: block;
+                padding: 10px;
+                background-color: #e7e7e7;
+                border-radius: 5px;
+            }
+
+                .sidebar nav ul li a:hover {
+                    background-color: #ccc;
+                }
+
+.main-content {
+    margin-left: 220px; /* Adjust based on the width of the sidebar */
+    padding: 20px;
+    flex: 1;
+}
+
+.statistics {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+    .statistics .graph {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    margin-top: auto;
+}

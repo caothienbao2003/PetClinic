@@ -1,0 +1,292 @@
+﻿@page
+@model PetClinic.Pages.BookingManagement.ChooseDateShiftDoctorModel
+@{
+    ViewData["Title"] = "Choose Date, Shift, and Doctor";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .booking-container {
+        display: flex;
+        justify-content: center;
+        margin: 40px auto;
+        padding: 20px;
+        max-width: 1000px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .booking-header {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 36px;
+        color: #4CAF50;
+    }
+
+    .calendar-container, .details-container {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .calendar-container {
+        border-right: 1px solid #ddd;
+    }
+
+    .calendar {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .calendar th, .calendar td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .calendar th {
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        .calendar td.available-date {
+            cursor: pointer;
+            color: #4CAF50;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+            .calendar td.available-date:hover {
+                background-color: #E8F5E9;
+                border-radius: 50%;
+            }
+
+        .calendar td.unavailable-date {
+            color: #ddd;
+        }
+
+        .calendar td.selected-date {
+            background-color: #2196F3;
+            color: white;
+            border-radius: 50%;
+        }
+
+    .details-container h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .slots-container, .doctors-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 30px;
+        justify-content: center;
+    }
+
+    .slot, .doctor {
+        flex: 0 0 calc(50% - 10px);
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+        .slot.selected, .doctor.selected {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+    .btn-primary {
+        background-color: #4CAF50;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #4CAF50;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+
+        .back-link:hover {
+            color: #45a049;
+        }
+
+    .navigation-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        max-width: 300px;
+        margin: 0 auto 20px;
+        width: 100%;
+    }
+
+    .month-year-wrapper {
+        flex-grow: 1;
+        text-align: center;
+        margin: 0 20px;
+    }
+
+    .navigation-buttons i {
+        font-size: 24px;
+        cursor: pointer;
+        color: #4CAF50;
+        transition: color 0.3s;
+        margin: 0 10px;
+    }
+
+        .navigation-buttons i:hover {
+            color: #45a049;
+        }
+</style>
+
+<div class="booking-container">
+    <div class="calendar-container">
+        <h1 class="booking-header">Booking</h1>
+
+        <div class="navigation-buttons">
+            <i class="fas fa-arrow-left" id="prevMonthBtn" onclick="changeMonth(-1)"></i>
+            <div class="month-year-wrapper">
+                <span id="monthYearDisplay">@Model.SelectedDate.ToString("MMMM yyyy")</span>
+            </div>
+            <i class="fas fa-arrow-right" id="nextMonthBtn" onclick="changeMonth(1)"></i>
+        </div>
+
+        <form method="post" id="dateForm">
+            <table class="calendar">
+                <thead>
+                    <tr>
+                        <th>Su</th>
+                        <th>Mo</th>
+                        <th>Tu</th>
+                        <th>We</th>
+                        <th>Th</th>
+                        <th>Fr</th>
+                        <th>Sa</th>
+                    </tr>
+                </thead>
+                <tbody id="calendarBody">
+                    @{
+                        var firstDayOfMonth = new DateTime(Model.SelectedDate.Year, Model.SelectedDate.Month, 1);
+                        var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                        var startDay = (int)firstDayOfMonth.DayOfWeek;
+                        var currentDate = firstDayOfMonth;
+
+                        if (startDay != 0)
+                        {
+                            currentDate = currentDate.AddDays(-startDay);
+                        }
+
+                        while (currentDate <= lastDayOfMonth || currentDate.DayOfWeek != DayOfWeek.Sunday)
+                        {
+                            <tr>
+                                @for (var i = 0; i < 7; i++)
+                                {
+                                    var isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == Model.SelectedDate.Month;
+                                    var isSelectedDate = currentDate.Date == Model.SelectedDate.Date;
+                                    <td class="@(isAvailableDate ? "available-date" : "unavailable-date") @(isSelectedDate ? "selected-date" : "")"
+                                        onclick="@(isAvailableDate ? $"selectDate('{currentDate.ToString("yyyy-MM-dd")}')" : "")">
+                                        @(currentDate.Month == Model.SelectedDate.Month ? currentDate.Day.ToString() : "")
+                                    </td>
+                                    currentDate = currentDate.AddDays(1);
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <input type="hidden" asp-for="SelectedDate" id="SelectedDate" />
+            <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+        </form>
+
+        <div class="form-group text-center">
+            <a asp-page="ChoosePet" class="back-link"><i class="fas fa-arrow-left"></i> Back to Choose Pet</a>
+        </div>
+    </div>
+
+    <div class="details-container">
+        <h2>Available slots</h2>
+        <div class="slots-container">
+            @foreach (var shift in Model.ShiftList)
+            {
+                <div class="slot" onclick="selectSlot(this, @shift.ShiftId)">
+                    @string.Format("{0:hh\\:mm}", shift.StartTime) - @string.Format("{0:hh\\:mm}", shift.EndTime)
+                </div>
+            }
+        </div>
+
+        <h2>Available Doctors</h2>
+        <div class="doctors-container">
+            @foreach (var doctor in Model.DoctorList)
+            {
+                <div class="doctor" onclick="selectDoctor(this, @doctor.UserId)">
+                    @doctor.FirstName @doctor.LastName
+                </div>
+            }
+        </div>
+
+        <div class="form-group text-center">
+            <form method="post">
+                <input type="hidden" asp-for="SelectedShiftId" id="SelectedShift" />
+                <input type="hidden" asp-for="SelectedDoctorId" id="SelectedDoctor" />
+                <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+                <input type="submit" value="Next" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectDate(date) {
+        document.getElementById("SelectedDate").value = date;
+        document.getElementById("dateForm").submit();
+    }
+
+    function selectSlot(element, shiftId) {
+        document.querySelectorAll(".slot").forEach(slot => slot.classList.remove("selected"));
+        element.classList.add("selected");
+        document.getElementById("SelectedShift").value = shiftId;
+    }
+
+    function selectDoctor(element, doctorId) {
+        document.querySelectorAll(".doctor").forEach(doctor => doctor.classList.remove("selected"));
+        element.classList.add("selected");
+        document.getElementById("SelectedDoctor").value = doctorId;
+    }
+
+    function changeMonth(offset) {
+        let currentMonthYear = document.getElementById("monthYearDisplay").innerText;
+        let date = new Date(currentMonthYear + " 1");
+        date.setMonth(date.getMonth() + offset);
+        window.location.href = `?year=${date.getFullYear()}&month=${date.getMonth() + 1}`;
+    }
+</script>
