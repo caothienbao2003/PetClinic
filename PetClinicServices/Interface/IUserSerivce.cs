@@ -27,6 +27,6 @@ namespace PetClinicServices.Interface
 
         public Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
 
-        Task<User> UpdateUser(User user);
+        public void UpdateUser(User user);
     }
 }

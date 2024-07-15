@@ -95,12 +95,16 @@ namespace PetClinicDAO
         {
             try
             {
+                if (GetUserById(user.UserId) == null)
+                {
+                    return;
+                }
                 context.Users.Update(user);
                 context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Failed to update user.", ex);
             }
         }
     } 
