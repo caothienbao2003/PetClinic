@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Security.Claims
 @model PublicModel
 @{
     ViewData["Title"] = "Pet Clinic Homepage";
@@ -11,9 +12,9 @@
     <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
 
-<div class="top-right-buttons">
-    <a asp-page="/Authentication/Login"><button>Login</button></a>
-    <a asp-page="/Authentication/CustomerRegister"><button>Register</button></a>
+<div class="user-info">
+    <span>Welcome, @Model.User.FindFirstValue(ClaimTypes.GivenName)!</span>
+    <a asp-page="/ProfilePages/CustomerProfile"><button>View Profile</button></a>
 </div>
 
 <div class="container">
