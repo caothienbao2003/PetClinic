@@ -16,15 +16,15 @@
 
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
-    @if(Model.User.IsInRole(Enum.GetName(typeof(UserRole), UserRole.Customer)))
+    @if(Model.user.Role == 0)
     {
         <a asp-page="/Homepages/Customer"><button>Back to Home</button></a>
     }
-    else if(Model.User.IsInRole(Enum.GetName(typeof(UserRole), UserRole.Staff)))
+    else if (Model.user.Role == 1)
     {
         <a asp-page="/Homepages/Staff"><button>Back to Home</button></a>
     }
-    else if(Model.User.IsInRole(Enum.GetName(typeof(UserRole), UserRole.Doctor)))
+    else if (Model.user.Role == 2)
     {
         <a asp-page="/Homepages/Doctor"><button>Back to Home</button></a>
     }
