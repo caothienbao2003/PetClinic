@@ -93,19 +93,34 @@ namespace PetClinicDAO
 
         public void UpdateUser(User user)
         {
-            try
+            var existingUser = context.Users.Local.FirstOrDefault(u => u.UserId == user.UserId);
+            if (existingUser != null)
             {
-                if (GetUserById(user.UserId) == null)
-                {
-                    return;
-                }
-                context.Users.Update(user);
-                context.SaveChanges();
+                context.Entry(existingUser).State = EntityState.Detached;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to update user.", ex);
-            }
+
+            context.Entry(user).State = EntityState.Modified;
+            context.SaveChanges();
+
+            //try
+            //{
+            //    var existingUser = GetUserById(user.UserId);
+            //    if (existingUser != null)
+            //    {
+            //        context.Update(user);
+            //        context.SaveChanges();
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("User not found.");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Failed to update user.", ex);
+            //}
         }
+
+
     } 
 }
