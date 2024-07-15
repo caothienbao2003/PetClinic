@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace PetClinic.Pages.Homepages
 {
-    public class PublicModel : PageModel
+    public class StaffModel : PageModel
     {
         public void OnGet()
         {

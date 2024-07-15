@@ -1,0 +1,55 @@
+﻿@page
+@using System.Security.Claims
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using PetClinicBussinessObject
+@model PetClinic.Pages.ProfilePages.ProfileModel
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    @if(Model.User.IsInRole(Enum.GetName(typeof(UserRole), UserRole.Customer)))
+    {
+        <a asp-page="/Homepages/Customer"><button>Back to Home</button></a>
+    }
+    else if(Model.User.IsInRole(Enum.GetName(typeof(UserRole), UserRole.Staff)))
+    {
+        <a asp-page="/Homepages/Staff"><button>Back to Home</button></a>
+    }
+    else if(Model.User.IsInRole(Enum.GetName(typeof(UserRole), UserRole.Doctor)))
+    {
+        <a asp-page="/Homepages/Doctor"><button>Back to Home</button></a>
+    }
+    else
+    {
+        <a asp-page="/Homepages/Admin"><button>Back to Home</button></a>
+    }
+</div>
+
+<main>
+    <h2>User Profile</h2>
+    <div class="profile-info">
+        <div class="avatar-container">
+            <img src="@Model.user.Image" alt="User Avatar" class="avatar">
+        </div>
+        <div class="profile-details">
+            <p><strong>Name:</strong> @Model.user.FirstName @Model.user.LastName</p>
+            <p><strong>Email:</strong> @Model.user.Email</p>
+            <p><strong>Password:</strong> @Model.user.Password</p>
+            <p><strong>Address:</strong> @Model.user.Address</p>
+            <p><strong>Gender:</strong> @Model.user.Gender</p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Pet Clinic. All rights reserved.</p>
+</footer>

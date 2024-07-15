@@ -5,11 +5,11 @@ using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Homepages
 {
-    public class CustomerModel : PageModel
+    public class DoctorModel : PageModel
     {
         private readonly IUserService userService;
 
-        public CustomerModel(IUserService _userService)
+        public DoctorModel(IUserService _userService)
         {
             userService = _userService;
         }

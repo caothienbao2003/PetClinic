@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.Homepages
+namespace PetClinic.Pages.ProfilePages
 {
-    public class CustomerModel : PageModel
+    public class ProfileModel : PageModel
     {
         private readonly IUserService userService;
 
-        public CustomerModel(IUserService _userService)
+        public ProfileModel(IUserService _userService)
         {
             userService = _userService;
         }
@@ -29,5 +29,7 @@ namespace PetClinic.Pages.Homepages
                 user = userService.GetUserById(int.Parse(userId));
             }
         }
+
+        
     }
 }

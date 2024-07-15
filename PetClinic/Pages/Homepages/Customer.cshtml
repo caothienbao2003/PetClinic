@@ -1,6 +1,7 @@
 ﻿@page
 @using System.Security.Claims
-@model PublicModel
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model PetClinic.Pages.Homepages.CustomerModel
 @{
     ViewData["Title"] = "Pet Clinic Homepage";
 }
@@ -13,8 +14,8 @@
 </head>
 
 <div class="user-info">
-    <span>Welcome, @Model.User.FindFirstValue(ClaimTypes.GivenName)!</span>
-    <a asp-page="/ProfilePages/CustomerProfile"><button>View Profile</button></a>
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/ProfilePages/Profile"><button>View Profile</button></a>
 </div>
 
 <div class="container">

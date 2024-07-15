@@ -146,22 +146,22 @@ footer {
     right: 50px;
 }
 
-.top-right-buttons button {
-     background-color: #4CAF50;
-     color: white;
-     border: none;
-     padding: 10px 20px;
-     text-align: center;
-     text-decoration: none;
-     display: inline-block;
-     font-size: 16px;
-     margin-left: 10px;
-     cursor: pointer;
-}
+    .top-right-buttons button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
 
-.top-right-buttons button:hover {
-     background-color: #45a049;
-}
+        .top-right-buttons button:hover {
+            background-color: #45a049;
+        }
 
 /* Personalized Greeting and Profile Button Styles */
 .user-info {
@@ -191,4 +191,19 @@ footer {
 
         .user-info button:hover {
             background-color: #45a049;
-        }
+        }   
+
+/* Profile Page Styles */
+.profile-info {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+    .profile-info p {
+        margin: 10px 0;
+    }
+
+    .profile-info strong {
+        font-weight: bold;
+    }
