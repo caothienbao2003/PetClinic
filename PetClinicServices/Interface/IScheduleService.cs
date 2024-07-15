@@ -1,4 +1,5 @@
 ﻿using PetClinicBussinessObject;
+using PetClinicDAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace PetClinicServices.Interface
         public List<Schedule> GetAllSchedule();
         public void AddSchedule(Schedule schedule);
         public void UpdateSchedule(Schedule schedule);
-        public void GetScheduleList(DateTime date, int shiftId);
+        public List<Schedule> GetScheduleList(DateTime date, int shiftId);
+        public List<Schedule> GetScheduleListByDate(DateTime date);
+        public List<Schedule> GetAvailableScheduleListByDate(DateTime date);
+        public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId);
+
     }
 }

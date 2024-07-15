@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
+using PetClinicServices;
 using PetClinicServices.Interface;
+using System;
+using System.Collections.Generic;
 
 namespace PetClinic.Pages.BookingManagement
 {
@@ -34,6 +37,12 @@ namespace PetClinic.Pages.BookingManagement
         [BindProperty(SupportsGet = true)]
         public int SelectedPetId { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int? Year { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? Month { get; set; }
+
         public void OnGet()
         {
             if (TempData.ContainsKey("SelectedPetId"))
@@ -42,7 +51,11 @@ namespace PetClinic.Pages.BookingManagement
                 TempData.Keep("SelectedPetId");
             }
 
-            if (SelectedDate == default(DateTime))
+            if (Year.HasValue && Month.HasValue)
+            {
+                SelectedDate = new DateTime(Year.Value, Month.Value, 1);
+            }
+            else
             {
                 SelectedDate = DateTime.Today.AddDays(1); // Default to tomorrow if no date is selected
             }
@@ -75,8 +88,6 @@ namespace PetClinic.Pages.BookingManagement
 
         private void LoadData()
         {
-            //ShiftList = _shiftService.GetShiftsByDate(SelectedDate);
-            //DoctorList = _doctorService.GetDoctorsByDate(SelectedDate);
             ShiftList = shiftService.GetAllDoctorShifts();
             DoctorList = doctorService.GetAllDoctors();
         }

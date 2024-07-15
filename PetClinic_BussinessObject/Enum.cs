@@ -56,4 +56,10 @@ namespace PetClinicBussinessObject
         Pending,
         Verified
     }
+
+    public enum ScheduleStatus
+    {
+        Occupied,
+        Available
+    }
 }

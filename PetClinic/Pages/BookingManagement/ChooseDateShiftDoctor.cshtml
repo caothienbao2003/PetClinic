@@ -287,6 +287,6 @@
         let currentMonthYear = document.getElementById("monthYearDisplay").innerText;
         let date = new Date(currentMonthYear + " 1");
         date.setMonth(date.getMonth() + offset);
-        window.location.href = `?year=${date.getFullYear()}&month=${date.getMonth() + 1}`;
+        window.location.href = `?year=${date.getFullYear()}&month=${date.getMonth() + 1}&SelectedPetId=${@Model.SelectedPetId}`;
     }
 </script>
