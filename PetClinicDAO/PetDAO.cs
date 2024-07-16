@@ -97,10 +97,9 @@ namespace PetClinicDAO
         {
             var petHealth = context.PetHealths
                 .Include(ph => ph.VaccinationRecords)
-                .ThenInclude(vr => vr.VaccinationDetails)
                 .FirstOrDefault(ph => ph.PetHealthId == petHealthId);
 
-            return petHealth?.VaccinationRecords!;
+            return petHealth!.VaccinationRecords.FirstOrDefault()!;
         }
     }
 }

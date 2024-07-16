@@ -1,5 +1,5 @@
 ﻿@page
-@model PetClinic.Pages.DoctorPages.MedicalRecords.EditModel
+@model PetClinic.Pages.Doctor.MedicalRecordManagement.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -28,11 +28,6 @@
                 <label asp-for="MedicalRecord.DoctorId" class="control-label"></label>
                 <select asp-for="MedicalRecord.DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
                 <span asp-validation-for="MedicalRecord.DoctorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MedicalRecord.PrescriptionId" class="control-label"></label>
-                <select asp-for="MedicalRecord.PrescriptionId" class="form-control" asp-items="ViewBag.PrescriptionId"></select>
-                <span asp-validation-for="MedicalRecord.PrescriptionId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MedicalRecord.ServiceId" class="control-label"></label>

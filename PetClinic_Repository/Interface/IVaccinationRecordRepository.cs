@@ -10,7 +10,6 @@ namespace PetClinicRepository.Interface
     public interface IVaccinationRecordRepository
     {
         public List<VaccinationRecord> GetVaccinationRecordsList();
-        public VaccinationRecord GetVaccinationRecordByVaccinationRecordsId(int id);
-        public void UpdateVaccinationDetail(VaccinationDetail vaccinationDetail);
+        public VaccinationRecord GetVaccinationRecordById(int id);
     }
 }

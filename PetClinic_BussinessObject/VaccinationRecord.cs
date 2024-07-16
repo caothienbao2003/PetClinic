@@ -7,13 +7,17 @@ namespace PetClinicBussinessObject
     {
         public VaccinationRecord()
         {
-            PetHealths = new HashSet<PetHealth>();
+            RecordMedicines = new HashSet<RecordMedicine>();
         }
 
-        public int VaccinationRecordsId { get; set; }
-        public int? VaccinationDetailsId { get; set; }
+        public int VaccinationRecordId { get; set; }
+        public DateTime? VaccinationDate { get; set; }
+        public DateTime? NextDueDate { get; set; }
+        public string? VaccinatedAt { get; set; }
+        public bool? Verification { get; set; }
+        public int? PetHealthId { get; set; }
 
-        public virtual VaccinationDetail? VaccinationDetails { get; set; }
-        public virtual ICollection<PetHealth> PetHealths { get; set; }
+        public virtual PetHealth? PetHealth { get; set; }
+        public virtual ICollection<RecordMedicine> RecordMedicines { get; set; }
     }
 }

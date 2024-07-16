@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.DoctorPages.MedicalRecords
+namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 {
     public class CreateModel : PageModel
     {
@@ -54,12 +55,10 @@ namespace PetClinic.Pages.DoctorPages.MedicalRecords
 
             PetHealthInfo = petService.GetPetHealthByPetId(booking!.PetId);
 
-            records = petService.GetVaccinationRecordByPetHealthId(PetHealthInfo.PetHealthId);
-
-            if (PetHealthInfo?.VaccinationRecordsId != null)
-            {
-                records = vaccinationRecordService.GetVaccinationRecordByVaccinationRecordsId(PetHealthInfo.VaccinationRecordsId.Value);
-            }
+            //if (PetHealthInfo?.VaccinationRecordId != null)
+            //{
+            //    records = vaccinationRecordService.GetVaccinationRecordByVaccinationRecordId(PetHealthInfo.VaccinationRecordId.Value);
+            //}
 
             //foreach (var record in records)
             //{
@@ -71,17 +70,18 @@ namespace PetClinic.Pages.DoctorPages.MedicalRecords
             //    }
             //}
 
-            ViewData["DoctorId"] = new SelectList(userService.GetAllUsers(), "UserId", "FirstName");
-            ViewData["ServiceId"] = new SelectList(medicalRecordService.GetServices(), "ServiceId", "ServiceName");
-            ViewData["PrescriptionId"] = new SelectList(_context.Prescriptions, "PrescriptionId", "PrescriptionId");
+            records = petService.GetVaccinationRecordByPetHealthId(PetHealthInfo.PetHealthId);
+            ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId");
+            ViewData["DoctorId"] = new SelectList(_context.Users, "UserId", "FirstName");
+            ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId");
             return Page();
         }
-
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPost()
+        public IActionResult OnPostAsync()
         {
-          if (!ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
