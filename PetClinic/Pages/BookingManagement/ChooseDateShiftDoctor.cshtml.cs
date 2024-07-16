@@ -22,7 +22,7 @@ namespace PetClinic.Pages.BookingManagement
         }
 
         [BindProperty]
-        public DateTime? SelectedDate { get; set; }
+        public DateTime CurrentDateOnCalendar { get; set; }
 
         [BindProperty]
         public int SelectedShiftId { get; set; }
@@ -38,31 +38,29 @@ namespace PetClinic.Pages.BookingManagement
         public int SelectedPetId { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int? CurrentYear { get; set; }
+        public int? Year { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int? CurrentMonth { get; set; }
+        public int? Month { get; set; }
 
         [BindProperty]
-        public DateTime CurrentDate { get; set; }
+        public DateTime? SelectedDate { get; set; }
 
         public void OnGet()
         {
-            CurrentDate = DateTime.Now.Date;
-
             if (TempData.ContainsKey("SelectedPetId"))
             {
                 SelectedPetId = (int)TempData["SelectedPetId"];
                 TempData.Keep("SelectedPetId");
             }
 
-            if (CurrentYear.HasValue && CurrentMonth.HasValue)
+            if (Year.HasValue && Month.HasValue)
             {
-                SelectedDate = new DateTime(CurrentYear.Value, CurrentMonth.Value, 1);
+                CurrentDateOnCalendar = new DateTime(Year.Value, Month.Value, 1);
             }
             else
             {
-                SelectedDate = DateTime.Today.AddDays(1); // Default to tomorrow if no date is selected
+                CurrentDateOnCalendar = DateTime.Today.AddDays(1); // Default to tomorrow if no date is selected
             }
 
             LoadData();
@@ -77,24 +75,32 @@ namespace PetClinic.Pages.BookingManagement
 
             if (Request.Form.ContainsKey("SelectedDate"))
             {
-                SelectedDate = DateTime.Parse(Request.Form["SelectedDate"]);
+                CurrentDateOnCalendar = DateTime.Parse(Request.Form["SelectedDate"]);
                 LoadData(); // Load shifts and doctors based on the selected date
                 return Page();
             }
 
             // Handle form submission logic here
-            TempData["SelectedDate"] = SelectedDate;
+            TempData["SelectedDate"] = CurrentDateOnCalendar;
             TempData["SelectedPetId"] = SelectedPetId;
             TempData["SelectedShiftId"] = SelectedShiftId;
             TempData["SelectedDoctorId"] = SelectedDoctorId;
 
-            return RedirectToPage("/BookingManagement/ChooseDateAndShift", new { SelectedPetId, SelectedDate, SelectedShiftId, SelectedDoctorId });
+            return RedirectToPage("/BookingManagement/ChooseDateAndShift", new { SelectedPetId, CurrentDateOnCalendar, SelectedShiftId, SelectedDoctorId });
         }
 
         private void LoadData()
         {
             ShiftList = shiftService.GetAllDoctorShifts();
             DoctorList = doctorService.GetAllDoctors();
+        }
+
+        public IActionResult OnGetChooseDateShiftDoctor(int year, int month, int selectedPetId)
+        {
+            CurrentDateOnCalendar = new DateTime(year, month, 1);
+            SelectedPetId = selectedPetId;
+            LoadData();
+            return Partial("_CalendarPartial", this); // _CalendarPartial is a partial view containing the calendar HTML
         }
     }
 }

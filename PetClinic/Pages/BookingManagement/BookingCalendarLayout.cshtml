@@ -1,0 +1,27 @@
+﻿@{
+    var firstDayOfMonth = new DateTime(Model.CurrentDateOnCalendar.Year, Model.CurrentDateOnCalendar.Month, 1);
+    var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+    var startDay = (int)firstDayOfMonth.DayOfWeek;
+    var currentDate = firstDayOfMonth;
+
+    if (startDay != 0)
+    {
+        currentDate = currentDate.AddDays(-startDay);
+    }
+
+    while (currentDate <= lastDayOfMonth || currentDate.DayOfWeek != DayOfWeek.Sunday)
+    {
+        <tr>
+            @for (var i = 0; i < 7; i++)
+            {
+                var isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == Model.CurrentDateOnCalendar.Month;
+                var isSelectedDate = currentDate.Date == Model.SelectedDate?.Date;
+                <td class="@(isAvailableDate ? "available-date" : "unavailable-date") @(isSelectedDate ? "selected-date" : "")"
+                    onclick="@(isAvailableDate ? $"selectDate('{currentDate.ToString("yyyy-MM-dd")}')" : "")">
+                    @(currentDate.Month == Model.CurrentDateOnCalendar.Month ? currentDate.Day.ToString() : "")
+                </td>
+                currentDate = currentDate.AddDays(1);
+            }
+        </tr>
+    }
+}

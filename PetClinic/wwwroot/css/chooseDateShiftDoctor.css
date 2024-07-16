@@ -1,0 +1,159 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.booking-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 1000px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 36px;
+    color: #4CAF50;
+}
+
+.calendar-container, .details-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.calendar-container {
+    border-right: 1px solid #ddd;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .calendar th, .calendar td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .calendar th {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .calendar td.available-date {
+        cursor: pointer;
+        color: #4CAF50;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+        .calendar td.available-date:hover {
+            background-color: #E8F5E9;
+            border-radius: 50%;
+        }
+
+    .calendar td.unavailable-date {
+        color: #ddd;
+    }
+
+    .calendar td.selected-date {
+        background-color: #2196F3;
+        color: white;
+        border-radius: 50%;
+    }
+
+.details-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.slots-container, .doctors-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.slot, .doctor {
+    flex: 0 0 calc(50% - 10px);
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+    .slot.selected, .doctor.selected {
+        background-color: #4CAF50;
+        color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+.btn-primary {
+    background-color: #4CAF50;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #45a049;
+    }
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+    .back-link:hover {
+        color: #45a049;
+    }
+
+.navigation-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    max-width: 300px;
+    margin: 0 auto 20px;
+    width: 100%;
+}
+
+.month-year-wrapper {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 20px;
+}
+
+.navigation-buttons i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #4CAF50;
+    transition: color 0.3s;
+    margin: 0 10px;
+}
+
+    .navigation-buttons i:hover {
+        color: #45a049;
+    }
