@@ -36,6 +36,8 @@ namespace PetClinic.Pages.BookingManagement
             // Save the selected date and proceed to the next page
             TempData["SelectedDate"] = SelectedDate;
             TempData["SelectedPetId"] = SelectedPetId;
+
+            Response.Redirect("/BookingManagement/ChooseShiftAndDoctor");
         }
     }
 }

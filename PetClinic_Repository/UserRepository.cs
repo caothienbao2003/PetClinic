@@ -24,5 +24,7 @@ namespace PetClinicRepository
         public User GetUserByEmail(string email) => UserDAO.Instance.GetUserByEmail(email);
 
 		public List<User> GetUserListWithRole(UserRole userRole) => UserDAO.Instance.GetUserListWithRole(userRole);
+
+        public void UpdateUser(User user) => UserDAO.Instance.UpdateUser(user);
 	}
 }

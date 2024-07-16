@@ -1,0 +1,100 @@
+﻿@page
+@model PetClinic.Pages.HomePages.CustomerHomePageModel
+@{
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Customer/CustomerProfile"><button>View Profile</button></a>
+</div>
+
+<div class="container">
+    <!-- About Section -->
+    <section class="about-section">
+        <img src="/img/veterinary-clinic.jpg" alt="Pet Clinic Image">
+        <div>
+            <h2>Building New Space Where Caring Comes First</h2>
+            <p>Welcome to Pet Clinic, where the health and happiness of your furry friends are our top priority. We are a state-of-the-art veterinary facility dedicated to providing the best possible care for your beloved pets.</p>
+            <p>Our team of experienced veterinarians and dedicated staff are committed to delivering exceptional service and personalized attention to each and every patient. We understand that your pets are more than just animals; they are beloved members of your family, and we treat them with the same level of care and compassion.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <h2>Our Services</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <img src="/img/vet-clinic-blog-img.png" alt="Veterinary Service">
+                <h3>Veterinary Services</h3>
+                <p>Our team of experienced veterinarians provides comprehensive medical care for your pets, including routine check-ups, vaccinations, and specialized treatments.</p>
+            </div>
+            <div class="service-card">
+                <img src="/img/veterinarian.jpg" alt="Grooming Service">
+                <h3>Grooming</h3>
+                <p>Keep your pet looking and feeling their best with our professional grooming services, including bathing, nail trimming, and haircuts.</p>
+            </div>
+            <div class="service-card">
+                <img src="/img/Belwee-clinic.jpg" alt="Boarding Service">
+                <h3>Boarding</h3>
+                <p>When you need to travel, leave your furry friend in our care. Our clean, comfortable boarding facilities provide a safe and nurturing environment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <h2>From the Blog</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <img src="/img/blog1.jpg" alt="Blog Post Image">
+                <div class="blog-card-content">
+                    <h3>The Importance of Spaying and Neutering</h3>
+                    <p>Learn why spaying and neutering your pets is crucial for their health and the well-being of your community.</p>
+                </div>
+            </div>
+            <div class="blog-card">
+                <img src="/img/blog2.jpg" alt="Blog Post Image">
+                <div class="blog-card-content">
+                    <h3>Tips for Keeping Your Pet Healthy and Happy</h3>
+                    <p>Discover simple ways to ensure your furry friend stays healthy and content, both physically and mentally.</p>
+                </div>
+            </div>
+            <div class="blog-card">
+                <img src="/img/blog3.jpg" alt="Blog Post Image">
+                <div class="blog-card-content">
+                    <h3>The Benefits of Adopting a Rescue Pet</h3>
+                    <p>Explore the many reasons why adopting a rescue pet can be a rewarding and life-changing experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Review Section -->
+    <section class="review-section">
+        <h2>What Our Clients Say</h2>
+        <div class="review-grid">
+            <div class="review-card">
+                <p>"The staff at Pet Clinic is absolutely amazing! They took great care of my cat, and I couldn't be happier with the service."</p>
+                <p>- Jane Doe</p>
+            </div>
+            <div class="review-card">
+                <p>"I've been bringing my dogs to Pet Clinic for years, and they always receive the best possible care. Highly recommended!"</p>
+                <p>- John Smith</p>
+            </div>
+            <div class="review-card">
+                <p>"Pet Clinic is the only place I trust with my pets. The veterinarians are knowledgeable, and the staff is so caring and compassionate."</p>
+                <p>- Sarah Johnson</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2024 Pet Clinic. All rights reserved.</p>
+</footer>

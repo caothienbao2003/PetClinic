@@ -1,0 +1,209 @@
+﻿/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    background-color: white;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+    header h1 {
+        margin: 0;
+    }
+
+/* About Section Styles */
+.about-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+}
+
+    .about-section img {
+        max-width: 300px;
+        margin-right: 30px;
+    }
+
+    .about-section h2 {
+        margin-top: 0;
+    }
+
+/* Services Section Styles */
+.services-section {
+    background-color: #f2f2f2;
+    padding: 40px 0;
+}
+
+    .services-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.service-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+    .service-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+/* Blog Section Styles */
+.blog-section {
+    padding: 40px 0;
+}
+
+    .blog-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.blog-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+    .blog-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+.blog-card-content {
+    padding: 20px;
+}
+
+/* Review Section Styles */
+.review-section {
+    background-color: #f2f2f2;
+    padding: 40px 0;
+}
+
+    .review-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.review-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Footer Styles */
+footer {
+    background-color: white;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Top-Right Buttons Styles */
+.top-right-buttons {
+    position: absolute;
+    top: 35px;
+    right: 50px;
+}
+
+    .top-right-buttons button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+        .top-right-buttons button:hover {
+            background-color: #45a049;
+        }
+
+/* Personalized Greeting and Profile Button Styles */
+.user-info {
+    position: absolute;
+    top: 35px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+}
+
+    .user-info span {
+        color: black;
+        margin-right: 10px;
+    }
+
+    .user-info button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .user-info button:hover {
+            background-color: #45a049;
+        }   
+
+/* Profile Page Styles */
+.profile-info {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+    .profile-info p {
+        margin: 10px 0;
+    }
+
+    .profile-info strong {
+        font-weight: bold;
+    }

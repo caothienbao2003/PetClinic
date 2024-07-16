@@ -49,20 +49,27 @@
 <div class="choose-pet-container">
     <h1 class="choose-pet-header">Choose Pet</h1>
 
-    <div class="form-container">
-        <h4 class="information">Pet Information</h4>
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="SelectedPetId" class="control-label">Pet Name</label>
-                <select asp-for="SelectedPetId" class="form-control" asp-items="ViewBag.PetList"></select>
-                <span asp-validation-for="SelectedPetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Next" class="btn btn-primary"/>
-            </div>
-        </form>
-    </div>
+    @if (Model.PetList == null || Model.PetList.Count == 0)
+    {
+        <div>Your pet list is empty <a asp-page="/PetManagement/Create">Click here to create pet</a></div>
+    }
+    else
+    {
+        <div class="form-container">
+            <h4 class="information">Pet Information</h4>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SelectedPetId" class="control-label">Pet Name</label>
+                    <select asp-for="SelectedPetId" class="form-control" asp-items="ViewBag.PetList"></select>
+                    <span asp-validation-for="SelectedPetId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Next" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    }
 
     <div>
         <a asp-page="Index">Back to List</a>

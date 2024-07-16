@@ -5,41 +5,51 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.PetManagement
 {
     public class CreateModel : PageModel
     {
-        private readonly PetClinicBussinessObject.PetClinicContext _context;
+        private readonly IPetService petService;
 
-        public CreateModel(PetClinicBussinessObject.PetClinicContext context)
+        public int userId = 0;
+        public string? userIdString;
+
+        public CreateModel(IPetService _petService)
         {
-            _context = context;
+            petService = _petService;
         }
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
-        ViewData["CustomerId"] = new SelectList(_context.Users, "UserId", "Password");
-            return Page();
+            
         }
 
         [BindProperty]
         public Pet Pet { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public void OnPost()
         {
-          if (!ModelState.IsValid || _context.Pets == null || Pet == null)
+            userIdString = HttpContext.Session.GetString("UserId");
+            if (userIdString.IsNullOrEmpty())
             {
-                return Page();
+                Response.Redirect("/Privacy");
+            }
+            else
+            {
+                userId = int.Parse(userIdString);
             }
 
-            _context.Pets.Add(Pet);
-            await _context.SaveChangesAsync();
+            Pet.CustomerId = userId;
+            Pet.ActiveStatus = 1;
+            petService.AddPet(Pet);
 
-            return RedirectToPage("./Index");
+            Response.Redirect("/PetManagement/Index");
         }
     }
 }

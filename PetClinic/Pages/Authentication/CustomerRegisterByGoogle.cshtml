@@ -1,0 +1,76 @@
+﻿@page
+@model CustomerRegisterByGoogleModel
+@{
+	ViewData["Title"] = "Customer Register";
+}
+
+<head>
+	<link rel="stylesheet" href="~/css/khoistyle.css" />
+</head>
+
+<div class="login-container">
+	<h2 class="text-center">REGISTER</h2>
+
+	<form method="post">
+		<input type="hidden" asp-for="email" class="form-control" />
+
+
+		<div class="form-group">
+			<label>First Name</label>
+			<input type="text" asp-for="firstName" class="form-control" />
+			<span asp-validation-for="firstName" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Last Name</label>
+			<input type="text" asp-for="lastName" class="form-control" />
+			<span asp-validation-for="lastName" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Social Number</label>
+			<input type="text" asp-for="socialNumber" class="form-control" pattern="[0-9]{9}" title="Enter a 9-digit Social Number" required />
+			<span asp-validation-for="socialNumber" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Phone</label>
+			<input type="text" asp-for="phoneNumber" class="form-control" pattern="[0-9]{10,12}" title="Enter a valid phone number (10-12 digits)" required />
+			<span asp-validation-for="phoneNumber" class="text-danger"></span>
+		</div>
+
+
+		<div class="form-group">
+			<label>Address</label>
+			<input type="text" asp-for="address" class="form-control" />
+			<span asp-validation-for="address" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label>Gender</label>
+			<select asp-for="gender" class="form-control">
+				<option value="" disabled selected hidden>Select Gender</option>
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+				<option value="Other">Other</option>
+			</select>
+			<span asp-validation-for="gender" class="text-danger"></span>
+		</div>
+
+		<div class="form-group form-submit-button">
+			<button type="submit" class="btn btn-primary btn-block" asp-page-handler="Register">Register</button>
+		</div>
+
+	</form>
+
+	</br>
+	<hr />
+
+	<div class="register-link text-center">
+		<label>Or&nbsp;</label><a asp-page="Login">Login</a>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
