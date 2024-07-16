@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
+using PetClinicServices;
 using PetClinicServices.Interface;
+using System;
+using System.Collections.Generic;
 
 namespace PetClinic.Pages.BookingManagement
 {
@@ -19,7 +22,7 @@ namespace PetClinic.Pages.BookingManagement
         }
 
         [BindProperty]
-        public DateTime SelectedDate { get; set; }
+        public DateTime? SelectedDate { get; set; }
 
         [BindProperty]
         public int SelectedShiftId { get; set; }
@@ -34,15 +37,30 @@ namespace PetClinic.Pages.BookingManagement
         [BindProperty(SupportsGet = true)]
         public int SelectedPetId { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int? CurrentYear { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? CurrentMonth { get; set; }
+
+        [BindProperty]
+        public DateTime CurrentDate { get; set; }
+
         public void OnGet()
         {
+            CurrentDate = DateTime.Now.Date;
+
             if (TempData.ContainsKey("SelectedPetId"))
             {
                 SelectedPetId = (int)TempData["SelectedPetId"];
                 TempData.Keep("SelectedPetId");
             }
 
-            if (SelectedDate == default(DateTime))
+            if (CurrentYear.HasValue && CurrentMonth.HasValue)
+            {
+                SelectedDate = new DateTime(CurrentYear.Value, CurrentMonth.Value, 1);
+            }
+            else
             {
                 SelectedDate = DateTime.Today.AddDays(1); // Default to tomorrow if no date is selected
             }
@@ -75,8 +93,6 @@ namespace PetClinic.Pages.BookingManagement
 
         private void LoadData()
         {
-            //ShiftList = _shiftService.GetShiftsByDate(SelectedDate);
-            //DoctorList = _doctorService.GetDoctorsByDate(SelectedDate);
             ShiftList = shiftService.GetAllDoctorShifts();
             DoctorList = doctorService.GetAllDoctors();
         }
