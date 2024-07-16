@@ -176,11 +176,11 @@
         <div class="navigation-buttons">
             <i class="fas fa-arrow-left" id="prevMonthBtn" onclick="changeMonth(-1)"></i>
             <div class="month-year-wrapper">
-                <span id="monthYearDisplay">@Model.SelectedDate.ToString("MMMM yyyy")</span>
+                <span id="monthYearDisplay">@Model.SelectedDate?.ToString("MMMM yyyy")</span>
             </div>
             <i class="fas fa-arrow-right" id="nextMonthBtn" onclick="changeMonth(1)"></i>
         </div>
-
+        <div>@Model.CurrentDate.ToString("yyyy-MM-dd")</div>
         <form method="post" id="dateForm">
             <table class="calendar">
                 <thead>
@@ -196,7 +196,7 @@
                 </thead>
                 <tbody id="calendarBody">
                     @{
-                        var firstDayOfMonth = new DateTime(Model.SelectedDate.Year, Model.SelectedDate.Month, 1);
+                        var firstDayOfMonth = new DateTime(Model.SelectedDate?.Year ?? 0, Model.SelectedDate?.Month ?? 1, 1);
                         var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
                         var startDay = (int)firstDayOfMonth.DayOfWeek;
                         var currentDate = firstDayOfMonth;
@@ -211,11 +211,17 @@
                             <tr>
                                 @for (var i = 0; i < 7; i++)
                                 {
-                                    var isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == Model.SelectedDate.Month;
-                                    var isSelectedDate = currentDate.Date == Model.SelectedDate.Date;
+                                    var isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == Model.SelectedDate?.Month;
+                                    var isSelectedDate = false;
+
+                                    if (Model.SelectedDate != null)
+                                    {
+                                        isSelectedDate = currentDate.Date == Model.SelectedDate?.Date;
+                                    }
+
                                     <td class="@(isAvailableDate ? "available-date" : "unavailable-date") @(isSelectedDate ? "selected-date" : "")"
                                         onclick="@(isAvailableDate ? $"selectDate('{currentDate.ToString("yyyy-MM-dd")}')" : "")">
-                                        @(currentDate.Month == Model.SelectedDate.Month ? currentDate.Day.ToString() : "")
+                                        @(currentDate.Month == Model.SelectedDate?.Month ? currentDate.Day.ToString() : "")
                                     </td>
                                     currentDate = currentDate.AddDays(1);
                                 }
@@ -231,6 +237,8 @@
         <div class="form-group text-center">
             <a asp-page="ChoosePet" class="back-link"><i class="fas fa-arrow-left"></i> Back to Choose Pet</a>
         </div>
+
+        <div> Selected date: @Model.SelectedDate?.ToString("yyyy-MM-dd")</div>
     </div>
 
     <div class="details-container">

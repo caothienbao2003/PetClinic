@@ -22,7 +22,7 @@ namespace PetClinic.Pages.BookingManagement
         }
 
         [BindProperty]
-        public DateTime SelectedDate { get; set; }
+        public DateTime? SelectedDate { get; set; }
 
         [BindProperty]
         public int SelectedShiftId { get; set; }
@@ -38,22 +38,27 @@ namespace PetClinic.Pages.BookingManagement
         public int SelectedPetId { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int? Year { get; set; }
+        public int? CurrentYear { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int? Month { get; set; }
+        public int? CurrentMonth { get; set; }
+
+        [BindProperty]
+        public DateTime CurrentDate { get; set; }
 
         public void OnGet()
         {
+            CurrentDate = DateTime.Now.Date;
+
             if (TempData.ContainsKey("SelectedPetId"))
             {
                 SelectedPetId = (int)TempData["SelectedPetId"];
                 TempData.Keep("SelectedPetId");
             }
 
-            if (Year.HasValue && Month.HasValue)
+            if (CurrentYear.HasValue && CurrentMonth.HasValue)
             {
-                SelectedDate = new DateTime(Year.Value, Month.Value, 1);
+                SelectedDate = new DateTime(CurrentYear.Value, CurrentMonth.Value, 1);
             }
             else
             {
