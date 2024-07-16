@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.StaffPages.CageManagement
+namespace PetClinic.Pages.Staff.CageManagement
 {
     public class EditModel : PageModel
     {

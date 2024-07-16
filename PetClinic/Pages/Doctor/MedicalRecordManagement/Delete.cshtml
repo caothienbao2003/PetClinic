@@ -1,5 +1,5 @@
 ﻿@page
-@model PetClinic.Pages.DoctorPages.Records.DeleteModel
+@model PetClinic.Pages.Doctor.MedicalRecordManagement.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -29,12 +29,6 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MedicalRecord.Doctor.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicalRecord.Prescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MedicalRecord.Prescription.PrescriptionId)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MedicalRecord.Service)

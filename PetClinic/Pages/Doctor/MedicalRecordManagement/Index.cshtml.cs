@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.DoctorPages.MedicinePrescription
+namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 {
     public class IndexModel : PageModel
     {
@@ -18,14 +18,16 @@ namespace PetClinic.Pages.DoctorPages.MedicinePrescription
             _context = context;
         }
 
-        public IList<Prescription> Prescription { get;set; } = default!;
+        public IList<MedicalRecord> MedicalRecord { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Prescriptions != null)
+            if (_context.MedicalRecords != null)
             {
-                Prescription = await _context.Prescriptions
-                .Include(p => p.PrescriptionDetails).ToListAsync();
+                MedicalRecord = await _context.MedicalRecords
+                .Include(m => m.Booking)
+                .Include(m => m.Doctor)
+                .Include(m => m.Service).ToListAsync();
             }
         }
     }

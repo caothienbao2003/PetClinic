@@ -42,7 +42,7 @@ namespace PetClinicServices
             return petRepository.GetPetHealthsList();
         }
 
-        public PetHealth GetPetHealthByPetId(int petId)
+        public PetHealth GetPetHealthByPetId(int? petId)
         {
             return petRepository.GetPetHealthByPetId(petId);
         }
@@ -65,6 +65,11 @@ namespace PetClinicServices
         public void UpdatePetHealth(PetHealth petHealth)
         {
             petRepository.UpdatePetHealth(petHealth);
+        }
+
+        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId)
+        {
+            return petRepository.GetVaccinationRecordByPetHealthId(petHealthId);
         }
     }
 }

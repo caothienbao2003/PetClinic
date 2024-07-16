@@ -5,15 +5,15 @@ namespace PetClinicBussinessObject
 {
     public partial class VaccinationRecord
     {
-        public VaccinationRecord()
-        {
-            PetHealths = new HashSet<PetHealth>();
-        }
+        public int VaccinationRecordId { get; set; }
+        public DateTime? VaccinationDate { get; set; }
+        public DateTime? NextDueDate { get; set; }
+        public string? VaccinatedAt { get; set; }
+        public bool? Verification { get; set; }
+        public int? PetHealthId { get; set; }
+        public int? MedicineId { get; set; }
 
-        public int VaccinationRecordsId { get; set; }
-        public int? VaccinationDetailsId { get; set; }
-
-        public virtual VaccinationDetail? VaccinationDetails { get; set; }
-        public virtual ICollection<PetHealth> PetHealths { get; set; }
+        public virtual Medicine? Medicine { get; set; }
+        public virtual PetHealth? PetHealth { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.DoctorPages
+namespace PetClinic.Pages.Doctor
 {
     public class BookingViewModel : PageModel
     {

@@ -18,23 +18,23 @@ namespace PetClinic.Pages.VaccinationManagement
             _context = context;
         }
 
-      public VaccinationDetail VaccinationDetail { get; set; } = default!; 
+      public VaccinationRecord record { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.VaccinationDetails == null)
+            if (id == null || _context.VaccinationRecords == null)
             {
                 return NotFound();
             }
 
-            var vaccinationdetail = await _context.VaccinationDetails.FirstOrDefaultAsync(m => m.VaccinationDetailsId == id);
+            var vaccinationdetail = await _context.VaccinationRecords.FirstOrDefaultAsync(m => m.VaccinationRecordId == id);
             if (vaccinationdetail == null)
             {
                 return NotFound();
             }
             else 
             {
-                VaccinationDetail = vaccinationdetail;
+                record = vaccinationdetail;
             }
             return Page();
         }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.DoctorPages.MedicinePrescription
+namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 {
     public class EditModel : PageModel
     {
@@ -20,22 +20,24 @@ namespace PetClinic.Pages.DoctorPages.MedicinePrescription
         }
 
         [BindProperty]
-        public Prescription Prescription { get; set; } = default!;
+        public MedicalRecord MedicalRecord { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Prescriptions == null)
+            if (id == null || _context.MedicalRecords == null)
             {
                 return NotFound();
             }
 
-            var prescription =  await _context.Prescriptions.FirstOrDefaultAsync(m => m.PrescriptionId == id);
-            if (prescription == null)
+            var medicalrecord =  await _context.MedicalRecords.FirstOrDefaultAsync(m => m.MedicalRecordId == id);
+            if (medicalrecord == null)
             {
                 return NotFound();
             }
-            Prescription = prescription;
-           ViewData["PrescriptionDetailsId"] = new SelectList(_context.PrescriptionDetails, "PrescriptionDetailsId", "PrescriptionDetailsId");
+            MedicalRecord = medicalrecord;
+           ViewData["BookingId"] = new SelectList(_context.Bookings, "BookingId", "BookingId");
+           ViewData["DoctorId"] = new SelectList(_context.Users, "UserId", "FirstName");
+           ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId");
             return Page();
         }
 
@@ -48,7 +50,7 @@ namespace PetClinic.Pages.DoctorPages.MedicinePrescription
                 return Page();
             }
 
-            _context.Attach(Prescription).State = EntityState.Modified;
+            _context.Attach(MedicalRecord).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +58,7 @@ namespace PetClinic.Pages.DoctorPages.MedicinePrescription
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PrescriptionExists(Prescription.PrescriptionId))
+                if (!MedicalRecordExists(MedicalRecord.MedicalRecordId))
                 {
                     return NotFound();
                 }
@@ -69,9 +71,9 @@ namespace PetClinic.Pages.DoctorPages.MedicinePrescription
             return RedirectToPage("./Index");
         }
 
-        private bool PrescriptionExists(int id)
+        private bool MedicalRecordExists(int id)
         {
-          return (_context.Prescriptions?.Any(e => e.PrescriptionId == id)).GetValueOrDefault();
+          return (_context.MedicalRecords?.Any(e => e.MedicalRecordId == id)).GetValueOrDefault();
         }
     }
 }

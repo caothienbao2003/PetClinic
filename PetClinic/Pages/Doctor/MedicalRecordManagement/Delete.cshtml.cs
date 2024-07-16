@@ -7,18 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.DoctorPages.Records
+namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly PetClinicBussinessObject.PetClinicContext _context;
 
-        public DetailsModel(PetClinicBussinessObject.PetClinicContext context)
+        public DeleteModel(PetClinicBussinessObject.PetClinicContext context)
         {
             _context = context;
         }
 
-      public MedicalRecord MedicalRecord { get; set; } = default!; 
+        [BindProperty]
+      public MedicalRecord MedicalRecord { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,6 +29,7 @@ namespace PetClinic.Pages.DoctorPages.Records
             }
 
             var medicalrecord = await _context.MedicalRecords.FirstOrDefaultAsync(m => m.MedicalRecordId == id);
+
             if (medicalrecord == null)
             {
                 return NotFound();
@@ -37,6 +39,24 @@ namespace PetClinic.Pages.DoctorPages.Records
                 MedicalRecord = medicalrecord;
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null || _context.MedicalRecords == null)
+            {
+                return NotFound();
+            }
+            var medicalrecord = await _context.MedicalRecords.FindAsync(id);
+
+            if (medicalrecord != null)
+            {
+                MedicalRecord = medicalrecord;
+                _context.MedicalRecords.Remove(MedicalRecord);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

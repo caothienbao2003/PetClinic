@@ -1,5 +1,5 @@
 ﻿@page
-@model PetClinic.Pages.DoctorPages.Records.IndexModel
+@model PetClinic.Pages.Doctor.MedicalRecordManagement.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -23,9 +23,6 @@
                 @Html.DisplayNameFor(model => model.MedicalRecord[0].Doctor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MedicalRecord[0].Prescription)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.MedicalRecord[0].Service)
             </th>
             <th></th>
@@ -42,9 +39,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Doctor.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prescription.PrescriptionId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Service.ServiceId)

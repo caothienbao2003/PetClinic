@@ -11,6 +11,7 @@ namespace PetClinicRepository.Interface
     public interface IBookingRepository
     {
         public List<Booking> GetAll();
-		public void Add(Booking booking);
+        public Booking? GetBookingById(int id);
+        public void Add(Booking booking);
 	}
 }

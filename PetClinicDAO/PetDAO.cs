@@ -51,9 +51,9 @@ namespace PetClinicDAO
             return context.PetHealths.ToList();
         }
 
-        public PetHealth GetPetHealthByPetId(int petId)
+        public PetHealth GetPetHealthByPetId(int? petId)
         {
-            return context.PetHealths.FirstOrDefault(p => p.PetId == petId);
+            return context.PetHealths.FirstOrDefault(p => p.PetId == petId)!;
         }
 
         public void AddPet(Pet pet)
@@ -91,6 +91,15 @@ namespace PetClinicDAO
             }
             context.PetHealths.Update(petHealth);
             context.SaveChanges();
+        }
+
+        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId)
+        {
+            var petHealth = context.PetHealths
+                .Include(ph => ph.VaccinationRecords)
+                .FirstOrDefault(ph => ph.PetHealthId == petHealthId);
+
+            return petHealth!.VaccinationRecords.FirstOrDefault()!;
         }
     }
 }

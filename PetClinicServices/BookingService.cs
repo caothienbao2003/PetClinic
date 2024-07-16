@@ -27,9 +27,16 @@ namespace PetClinicServices
             bookingRepository.Add(booking);
         }
 
+        public Booking? GetBookingById(int id)
+        {
+            return bookingRepository.GetBookingById(id);
+        }
+
         public List<Booking> GetAll()
         {
             return bookingRepository.GetAll();
         }
-	}
+
+        
+    }
 }
