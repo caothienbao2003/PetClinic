@@ -24,13 +24,11 @@ namespace PetClinicBussinessObject
         public virtual Pet? Pet { get; set; }
         public virtual ICollection<HospitalizeLog> HospitalizeLogs { get; set; }
 
-
         [NotMapped]
         public HospitalizeStatus? HospitalizeEnumStatus
         {
             get { return (HospitalizeStatus?)ActiveStatus; }
             set { ActiveStatus = (int?)value; }
         }
-
     }
 }

@@ -8,7 +8,7 @@ namespace PetClinicBussinessObject
         public Medicine()
         {
             PrescriptionMedicines = new HashSet<PrescriptionMedicine>();
-            RecordMedicines = new HashSet<RecordMedicine>();
+            VaccinationRecords = new HashSet<VaccinationRecord>();
         }
 
         public int MedicineId { get; set; }
@@ -19,6 +19,6 @@ namespace PetClinicBussinessObject
 
         public virtual MedicineType? MedicineType { get; set; }
         public virtual ICollection<PrescriptionMedicine> PrescriptionMedicines { get; set; }
-        public virtual ICollection<RecordMedicine> RecordMedicines { get; set; }
+        public virtual ICollection<VaccinationRecord> VaccinationRecords { get; set; }
     }
 }

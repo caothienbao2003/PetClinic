@@ -14,32 +14,32 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].VaccinationDetailsId)
+                @Html.DisplayNameFor(model => model.vaccinationRecordList[0].VaccinationRecordId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].MedicineId)
+                @Html.DisplayNameFor(model => model.vaccinationRecordList[0].MedicineId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].VaccinationDate)
+                @Html.DisplayNameFor(model => model.vaccinationRecordList[0].VaccinationDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].NextDueDate)
+                @Html.DisplayNameFor(model => model.vaccinationRecordList[0].NextDueDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].VaccinatedAt)
+                @Html.DisplayNameFor(model => model.vaccinationRecordList[0].VaccinatedAt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vaccinationDetailsList[0].Verification)
+                @Html.DisplayNameFor(model => model.vaccinationRecordList[0].Verification)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.vaccinationDetailsList)
+        @foreach (var item in Model.vaccinationRecordList)
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VaccinationDetailsId)
+                @Html.DisplayFor(modelItem => item.VaccinationRecordId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MedicineId)
@@ -57,9 +57,9 @@
                 @Html.DisplayFor(modelItem => item.Verification)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.VaccinationDetailsId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.VaccinationDetailsId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.VaccinationDetailsId">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.VaccinationRecordId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.VaccinationRecordId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.VaccinationRecordId">Delete</a>
             </td>
         </tr>
         }

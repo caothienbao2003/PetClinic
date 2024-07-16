@@ -32,9 +32,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.petHealthList[0].PetId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.petHealthList[0].VaccinationRecordsId)
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -58,9 +55,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PetId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VaccinationRecordsId)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.PetId">Edit</a> |

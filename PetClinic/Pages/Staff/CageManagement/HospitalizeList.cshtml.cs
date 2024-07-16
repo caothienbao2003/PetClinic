@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.StaffPages.CageManagement
+namespace PetClinic.Pages.Staff.CageManagement
 {
     public class HospitalizeListModel : PageModel
     {
@@ -54,7 +54,7 @@ namespace PetClinic.Pages.StaffPages.CageManagement
             //    }
             //}
 
-            return RedirectToPage("/StaffPages/CageManagement/Index");
+            return RedirectToPage("/Staff/CageManagement/Index");
         }
 
         public IActionResult OnPostCreateLog(int HospitalizeId, string Description)

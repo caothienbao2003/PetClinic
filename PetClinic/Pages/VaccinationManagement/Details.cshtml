@@ -12,38 +12,38 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VaccinationDetail.VaccinationDate)
+            @Html.DisplayNameFor(model => model.record.VaccinationDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VaccinationDetail.VaccinationDate)
+            @Html.DisplayFor(model => model.record.VaccinationDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VaccinationDetail.NextDueDate)
+            @Html.DisplayNameFor(model => model.record.NextDueDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VaccinationDetail.NextDueDate)
+            @Html.DisplayFor(model => model.record.NextDueDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VaccinationDetail.VaccinatedAt)
+            @Html.DisplayNameFor(model => model.record.VaccinatedAt)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VaccinationDetail.VaccinatedAt)
+            @Html.DisplayFor(model => model.record.VaccinatedAt)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VaccinationDetail.Verification)
+            @Html.DisplayNameFor(model => model.record.Verification)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VaccinationDetail.Verification)
+            @Html.DisplayFor(model => model.record.Verification)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VaccinationDetail.Medicine)
+            @Html.DisplayNameFor(model => model.record.Medicine)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.VaccinationDetail.Medicine.MedicineId)
+            @Html.DisplayFor(model => model.record.Medicine.MedicineId)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.VaccinationDetail?.VaccinationDetailsId">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.record?.VaccinationRecordId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

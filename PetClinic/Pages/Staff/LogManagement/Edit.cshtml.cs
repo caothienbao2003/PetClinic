@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.StaffPages.LogManagement
+namespace PetClinic.Pages.Staff.LogManagement
 {
     public class EditModel : PageModel
     {

@@ -13,18 +13,18 @@ namespace PetClinic.Pages.VaccinationManagement
 {
     public class IndexModel : PageModel
     {
-        private readonly IVaccinationDetailService vaccinationDetailService;
+        private readonly IVaccinationRecordService vaccinationRecordService;
 
-        public IndexModel(IVaccinationDetailService _vaccinationDetailService)
+        public IndexModel(IVaccinationRecordService _vaccinationRecordService)
         {
-            vaccinationDetailService = _vaccinationDetailService;
+            vaccinationRecordService = _vaccinationRecordService;
         }
 
-        public List<VaccinationDetail> vaccinationDetailsList { get;set; } = default!;
+        public List<VaccinationRecord> vaccinationRecordList { get;set; } = default!;
 
         public void OnGet()
         {
-            vaccinationDetailsList = vaccinationDetailService.GetVaccinationDetailsList();
+            vaccinationRecordList = vaccinationRecordService.GetVaccinationRecordsList();
         }
     }
 }

@@ -30,7 +30,6 @@ namespace PetClinicBussinessObject
         public virtual DbSet<PetHealth> PetHealths { get; set; } = null!;
         public virtual DbSet<Prescription> Prescriptions { get; set; } = null!;
         public virtual DbSet<PrescriptionMedicine> PrescriptionMedicines { get; set; } = null!;
-        public virtual DbSet<RecordMedicine> RecordMedicines { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
         public virtual DbSet<Service> Services { get; set; } = null!;
         public virtual DbSet<Shift> Shifts { get; set; } = null!;
@@ -42,8 +41,8 @@ namespace PetClinicBussinessObject
             if (!optionsBuilder.IsConfigured)
             {
                 var config = new ConfigurationBuilder()
-                                            .SetBasePath(Directory.GetCurrentDirectory())
-                                            .AddJsonFile("appsettings.json", true, true).Build();
+                                .SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile("appsettings.json", true, true).Build();
                 var connectionString = config.GetConnectionString("PetClinic");
                 optionsBuilder.UseSqlServer(connectionString);
             }
@@ -228,7 +227,7 @@ namespace PetClinicBussinessObject
             modelBuilder.Entity<PrescriptionMedicine>(entity =>
             {
                 entity.HasKey(e => new { e.PrescriptionId, e.MedicineId })
-                    .HasName("PK__Prescrip__54E11ABBD22C9C61");
+                    .HasName("PK__Prescrip__54E11ABB196A59DB");
 
                 entity.ToTable("Prescription_Medicine");
 
@@ -245,26 +244,6 @@ namespace PetClinicBussinessObject
                     .HasForeignKey(d => d.PrescriptionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Prescript__Presc__52593CB8");
-            });
-
-            modelBuilder.Entity<RecordMedicine>(entity =>
-            {
-                entity.HasKey(e => new { e.VaccinationRecordId, e.MedicineId })
-                    .HasName("PK__Record_M__BA0085F5645FD658");
-
-                entity.ToTable("Record_Medicine");
-
-                entity.HasOne(d => d.Medicine)
-                    .WithMany(p => p.RecordMedicines)
-                    .HasForeignKey(d => d.MedicineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Record_Me__Medic__5DCAEF64");
-
-                entity.HasOne(d => d.VaccinationRecord)
-                    .WithMany(p => p.RecordMedicines)
-                    .HasForeignKey(d => d.VaccinationRecordId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Record_Me__Vacci__5CD6CB2B");
             });
 
             modelBuilder.Entity<Schedule>(entity =>
@@ -334,6 +313,11 @@ namespace PetClinicBussinessObject
                 entity.Property(e => e.VaccinatedAt).HasMaxLength(255);
 
                 entity.Property(e => e.VaccinationDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Medicine)
+                    .WithMany(p => p.VaccinationRecords)
+                    .HasForeignKey(d => d.MedicineId)
+                    .HasConstraintName("FK__Vaccinati__Medic__5AEE82B9");
 
                 entity.HasOne(d => d.PetHealth)
                     .WithMany(p => p.VaccinationRecords)

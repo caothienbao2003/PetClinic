@@ -20,23 +20,23 @@ namespace PetClinic.Pages.VaccinationManagement
 
         public IActionResult OnGet()
         {
-        ViewData["MedicineId"] = new SelectList(_context.Medicines, "MedicineId", "MedicineId");
+            ViewData["MedicineId"] = new SelectList(_context.Medicines, "MedicineId", "MedicineId");
             return Page();
         }
 
         [BindProperty]
-        public VaccinationDetail VaccinationDetail { get; set; } = default!;
+        public VaccinationRecord record { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.VaccinationDetails == null || VaccinationDetail == null)
+          if (!ModelState.IsValid || _context.VaccinationRecords == null || record == null)
             {
                 return Page();
             }
 
-            _context.VaccinationDetails.Add(VaccinationDetail);
+            _context.VaccinationRecords.Add(record);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
