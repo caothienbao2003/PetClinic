@@ -1,0 +1,75 @@
+﻿@page
+@model PetClinic.Pages.Customer.BookingManagement.BookingConfirmationModel
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+<link href="~/css/bookingpage.css" rel="stylesheet" />
+
+<style>
+    .confirmation-container {
+        margin: 50px auto;
+        padding: 30px;
+        max-width: 500px;
+        border: 2px solid #4CAF50;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .confirmation-header {
+        font-size: 24px;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-bottom: 20px;
+    }
+
+    .confirmation-details {
+        margin-bottom: 20px;
+    }
+
+        .confirmation-details p {
+            margin: 5px 0;
+        }
+
+    .btn-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+        .btn-container .btn {
+            width: 100px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            .btn-container .btn:hover {
+                background-color: #45a049;
+            }
+</style>
+
+<div class="confirmation-container">
+    <div class="confirmation-header">CONFIRMATION</div>
+    <div class="confirmation-details">
+        <p><strong>Name:</strong> Cutomer asdasd</p>
+        <p><strong>Phone:</strong> asdasd</p>
+        <p><strong>Pet:</strong> asdad</p>
+        <p><strong>12-02-2024</strong></p>
+        <p><strong>Slot:</strong> 7:00-8:00</p>
+        <p><strong>Doctor:</strong> Doctor asdsd</p>
+    </div>
+    <div class="btn-container">
+        <a asp-page="/PreviousPage" class="btn">Back</a>
+        <form method="post">
+            <button type="submit" class="btn">Book</button>
+        </form>
+    </div>
+</div>

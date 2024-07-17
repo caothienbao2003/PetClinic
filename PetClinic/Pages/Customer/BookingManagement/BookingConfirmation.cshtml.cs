@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PetClinic.Pages.BookingManagement
+namespace PetClinic.Pages.Customer.BookingManagement
 {
-    public class BookingCalendarModel : PageModel
+    public class BookingConfirmationModel : PageModel
     {
         public void OnGet()
         {

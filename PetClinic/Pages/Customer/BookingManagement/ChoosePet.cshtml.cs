@@ -42,7 +42,7 @@ namespace PetClinic.Pages.BookingManagement
                 TempData["SelectedPetId"] = SelectedPetId;
             }
 
-            Response.Redirect("ChooseDate");
+            Response.Redirect("ChooseDateShiftDoctor");
         }
     }
 }

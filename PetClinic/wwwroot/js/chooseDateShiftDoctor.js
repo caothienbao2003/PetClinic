@@ -1,29 +1,4 @@
-﻿function changeMonth(offset) {
-    let currentMonthYear = document.getElementById("monthYearDisplay").innerText;
-    let date = new Date(currentMonthYear + " 1");
-    date.setMonth(date.getMonth() + offset);
-
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-
-    $.ajax({
-        url: '?handler=ChooseDateShiftDoctor',
-        type: 'GET',
-        data: {
-            year: year,
-            month: month,
-            selectedPetId: selectedPetId
-        },
-        success: function (data) {
-            $('#calendarBody').html(data);
-        },
-        error: function (xhr, status, error) {
-            console.error('Error:', error);
-        }
-    });
-}
-
-function selectDate(date) {
+﻿function selectDate(date) {
     document.getElementById("CurrentDateOnCalendar").value = date;
     document.getElementById("SelectedDate").value = date;
     document.getElementById("dateForm").submit();

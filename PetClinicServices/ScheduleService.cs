@@ -25,11 +25,8 @@ namespace PetClinicServices
 
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId) => scheduleRepository.GetAvailableScheduleList(date, shiftId);
 
-        public List<Schedule> GetAvailableScheduleListByDate(DateTime date) => scheduleRepository.GetAvailableScheduleListByDate(date);
-
+        public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId) => scheduleRepository.GetAvailableScheduleList(date, shiftId, doctorId);
         public List<Schedule> GetScheduleList(DateTime date, int shiftId) => scheduleRepository.GetScheduleList(date, shiftId);
-        public List<Schedule> GetScheduleListByDate(DateTime date) => scheduleRepository.GetScheduleListByDate(date);
-
         public void UpdateSchedule(Schedule schedule) => scheduleRepository.UpdateSchedule(schedule);
     }
 }

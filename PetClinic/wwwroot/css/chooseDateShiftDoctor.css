@@ -1,4 +1,18 @@
-﻿body {
+﻿.available-date:hover {
+    background-color: #d1ecf1;
+    cursor: pointer;
+}
+
+.available-date {
+    background-color: white;
+}
+
+.unavailable-date {
+    background-color: white;
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
 }
@@ -28,44 +42,28 @@
 
 .calendar-container {
     border-right: 1px solid #ddd;
+    padding: 20px;
 }
 
 .calendar {
     width: 100%;
     border-collapse: collapse;
+    background-color: white;
 }
 
     .calendar th, .calendar td {
-        padding: 10px;
+        padding: 0;
+        margin: 0;
         text-align: center;
         border: 1px solid #ddd;
+        background-color: white;
     }
 
     .calendar th {
         font-weight: bold;
         text-transform: uppercase;
         color: #333;
-    }
-
-    .calendar td.available-date {
-        cursor: pointer;
-        color: #4CAF50;
-        transition: background-color 0.3s, transform 0.3s;
-    }
-
-        .calendar td.available-date:hover {
-            background-color: #E8F5E9;
-            border-radius: 50%;
-        }
-
-    .calendar td.unavailable-date {
-        color: #ddd;
-    }
-
-    .calendar td.selected-date {
-        background-color: #2196F3;
-        color: white;
-        border-radius: 50%;
+        background-color: white;
     }
 
 .details-container h2 {
@@ -75,7 +73,7 @@
     color: #333;
 }
 
-.slots-container, .doctors-container {
+.shifts-container, .doctors-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -83,7 +81,8 @@
     justify-content: center;
 }
 
-.slot, .doctor {
+.shift, .doctor {
+    opacity: 1;
     flex: 0 0 calc(50% - 10px);
     padding: 15px;
     text-align: center;
@@ -98,10 +97,19 @@
     box-sizing: border-box;
 }
 
-    .slot.selected, .doctor.selected {
+    .shift.selected, .doctor.selected {
         background-color: #4CAF50;
         color: white;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .shift.unavailable, .doctor.unavailable {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .shift .btn, .doctor .btn {
+        background-color: inherit;
     }
 
 .btn-primary {
@@ -115,6 +123,56 @@
 
     .btn-primary:hover {
         background-color: #45a049;
+    }
+
+.btn-transparent {
+    background-color: transparent;
+    border: 1px;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    outline: none;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-cell {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 10px;
+    font: inherit;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: inherit;
+    text-transform: uppercase;
+    color: #333;
+    background-color: white;
+}
+
+    .btn-cell.available-date {
+        cursor: pointer;
+        color: #4CAF50;
+        transition: background-color 0.3s, transform 0.3s;
+        background-color: white;
+    }
+
+        .btn-cell.available-date:hover {
+            background-color: #E8F5E9;
+        }
+
+    .btn-cell.unavailable-date {
+        cursor: not-allowed;
+        color: #ddd;
+        pointer-events: none; /* Prevent clicking */
+    }
+
+    .btn-cell.selected-date {
+        background-color: #4CAF50;
+        color: white;
     }
 
 .back-link {
@@ -133,27 +191,57 @@
 .navigation-buttons {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 20px;
     max-width: 300px;
     margin: 0 auto 20px;
     width: 100%;
 }
 
+    .navigation-buttons button.disabled {
+        color: #ccc;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
 .month-year-wrapper {
     flex-grow: 1;
     text-align: center;
-    margin: 0 20px;
+    font-size: 18px;
+    color: #333;
 }
 
-.navigation-buttons i {
-    font-size: 24px;
-    cursor: pointer;
-    color: #4CAF50;
-    transition: color 0.3s;
-    margin: 0 10px;
+.navigation-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    max-width: 300px;
+    width: 100%;
 }
 
     .navigation-buttons i:hover {
         color: #45a049;
     }
+
+    .navigation-buttons button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        color: #4CAF50;
+        font-size: 24px;
+        transition: color 0.3s;
+    }
+
+        .navigation-buttons button:hover {
+            color: #45a049;
+        }
+
+.selected-date {
+    background-color: #ffeeba;
+}
+
+.hidden {
+    display: none;
+}
