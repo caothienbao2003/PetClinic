@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
-using PetClinicServices;
-using PetClinicDAO;
-using System.Net;
+using System.Collections.Generic;
 
 namespace PetClinic.Pages.Admin.AdminManageService
 {
@@ -18,19 +16,6 @@ namespace PetClinic.Pages.Admin.AdminManageService
         public int totalBookings { get; set; }
 
         [BindProperty]
-        public int updateServiceId { get; set; }
-
-        [BindProperty]
-        public string updateServiceName { get; set; }
-        [BindProperty]
-        public int updateServicePrice { get; set; }
-        [BindProperty]
-        public string updateServiceDescription { get; set; }
-        [BindProperty]
-        public int updateActiveStatus { get; set; }
-
-
-        [BindProperty]
         public string newServiceName { get; set; }
         [BindProperty]
         public int newServicePrice { get; set; }
@@ -38,7 +23,6 @@ namespace PetClinic.Pages.Admin.AdminManageService
         public string newServiceDescription { get; set; }
         [BindProperty]
         public int newActiveStatus { get; set; }
-
 
         [BindProperty]
         public IList<Service> Services { get; set; }
@@ -55,74 +39,41 @@ namespace PetClinic.Pages.Admin.AdminManageService
             InitializePage();
         }
 
-		public IActionResult OnPostCreateService()
-		{
-            //ModelState.Clear();
-			if (!ModelState.IsValid)
-			{
-                InitializePage();
-
-                ModelState.Clear();
-				ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
-				return Page(); // Stay on the page with validation errors
-			}
-
-			try
-			{
-				var newService = new Service
-				{
-					ServiceName = newServiceName,
-					Price = newServicePrice,
-					ServiceDescription = newServiceDescription,
-					ActiveStatus = 1
-				};
-
-				serviceService.AddService(newService);
-                InitializePage();
-				return Page();
-			}
-			catch (Exception ex)
-			{
-                InitializePage();
-				ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
-				return Page(); 
-			}
-		}
-
-
-		public IActionResult OnPostUpdateService()
+        public IActionResult OnPostCreateService()
         {
-            Service existingService = serviceService.GetServiceById(updateServiceId);
-            if (existingService == null)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Non-existing service");
-                return RedirectToPage(); // Stay on the registration page with error message
+                InitializePage();
+                ModelState.Clear();
+                ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
+                return Page(); // Stay on the page with validation errors
             }
 
             try
             {
-                // Proceed with update
-                existingService.ServiceName = updateServiceName;
-                existingService.Price = updateServicePrice;
-                existingService.ServiceDescription = updateServiceDescription;
-                existingService.ActiveStatus = updateActiveStatus;
+                var newService = new Service
+                {
+                    ServiceName = newServiceName,
+                    Price = newServicePrice,
+                    ServiceDescription = newServiceDescription,
+                    ActiveStatus = 1
+                };
 
-                serviceService.UpdateService(existingService);
-
-                return RedirectToPage();
+                serviceService.AddService(newService);
+                InitializePage();
+                return Page();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, "Error occurred while updating service.");
-                return RedirectToPage(); // Stay on the registration page with error message
+                InitializePage();
+                ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
+                return Page();
             }
         }
 
         private void InitializePage()
         {
-			Console.WriteLine("Hohohoh");
-			Services = serviceService.GetAllServices();
-			Console.WriteLine("hehe");
-		}
+            Services = serviceService.GetAllServices();
+        }
     }
 }

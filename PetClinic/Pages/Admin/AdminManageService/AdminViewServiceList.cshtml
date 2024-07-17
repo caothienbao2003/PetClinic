@@ -74,7 +74,9 @@
 								<td>@service.ServiceDescription</td>
 								<td>@(service.ActiveStatus == 1 ? "Active" : "Inactive")</td>
 								<td>
-									<button class="btn-update" onclick="openUpdateModal(@service.ServiceId)">Update</button>
+								<td>
+									<a class="btn-update" href="/Admin/AdminManageService/AdminUpdateService?id=@service.ServiceId">Update</a>
+								</td>
 								</td>
 							</tr>
 						}
@@ -99,30 +101,7 @@
 					</form>
 				</div>
 			</div>
-
-			<!-- Update Service Modal -->
-			<div id="updateServiceModal" class="modal">
-				<div class="modal-content">
-					<span class="close" onclick="closeModal('updateServiceModal')">&times;</span>
-					<h2>Update Service</h2>
-					<form id="updateServiceForm" method="post" asp-page-handler="UpdateService">
-						<input type="hidden" id="UpdateServiceId" asp-for="updateServiceId" class="form-control" />
-						<input type="text" id="UpdateServiceName" asp-for="updateServiceName" class="form-control">
-						<input type="number" id="UpdateServicePrice" asp-for="updateServicePrice" class="form-control">
-						<textarea id="UpdateServiceDescription" asp-for="updateServiceDescription" class="form-control"></textarea>
-						<select id="UpdateActiveStatus" name="ActiveStatus">
-							<option value="1">Active</option>
-							<option value="0">Inactive</option>
-						</select>
-
-						<button type="submit">Update</button>
-
-					</form>
-				</div>
-			</div>
 		</main>
-
-		
 	</div>
 	<!-- Display error messages -->
 	<div class="form-group">

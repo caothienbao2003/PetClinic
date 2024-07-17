@@ -1,0 +1,91 @@
+﻿@page "{serviceId:int}"
+@model PetClinic.Pages.Admin.AdminManageService.AdminUpdateServiceModel
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Update Service</title>
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css">
+</head>
+<body>
+	<header class="header">
+		<div class="header-box-container"></div>
+		<div class="header-buttons">
+			<button onclick="location.href='/Admin/AdminProfile'">Profile</button>
+			<button onclick="location.href='/Authentication/Logout'">Logout</button>
+			<button onclick="location.href='/Authentication/Login'">Login</button>
+		</div>
+	</header>
+
+	<div class="container">
+		<aside class="sidebar">
+			<nav>
+				<ul>
+					<li><a href="/Admin/AdminHomePage">Home</a></li>
+					<li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
+					<li><a href="/Admin/AdminManageStaff/StaffManagement">Staff Management</a></li>
+					<li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
+					<li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
+					<li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
+					<li><a href="/Admin/AdminManageSchedule/ScheduleManagement">Schedule Management</a></li>
+					<li><a href="/Admin/AdminManageService/AdminViewServiceList">Service Management</a></li>
+					<li><a href="/Admin/AdminManageCage/CageManagement">Cage Management</a></li>
+					<li><a href="/Admin/AdminManageMedicine/MedicineManagement">Medicine Management</a></li>
+				</ul>
+			</nav>
+		</aside>
+
+		<main class="main-content">
+			<h1>
+				Update Service</h>
+				<form id="updateServiceForm" method="post">
+					<input type="hidden" asp-for="updateServiceId" />
+					<div>
+						<label for="updateServiceName">Service Name:</label>
+						<input type="text" id="updateServiceName" asp-for="updateServiceName" class="form-control" />
+					</div>
+					<div>
+						<label for="updateServicePrice">Price:</label>
+						<input type="number" id="updateServicePrice" asp-for="updateServicePrice" class="form-control" />
+					</div>
+					<div>
+						<label for="updateServiceDescription">Description:</label>
+						<textarea id="updateServiceDescription" asp-for="updateServiceDescription" class="form-control"></textarea>
+					</div>
+					<div>
+						<label for="updateActiveStatus">Status:</label>
+						<select id="updateActiveStatus" asp-for="updateActiveStatus" class="form-control">
+							<option value="1">Active</option>
+							<option value="0">Inactive</option>
+						</select>
+					</div>
+					<button type="submit">Update</button>
+				</form>
+
+				<div class="form-group">
+					<div asp-validation-summary="All" class="text-danger"></div>
+				</div>
+		</main>
+	</div>
+
+	<footer>
+		<p>&copy; 2024 Pet Clinic. All rights reserved.</p>
+		<p>1234 Clinic Address, HCM, Viet Nam</p>
+	</footer>
+
+	<script>
+		document.getElementById('updateServiceForm').onsubmit = function () {
+			if (!confirm('Are you sure you want to update this service?')) {
+				return false;
+			}
+		};
+	</script>
+</body>
+</html>
+
+
