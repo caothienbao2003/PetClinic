@@ -32,6 +32,13 @@ namespace PetClinic.Pages.Authentication
 
 		public void OnPostLogin()
 		{
+			ModelState.Clear();
+			if (!ModelState.IsValid)
+			{
+				return; // Stay on the registration page with validation errors
+			}
+
+
 			bool isAdmin = userService.IsAdmin(new() { Email = email, Password = password });
 
 			if (isAdmin)
@@ -62,6 +69,7 @@ namespace PetClinic.Pages.Authentication
 				}
 				else
 				{
+					ModelState.AddModelError(string.Empty, "Wrong Email or Password");
 					return;
 				}
 			}

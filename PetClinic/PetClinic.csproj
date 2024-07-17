@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\adminHomePage.js" />
+    <None Include="wwwroot\js\adminManageService.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PetClinicServices\PetClinicServices.csproj" />
   </ItemGroup>
 
@@ -20,10 +25,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.17" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Service Management\" />
   </ItemGroup>
 
 </Project>

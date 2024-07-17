@@ -20,7 +20,7 @@ namespace PetClinicDAO
         {
             context = new PetClinicContext();
         }
-
+           
         public static UserDAO Instance
         {
             get
