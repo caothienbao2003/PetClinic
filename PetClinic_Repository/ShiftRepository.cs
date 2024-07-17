@@ -14,5 +14,6 @@ namespace PetClinicRepository
         public List<Shift> GetAllShifts() => ShiftDAO.Instance.GetAllShifts();
         public List<Shift> GetAllDoctorShifts() => ShiftDAO.Instance.GetAllShiftWithShiftType(ShiftType.Doctor);
         public List<Shift> GetAllStaffShifts() => ShiftDAO.Instance.GetAllShiftWithShiftType(ShiftType.Staff);
+        public Shift GetShiftById(int shiftId) => ShiftDAO.Instance.GetShiftById(shiftId);
     }
 }

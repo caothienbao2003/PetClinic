@@ -22,7 +22,7 @@ namespace PetClinicServices
             }
         }
 
-        public void Add(Booking booking)
+        public void AddBooking(Booking booking)
         {
             bookingRepository.Add(booking);
         }

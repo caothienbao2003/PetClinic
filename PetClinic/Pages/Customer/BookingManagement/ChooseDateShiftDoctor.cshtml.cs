@@ -240,6 +240,9 @@ namespace PetClinic.Pages.BookingManagement
         public void OnPostNext()
         {
             Console.WriteLine("Next Pet id: " + SelectedPetId);
+            Console.WriteLine("SelectedDate: " + SelectedDate);
+            Console.WriteLine("SelectedShiftId: " + SelectedShiftId);
+            Console.WriteLine("SelectedDoctorId: " + SelectedDoctorId);
 
             TempData["SelectedPetId"] = SelectedPetId;
             TempData["SelectedDate"] = SelectedDate;

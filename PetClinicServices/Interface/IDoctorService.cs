@@ -10,5 +10,6 @@ namespace PetClinicServices.Interface
     public interface IDoctorService
     {
         public List<User> GetAllDoctors();
+        public User GetDoctorById(int doctorId);
     }
 }
