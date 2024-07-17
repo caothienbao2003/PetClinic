@@ -1,121 +1,119 @@
 ﻿@page
 @model PetClinic.Pages.Admin.AdminManageService.AdminViewServiceListModel
 @{
-	Layout = null;
+    Layout = null;
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin Service Management</title>
-	<link rel="stylesheet" href="~/css/khoiadminstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Service Management</title>
+    <link rel="stylesheet" href="~/css/khoiadminstyle.css">
 </head>
 <body>
-	<header class="header">
-		<div class="header-box-container">
-			<!-- Remove these lines if the properties are not required -->
-			<!--
-			<div class="header-box">Revenue: $@Model.revenue</div>
-			<div class="header-box">Total Customers: @Model.totalCustomers</div>
-			<div class="header-box">Total Bookings: @Model.totalBookings</div>
-			-->
-		</div>
-		<div class="header-buttons">
-			<button onclick="location.href='/Admin/AdminProfile'">Profile</button>
-			<button onclick="location.href='/Authentication/Logout'">Logout</button>
-			<button onclick="location.href='/Authentication/Login'">Login</button>
-		</div>
-	</header>
+    <header class="header">
+        <div class="header-box-container">
+            <!-- Remove these lines if the properties are not required -->
+            <!--
+            <div class="header-box">Revenue: $@Model.revenue</div>
+            <div class="header-box">Total Customers: @Model.totalCustomers</div>
+            <div class="header-box">Total Bookings: @Model.totalBookings</div>
+            -->
+        </div>
+        <div class="header-buttons">
+            <button onclick="location.href='/Admin/AdminProfile'">Profile</button>
+            <button onclick="location.href='/Authentication/Logout'">Logout</button>
+            <button onclick="location.href='/Authentication/Login'">Login</button>
+        </div>
+    </header>
 
-	<div class="container">
-		<aside class="sidebar">
-			<nav>
-				<ul>
-					<li><a href="/Admin/AdminHomePage">Home</a></li>
-					<li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
-					<li><a href="/Admin/AdminManageStaff/StaffManagement">Staff Management</a></li>
-					<li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
-					<li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
-					<li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
-					<li><a href="/Admin/AdminManageSchedule/ScheduleManagement">Schedule Management</a></li>
-					<li><a href="/Admin/AdminManageService/AdminViewServiceList">Service Management</a></li>
-					<li><a href="/Admin/AdminManageCage/CageManagement">Cage Management</a></li>
-					<li><a href="/Admin/AdminManageMedicine/MedicineManagement">Medicine Management</a></li>
-				</ul>
-			</nav>
-		</aside>
+    <div class="container">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="/Admin/AdminHomePage">Home</a></li>
+                    <li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
+                    <li><a href="/Admin/AdminManageStaff/StaffManagement">Staff Management</a></li>
+                    <li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
+                    <li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
+                    <li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
+                    <li><a href="/Admin/AdminManageSchedule/ScheduleManagement">Schedule Management</a></li>
+                    <li><a href="/Admin/AdminManageService/AdminViewServiceList">Service Management</a></li>
+                    <li><a href="/Admin/AdminManageCage/CageManagement">Cage Management</a></li>
+                    <li><a href="/Admin/AdminManageMedicine/MedicineManagement">Medicine Management</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-		<main class="main-content">
-			<h1>Service Management</h1>
+        <main class="main-content">
+            <h1>Service Management</h1>
 
-			<div class="service-management">
-				<button id="createServiceBtn" class="btn-create">Create New Service</button>
+            <div class="service-management">
+                <button id="createServiceBtn" class="btn-create">Create New Service</button>
 
-				<table class="service-table">
-					<thead>
-						<tr>
-							<th>Service ID</th>
-							<th>Service Name</th>
-							<th>Price</th>
-							<th>Description</th>
-							<th>Status</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var service in Model.Services)
-						{
-							<tr>
-								<td>@service.ServiceId</td>
-								<td>@service.ServiceName</td>
-								<td>@service.Price</td>
-								<td>@service.ServiceDescription</td>
-								<td>@(service.ActiveStatus == 1 ? "Active" : "Inactive")</td>
-								<td>
-								<td>
-									<a class="btn-update" href="/Admin/AdminManageService/AdminUpdateService?id=@service.ServiceId">Update</a>
-								</td>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
+                <table class="service-table">
+                    <thead>
+                        <tr>
+                            <th>Service ID</th>
+                            <th>Service Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var service in Model.Services)
+                        {
+                            <tr>
+                                <td>@service.ServiceId</td>
+                                <td>@service.ServiceName</td>
+                                <td>@service.Price</td>
+                                <td>@service.ServiceDescription</td>
+                                <td>@(service.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+                                <td>
+                                    <a class="btn-update" asp-page="AdminUpdateService" asp-route-serviceId="@service.ServiceId">Update</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
-			<!-- Create Service Modal -->
-			<div id="createServiceModal" class="modal">
-				<div class="modal-content">
-					<span class="close" onclick="closeModal('createServiceModal')">&times;</span>
-					<h2>Create New Service</h2>
-					<form id="createServiceForm" method="post" asp-page-handler="CreateService">
-						<label for="ServiceName">Service Name:</label>
-						<input type="text" id="ServiceName" asp-for="newServiceName" class="form-control">
-						<label for="Price">Price:</label>
-						<input type="number" id="Price" asp-for="newServicePrice" class="form-control">
-						<label for="ServiceDescription">Description:</label>
-						<textarea id="ServiceDescription" asp-for="newServiceDescription" class="form-control"></textarea>
+            <!-- Create Service Modal -->
+            <div id="createServiceModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('createServiceModal')">&times;</span>
+                    <h2>Create New Service</h2>
+                    <form id="createServiceForm" method="post" asp-page-handler="CreateService">
+                        <label for="ServiceName">Service Name:</label>
+                        <input type="text" id="ServiceName" asp-for="newServiceName" class="form-control">
+                        <label for="Price">Price:</label>
+                        <input type="number" id="Price" asp-for="newServicePrice" class="form-control">
+                        <label for="ServiceDescription">Description:</label>
+                        <textarea id="ServiceDescription" asp-for="newServiceDescription" class="form-control"></textarea>
 
-						<button type="submit">Create</button>
-					</form>
-				</div>
-			</div>
-		</main>
-	</div>
-	<!-- Display error messages -->
-	<div class="form-group">
-		<div asp-validation-summary="All" class="text-danger"></div>
-	</div>
-	<footer>
-		<p>&copy; 2024 Pet Clinic. All rights reserved.</p>
-		<p>1234 Clinic Address, HCM, Viet Nam</p>
-	</footer>
+                        <button type="submit">Create</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Display error messages -->
+    <div class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Pet Clinic. All rights reserved.</p>
+        <p>1234 Clinic Address, HCM, Viet Nam</p>
+    </footer>
 
-	<script>
-		var services = @Html.Raw(Json.Serialize(Model.Services));
-	</script>
+    <script>
+        var services = @Html.Raw(Json.Serialize(Model.Services));
+    </script>
 
-	<script src="~/js/adminManageService.js"></script>
+    <script src="~/js/adminManageService.js"></script>
 </body>
 </html>
