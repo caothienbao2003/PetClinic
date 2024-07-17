@@ -67,5 +67,10 @@ namespace PetClinicServices
 		{
 			return userRepository.GetUserListWithRole(userRole);
 		}
+
+        public void UpdateUser(User user)
+        {
+            userRepository.UpdateUser(user);
+        }
 	}
 }

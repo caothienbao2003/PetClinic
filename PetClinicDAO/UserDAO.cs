@@ -90,5 +90,18 @@ namespace PetClinicDAO
                 .Include(u => u.Pets)
                 .ToList();
         }
+
+        public void UpdateUser(User user)
+        {
+            var existingUser = context.Users.Local.FirstOrDefault(u => u.UserId == user.UserId);
+
+            if (existingUser != null)
+            {
+                context.Entry(existingUser).State = EntityState.Detached;
+            }
+
+            context.Entry(user).State = EntityState.Modified;
+            context.SaveChanges();
+        }
     } 
 }

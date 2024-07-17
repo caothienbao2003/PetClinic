@@ -56,15 +56,15 @@ namespace PetClinic.Pages.Authentication
 
 					if (user.Role == 0)
 					{
-						Response.Redirect("/Privacy");
+						Response.Redirect("/Customer/CustomerHomePage");
 					}
 					else if (user.Role == 1)
 					{
-						Response.Redirect("/BookingManagement/Index");
+						Response.Redirect("/Staff/StaffHomePage");
 					}
 					else if (user.Role == 2)
 					{
-						Response.Redirect("/PetManagement/Index");
+						Response.Redirect("/Doctor/DoctorHomePage");
 					}
 				}
 				else
