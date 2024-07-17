@@ -33,12 +33,12 @@ namespace PetClinicDAO
 
         public List<MedicalRecord> GetMedicalRecordsList()
         {
-            return context.MedicalRecords.Include(b => b.Booking).Include(d => d.Doctor).Include(p => p.Prescription).Include(s => s.Service).ToList();
+            return context.MedicalRecords.Include(b => b.Booking).Include(d => d.Doctor).Include(s => s.Service).ToList();
         }
 
         public MedicalRecord GetMedicalRecordByBookingId(int id)
         {
-            return context.MedicalRecords.Include(b => b.Booking).Include(d => d.Doctor).Include(p => p.Prescription).Include(s => s.Service).FirstOrDefault(m => m.BookingId == id)!;
+            return context.MedicalRecords.Include(b => b.Booking).Include(d => d.Doctor).Include(s => s.Service).FirstOrDefault(m => m.BookingId == id)!;
         }
 
         public void AddMedicalRecord(MedicalRecord medicalRecord)

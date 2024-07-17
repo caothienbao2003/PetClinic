@@ -19,16 +19,16 @@ namespace PetClinic.Pages.VaccinationManagement
         }
 
         [BindProperty]
-      public VaccinationDetail VaccinationDetail { get; set; } = default!;
+      public VaccinationRecord record { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.VaccinationDetails == null)
+            if (id == null || _context.VaccinationRecords == null)
             {
                 return NotFound();
             }
 
-            var vaccinationdetail = await _context.VaccinationDetails.FirstOrDefaultAsync(m => m.VaccinationDetailsId == id);
+            var vaccinationdetail = await _context.VaccinationRecords.FirstOrDefaultAsync(m => m.VaccinationRecordId == id);
 
             if (vaccinationdetail == null)
             {
@@ -36,23 +36,23 @@ namespace PetClinic.Pages.VaccinationManagement
             }
             else 
             {
-                VaccinationDetail = vaccinationdetail;
+                record = vaccinationdetail;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.VaccinationDetails == null)
+            if (id == null || _context.VaccinationRecords == null)
             {
                 return NotFound();
             }
-            var vaccinationdetail = await _context.VaccinationDetails.FindAsync(id);
+            var vaccinationdetail = await _context.VaccinationRecords.FindAsync(id);
 
             if (vaccinationdetail != null)
             {
-                VaccinationDetail = vaccinationdetail;
-                _context.VaccinationDetails.Remove(VaccinationDetail);
+                record = vaccinationdetail;
+                _context.VaccinationRecords.Remove(record);
                 await _context.SaveChangesAsync();
             }
 

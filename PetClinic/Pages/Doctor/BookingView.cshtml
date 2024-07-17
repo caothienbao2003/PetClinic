@@ -1,8 +1,9 @@
 ﻿@page
-@model PetClinic.Pages.DoctorPages.BookingViewModel
+@model PetClinic.Pages.Doctor.BookingViewModel
 @{
     ViewData["Title"] = "Booking";
 }
+
 <table class="table">
     <thead>
         <tr>
@@ -53,8 +54,8 @@
                     <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> |
                     @*<a asp-page="./Details" asp-route-id="@item.BookingId">Delete</a>*@
-                    <a asp-page="/DoctorPages/MedicalRecords/Index" asp-route-bookid="@item.BookingId">View Medical Records</a> |
-                    <a asp-page="/DoctorPages/MedicalRecords/Create" asp-route-bookid="@item.BookingId">Create Medical Records</a>
+                    <a asp-page="/Doctor/MedicalRecordManagement/Index" asp-route-bookid="@item.BookingId">View Medical Records</a> |
+                    <a asp-page="/Doctor/MedicalRecordManagement/Create" asp-route-bookid="@item.BookingId">Create Medical Records</a>
 
                 </td>
             </tr>

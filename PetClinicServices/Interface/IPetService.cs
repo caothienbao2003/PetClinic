@@ -17,7 +17,7 @@ namespace PetClinicServices.Interface
 
         public List<PetHealth> GetPetHealthsList();
 
-        public PetHealth GetPetHealthByPetId(int petId);
+        public PetHealth GetPetHealthByPetId(int? petId);
 
         public void AddPet(Pet pet);
 
@@ -26,5 +26,7 @@ namespace PetClinicServices.Interface
         public void UpdatePet(Pet pet);
 
         public void UpdatePetHealth(PetHealth petHealth);
+
+        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId);
     }
 }

@@ -7,13 +7,13 @@ namespace PetClinicBussinessObject
     {
         public Prescription()
         {
-            MedicalRecords = new HashSet<MedicalRecord>();
+            PrescriptionMedicines = new HashSet<PrescriptionMedicine>();
         }
 
         public int PrescriptionId { get; set; }
-        public int? PrescriptionDetailsId { get; set; }
+        public int? MedicalRecordId { get; set; }
 
-        public virtual PrescriptionDetail? PrescriptionDetails { get; set; }
-        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
+        public virtual MedicalRecord? MedicalRecord { get; set; }
+        public virtual ICollection<PrescriptionMedicine> PrescriptionMedicines { get; set; }
     }
 }

@@ -18,9 +18,11 @@ builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
-builder.Services.AddScoped<IVaccinationDetailService, VaccinationDetailService>();
+//builder.Services.AddScoped<IVaccinationDetailService, VaccinationDetailService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 
+//builder.Services.AddScoped<IVaccinationDetailService, VaccinationDetailService>();
+builder.Services.AddScoped<IVaccinationRecordService, VaccinationRecordService>();
 
 builder.Services.AddScoped<IEmailService>(provider => 
         new EmailService("smtp.your-email-provider.com", 587, "your-email@example.com", "your-email-password"));

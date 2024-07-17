@@ -1,5 +1,5 @@
 ﻿@page
-@model PetClinic.Pages.StaffPages.CageManagement.IndexModel
+@model PetClinic.Pages.Staff.CageManagement.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -50,7 +50,7 @@
                 }
                 else
                 {
-                    <a asp-page="/StaffPages/HospitalizeManagement/Create" asp-route-CageId="@item.CageId">Hospitalize</a>
+                    <a asp-page="/Staff/HospitalizeManagement/Create" asp-route-CageId="@item.CageId">Hospitalize</a>
                 }
 
             </td>

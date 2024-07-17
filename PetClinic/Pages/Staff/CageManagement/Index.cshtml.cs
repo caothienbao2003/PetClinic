@@ -10,7 +10,7 @@ using PetClinicBussinessObject;
 using PetClinicServices;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.StaffPages.CageManagement
+namespace PetClinic.Pages.Staff.CageManagement
 {
     public class IndexModel : PageModel
     {

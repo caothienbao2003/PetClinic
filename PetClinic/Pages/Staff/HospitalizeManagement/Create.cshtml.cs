@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.StaffPages.HospitializeManagement
+namespace PetClinic.Pages.Staff.HospitializeManagement
 {
     public class CreateModel : PageModel
     {
@@ -83,7 +83,7 @@ namespace PetClinic.Pages.StaffPages.HospitializeManagement
                 cageService.UpdateCage(cage);
             }
 
-            return RedirectToPage("/StaffPages/CageManagement/Index");
+            return RedirectToPage("/Staff/CageManagement/Index");
         }
     }
 }
