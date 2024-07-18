@@ -11,5 +11,6 @@ namespace PetClinicServices.Interface
     {
         public List<User> GetAllDoctors();
         public User GetDoctorById(int doctorId);
+        public void UpdateDoctor(User doctor);
     }
 }

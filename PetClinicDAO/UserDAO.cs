@@ -45,6 +45,14 @@ namespace PetClinicDAO
             return context.Users.FirstOrDefault(u => u.UserId == id)!;
         }
 
+        public User GetUserByIdAndRole(int id, UserRole role)
+        {
+            return context.Users
+                .Where(u => u.UserId == id && u.Role == (int) role)
+                .Include(u => u.Pets)
+                .FirstOrDefault()!;
+        }
+
         public User GetUserByEmail(string email) 
         { 
             return context.Users.FirstOrDefault(u => u.Email == email)!; 

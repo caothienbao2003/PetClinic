@@ -8,15 +8,15 @@ namespace PetClinic.Pages.Customer.BookingManagement
     public class BookingConfirmationModel : PageModel
     {
         private readonly IPetService petService;
-        private readonly IUserService userService;
+        private readonly IDoctorService doctorService;
         private readonly IShiftService shiftService;
         private readonly IScheduleService scheduleService;
         private readonly IBookingService bookingService;
 
-        public BookingConfirmationModel(IPetService _petService, IUserService _userService, IShiftService _shiftService, IScheduleService _scheduleService, IBookingService _bookingService)
+        public BookingConfirmationModel(IPetService _petService, IDoctorService _userService, IShiftService _shiftService, IScheduleService _scheduleService, IBookingService _bookingService)
         {
             petService = _petService;
-            userService = _userService;
+            doctorService = _userService;
             shiftService = _shiftService;
             scheduleService = _scheduleService;
             bookingService = _bookingService;
@@ -66,7 +66,7 @@ namespace PetClinic.Pages.Customer.BookingManagement
             }
 
             Pet = petService.GetPetById(SelectedPetId);
-            SelectedDoctor = userService.GetUserById(SelectedDoctorId);
+            SelectedDoctor = doctorService.GetDoctorById(SelectedDoctorId);
             SelectedShift = shiftService.GetShiftById(SelectedShiftId);
             PetOwner = Pet.Customer;
         }
@@ -79,17 +79,26 @@ namespace PetClinic.Pages.Customer.BookingManagement
 
             Schedule schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId, SelectedDoctorId).First();
 
+            //int noOfOccupation = (int) schedule.NoOfOccupation;
+            //noOfOccupation++;
+            //schedule.NoOfOccupation = noOfOccupation;
+
+            //scheduleService.UpdateSchedule(schedule);
+
             Booking newBooking = new Booking
             {
                 PetId = SelectedPetId,
                 DoctorId = SelectedDoctorId,
                 ScheduleId = schedule.ScheduleId,
                 BookingAt = DateTime.Now,
+                ServiceId = 1,
                 PaymentStatus = (int)BookingPaymentStatus.Unpaid,
                 BookingStatus = (int)BookingStatus.Pending,
             };
 
             bookingService.AddBooking(newBooking);
+
+            Response.Redirect("/Customer/BookingManagement/PaymentInfo");
         }
     }
 }

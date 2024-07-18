@@ -1,0 +1,76 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 50px;
+}
+
+h1 {
+    color: #4caf50; /* Green color */
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px; /* Increase max width */
+    margin: 20px;
+}
+
+.left, .right {
+    width: 45%;
+    min-width: 300px; /* Set a minimum width */
+    height: 300px; /* Set a fixed height to keep positions consistent */
+}
+
+.left {
+    text-align: left;
+}
+
+    .left p {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .left img, .right img {
+        max-width: 100%;
+        height: auto;
+    }
+
+.info-box {
+    background-color: #f9f9f9; /* Light grey background */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+button {
+    background: linear-gradient(90deg, #4caf50 0%, #32cd32 100%); /* Green gradient */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 0;
+    cursor: pointer;
+    border-radius: 25px; /* Rounded corners */
+    transition: background 0.3s;
+    width: 200px; /* Fixed width to match the button */
+}
+
+    button:hover {
+        background: linear-gradient(90deg, #45a049 0%, #3cbb3c 100%);
+    }

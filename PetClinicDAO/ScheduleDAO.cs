@@ -66,5 +66,10 @@ namespace PetClinicDAO
                 .Where(s => s.Date == date && s.ShiftId == shiftId && s.EmployeeId == doctorId && s.ScheduleStatus == (int)ScheduleStatus.Available)
                 .ToList();
         }
+
+        public Schedule GetOneScheduleByDate(DateTime date)
+        {
+            return context.Schedules.FirstOrDefault(s=>s.Date == date);
+        }
     }
 }
