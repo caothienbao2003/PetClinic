@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using PetClinic.Custom_Model;
 using PetClinic.Model;
 using PetClinicBussinessObject;
+using PetClinicDAO;
 using PetClinicServices;
 using PetClinicServices.Interface;
 using System;
@@ -121,7 +122,8 @@ namespace PetClinic.Pages.BookingManagement
 
             while (currentDate <= lastDateOfMonth || currentDate.DayOfWeek != DayOfWeek.Sunday)
             {
-                bool isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == CurrentMonth;
+                Schedule checkSchedule = ScheduleDAO.Instance.GetOneScheduleByDate(currentDate);
+                bool isAvailableDate = currentDate >= DateTime.Today.AddDays(1) && currentDate.Month == CurrentMonth && checkSchedule != null;
                 var isSelectedDate = currentDate.Date == SelectedDate?.Date;
 
                 BookingCalendarCellModel newCell = new BookingCalendarCellModel
@@ -136,7 +138,6 @@ namespace PetClinic.Pages.BookingManagement
             }
 
             Console.WriteLine("Load calendar Pet id: " + SelectedPetId);
-
         }
 
         public void OnPostChooseDate(DateTime date)
@@ -162,18 +163,27 @@ namespace PetClinic.Pages.BookingManagement
             {
                 bool isAvailable = false;
 
+                int capacity = 0;
+                int noOfOccupation = 0;
                 List<Schedule> schedule = scheduleService.GetAvailableScheduleList(selectedDate, shift.ShiftId);
-                if (!schedule.IsNullOrEmpty())
+
+                foreach (Schedule s in schedule)
                 {
-                    isAvailable = true;
+                    User doctor = doctorService.GetDoctorById((int)s.EmployeeId);
+                    capacity += (int)doctor.DoctorCapacity;
+                    noOfOccupation += (int)s.NoOfOccupation;
                 }
+
+
+                isAvailable = !schedule.IsNullOrEmpty() && noOfOccupation < capacity;
 
                 BookingShiftSelectionModel newShift = new BookingShiftSelectionModel
                 {
                     ShiftId = shift.ShiftId,
                     ShiftDisplay = shift.StartTime?.ToString() + " - " + shift.EndTime?.ToString(),
                     IsAvailable = isAvailable,
-                    IsSelected = SelectedShiftId == shift.ShiftId
+                    IsSelected = SelectedShiftId == shift.ShiftId,
+                    OccupationDisplay = noOfOccupation.ToString() + " / " + capacity.ToString() + (noOfOccupation >= capacity ? " Full" : "")
                 };
 
                 ShiftSelectionList.Add(newShift);

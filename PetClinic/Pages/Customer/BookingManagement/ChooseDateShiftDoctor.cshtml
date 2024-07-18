@@ -11,7 +11,7 @@
 <div class="booking-container">
     <div class="calendar-container">
         <h1 class="booking-header">Booking</h1>
-        <div>Date selected: @Model.SelectedDate?.ToString("dd/MM/yyyy")</div>
+        <h2>Choose a date</h2>
         <form method="post" asp-page-handler="ChangeMonth">
             <div class="navigation-buttons">
                 <button type="submit" name="offset" value="-1" class="btn-transparent @(Model.CurrentMonth == DateTime.Today.Month && Model.CurrentYear == DateTime.Today.Year ? "disabled" : "")" @(Model.CurrentMonth == DateTime.Today.Month && Model.CurrentYear == DateTime.Today.Year ? "disabled" : "")>
@@ -24,6 +24,7 @@
                     <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
+            <div>Date selected: @Model.SelectedDate?.ToString("dd/MM/yyyy")</div>
 
             <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
             <input type="hidden" name="currentMonth" value="@Model.CurrentMonth" />
@@ -93,6 +94,8 @@
                         <div>
                             <button type="submit" name="shiftId" value="@shift.ShiftId" class="shift @(shift.IsAvailable ? "" : "unavailable") @(shift.IsSelected ? "selected" : "")" @(shift.IsAvailable ? "" : "disabled")>
                                 @shift.ShiftDisplay
+                                <br/>
+                                @shift.OccupationDisplay
                             </button>
                         </div>
 
