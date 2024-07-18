@@ -19,5 +19,7 @@ namespace PetClinicServices
         }
 
         public List<User> GetAllDoctors() => doctorRepository.GetAllDoctors();
+
+        public User GetDoctorById(int doctorId) => doctorRepository.GetDoctorById(doctorId);
     }
 }

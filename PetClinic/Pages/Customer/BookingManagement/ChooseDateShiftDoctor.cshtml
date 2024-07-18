@@ -4,9 +4,9 @@
     ViewData["Title"] = "Choose Date, Shift, and Doctor";
 }
 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-<link href="~/css/chooseDateShiftDoctor.css" rel="stylesheet" />
+<head>
+    <link rel="stylesheet" href="~/css/chooseDateShiftDoctor.css" />
+</head>
 
 <div class="booking-container">
     <div class="calendar-container">
@@ -133,10 +133,10 @@
         {
             <div class="form-group text-center">
                 <form method="post" asp-page-handler="Next">
-                    <input type="hidden" asp-for="SelectedDate" value="Model.SelectedDate" />
-                    <input type="hidden" asp-for="SelectedShiftId" value="Model.SelectedShift" />
-                    <input type="hidden" asp-for="SelectedDoctorId" value="Model.SelectedDoctor" />
-                    <input type="hidden" asp-for="SelectedPetId" value="Model.SelectedPetId" />
+                    <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+                    <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
+                    <input type="hidden" asp-for="SelectedDoctorId" value="@Model.SelectedDoctorId" />
+                    <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
                     <input type="hidden" asp-for="CurrentMonth" value="@Model.CurrentMonth" />
                     <input type="hidden" asp-for="CurrentYear" value="@Model.CurrentYear" />
 
