@@ -12,7 +12,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin Staff Management</title>
-	<link rel="stylesheet" href="~/css/khoiadminstyle.css">
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css"/>
 </head>
 <body>
 	<header class="header">
@@ -78,7 +78,7 @@
 							<th>@staff.ActiveStatus</th>
 							<!-- Add other relevant fields -->
 							<td>
-								<a class="btn-update" asp-page="AdminUpdateStaff" asp-route-id="@staff.UserId">Update</a>
+								<a class="btn-update" asp-page="AdminUpdateStaff" asp-route-staffid="@staff.UserId">Update</a>
 							</td>
 						</tr>
 					}
@@ -146,8 +146,6 @@
 			</div>
 		</main>
 	</div>
-
-
 
 	<footer>
 		<p>&copy; 2024 Pet Clinic. All rights reserved.</p>
