@@ -10,5 +10,12 @@ namespace PetClinicServices.Interface
     public interface IPrescriptionService
     {
         public List<Prescription> GetAllPrescription();
+
+        public List<PrescriptionMedicine> GetMedicineByPrescriptionId(int id);
+
+        public void AddPrescription(Prescription prescription);
+
+        public void AddPrescriptionMedicine(PrescriptionMedicine prescriptionMedicine);
+
     }
 }

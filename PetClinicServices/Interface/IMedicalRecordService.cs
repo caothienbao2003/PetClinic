@@ -13,6 +13,8 @@ namespace PetClinicServices.Interface
 
         public MedicalRecord GetMedicalRecordByBookingId(int id);
 
+        public MedicalRecord GetMedicalRecordById(int id);
+
         public void AddMedicalRecord(MedicalRecord medicalRecord);
 
         public List<Service> GetServices();

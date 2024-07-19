@@ -15,5 +15,7 @@ namespace PetClinicRepository
 
         public VaccinationRecord GetVaccinationRecordById(int id) => VaccinationRecordDAO.Instance.GetVaccinationRecordById(id);
 
+        public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId) => VaccinationRecordDAO.Instance.GetVaccinationRecordsByPetHealthId(petHealthId);
+
     }
 }

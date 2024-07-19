@@ -31,11 +31,6 @@ namespace PetClinic.Pages.Staff.CageManagement
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public IActionResult OnPost()
         {
-          if (!ModelState.IsValid || Cage == null)
-            {
-                return Page();
-            }
-
             cageService.AddCage(Cage);
 
             return RedirectToPage("./Index");

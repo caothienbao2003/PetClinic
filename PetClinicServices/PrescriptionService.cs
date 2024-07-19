@@ -12,19 +12,34 @@ namespace PetClinicServices
 {
     public class PrescriptionService : IPrescriptionService
     {
-        private readonly IPrescriptionService prescriptionService;
+        private readonly IPrescriptionRepository prescriptionRepository;
 
         public PrescriptionService()
         {
-            if (prescriptionService == null)
+            if (prescriptionRepository == null)
             {
-                prescriptionService = new PrescriptionService();
+                prescriptionRepository = new PrescriptionRepository();
             }
+        }
+
+        public void AddPrescription(Prescription prescription)
+        {
+            prescriptionRepository.AddPrescription(prescription);
+        }
+
+        public void AddPrescriptionMedicine(PrescriptionMedicine prescriptionMedicine)
+        {
+            prescriptionRepository.AddPrescriptionMedicine(prescriptionMedicine);
         }
 
         public List<Prescription> GetAllPrescription()
         {
-            return prescriptionService.GetAllPrescription();
+            return prescriptionRepository.GetAllPrescription();
+        }
+
+        public List<PrescriptionMedicine> GetMedicineByPrescriptionId(int id)
+        {
+            return prescriptionRepository.GetMedicineByPrescriptionId(id);
         }
     }
 }

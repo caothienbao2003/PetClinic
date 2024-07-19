@@ -47,5 +47,10 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
+        public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId)
+        {
+            return context.VaccinationRecords.Where(v => v.PetHealthId == petHealthId).ToList();
+        }
+
     }
 }

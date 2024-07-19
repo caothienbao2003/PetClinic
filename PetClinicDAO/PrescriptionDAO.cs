@@ -34,5 +34,22 @@ namespace PetClinicDAO
         {
             return context.Prescriptions.ToList();
         }
+
+        public List<PrescriptionMedicine> GetMedicineByPrescriptionId(int id)
+        {
+            return context.PrescriptionMedicines.Where(p => p.PrescriptionId == id).ToList();
+        }
+
+        public void AddPrescription(Prescription prescription)
+        {
+            context.Prescriptions.Add(prescription);
+            context.SaveChanges();
+        }
+
+        public void AddPrescriptionMedicine(PrescriptionMedicine prescriptionMedicine)
+        {
+            context.PrescriptionMedicines.Add(prescriptionMedicine);
+            context.SaveChanges();
+        }
     }
 }
