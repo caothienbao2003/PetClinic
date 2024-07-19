@@ -40,7 +40,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Medicine ID</th>
+            <th>Medicine Name</th>
             <th>Medicine Quantity</th>
             <th>Dosage</th>
         </tr>
@@ -49,7 +49,7 @@
         @foreach (var item in Model.PrescriptionMedicines)
         {
             <tr>
-                <td>@item.MedicineId</td>
+                <td>@item.MedicineName</td>
                 <td>@item.MedicineQuantity</td>
                 <td>@item.Dosage</td>
             </tr>

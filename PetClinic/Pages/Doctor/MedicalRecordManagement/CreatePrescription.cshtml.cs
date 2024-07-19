@@ -17,7 +17,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         private readonly IPrescriptionService prescriptionService;
         private readonly IMedicineService medicineService;
 
-        public CreatePrescriptionModel( IMedicineService _medicineService, IPrescriptionService _prescriptionService)
+        public CreatePrescriptionModel(IMedicineService _medicineService, IPrescriptionService _prescriptionService)
         {
             medicineService = _medicineService;
             prescriptionService = _prescriptionService;
@@ -47,9 +47,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
         public IActionResult OnPost()
         {
-            //PrescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines") != null
-            //    ? SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines") : PrescriptionMedicines;
-
             if (PrescriptionMedicines == null)
             {
                 PrescriptionMedicines = new List<PrescriptionMedicine>();
@@ -92,7 +89,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             }
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "PrescriptionMedicines", new List<PrescriptionMedicine>());
-            return RedirectToPage("/Doctor/BookingView");
+            return RedirectToPage("/Doctor/MedicalRecordManagement/ConfirmationForm", new { medicalRecordId = MedicalRecordId });
         }
     }
 }

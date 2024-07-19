@@ -19,9 +19,10 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         private readonly IPetService petService;
         private readonly IVaccinationRecordService vaccinationRecordService;
         private readonly IMedicineService medicineService;
+        private readonly IServiceService serviceService;
 
         public CreateRecordModel(IMedicalRecordService _medicalRecordService, IBookingService _bookingService, IUserService _userService, 
-            IPetService _petService, IVaccinationRecordService _vaccinationRecordService, IMedicineService _medicineService)
+            IPetService _petService, IVaccinationRecordService _vaccinationRecordService, IMedicineService _medicineService, IServiceService _serviceService)
         {
             medicalRecordService = _medicalRecordService;
             bookingService = _bookingService;
@@ -29,6 +30,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             petService = _petService;
             vaccinationRecordService = _vaccinationRecordService;
             medicineService = _medicineService;
+            serviceService = _serviceService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -77,7 +79,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
             var undesiredServiceNames = new List<string> { "Booking Fee", "Emergency Care" };
 
-            var filteredService = medicalRecordService.GetServices()
+            var filteredService = serviceService.GetAllServices()
                           .Where(s => !undesiredServiceNames.Contains(s.ServiceName!))
                           .ToList();
 

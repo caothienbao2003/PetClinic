@@ -17,7 +17,7 @@ namespace PetClinicRepository.Interface
 
         public void AddMedicalRecord(MedicalRecord medicalRecord);
 
-        public List<Service> GetServices();
+        public void UpdateMedicalRecord(MedicalRecord medicalRecord);
 
     }
 }

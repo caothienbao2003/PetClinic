@@ -19,6 +19,7 @@ namespace PetClinicRepository
 
         public void AddMedicalRecord(MedicalRecord medicalRecord) => MedicalRecordDAO.Instance.AddMedicalRecord(medicalRecord);
 
-        public List<Service> GetServices() => MedicalRecordDAO.Instance.GetServices();
+        public void UpdateMedicalRecord(MedicalRecord medicalRecord) => MedicalRecordDAO.Instance.UpdateMedicalRecord(medicalRecord);
+
     }
 }

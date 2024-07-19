@@ -40,6 +40,11 @@ namespace PetClinicDAO
             return context.PrescriptionMedicines.Where(p => p.PrescriptionId == id).ToList();
         }
 
+        public Prescription GetPrescriptionByMedicalRecordId(int id)
+        {
+            return context.Prescriptions.FirstOrDefault(p => p.MedicalRecordId == id)!;
+        }
+
         public void AddPrescription(Prescription prescription)
         {
             context.Prescriptions.Add(prescription);
@@ -49,6 +54,18 @@ namespace PetClinicDAO
         public void AddPrescriptionMedicine(PrescriptionMedicine prescriptionMedicine)
         {
             context.PrescriptionMedicines.Add(prescriptionMedicine);
+            context.SaveChanges();
+        }
+
+        public void UpdatePrescription(Prescription prescription)
+        {
+            context.Prescriptions.Update(prescription);
+            context.SaveChanges();
+        }
+
+        public void UpdatePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine)
+        {
+            context.PrescriptionMedicines.Update(prescriptionMedicine);
             context.SaveChanges();
         }
     }

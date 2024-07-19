@@ -52,9 +52,10 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public List<Service> GetServices()
+        public void UpdateMedicalRecord(MedicalRecord medicalRecord)
         {
-            return context.Services.ToList();
+            context.MedicalRecords.Update(medicalRecord);
+            context.SaveChanges();
         }
     }
 }

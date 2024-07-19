@@ -32,6 +32,11 @@ namespace PetClinicServices
             prescriptionRepository.AddPrescriptionMedicine(prescriptionMedicine);
         }
 
+        public Prescription GetPrescriptionByMedicalRecordId(int id)
+        {
+            return prescriptionRepository.GetPrescriptionByMedicalRecordId(id);
+        }
+
         public List<Prescription> GetAllPrescription()
         {
             return prescriptionRepository.GetAllPrescription();
@@ -40,6 +45,16 @@ namespace PetClinicServices
         public List<PrescriptionMedicine> GetMedicineByPrescriptionId(int id)
         {
             return prescriptionRepository.GetMedicineByPrescriptionId(id);
+        }
+
+        public void UpdatePrescription(Prescription prescription)
+        {
+            prescriptionRepository.UpdatePrescription(prescription);
+        }
+
+        public void UpdatePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine)
+        {
+            prescriptionRepository.UpdatePrescriptionMedicine(prescriptionMedicine);
         }
     }
 }

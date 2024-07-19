@@ -42,9 +42,9 @@ namespace PetClinicServices
             medicalRecordRepository.AddMedicalRecord(medicalRecord);
         }
 
-        public List<Service> GetServices()
+        public void UpdateMedicalRecord(MedicalRecord medicalRecord)
         {
-            return medicalRecordRepository.GetServices();
+            medicalRecordRepository.UpdateMedicalRecord(medicalRecord);
         }
     }
 }
