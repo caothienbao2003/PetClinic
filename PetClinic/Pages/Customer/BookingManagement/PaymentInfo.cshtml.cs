@@ -18,11 +18,11 @@ namespace PetClinic.Pages.Customer.BookingManagement
 
         public void OnGet()
         {
-            BankAccountNumber = "123456789";
-            BankAccountOwnerName = "John Doe";
-            BankName = "Example Bank";
-            BankImage = "/images/bank-logo.png";
-            QrCodeImage = "/images/qr-code.png";
+            BankAccountNumber = "0123456789";
+            BankAccountOwnerName = "Pet Clinic";
+            BankName = "TP Bank";
+            BankImage = "https://media.loveitopcdn.com/3807/logo-tpbank-2.jpg";
+            QrCodeImage = "https://images.viblo.asia/2b174eac-50bd-40c0-91c8-bbecab2093b5.png";
         }
     }
 }

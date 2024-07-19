@@ -19,7 +19,12 @@
         <p><strong>Pet:</strong> @Model.Pet.PetName</p>
         <p><strong>Booking date:</strong> @Model.SelectedDate.Day.ToString("D2") - @Model.SelectedDate.Month.ToString("D2") - @Model.SelectedDate.Year.ToString("D4")</p>
         <p><strong>Shift:</strong> @Model.SelectedShift.StartTime - @Model.SelectedShift.EndTime</p>
-        <p><strong>Doctor:</strong> @Model.SelectedDoctor.FirstName @Model.SelectedDoctor.LastName</p>
+        @if (Model.SelectedDoctor != null)
+        {
+            <p>
+                <strong>Doctor:</strong> @Model.SelectedDoctor.FirstName @Model.SelectedDoctor.LastName
+            </p>
+        }
     </div>
     <div class="btn-container">
         <a asp-page="/Customer/BookingManagement/ChoosePet" class="btn">Back</a>

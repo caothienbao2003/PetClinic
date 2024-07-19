@@ -58,7 +58,7 @@ namespace PetClinic.Pages.BookingManagement
         public int SelectedShiftId { get; set; }
 
         [BindProperty]
-        public int SelectedDoctorId { get; set; }
+        public int? SelectedDoctorId { get; set; }
 
 
         public void OnGet()
@@ -257,7 +257,11 @@ namespace PetClinic.Pages.BookingManagement
             TempData["SelectedPetId"] = SelectedPetId;
             TempData["SelectedDate"] = SelectedDate;
             TempData["SelectedShiftId"] = SelectedShiftId;
-            TempData["SelectedDoctorId"] = SelectedDoctorId;
+
+            if(SelectedDoctorId != null)
+            {
+                TempData["SelectedDoctorId"] = SelectedDoctorId;
+            }
 
             Response.Redirect("/Customer/BookingManagement/BookingConfirmation");
         }

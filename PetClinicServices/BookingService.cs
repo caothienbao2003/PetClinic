@@ -16,27 +16,17 @@ namespace PetClinicServices
 
         public BookingService()
         {
-            if(bookingRepository == null)
+            if (bookingRepository == null)
             {
                 bookingRepository = new BookingRepository();
             }
         }
 
-        public void AddBooking(Booking booking)
-        {
-            bookingRepository.Add(booking);
-        }
-
-        public Booking? GetBookingById(int id)
-        {
-            return bookingRepository.GetBookingById(id);
-        }
-
-        public List<Booking> GetAll()
-        {
-            return bookingRepository.GetAll();
-        }
-
-        
+        public void AddBooking(Booking booking) => bookingRepository.Add(booking);
+        public Booking? GetBookingById(int id) => bookingRepository.GetBookingById(id);
+        public List<Booking> GetAll() => bookingRepository.GetAll();
+        public List<Booking> GetBookingListByPetId(int petId) => bookingRepository.GetBookingListByPetId(petId);
+        public List<Booking> GetBookingListByUserId(int userId) => bookingRepository.GetBookingByUserId(userId);
+        public void UpdateBooking(Booking booking) => bookingRepository.Update(booking);
     }
 }
