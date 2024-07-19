@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pet Clinic Homepage</title>
-    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <link rel="stylesheet" href="~/css/luongDoctorStyle.css" />
 </head>
 
 <div class="user-info">
@@ -21,7 +21,7 @@
     <div class="profile-info">
         <h2>View Profile</h2>
         <div class="text-center">
-            <img src="@Model.user.Image" alt="Profile Picture" class="img-thumbnail" style="max-width: 200px;">
+            <img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" style="width: 200px">
         </div>
         <dl class="row">
             <dt class="col-sm-3">First Name</dt>
@@ -39,11 +39,11 @@
     </div>
     <div class="profile-info" id="editProfileForm" style="display: none;">
         <h2>Edit Profile</h2>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label asp-for="user.Image" class="control-label">Profile Picture</label>
-                <input asp-for="user.Image" class="form-control" type="file" />
-                <span asp-validation-for="user.Image" class="text-danger"></span>
+                <label asp-for="updateImage" class="control-label">Profile Picture</label>
+                <input asp-for="updateImage" class="form-control" type="file" id="updateImage" name="updateImage" />
+                <span asp-validation-for="updateImage" class="text-danger"></span>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="user.UserId" />
@@ -63,8 +63,8 @@
                 <span asp-validation-for="user.SocialNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="user.Password" class="control-label"></label>
-                <input asp-for="user.Password" class="form-control" />
+                <label asp-for="user.Password" class="control-label">Password</label>
+                <input type="password" asp-for="user.Password" class="form-control" />
                 <span asp-validation-for="user.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -73,12 +73,12 @@
                 <span asp-validation-for="user.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="user.Address" class="control-label"></label>
+                <label asp-for="user.Address" class="control-label">Address</label>
                 <input asp-for="user.Address" class="form-control" />
                 <span asp-validation-for="user.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="user.Email" class="control-label"></label>
+                <label asp-for="user.Email" class="control-label">Email</label>
                 <input asp-for="user.Email" class="form-control" />
                 <span asp-validation-for="user.Email" class="text-danger"></span>
             </div>
@@ -121,6 +121,97 @@
         this.style.display = 'none';
     });
 </script>
+
+@* <div class="profile">
+    <div class="profile-item">
+        <label>First Name</label>
+        <div>
+            <label asp-for="user.FirstName" class="control-label">First Name</label>
+            <input asp-for="user.FirstName" class="form-control" />
+            <span asp-validation-for="user.FirstName" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div class="profile-item">
+        <label>Last Name</label>
+        <div>
+            <label asp-for="user.LastName" class="control-label">Last Name</label>
+            <input asp-for="user.LastName" class="form-control" />
+            <span asp-validation-for="user.LastName" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div class="profile-item">
+        <label>Gender</label>
+        <div>
+            <label asp-for="user.Gender" class="control-label">Gender</label>
+            <select asp-for="user.Gender" class="form-control">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+            <span asp-validation-for="user.Gender" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div class="profile-item">
+        <label>Email</label>
+        <div>
+            <label asp-for="user.Email" class="control-label">Email</label>
+            <input type="email" asp-for="user.Email" class="form-control" />
+            <span asp-validation-for="user.Email" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div class="profile-item">
+        <label>Password</label>
+        <div>
+            <label asp-for="user.Password" class="control-label">Password</label>
+            <input type="password" asp-for="user.Password" class="form-control" />
+            <span asp-validation-for="user.Password" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div class="profile-item">
+        <label>Phone</label>
+        <div>
+            <label asp-for="user.PhoneNumber" class="control-label">Phone Number</label>
+            <input asp-for="user.PhoneNumber" class="form-control" />
+            <span asp-validation-for="user.PhoneNumber" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div class="profile-item">
+        <label>Address</label>
+        <div>
+            <label asp-for="user.Address" class="control-label">Address</label>
+            <input asp-for="user.Address" class="form-control" />
+            <span asp-validation-for="user.Address" class="text-danger"></span>
+            <button class="change">Change</button>
+        </div>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="user.UserId" />
+    <div class="form-group">
+        <input type="hidden" asp-for="user.DoctorRank" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="user.DoctorCapacity" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="user.EmployeeSalary" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="user.Role" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="user.ActiveStatus" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</div> *@
 
 <footer>
     <p>&copy; 2024 Pet Clinic. All rights reserved.</p>

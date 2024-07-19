@@ -111,5 +111,16 @@ namespace PetClinicDAO
             context.Entry(user).State = EntityState.Modified;
             context.SaveChanges();
         }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        }
     } 
 }

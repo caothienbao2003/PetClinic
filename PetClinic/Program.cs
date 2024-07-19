@@ -4,6 +4,9 @@ using PetClinicServices;
 using PetClinicServices.Interface;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using PetClinic.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,7 @@ builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 
 //builder.Services.AddScoped<IVaccinationDetailService, VaccinationDetailService>();
 builder.Services.AddScoped<IVaccinationRecordService, VaccinationRecordService>();
@@ -56,7 +60,19 @@ builder.Services.AddAuthentication(options =>
 	*/
 
 // Add authorization, routing, and Razor Pages
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Customer", policy =>
+        policy.Requirements.Add(new RoleRequirement(0)));
+	options.AddPolicy("Staff", policy =>
+        policy.Requirements.Add(new RoleRequirement(1)));
+	options.AddPolicy("Doctor", policy =>
+        policy.Requirements.Add(new RoleRequirement(2)));
+    options.AddPolicy("Admin", policy =>
+        policy.Requirements.Add(new RoleRequirement(3)));
+});
+builder.Services.AddSingleton<IAuthorizationHandler, RoleAuthorizationHandler>();
+
 builder.Services.AddRouting();
 
 builder.Services.AddSession();

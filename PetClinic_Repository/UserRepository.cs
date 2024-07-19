@@ -26,5 +26,9 @@ namespace PetClinicRepository
 		public List<User> GetUserListWithRole(UserRole userRole) => UserDAO.Instance.GetUserListWithRole(userRole);
 
         public void UpdateUser(User user) => UserDAO.Instance.UpdateUser(user);
+
+        public async Task UpdateUserAsync(User user) => await UserDAO.Instance.UpdateUserAsync(user);
+
+        public async Task<User> GetUserByIdAsync(int userId) => await UserDAO.Instance.GetUserByIdAsync(userId);
 	}
 }

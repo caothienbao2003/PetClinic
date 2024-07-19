@@ -5,6 +5,7 @@ using PetClinicServices.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -70,6 +71,16 @@ namespace PetClinicServices
         public void UpdateUser(User user)
         {
             userRepository.UpdateUser(user);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            await userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await userRepository.GetUserByIdAsync(userId);
         }
 	}
 }
