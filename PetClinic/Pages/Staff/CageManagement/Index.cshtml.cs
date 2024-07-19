@@ -28,24 +28,27 @@ namespace PetClinic.Pages.Staff.CageManagement
         public void OnGet()
         {
             Cage = cageService.GetAllCage();
-            string role = HttpContext.Session.GetString("Role");
+
+            UserRole role = (UserRole)Enum.Parse(typeof(UserRole),HttpContext.Session.GetString("Role") ?? "");
             if (role == null)
             {
                 Response.Redirect("/Authentication/Login");
             }
-            else if(role != "1")
+            else
             {
-                if (role == "0")
+                switch (role)
                 {
-                    Response.Redirect("/Customer/CustomerHomePage");
-                }
-                else if (role == "2")
-                {
-                    Response.Redirect("/Doctor/DoctorHomePage");
-                }
-                else
-                {
-                    Response.Redirect("/Admin/AdminHomePage");
+                    case UserRole.Customer:
+                        Response.Redirect("/Customer/CustomerHomePage");
+                        break;
+                    case UserRole.Staff:
+                        break;
+                    case UserRole.Doctor:
+                        Response.Redirect("/Doctor/DoctorHomePage");
+                        break;
+                    default:
+                        Response.Redirect("/Admin/AdminHomePage");
+                        break;
                 }
             }
         }

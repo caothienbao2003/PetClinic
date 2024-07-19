@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Doctor
 {
+    //[Authorize(Roles = "Doctor")]
     public class DoctorProfileModel : PageModel
     {
         private readonly IUserService userService;
@@ -33,6 +35,32 @@ namespace PetClinic.Pages.Doctor
             else
             {
                 user = userService.GetUserById(int.Parse(userId));
+            }
+
+            UserRole role = (UserRole)Enum.Parse(typeof(UserRole), HttpContext.Session.GetString("Role") ?? "");
+            if (role == null)
+            {
+                Response.Redirect("/Authentication/Login");
+            }
+            else
+            {
+                switch (role)
+                {
+                    case UserRole.Customer:
+                        Response.Redirect("/Customer/CustomerHomePage");
+                        TempData["ErrorMessage"] = "You are not authorized to view this page.";
+                        break;
+                    case UserRole.Staff:
+                        break;
+                    case UserRole.Doctor:
+                        Response.Redirect("/Doctor/DoctorHomePage");
+                        TempData["ErrorMessage"] = "You are not authorized to view this page.";
+                        break;
+                    default:
+                        Response.Redirect("/Admin/AdminHomePage");
+                        TempData["ErrorMessage"] = "You are not authorized to view this page.";
+                        break;
+                }
             }
         }
 
