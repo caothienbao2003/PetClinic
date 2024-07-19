@@ -1,6 +1,7 @@
 ﻿@page
 @model PetClinic.Pages.Customer.BookingManagement.PaymentInfoModel
 @{
+    ViewData["Title"] = "Payment Information";
 }
 <head>
     <link rel="stylesheet" href="~/css/paymentInfo.css" />
@@ -11,23 +12,24 @@
         <h1>INFORMATION</h1>
         <div class="content">
             <div class="left">
+                
                 <div class="info-box">
-                    <p><strong>Bank Account Number:</strong> @Model.BankAccountNumber</p>
+                    <p><strong>Account Number: </strong> @Model.BankAccountNumber</p>
                 </div>
                 <div class="info-box">
-                    <p><strong>Bank Account Owner Name:</strong> @Model.BankAccountOwnerName</p>
+                    <p><strong>Account Name: </strong> @Model.BankAccountOwnerName</p>
                 </div>
                 <div class="info-box">
-                    <p><strong>Bank Name:</strong> @Model.BankName</p>
-                </div>
-                <div class="info-box">
-                    <img src="@Model.BankImage" alt="Bank Logo">
+                    <p><strong>Bank: </strong> @Model.BankName</p>
+                    <div class="bank-img">
+                        <img src="@Model.BankImage" alt="Bank Logo">
+                    </div>
                 </div>
             </div>
+            
             <div class="right">
                 <img src="@Model.QrCodeImage" alt="QR Code">
             </div>
         </div>
-        <button type="button">Next</button>
     </div>
 </body>

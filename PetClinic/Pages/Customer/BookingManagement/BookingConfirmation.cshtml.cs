@@ -29,7 +29,7 @@ namespace PetClinic.Pages.Customer.BookingManagement
         [BindProperty]
         public int SelectedShiftId { get; set; }
         [BindProperty]
-        public int SelectedDoctorId { get; set; }
+        public int? SelectedDoctorId { get; set; }
 
         [BindProperty]
         public User PetOwner { get; set; }
@@ -40,7 +40,7 @@ namespace PetClinic.Pages.Customer.BookingManagement
         [BindProperty]
         public Shift SelectedShift { get; set; }
         [BindProperty]
-        public User SelectedDoctor { get; set; }
+        public User? SelectedDoctor { get; set; }
 
 
         public void OnGet()
@@ -66,7 +66,10 @@ namespace PetClinic.Pages.Customer.BookingManagement
             }
 
             Pet = petService.GetPetById(SelectedPetId);
-            SelectedDoctor = doctorService.GetDoctorById(SelectedDoctorId);
+            if (SelectedDoctorId != null)
+            {
+                SelectedDoctor = doctorService.GetDoctorById((int)SelectedDoctorId);
+            }
             SelectedShift = shiftService.GetShiftById(SelectedShiftId);
             PetOwner = Pet.Customer;
         }
@@ -77,7 +80,18 @@ namespace PetClinic.Pages.Customer.BookingManagement
             Console.WriteLine("Cf SelectedShiftId: " + SelectedShiftId);
             Console.WriteLine("Cf SelectedDoctorId: " + SelectedDoctorId);
 
-            Schedule schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId, SelectedDoctorId).First();
+            Schedule schedule;
+
+            Console.WriteLine(SelectedDoctorId + " " + SelectedDoctorId == null);
+
+            if (SelectedDoctorId != null)
+            {
+                schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId, (int)SelectedDoctorId).First();
+            }
+            else
+            {
+                schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId).First();
+            }
 
             //int noOfOccupation = (int) schedule.NoOfOccupation;
             //noOfOccupation++;

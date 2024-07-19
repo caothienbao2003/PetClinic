@@ -31,7 +31,7 @@ namespace PetClinicDAO
             }
         }
 
-        public List<Booking> GetAll()
+        public List<Booking> GetAllBooking()
         {
             return context.Bookings.Include(p => p.Pet).Include(d => d.Doctor).Include(s => s.Schedule).Include(s => s.Service).ToList();
         }

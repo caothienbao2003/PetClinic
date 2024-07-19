@@ -13,5 +13,8 @@ namespace PetClinicRepository.Interface
         public List<Booking> GetAll();
         public Booking? GetBookingById(int id);
         public void Add(Booking booking);
+        public List<Booking> GetBookingListByPetId(int petId);
+        public List<Booking> GetBookingByUserId(int userId);
+        public void Update(Booking booking);
 	}
 }
