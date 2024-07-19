@@ -62,6 +62,9 @@ namespace PetClinic.Pages.BookingManagement
         [BindProperty]
         public int? SelectedDoctorId { get; set; }
 
+        [BindProperty]
+        public string? Error {  get; set; }
+
 
         public void OnGet()
         {
@@ -277,15 +280,22 @@ namespace PetClinic.Pages.BookingManagement
                 }
             }
 
+            Booking checkExistedBooking;
             if (scheduleList != null)
             {
 
                 foreach (Schedule s in scheduleList)
                 {
-                    //Booking checkExistedBooking = bookingService.GetBooking
-
-
-            }
+                    checkExistedBooking = bookingService.GetBookingList(SelectedPetId, s.ScheduleId);
+                    if(checkExistedBooking != null)
+                    {
+                        LoadCalendar();
+                        LoadShift();
+                        LoadDoctor();
+                        Error = "You've already book this schedule. Please choose another one.";
+                        return;
+                    }
+                }
             }
 
             if (SelectedDoctorId != null)
