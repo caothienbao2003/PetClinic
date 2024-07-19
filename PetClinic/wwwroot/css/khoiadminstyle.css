@@ -13,10 +13,10 @@ header {
     padding: 20px;
     background-color: #4CAF50;
     color: white;
-    position: fixed; /* Fix the header at the top */
+    position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Ensure it stays above other content */
+    z-index: 1000;
 }
 
 .header-box-container {
@@ -51,16 +51,16 @@ header {
 .container {
     display: flex;
     flex: 1;
-    margin-top: 80px; /* Adjust for the fixed header height */
+    margin-top: 80px;
 }
 
 .sidebar {
     width: 200px;
     background-color: #f4f4f4;
     padding: 15px;
-    height: calc(100vh - 100px); /* Adjust based on the height of your header and footer */
-    position: fixed; /* Keep the sidebar fixed */
-    top: 100px; /* Height of the header */
+    height: calc(100vh - 100px);
+    position: fixed;
+    top: 80px;
 }
 
     .sidebar nav ul {
@@ -86,23 +86,10 @@ header {
                 }
 
 .main-content {
-    margin-left: 220px; /* Adjust based on the width of the sidebar */
+    margin-left: 220px;
     padding: 20px;
     flex: 1;
 }
-
-.statistics {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-    .statistics .graph {
-        background-color: #fff;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
 
 footer {
     text-align: center;
@@ -110,4 +97,329 @@ footer {
     background-color: #4CAF50;
     color: white;
     margin-top: auto;
+}
+
+.service-management {
+    margin-top: 20px;
+}
+
+.service-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .service-table th, .service-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .service-table th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .service-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .service-table tr:hover {
+        background-color: #ddd;
+    }
+
+.btn-create, .btn-update {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-update {
+    background-color: #2196F3;
+}
+
+    .btn-create:hover, .btn-update:hover {
+        background-color: #45a049;
+    }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    background-color: #fefefe;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.modal-body {
+    max-height: 500px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.modal .form-control {
+    width: 95%;
+    margin: 10px 0;
+}
+
+.form-submit-button {
+    text-align: center;
+}
+
+    .form-submit-button .btn-create {
+        width: 150px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .form-submit-button .btn-create:hover {
+            background-color: #45a049;
+        }
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover, .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+/* Update Form Styles */
+.form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+.form-control {
+    width: 95%;
+    padding: 10px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+    .form-control:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-update {
+    background-color: #4CAF50;
+    color: white;
+}
+
+    .btn-update:hover {
+        background-color: #45a049;
+    }
+
+/* Additional styles for the AdminUpdateStaff page */
+
+.admin-update-staff .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin-update-staff .profile-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+    .admin-update-staff .profile-info h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+.admin-update-staff .img-thumbnail {
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.admin-update-staff .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.admin-update-staff .form-group input,
+.admin-update-staff .form-group select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+    .admin-update-staff .form-group input:focus,
+    .admin-update-staff .form-group select:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        outline: none;
+    }
+
+.admin-update-staff .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .admin-update-staff .btn:hover {
+        background-color: #45a049;
+    }
+
+.admin-update-staff .text-center {
+    text-align: center;
+}
+
+.admin-update-staff .text-danger {
+    color: #ff0000;
+}
+
+.admin-update-staff .form-group {
+    margin-bottom: 20px;
+}
+
+.admin-update-staff .form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.admin-update-staff .header-buttons button {
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .admin-update-staff .header-buttons button:hover {
+        background-color: #45a049;
+    }
+
+/* Beautify profile-info section */
+.profile-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+    .profile-info h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .profile-info .profile-pic {
+        border-radius: 50%;
+        max-width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .profile-info .profile-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .profile-info .profile-item {
+        width: 48%;
+        margin-bottom: 15px;
+    }
+
+        .profile-info .profile-item dt {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .profile-info .profile-item dd {
+            margin: 0;
+            color: #777;
+        }
+
+    .profile-info .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .profile-info .btn:hover {
+            background-color: #45a049;
+        }
+
+.text-center {
+    text-align: center;
 }

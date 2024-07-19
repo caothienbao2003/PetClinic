@@ -1,0 +1,40 @@
+﻿@page
+@model PetClinic.Pages.Customer.BookingManagement.BookingConfirmationModel
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+<head>
+    <link rel="stylesheet" href="~/css/bookingConfirmation.css" />
+</head>
+
+<div class="confirmation-container">
+    <div class="confirmation-header">CONFIRMATION</div>
+    <div class="confirmation-details">
+        <p><strong>Name:</strong> @Model.PetOwner.FirstName @Model.PetOwner.LastName</p>
+        <p><strong>Phone:</strong> @Model.PetOwner.PhoneNumber</p>
+        <p><strong>Pet:</strong> @Model.Pet.PetName</p>
+        <p><strong>Booking date:</strong> @Model.SelectedDate.Day.ToString("D2") - @Model.SelectedDate.Month.ToString("D2") - @Model.SelectedDate.Year.ToString("D4")</p>
+        <p><strong>Shift:</strong> @Model.SelectedShift.StartTime - @Model.SelectedShift.EndTime</p>
+        @if (Model.SelectedDoctor != null)
+        {
+            <p>
+                <strong>Doctor:</strong> @Model.SelectedDoctor.FirstName @Model.SelectedDoctor.LastName
+            </p>
+        }
+    </div>
+    <div class="btn-container">
+        <a asp-page="/Customer/BookingManagement/ChoosePet" class="btn">Back</a>
+        <form method="post">
+            <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+            <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
+            <input type="hidden" asp-for="SelectedDoctorId" value="@Model.SelectedDoctorId" />
+            <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+
+            <button type="submit" class="btn">Book</button>
+        </form>
+    </div>
+</div>

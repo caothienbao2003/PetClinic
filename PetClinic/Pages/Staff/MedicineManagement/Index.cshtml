@@ -1,0 +1,61 @@
+﻿@page
+@model PetClinic.Pages.Staff.MedicineManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.medicineList[0].MedicineId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medicineList[0].MedicineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medicineList[0].MedicineDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medicineList[0].MedicineTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medicineList[0].ActiveStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.medicineList)
+        {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.MedicineId)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.MedicineName)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.MedicineDescription)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.MedicineTypeId)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                    </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MedicineId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.MedicineId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MedicineId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

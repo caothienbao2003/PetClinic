@@ -58,5 +58,10 @@ namespace PetClinicDAO
             Console.WriteLine("Shift type: " +  shiftType);
             return context.Shifts.Where(st => st.ShiftType == (int)shiftType).ToList();
         }
+
+        public Shift GetShiftById(int shiftId)
+        {
+            return context.Shifts.FirstOrDefault(s => s.ShiftId == shiftId);
+        }
     }
 }

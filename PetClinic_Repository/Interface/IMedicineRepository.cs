@@ -10,5 +10,13 @@ namespace PetClinicRepository.Interface
     public interface IMedicineRepository
     {
         public List<Medicine> GetMedicineList();
+
+        public Medicine GetMedicineById(int medicineId);
+
+        public void AddMedicine(Medicine medicine);
+
+        public void UpdateMedicine(Medicine medicine);
+
+        public void RemoveMedicine(int medicineId);
     }
 }

@@ -13,8 +13,7 @@ namespace PetClinicRepository.Interface
         public void AddSchedule(Schedule schedule);
         public void UpdateSchedule(Schedule schedule);
         public List<Schedule> GetScheduleList(DateTime date, int shiftId);
-        public List<Schedule> GetScheduleListByDate(DateTime date);
-        public List<Schedule> GetAvailableScheduleListByDate(DateTime date);
+        public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId);
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId);
     }
 }

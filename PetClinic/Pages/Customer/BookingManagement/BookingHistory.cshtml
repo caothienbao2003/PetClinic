@@ -1,0 +1,78 @@
+﻿@page
+@using PetClinicBussinessObject
+@model PetClinic.Pages.Customer.BookingManagement.BookingHistoryModel
+
+@{
+    ViewData["Title"] = "BookingHistory";
+}
+
+<h1>BookingHistory</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Pet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Service)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BookingList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingAt)
+                </td>
+                <td>
+                    @((BookingPaymentStatus)item.PaymentStatus)
+                </td>
+                <td>
+                    @((BookingStatus)item.BookingStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet.PetId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="Cancel">
+                        <button type="submit" name="id" value="@item.BookingId">Cancel</button>
+                    </form>
+                    <form method="post" asp-page-handler="Detail">
+                        <button type="submit" name="id" value="@item.BookingId">Detail</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

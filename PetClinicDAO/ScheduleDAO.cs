@@ -60,18 +60,16 @@ namespace PetClinicDAO
                 .ToList();
         }
 
-        public List<Schedule> GetScheduleListByDate(DateTime date)
+        public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId)
         {
             return context.Schedules
-                .Where(s => s.Date == date)
+                .Where(s => s.Date == date && s.ShiftId == shiftId && s.EmployeeId == doctorId && s.ScheduleStatus == (int)ScheduleStatus.Available)
                 .ToList();
         }
 
-        public List<Schedule> GetAvailableScheduleListByDate(DateTime date)
+        public Schedule GetOneScheduleByDate(DateTime date)
         {
-            return context.Schedules
-                .Where(s => s.Date == date && s.ScheduleStatus == (int)ScheduleStatus.Available)
-                .ToList();
+            return context.Schedules.FirstOrDefault(s=>s.Date == date);
         }
     }
 }

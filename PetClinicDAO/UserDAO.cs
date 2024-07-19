@@ -20,7 +20,7 @@ namespace PetClinicDAO
         {
             context = new PetClinicContext();
         }
-
+           
         public static UserDAO Instance
         {
             get
@@ -43,6 +43,14 @@ namespace PetClinicDAO
         public User GetUserById(int id)
         {
             return context.Users.FirstOrDefault(u => u.UserId == id)!;
+        }
+
+        public User GetUserByIdAndRole(int id, UserRole role)
+        {
+            return context.Users
+                .Where(u => u.UserId == id && u.Role == (int) role)
+                .Include(u => u.Pets)
+                .FirstOrDefault()!;
         }
 
         public User GetUserByEmail(string email) 
@@ -102,6 +110,17 @@ namespace PetClinicDAO
 
             context.Entry(user).State = EntityState.Modified;
             context.SaveChanges();
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
         }
     } 
 }

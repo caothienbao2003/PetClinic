@@ -1,0 +1,43 @@
+﻿@page
+@model PetClinic.Pages.Staff.MedicineManagement.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Medicine</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Medicine.MedicineName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Medicine.MedicineName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Medicine.MedicineDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Medicine.MedicineDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Medicine.ActiveStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Medicine.ActiveStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Medicine.MedicineType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Medicine.MedicineType.MedicineTypeId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Medicine?.MedicineId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

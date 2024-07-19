@@ -23,5 +23,9 @@ namespace PetClinicRepository.Interface
         public List<User> GetUserListWithRole(UserRole userRole);
 
         public void UpdateUser(User user);
+
+        public Task UpdateUserAsync(User user);
+
+        public Task<User> GetUserByIdAsync(int userId);
     }
 }

@@ -1,0 +1,187 @@
+﻿@page
+@model PetClinic.Pages.Admin.AdminManageStaff.AdminUpdateStaffModel
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Update Staff</title>
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body class="admin-update-staff">
+	<header class="header">
+		<div class="header-box-container"></div>
+		<div class="header-buttons">
+			<button onclick="location.href='/Admin/AdminProfile'">Profile</button>
+			<button onclick="location.href='/Authentication/Logout'">Logout</button>
+			<button onclick="location.href='/Authentication/Login'">Login</button>
+		</div>
+	</header>
+
+	<div class="container">
+		<aside class="sidebar">
+			<nav>
+				<ul>
+					<li><a href="/Admin/AdminHomePage">Home</a></li>
+					<li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
+					<li><a href="/Admin/AdminManageStaff/AdminViewStaffList">Staff Management</a></li>
+					<li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
+					<li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
+					<li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
+					<li><a href="/Admin/AdminManageSchedule/ScheduleManagement">Schedule Management</a></li>
+					<li><a href="/Admin/AdminManageService/AdminViewServiceList">Service Management</a></li>
+					<li><a href="/Admin/AdminManageCage/CageManagement">Cage Management</a></li>
+					<li><a href="/Admin/AdminManageMedicine/MedicineManagement">Medicine Management</a></li>
+				</ul>
+			</nav>
+		</aside>
+
+		<main class="main-content">
+			<div class="profile-container">
+				<div class="profile-info">
+					<h2>View Profile</h2>
+					<div class="text-center">
+						<img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" class="img-thumbnail profile-pic">
+					</div>
+					<dl class="profile-details">
+						<div class="profile-item">
+							<dt>First Name</dt>
+							<dd>@Model.user?.FirstName</dd>
+						</div>
+						<div class="profile-item">
+							<dt>Last Name</dt>
+							<dd>@Model.user?.LastName</dd>
+						</div>
+						<div class="profile-item">
+							<dt>Social Number</dt>
+							<dd>@Model.user?.SocialNumber</dd>
+						</div>
+						<div class="profile-item">
+							<dt>Email</dt>
+							<dd>@Model.user?.Email</dd>
+						</div>
+						<div class="profile-item">
+							<dt>Address</dt>
+							<dd>@Model.user?.Address</dd>
+						</div>
+						<div class="profile-item">
+							<dt>Gender</dt>
+							<dd>@Model.user?.Gender</dd>
+						</div>
+						<div class="profile-item">
+							<dt>Salary</dt>
+							<dd>@Model.user?.EmployeeSalary</dd>
+						</div>
+					</dl>
+					<button class="btn btn-primary" id="editProfileBtn">Edit Profile</button>
+				</div>
+
+				<div class="profile-info" id="editProfileForm" style="display: none;">
+					<h2>Edit Profile</h2>
+					<form method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label asp-for="updateImage" class="control-label">Profile Picture</label>
+							<input asp-for="updateImage" class="form-control" type="file" />
+							<span asp-validation-for="updateImage" class="text-danger"></span>
+						</div>
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<input type="hidden" asp-for="updateUserId" value="@Model.user.UserId" />
+						<div class="form-group">
+							<label asp-for="updateFirstName" class="control-label">First Name</label>
+							<input asp-for="updateFirstName" class="form-control" />
+							<span asp-validation-for="updateFirstName" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updateLastName" class="control-label">Last Name</label>
+							<input asp-for="updateLastName" class="form-control" />
+							<span asp-validation-for="updateLastName" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updateSocialNumber" class="control-label">Social Number</label>
+							<input asp-for="updateSocialNumber" class="form-control" />
+							<span asp-validation-for="updateSocialNumber" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updatePassword" class="control-label">Password</label>
+							<input asp-for="updatePassword" class="form-control" />
+							<span asp-validation-for="updatePassword" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updatePhoneNumber" class="control-label">Phone Number</label>
+							<input asp-for="updatePhoneNumber" class="form-control" />
+							<span asp-validation-for="updatePhoneNumber" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updateAddress" class="control-label">Address</label>
+							<input asp-for="updateAddress" class="form-control" />
+							<span asp-validation-for="updateAddress" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updateEmail" class="control-label">Email</label>
+							<input asp-for="updateEmail" class="form-control" />
+							<span asp-validation-for="updateEmail" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updateGender" class="control-label">Gender</label>
+							<select asp-for="updateGender" class="form-control">
+								<option value="" disabled selected hidden>Select Gender</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Other">Other</option>
+							</select>
+							<span asp-validation-for="updateGender" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="updateEmployeeSalary" class="control-label">Salary</label>
+							<input asp-for="updateEmployeeSalary" class="form-control" />
+							<span asp-validation-for="updateEmployeeSalary" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input type="hidden" asp-for="updateRole" />
+						</div>
+						<div class="form-group">
+							<label for="ActiveStatus">Status:</label>
+							<select id="updateActiveStatus" asp-for="updateActiveStatus" class="form-control">
+								<option value="1">Active</option>
+								<option value="0">Inactive</option>
+							</select>
+							<span asp-validation-for="updateActiveStatus" class="text-danger"></span>
+						</div>
+						<div class="form-group form-submit-button">
+							<button type="submit" class="btn btn-create btn-block" asp-page-handler="UpdateUser">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- Display error messages -->
+			<div class="form-group">
+				<div asp-validation-summary="All" class="text-danger"></div>
+			</div>
+		</main>
+	</div>
+
+	<footer>
+		<p>&copy; 2024 Pet Clinic. All rights reserved.</p>
+		<p>1234 Clinic Address, HCM, Viet Nam</p>
+	</footer>
+
+	<script>
+		var services = @Html.Raw(Json.Serialize(Model.User));
+	</script>
+
+	<script src="~/js/adminManageUser.js"></script>
+
+	<script>
+		document.getElementById('editProfileBtn').addEventListener('click', function () {
+			var editProfileForm = document.getElementById('editProfileForm');
+			editProfileForm.style.display = 'block';
+			this.style.display = 'none';
+		});
+	</script>
+</body>
+</html>

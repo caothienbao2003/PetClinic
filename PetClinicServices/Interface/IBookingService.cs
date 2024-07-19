@@ -1,4 +1,5 @@
 ﻿using PetClinicBussinessObject;
+using PetClinicDAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace PetClinicServices.Interface
     {
         public List<Booking> GetAll();
         public Booking? GetBookingById(int id);
-        public void Add(Booking booking);
+        public void AddBooking(Booking booking);
+        public List<Booking> GetBookingListByPetId(int petId);
+        public List<Booking> GetBookingListByUserId(int userId);
+        public void UpdateBooking(Booking booking);
     }
 }

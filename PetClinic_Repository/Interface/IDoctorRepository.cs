@@ -10,5 +10,7 @@ namespace PetClinicRepository.Interface
     public interface IDoctorRepository
     {
         public List<User> GetAllDoctors();
+        public User GetDoctorById(int id);
+        public void UpdateDoctor(User doctor);
     }
 }

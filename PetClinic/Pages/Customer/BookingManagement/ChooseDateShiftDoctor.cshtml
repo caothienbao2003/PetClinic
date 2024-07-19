@@ -1,0 +1,150 @@
+﻿@page
+@model PetClinic.Pages.BookingManagement.ChooseDateShiftDoctorModel
+@{
+    ViewData["Title"] = "Choose Date, Shift, and Doctor";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/chooseDateShiftDoctor.css" />
+</head>
+
+<div class="booking-container">
+    <div class="calendar-container">
+        <h1 class="booking-header">Booking</h1>
+        <h2>Choose a date</h2>
+        <form method="post" asp-page-handler="ChangeMonth">
+            <div class="navigation-buttons">
+                <button type="submit" name="offset" value="-1" class="btn-transparent @(Model.CurrentMonth == DateTime.Today.Month && Model.CurrentYear == DateTime.Today.Year ? "disabled" : "")" @(Model.CurrentMonth == DateTime.Today.Month && Model.CurrentYear == DateTime.Today.Year ? "disabled" : "")>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="month-year-wrapper">
+                    <span id="monthYearDisplay">@Model.CurrentMonthYearDisplay</span>
+                </div>
+                <button type="submit" name="offset" value="1" class="btn-transparent">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div>Date selected: @Model.SelectedDate?.ToString("dd/MM/yyyy")</div>
+
+            <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
+            <input type="hidden" name="currentMonth" value="@Model.CurrentMonth" />
+            <input type="hidden" name="currentYear" value="@Model.CurrentYear" />
+            <input type="hidden" name="selectedDate" value="@Model.SelectedDate" />
+            <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+
+        </form>
+
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Su</th>
+                    <th>Mo</th>
+                    <th>Tu</th>
+                    <th>We</th>
+                    <th>Th</th>
+                    <th>Fr</th>
+                    <th>Sa</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody">
+                <form method="post" asp-page-handler="ChooseDate">
+                    @{
+                        int sundayIndex = 7;
+                        var cellList = Model.CalendarCellList;
+
+                        for (int i = 0; i < cellList.Count; i++)
+                        {
+                            if (i % 7 == 0)
+                            {
+                            <tr>
+                                    @for (int j = i; j < sundayIndex; j++)
+                                    {
+                                    <td>
+                                        <button type="submit" name="date" value="@cellList[j].Date" class="btn-cell @(cellList[j].IsAvailable ? "available-date" : "unavailable-date") @(cellList[j].IsSelected ? "selected-date" : "")" @(cellList[j].IsAvailable ? "" : "disabled")>
+                                                @(cellList[j].Date?.Day.ToString())
+                                        </button>
+                                    </td>
+                                    }
+                                    @{
+                                        sundayIndex += 7;
+                                    }
+                            </tr>
+                            }
+                        }
+                    }
+                <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+
+                </form>
+            </tbody>
+        </table>
+
+        <div class="form-group text-center">
+            <a asp-page="ChoosePet" class="back-link"><i class="fas fa-arrow-left"></i> Back to Choose Pet</a>
+        </div>
+    </div>
+
+    <div class="details-container">
+        @if (Model.ShiftSelectionList != null && Model.ShiftSelectionList.Count > 0)
+        {
+            <form method="post" asp-page-handler="ChooseShift">
+                <h2>Available slots</h2>
+                <div class="shifts-container">
+                    @foreach (var shift in Model.ShiftSelectionList)
+                    {
+                        <div>
+                            <button type="submit" name="shiftId" value="@shift.ShiftId" class="shift @(shift.IsAvailable ? "" : "unavailable") @(shift.IsSelected ? "selected" : "")" @(shift.IsAvailable ? "" : "disabled")>
+                                @shift.ShiftDisplay
+                                <br/>
+                                @shift.OccupationDisplay
+                            </button>
+                        </div>
+
+                        <input type="hidden" asp-for="CurrentMonth" value="@Model.CurrentMonth" />
+                        <input type="hidden" asp-for="CurrentYear" value="@Model.CurrentYear" />
+                        <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+                        <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+                    }
+                </div>
+            </form>
+        }
+        @if (Model.DoctorSelectionList != null && Model.DoctorSelectionList.Count > 0)
+        {
+            <h2>Available Doctors</h2>
+            <form method="post" asp-page-handler="ChooseDoctor">
+                <div class="doctors-container">
+                    @foreach (var doctor in Model.DoctorSelectionList)
+                    {
+                        <div>
+                            <button type="submit" name="doctorId" value="@doctor.DoctorId" class="doctor @(doctor.IsAvailable ? "" : "unavailable") @(doctor.IsSelected ? "selected" : "")" @(doctor.IsAvailable ? "" : "disabled")>
+                                @doctor.DoctorName @doctor.DoctorId
+                            </button>
+                        </div>
+
+                        <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
+                        <input type="hidden" asp-for="CurrentMonth" value="@Model.CurrentMonth" />
+                        <input type="hidden" asp-for="CurrentYear" value="@Model.CurrentYear" />
+                        <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+                        <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+
+                    }
+                </div>
+            </form>
+        }
+
+        @if (Model.DoctorSelectionList != null && Model.DoctorSelectionList.Count > 0)
+        {
+            <div class="form-group text-center">
+                <form method="post" asp-page-handler="Next">
+                    <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+                    <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
+                    <input type="hidden" asp-for="SelectedDoctorId" value="@Model.SelectedDoctorId" />
+                    <input type="hidden" asp-for="SelectedPetId" value="@Model.SelectedPetId" />
+                    <input type="hidden" asp-for="CurrentMonth" value="@Model.CurrentMonth" />
+                    <input type="hidden" asp-for="CurrentYear" value="@Model.CurrentYear" />
+
+                    <input type="submit" value="Next" class="btn btn-primary" />
+                </form>
+            </div>
+        }
+    </div>
+</div>

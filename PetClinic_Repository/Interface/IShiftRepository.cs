@@ -12,5 +12,6 @@ namespace PetClinicRepository.Interface
         public List<Shift> GetAllShifts();
         public List<Shift> GetAllDoctorShifts();
         public List<Shift> GetAllStaffShifts();
+        public Shift GetShiftById(int shiftId);
     }
 }
