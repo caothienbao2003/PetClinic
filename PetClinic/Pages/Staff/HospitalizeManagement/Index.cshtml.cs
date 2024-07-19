@@ -41,7 +41,7 @@ namespace PetClinic.Pages.Staff.HospitializeManagement
                 var cage = cageService.GetCageById(hospitalizeFromDb.CageId!.Value);
                 if (cage != null)
                 {
-                    cage.CageEnumStatus = CageStatus.Available;
+                    cage.CageStatus = (int)CageStatus.Available;
                     cageService.UpdateCage(cage);
                 }
             }

@@ -22,12 +22,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="PrescriptionMedicine.MedicineQuantity" class="control-label"></label>
-                <input asp-for="PrescriptionMedicine.MedicineQuantity" class="form-control" />
+                <input asp-for="PrescriptionMedicine.MedicineQuantity" class="form-control" type="number" min="1" />
                 <span asp-validation-for="PrescriptionMedicine.MedicineQuantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrescriptionMedicine.Dosage" class="control-label"></label>
-                <input asp-for="PrescriptionMedicine.Dosage" class="form-control" />
+                <input asp-for="PrescriptionMedicine.Dosage" class="form-control" value="Breakfast ... pill, Afternoon .... pill, Night .... pill" />
                 <span asp-validation-for="PrescriptionMedicine.Dosage" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,15 +43,22 @@
             <th>Medicine Name</th>
             <th>Medicine Quantity</th>
             <th>Dosage</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.PrescriptionMedicines)
         {
             <tr>
-                <td>@item.MedicineName</td>
+                <td>@item.Medicine.MedicineName</td>
                 <td>@item.MedicineQuantity</td>
                 <td>@item.Dosage</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete">
+                        <input type="hidden" name="medicineId" value="@item.MedicineId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

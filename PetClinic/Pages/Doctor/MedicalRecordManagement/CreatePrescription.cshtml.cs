@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using PetClinic.Session;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
@@ -14,8 +12,8 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 {
     public class CreatePrescriptionModel : PageModel
     {
-        private readonly IPrescriptionService prescriptionService;
         private readonly IMedicineService medicineService;
+        private readonly IPrescriptionService prescriptionService;
 
         public CreatePrescriptionModel(IMedicineService _medicineService, IPrescriptionService _prescriptionService)
         {
@@ -33,52 +31,85 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         public Prescription Prescription { get; set; }
 
         [BindProperty]
-        public List<PrescriptionMedicine> PrescriptionMedicines { get; set; }
+        public List<PrescriptionMedicine> PrescriptionMedicines { get; set; } = new List<PrescriptionMedicine>();
 
         public IActionResult OnGet(int medicalRecordId)
         {
-            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
             MedicalRecordId = medicalRecordId;
-            
-            var prescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines");
-            PrescriptionMedicines = prescriptionMedicines ?? new List<PrescriptionMedicine>();
+            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
+            LoadPrescriptionMedicinesFromSession();
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            if (PrescriptionMedicines == null)
-            {
-                PrescriptionMedicines = new List<PrescriptionMedicine>();
-            }
-
-            var sessionPrescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines");
-
-            if (sessionPrescriptionMedicines != null)
-            {
-                PrescriptionMedicines = sessionPrescriptionMedicines;
-            }
-
-            if (PrescriptionMedicine != null)
-            {
-                PrescriptionMedicines.Add(PrescriptionMedicine);
-            }
-
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "PrescriptionMedicines", PrescriptionMedicines);
-
+            UpdatePrescriptionMedicinesInSession();
+            LoadPrescriptionMedicinesFromSession();
             ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
             return Page();
         }
-        
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public IActionResult OnPostDelete(int medicineId)
+        {
+            RemoveMedicineFromSession(medicineId);
+            LoadPrescriptionMedicinesFromSession();
+            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
+            return Page();
+        }
+
         public IActionResult OnPostSave()
+        {
+            SavePrescription();
+            ClearPrescriptionMedicinesFromSession();
+            return RedirectToPage("/Doctor/MedicalRecordManagement/ConfirmationForm", new { medicalRecordId = MedicalRecordId });
+        }
+
+        private void LoadPrescriptionMedicinesFromSession()
+        {
+            var sessionPrescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines");
+            PrescriptionMedicines = sessionPrescriptionMedicines ?? new List<PrescriptionMedicine>();
+
+            foreach (var pm in PrescriptionMedicines)
+            {
+                pm.Medicine = medicineService.GetMedicineById(pm.MedicineId);
+            }
+        }
+
+        private void UpdatePrescriptionMedicinesInSession()
+        {
+            var sessionPrescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines") ?? new List<PrescriptionMedicine>();
+
+            var existingMedicine = sessionPrescriptionMedicines.FirstOrDefault(pm => pm.MedicineId == PrescriptionMedicine.MedicineId);
+            if (existingMedicine != null)
+            {
+                existingMedicine.MedicineQuantity = PrescriptionMedicine.MedicineQuantity;
+                existingMedicine.Dosage = PrescriptionMedicine.Dosage;
+            }
+            else
+            {
+                sessionPrescriptionMedicines.Add(PrescriptionMedicine);
+            }
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "PrescriptionMedicines", sessionPrescriptionMedicines);
+        }
+
+        private void RemoveMedicineFromSession(int medicineId)
+        {
+            var sessionPrescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines") ?? new List<PrescriptionMedicine>();
+            var medicineToRemove = sessionPrescriptionMedicines.FirstOrDefault(pm => pm.MedicineId == medicineId);
+            if (medicineToRemove != null)
+            {
+                sessionPrescriptionMedicines.Remove(medicineToRemove);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "PrescriptionMedicines", sessionPrescriptionMedicines);
+            }
+        }
+
+        private void SavePrescription()
         {
             Prescription.MedicalRecordId = MedicalRecordId;
             prescriptionService.AddPrescription(Prescription);
 
             var prescriptionMedicines = SessionHelper.GetObjectFromJson<List<PrescriptionMedicine>>(HttpContext.Session, "PrescriptionMedicines");
-
             if (prescriptionMedicines != null && prescriptionMedicines.Any())
             {
                 foreach (var pm in prescriptionMedicines)
@@ -87,9 +118,11 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                     prescriptionService.AddPrescriptionMedicine(pm);
                 }
             }
+        }
 
+        private void ClearPrescriptionMedicinesFromSession()
+        {
             SessionHelper.SetObjectAsJson(HttpContext.Session, "PrescriptionMedicines", new List<PrescriptionMedicine>());
-            return RedirectToPage("/Doctor/MedicalRecordManagement/ConfirmationForm", new { medicalRecordId = MedicalRecordId });
         }
     }
 }

@@ -62,7 +62,7 @@ namespace PetClinic.Pages.Staff.HospitializeManagement
                 Hospitalize.CageId = CageId.Value;
             }
 
-            Hospitalize.HospitalizeEnumStatus = HospitalizeStatus.Show;
+            Hospitalize.ActiveStatus = (int)HospitalizeStatus.Show;
 
             hospitalizeService.AddHospitalize(Hospitalize);
 
@@ -78,8 +78,8 @@ namespace PetClinic.Pages.Staff.HospitializeManagement
 
             if (cage != null)
             {
-                cage.CageEnumStatus = CageStatus.Occupied;
-                cage.ActiveEnumStatus = ActiveStatus.Active;    
+                cage.CageStatus = (int)CageStatus.Occupied;
+                cage.ActiveStatus = (int)ActiveStatus.Active;    
                 cageService.UpdateCage(cage);
             }
 

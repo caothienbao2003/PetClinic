@@ -82,7 +82,7 @@
                 <p>No vaccination records available.</p>
             }
 
-            <!-- Medical Information -->
+            <!-- <!-- Medical Information --> -->
             <div class="form-group">
                 <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label"></label>
                 <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
@@ -99,7 +99,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@Model.IsMedicalRecordCreated ? " Edit" : "Create" " class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -108,7 +108,6 @@
 <div>
     @if (Model.IsMedicalRecordCreated)
     {
-        @*<a href="/Doctor/Prescription/Create" class="btn btn-success">Create Prescription</a>*@
         <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecord.MedicalRecordId" class="btn btn-success">Create Prescription</a>
         <a href="Index" class="btn btn-success">Back to List</a>
     }

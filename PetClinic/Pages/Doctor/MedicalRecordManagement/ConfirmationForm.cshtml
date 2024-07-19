@@ -21,13 +21,13 @@
             Doctor
         </dt>
         <dd class="col-sm-10">
-            @Model.MedicalRecord.DoctorId
+            @Model.MedicalRecord.Doctor!.FirstName
         </dd>
         <dt class="col-sm-2">
             Service
         </dt>
         <dd class="col-sm-10">
-            @Model.MedicalRecord.ServiceId
+            @Model.MedicalRecord.Service!.ServiceName
         </dd>
     </dl>
 </div>

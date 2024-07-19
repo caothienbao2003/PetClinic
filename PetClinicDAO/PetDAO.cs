@@ -68,7 +68,7 @@ namespace PetClinicDAO
             if (pet != null)
             {
                 //pet.ActiveStatus = 0;
-                pet.ActiveEnumStatus = ActiveStatus.UnActive;
+                pet.ActiveStatus = (int)ActiveStatus.UnActive;
                 context.SaveChanges();
             }
         }
