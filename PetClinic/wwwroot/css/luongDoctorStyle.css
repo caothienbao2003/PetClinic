@@ -1,0 +1,81 @@
+﻿/* Overall Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: #00c853;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* Profile Section */
+.profile {
+    padding: 20px;
+}
+
+.profile-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+    .profile-item label {
+        font-weight: bold;
+    }
+
+    .profile-item input,
+    .profile-item .change {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .profile-item .change {
+        background-color: #00c853;
+        color: #fff;
+        cursor: pointer;
+    }
+
+/* Personalized Greeting and Profile Button Styles */
+.user-info {
+    position: absolute;
+    top: 35px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+}
+
+    .user-info span {
+        color: black;
+        margin-right: 10px;
+    }
+
+    .user-info button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .user-info button:hover {
+            background-color: #45a049;
+        }   

@@ -25,5 +25,25 @@ namespace PetClinicServices
         { 
             return medicineRepository.GetMedicineList();
         }
+
+        public Medicine GetMedicineById(int medicineId)
+        {
+            return medicineRepository.GetMedicineById(medicineId);
+        }
+
+        public void AddMedicine(Medicine medicine)
+        {
+            medicineRepository.AddMedicine(medicine);
+        }
+
+        public void UpdateMedicine(Medicine medicine)
+        {
+            medicineRepository.UpdateMedicine(medicine);
+        }
+
+        public void RemoveMedicine(int medicineId)
+        {
+            medicineRepository.RemoveMedicine(medicineId);
+        }
     }
 }
