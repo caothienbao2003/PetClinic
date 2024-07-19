@@ -28,5 +28,6 @@ namespace PetClinicServices
         public List<Booking> GetBookingListByPetId(int petId) => bookingRepository.GetBookingListByPetId(petId);
         public List<Booking> GetBookingListByUserId(int userId) => bookingRepository.GetBookingByUserId(userId);
         public void UpdateBooking(Booking booking) => bookingRepository.Update(booking);
+        public Booking GetBookingList(int petId, int scheduleId) => bookingRepository.GetBooking(petId, scheduleId);
     }
 }

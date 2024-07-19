@@ -37,30 +37,39 @@ namespace PetClinicDAO
         }
 
         public Booking? GetBookingById(int id)
-		{
-			return context.Bookings.Include(p => p.Pet).FirstOrDefault(b => b.BookingId == id);
-		}
+        {
+            return context.Bookings.Include(p => p.Pet).FirstOrDefault(b => b.BookingId == id);
+        }
 
         public void Add(Booking booking)
-		{
-            if(GetBookingById(booking.BookingId) != null)
+        {
+            if (GetBookingById(booking.BookingId) != null)
             {
                 return;
             }
 
-			context.Bookings.Add(booking);
-			context.SaveChanges();
-		}
+            context.Bookings.Add(booking);
+            context.SaveChanges();
+        }
 
-		public void Update(Booking booking)
-		{
-            if(GetBookingById(booking.BookingId) == null)
+        public void Update(Booking booking)
+        {
+            if (GetBookingById(booking.BookingId) == null)
             {
                 return;
             }
 
-			context.Bookings.Update(booking);
-			context.SaveChanges();
-		}
+            context.Bookings.Update(booking);
+            context.SaveChanges();
+        }
+        public Booking GetBooking(int petId, int scheduleId)
+        {
+            return context.Bookings
+                .Include(p => p.Pet)
+                .Include(d => d.Doctor)
+                .Include(s => s.Schedule)
+                .Include(s => s.Service)
+                .FirstOrDefault(b => b.PetId == petId && b.ScheduleId == scheduleId)!;
+        }
     }
 }
