@@ -14,16 +14,19 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.medicineList[0].MedicineId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.medicineList[0].MedicineName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.medicineList[0].MedicineDescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.medicineList[0].ActiveStatus)
+                @Html.DisplayNameFor(model => model.medicineList[0].MedicineTypeId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.medicineList[0].MedicineType)
+                @Html.DisplayNameFor(model => model.medicineList[0].ActiveStatus)
             </th>
             <th></th>
         </tr>
@@ -33,17 +36,20 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.MedicineName)
+                    @Html.DisplayFor(modelItem => item.MedicineId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MedicineDescription)
+                    @Html.DisplayFor(modelItem => item.MedicineName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ActiveStatus)
+                    @Html.DisplayFor(modelItem => item.MedicineDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MedicineType.MedicineTypeId)
+                    @Html.DisplayFor(modelItem => item.MedicineTypeId)
             </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                    </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.MedicineId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.MedicineId">Details</a> |

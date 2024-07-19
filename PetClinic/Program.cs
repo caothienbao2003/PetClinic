@@ -19,6 +19,7 @@ builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 
 //builder.Services.AddScoped<IVaccinationDetailService, VaccinationDetailService>();
 builder.Services.AddScoped<IVaccinationRecordService, VaccinationRecordService>();
