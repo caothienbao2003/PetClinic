@@ -10,12 +10,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Service Management</title>
-    <link rel="stylesheet" href="~/css/khoiadminstyle.css">
+    <link rel="stylesheet" href="~/css/khoiadminstyle.css"/>
 </head>
 <body>
     <header class="header">
         <div class="header-box-container">
-            <!-- Remove these lines if the properties are not required -->
             <!--
             <div class="header-box">Revenue: $@Model.revenue</div>
             <div class="header-box">Total Customers: @Model.totalCustomers</div>
@@ -35,7 +34,7 @@
                 <ul>
                     <li><a href="/Admin/AdminHomePage">Home</a></li>
                     <li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
-                    <li><a href="/Admin/AdminManageStaff/StaffManagement">Staff Management</a></li>
+                    <li><a href="/Admin/AdminManageStaff/AdminViewStaffList">Staff Management</a></li>
                     <li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
                     <li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
                     <li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
@@ -95,7 +94,7 @@
                         <label for="ServiceDescription">Description:</label>
                         <textarea id="ServiceDescription" asp-for="newServiceDescription" class="form-control"></textarea>
 
-                        <button type="submit">Create</button>
+                        <button type="submit" class="btn-create">Create</button>
                     </form>
                 </div>
             </div>

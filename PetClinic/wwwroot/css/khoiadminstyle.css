@@ -158,13 +158,45 @@ footer {
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
+    position: relative;
+    margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 500px;
+    max-width: 600px;
+    background-color: #fefefe;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
 }
+
+.modal-body {
+    max-height: 500px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.modal .form-control {
+    width: 95%;
+    margin: 10px 0;
+}
+
+.form-submit-button {
+    text-align: center;
+}
+
+    .form-submit-button .btn-create {
+        width: 150px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .form-submit-button .btn-create:hover {
+            background-color: #45a049;
+        }
+
 
 .close {
     color: #aaa;
@@ -228,3 +260,166 @@ footer {
     .btn-update:hover {
         background-color: #45a049;
     }
+
+/* Additional styles for the AdminUpdateStaff page */
+
+.admin-update-staff .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin-update-staff .profile-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+    .admin-update-staff .profile-info h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+.admin-update-staff .img-thumbnail {
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.admin-update-staff .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.admin-update-staff .form-group input,
+.admin-update-staff .form-group select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+    .admin-update-staff .form-group input:focus,
+    .admin-update-staff .form-group select:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        outline: none;
+    }
+
+.admin-update-staff .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .admin-update-staff .btn:hover {
+        background-color: #45a049;
+    }
+
+.admin-update-staff .text-center {
+    text-align: center;
+}
+
+.admin-update-staff .text-danger {
+    color: #ff0000;
+}
+
+.admin-update-staff .form-group {
+    margin-bottom: 20px;
+}
+
+.admin-update-staff .form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.admin-update-staff .header-buttons button {
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .admin-update-staff .header-buttons button:hover {
+        background-color: #45a049;
+    }
+
+/* Beautify profile-info section */
+.profile-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+    .profile-info h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .profile-info .profile-pic {
+        border-radius: 50%;
+        max-width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .profile-info .profile-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .profile-info .profile-item {
+        width: 48%;
+        margin-bottom: 15px;
+    }
+
+        .profile-info .profile-item dt {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .profile-info .profile-item dd {
+            margin: 0;
+            color: #777;
+        }
+
+    .profile-info .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .profile-info .btn:hover {
+            background-color: #45a049;
+        }
+
+.text-center {
+    text-align: center;
+}

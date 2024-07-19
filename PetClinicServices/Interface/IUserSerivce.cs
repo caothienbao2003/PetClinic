@@ -15,7 +15,7 @@ namespace PetClinicServices.Interface
 
         public User GetUserById(int id);
 
-        public Task<User> AddUser(User newUser);
+        public void AddUser(User newUser);
 
         public bool IsAdmin(User user);
 
