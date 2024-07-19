@@ -21,22 +21,6 @@ namespace PetClinic.Pages.Customer
 
         [BindProperty]
         public IFormFile? updateImage { get; set; }
-        //[BindProperty]
-        //public string updateFirstName { get; set; } = null!;
-        //[BindProperty]
-        //public string updateLastName { get; set; } = null!;
-        //[BindProperty]
-        //public string updateSocialNumber { get; set; } = null!;
-        //[BindProperty]
-        //public string updatePassword { get; set; } = null!;
-        //[BindProperty]
-        //public string? updatePhoneNumber { get; set; }
-        //[BindProperty]
-        //public string? updateAddress { get; set; }
-        //[BindProperty]
-        //public string? updateEmail { get; set; }
-        //[BindProperty]
-        //public string? updateGender { get; set; }
 
         public void OnGet()
         {

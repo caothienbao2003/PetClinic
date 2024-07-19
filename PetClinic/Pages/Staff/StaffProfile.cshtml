@@ -21,7 +21,7 @@
     <div class="profile-info">
         <h2>View Profile</h2>
         <div class="text-center">
-            <img src="@Model.user.Image" alt="Profile Picture" class="img-thumbnail" style="max-width: 200px;">
+            <img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" style="width: 200px">
         </div>
         <dl class="row">
             <dt class="col-sm-3">First Name</dt>
@@ -39,11 +39,11 @@
     </div>
     <div class="profile-info" id="editProfileForm" style="display: none;">
         <h2>Edit Profile</h2>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label asp-for="user.Image" class="control-label">Profile Picture</label>
-                <input asp-for="user.Image" class="form-control" type="file" />
-                <span asp-validation-for="user.Image" class="text-danger"></span>
+                <label asp-for="updateImage" class="control-label">Profile Picture</label>
+                <input asp-for="updateImage" class="form-control" type="file" id="updateImage" name="updateImage" />
+                <span asp-validation-for="updateImage" class="text-danger"></span>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="user.UserId" />
@@ -63,8 +63,8 @@
                 <span asp-validation-for="user.SocialNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="user.Password" class="control-label"></label>
-                <input asp-for="user.Password" class="form-control" />
+                <label asp-for="user.Password" class="control-label">Password</label>
+                <input type="password" asp-for="user.Password" class="form-control" />
                 <span asp-validation-for="user.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -73,12 +73,12 @@
                 <span asp-validation-for="user.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="user.Address" class="control-label"></label>
+                <label asp-for="user.Address" class="control-label">Address</label>
                 <input asp-for="user.Address" class="form-control" />
                 <span asp-validation-for="user.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="user.Email" class="control-label"></label>
+                <label asp-for="user.Email" class="control-label">Email</label>
                 <input asp-for="user.Email" class="form-control" />
                 <span asp-validation-for="user.Email" class="text-danger"></span>
             </div>
