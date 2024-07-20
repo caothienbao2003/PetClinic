@@ -136,22 +136,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addVaccinationForm">
+                <form id="addVaccinationForm" method="post" asp-page-handler="AddVaccination" onsubmit="submitVaccinationRecord(event)">
+                    <!-- Form fields -->
                     <div class="form-group">
                         <label for="VaccinationDate">Vaccination Date</label>
-                        <input type="date" class="form-control" id="VaccinationDate" name="VaccinationDate" required />
+                        <input type="date" class="form-control" id="VaccinationDate" name="NewVaccinationRecord.VaccinationDate" required />
                     </div>
                     <div class="form-group">
                         <label for="NextDueDate">Next Due Date</label>
-                        <input type="date" class="form-control" id="NextDueDate" name="NextDueDate" required />
+                        <input type="date" class="form-control" id="NextDueDate" name="NewVaccinationRecord.NextDueDate" required />
                     </div>
                     <div class="form-group">
                         <label for="VaccinatedAt">Vaccinated At</label>
-                        <input type="text" class="form-control" id="VaccinatedAt" name="VaccinatedAt" required />
+                        <input type="text" class="form-control" id="VaccinatedAt" name="NewVaccinationRecord.VaccinatedAt" required />
                     </div>
                     <div class="form-group">
                         <label for="MedicineId">Medicine Name</label>
-                        <select class="form-control" id="MedicineId" name="MedicineId" required>
+                        <select class="form-control" id="MedicineId" name="NewVaccinationRecord.MedicineId" required>
                             @foreach (var medicine in Model.MedicineList)
                             {
                                 <option value="@medicine.MedicineId">@medicine.MedicineName</option>
@@ -160,12 +161,12 @@
                     </div>
                     <div class="form-group">
                         <label for="Verification">Verification</label>
-                        <select class="form-control" id="Verification" name="Verification" required>
+                        <select class="form-control" id="Verification" name="NewVaccinationRecord.Verification" required>
                             <option value="1">Verified</option>
                             <option value="2">Not Verified</option>
                         </select>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="submitVaccinationRecord()">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </form>
             </div>
         </div>
@@ -176,6 +177,53 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        // function submitVaccinationRecord() {
+        //     $('#addVaccinationForm').submit();
+        // }
+        fetch('@Url.Page("CreateRecord", "AddVaccination")?' + new Date().getTime(), {
+    method: 'POST',
+    body: formData
+})
+        function submitVaccinationRecord(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            const formData = new FormData(document.getElementById('addVaccinationForm'));
+            formData.append('NewVaccinationRecord.PetHealthId', @Model.PetHealthInfo.PetHealthId);
+            formData.append('NewVaccinationRecord.Verification', document.getElementById('Verification').value);
+
+            fetch('@Url.Page("CreateRecord", "AddVaccination")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the vaccination records table
+                    const tbody = document.querySelector('table tbody');
+                    tbody.innerHTML = ''; // Clear existing rows
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${record.vaccinationRecordId}</td>
+                        <td>${record.vaccinationDate}</td>
+                        <td>${record.nextDueDate}</td>
+                        <td>${record.vaccinatedAt}</td>
+                        <td>${record.verification}</td>
+                        <td>${record.medicineId}</td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(${record.vaccinationRecordId}, ${record.verification})">Toggle Verification</button>
+                        </td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+
+                    $('#addVaccinationModal').modal('hide');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
         // function toggleVerificationStatus(recordId, currentStatus) {
         //     const newStatus = currentStatus === 1 ? 2 : 1;
         //     $.post('@Url.//Page("/Doctor/MedicalRecordManagement/CreateRecord", "OnPostUpdateVerification")', 
@@ -191,24 +239,24 @@
         //     });
         // }
 
-        function submitVaccinationRecord() {
-            const formData = {
-                VaccinationDate: $('#VaccinationDate').val(),
-                NextDueDate: $('#NextDueDate').val(),
-                VaccinatedAt: $('#VaccinatedAt').val(),
-                MedicineId: $('#MedicineId').val(),
-                Verification: $('#Verification').val()
-            };
+        // function submitVaccinationRecord() {
+        //     const formData = {
+        //         VaccinationDate: $('#VaccinationDate').val(),
+        //         NextDueDate: $('#NextDueDate').val(),
+        //         VaccinatedAt: $('#VaccinatedAt').val(),
+        //         MedicineId: $('#MedicineId').val(),
+        //         Verification: $('#Verification').val()
+        //     };
 
-            $.post('@Url.Page("/Doctor/MedicalRecordManagement/CreateRecord", "OnPostAddVaccination")', formData)
-            .done(function () {
-                $('#addVaccinationModal').modal('hide');
-                location.reload();
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                alert("Error adding vaccination record: " + errorThrown);
-            });
-        }
+        //     $.post('@Url.//Page("/Doctor/MedicalRecordManagement/CreateRecord", "OnPostAddVaccination")', formData)
+        //     .done(function () {
+        //         $('#addVaccinationModal').modal('hide');
+        //         location.reload();
+        //     })
+        //     .fail(function (jqXHR, textStatus, errorThrown) {
+        //         alert("Error adding vaccination record: " + errorThrown);
+        //     });
+        // }
     </script>
 }
 
