@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Service Management\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
@@ -26,10 +31,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.17" />
     <PackageReference Include="QRCoder" Version="1.6.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Service Management\" />
   </ItemGroup>
 
 </Project>

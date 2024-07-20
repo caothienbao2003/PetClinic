@@ -48,11 +48,16 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         [BindProperty]
         public List<VaccinationRecord> records { get; set; } = default!;
 
-        public bool IsMedicalRecordCreated { get; set; } = false;
-
-
         [BindProperty(SupportsGet = true)]
         public int MecId { get; set; }
+
+        [BindProperty]
+        public VaccinationRecord NewVaccinationRecord { get; set; }
+
+        [BindProperty]
+        public List<Medicine> MedicineList { get; set; } = new List<Medicine>();
+
+        public bool IsMedicalRecordCreated { get; set; } = false;
 
         public IActionResult OnGet(int bookid, bool? isMedicalRecordCreated, int mecId = 0)
         {
@@ -84,9 +89,11 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                           .ToList();
 
 
-            ViewData["DoctorId"] = new SelectList(userService.GetAllUsers(), "UserId", "FirstName", null);
-            ViewData["ServiceId"] = new SelectList(filteredService, "ServiceId", "ServiceName", null);
+            ViewData["DoctorId"] = new SelectList(userService.GetAllUsers(), "UserId", "FirstName");
+            ViewData["ServiceId"] = new SelectList(filteredService, "ServiceId", "ServiceName");
             ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
+
+            MedicineList = medicineService.GetMedicineList();
 
             if (isMedicalRecordCreated.HasValue)
             {
@@ -113,5 +120,27 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
             return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
         }
+
+        public IActionResult OnPostAddVaccination()
+        {
+            if (NewVaccinationRecord != null)
+            {
+                NewVaccinationRecord.PetHealthId = PetHealthInfo.PetHealthId;
+                vaccinationRecordService.AddVaccinationRecord(NewVaccinationRecord);
+            }
+            return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
+        }
+
+        public IActionResult OnPostUpdateVerification(int recordId, bool verificationStatus)
+        {
+            var record = vaccinationRecordService.GetVaccinationRecordById(recordId);
+            if (record != null)
+            {
+                record.Verification = verificationStatus;
+                vaccinationRecordService.UpdateVaccinationRecord(record);
+            }
+            return Page();
+        }
+
     }
 }

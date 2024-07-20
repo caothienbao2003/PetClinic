@@ -41,15 +41,21 @@ namespace PetClinicDAO
             return context.VaccinationRecords.FirstOrDefault(v => v.VaccinationRecordId == id)!;
         }
 
+        public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId)
+        {
+            return context.VaccinationRecords.Where(v => v.PetHealthId == petHealthId).ToList();
+        }
+
         public void AddVaccinationRecord(VaccinationRecord vaccinationRecord)
         {
             context.VaccinationRecords.Add(vaccinationRecord);
             context.SaveChanges();
         }
 
-        public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId)
+        public void UpdateVaccinationRecord(VaccinationRecord vaccinationRecord)
         {
-            return context.VaccinationRecords.Where(v => v.PetHealthId == petHealthId).ToList();
+            context.VaccinationRecords.Update(vaccinationRecord);
+            context.SaveChanges();
         }
 
     }

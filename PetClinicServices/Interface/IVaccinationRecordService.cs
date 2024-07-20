@@ -14,5 +14,9 @@ namespace PetClinicServices.Interface
         public VaccinationRecord GetVaccinationRecordById(int id);
 
         public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId);
+
+        public void AddVaccinationRecord(VaccinationRecord vaccinationRecord);
+
+        public void UpdateVaccinationRecord(VaccinationRecord vaccinationRecord);
     }
 }
