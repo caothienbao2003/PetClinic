@@ -138,6 +138,7 @@
             <div class="modal-body">
                 <form id="addVaccinationForm" method="post" asp-page-handler="AddVaccination" onsubmit="submitVaccinationRecord(event)">
                     <!-- Form fields -->
+                    <input type="hidden" name="NewVaccinationRecord.PetHealthId" value="@Model.PetHealthInfo.PetHealthId" />
                     <div class="form-group">
                         <label for="VaccinationDate">Vaccination Date</label>
                         <input type="date" class="form-control" id="VaccinationDate" name="NewVaccinationRecord.VaccinationDate" required />
@@ -162,8 +163,8 @@
                     <div class="form-group">
                         <label for="Verification">Verification</label>
                         <select class="form-control" id="Verification" name="NewVaccinationRecord.Verification" required>
-                            <option value="1">Verified</option>
-                            <option value="2">Not Verified</option>
+                            <option value="true">Verified</option>
+                            <option value="false">Not Verified</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -177,19 +178,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // function submitVaccinationRecord() {
-        //     $('#addVaccinationForm').submit();
-        // }
-        fetch('@Url.Page("CreateRecord", "AddVaccination")?' + new Date().getTime(), {
-    method: 'POST',
-    body: formData
-})
         function submitVaccinationRecord(event) {
             event.preventDefault(); // Prevent the form from submitting the traditional way
 
             const formData = new FormData(document.getElementById('addVaccinationForm'));
-            formData.append('NewVaccinationRecord.PetHealthId', @Model.PetHealthInfo.PetHealthId);
-            formData.append('NewVaccinationRecord.Verification', document.getElementById('Verification').value);
 
             fetch('@Url.Page("CreateRecord", "AddVaccination")', {
                 method: 'POST',
@@ -223,7 +215,6 @@
                 });
         }
 
-
         // function toggleVerificationStatus(recordId, currentStatus) {
         //     const newStatus = currentStatus === 1 ? 2 : 1;
         //     $.post('@Url.//Page("/Doctor/MedicalRecordManagement/CreateRecord", "OnPostUpdateVerification")', 
@@ -239,24 +230,6 @@
         //     });
         // }
 
-        // function submitVaccinationRecord() {
-        //     const formData = {
-        //         VaccinationDate: $('#VaccinationDate').val(),
-        //         NextDueDate: $('#NextDueDate').val(),
-        //         VaccinatedAt: $('#VaccinatedAt').val(),
-        //         MedicineId: $('#MedicineId').val(),
-        //         Verification: $('#Verification').val()
-        //     };
-
-        //     $.post('@Url.//Page("/Doctor/MedicalRecordManagement/CreateRecord", "OnPostAddVaccination")', formData)
-        //     .done(function () {
-        //         $('#addVaccinationModal').modal('hide');
-        //         location.reload();
-        //     })
-        //     .fail(function (jqXHR, textStatus, errorThrown) {
-        //         alert("Error adding vaccination record: " + errorThrown);
-        //     });
-        // }
     </script>
 }
 

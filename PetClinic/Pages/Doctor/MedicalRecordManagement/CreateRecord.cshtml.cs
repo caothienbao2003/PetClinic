@@ -122,15 +122,16 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         }
 
         public IActionResult OnPostAddVaccination()
-        { 
+        {
             if (NewVaccinationRecord != null)
             {
-                //NewVaccinationRecord.PetHealthId = PetHealthInfo.PetHealthId;
+                NewVaccinationRecord.Verification = NewVaccinationRecord.Verification;
+
                 vaccinationRecordService.AddVaccinationRecord(NewVaccinationRecord);
             }
-            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(1);
+
+            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(NewVaccinationRecord!.PetHealthId!.Value);
             return new JsonResult(updatedRecords);
-            //return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
         }
 
         public IActionResult OnPostUpdateVerification(int recordId, bool verificationStatus)
