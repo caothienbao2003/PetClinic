@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 using PetClinicServices;
@@ -64,7 +65,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Customer", policy =>
         policy.Requirements.Add(new RoleRequirement(0)));
-	options.AddPolicy("Staff", policy =>
+    options.AddPolicy("Staff", policy =>
         policy.Requirements.Add(new RoleRequirement(1)));
 	options.AddPolicy("Doctor", policy =>
         policy.Requirements.Add(new RoleRequirement(2)));
