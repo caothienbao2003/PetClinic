@@ -5,9 +5,165 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Pet Information</h1>
 
-<div>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Pet Details -->
+            <div class="form-group">
+                <label asp-for="Pet.PetName" class="control-label">Pet Name</label>
+                <input type="text" class="form-control" value="@Model.Pet.PetName" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Pet.PetAge" class="control-label">Age</label>
+                <input type="text" class="form-control" value="@Model.Pet.PetAge" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Pet.PetType" class="control-label">Type</label>
+                <input type="text" class="form-control" value="@Model.Pet.PetType" readonly />
+            </div>
+
+            <!-- Pet Health Information -->
+            <div class="form-group">
+                <label asp-for="PetHealth.Conditions" class="control-label">Conditions</label>
+                <input type="text" class="form-control" value="@Model.PetHealth.Conditions" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.Weight" class="control-label">Weight</label>
+                <input type="text" class="form-control" value="@Model.PetHealth.Weight" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.WeightMeasurementDate" class="control-label">Weight Measurement Date</label>
+                <input type="text" class="form-control" value="@Model.PetHealth.WeightMeasurementDate" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.OverallHealth" class="control-label">Overall Health</label>
+                <input type="text" class="form-control" value="@Model.PetHealth.OverallHealth" readonly />
+            </div>
+
+            <!-- Vaccination Record -->
+            <h3>Vaccination Record</h3>
+            @if (Model.VaccinationRecordList != null && Model.VaccinationRecordList.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Vaccination Record ID</th>
+                        <th>Vaccination Date</th>
+                        <th>Next Due Date</th>
+                        <th>Vaccinated At</th>
+                        <th>Verification</th>
+                        <th>Medicine Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var record in Model.VaccinationRecordList)
+                    {
+                        <tr>
+                            <td>@record.VaccinationRecordId</td>
+                            <td>@record.VaccinationDate</td>
+                            <td>@record.NextDueDate</td>
+                            <td>@record.VaccinatedAt</td>
+                            <td>@record.Verification</td>
+                            <td>@record.MedicineId</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(@record.VaccinationRecordId, @record.Verification)">Toggle Verification</button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No vaccination records available.</p>
+            }
+        </form>
+    </div>
+</div>
+
+<!-- Button to trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVaccinationModal">
+    Add Vaccination Record
+</button>
+
+<!-- Modal for adding a new vaccination record -->
+<div class="modal fade" id="addVaccinationModal" tabindex="-1" role="dialog" aria-labelledby="addVaccinationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVaccinationModalLabel">Add Vaccination Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addVaccinationForm">
+                    <div class="form-group">
+                        <label for="VaccinationDate">Vaccination Date</label>
+                        <input type="date" class="form-control" id="VaccinationDate" name="VaccinationDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="NextDueDate">Next Due Date</label>
+                        <input type="date" class="form-control" id="NextDueDate" name="NextDueDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="VaccinatedAt">Vaccinated At</label>
+                        <input type="text" class="form-control" id="VaccinatedAt" name="VaccinatedAt" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="MedicineId">Medicine Name</label>
+                        <select class="form-control" id="MedicineId" name="MedicineId" required>
+                            @foreach (var medicine in Model.MedicineList)
+                            {
+                                <option value="@medicine.MedicineId">@medicine.MedicineName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Verification">Verification</label>
+                        <select class="form-control" id="Verification" name="Verification" required>
+                            <option value="1">Verified</option>
+                            <option value="2">Not Verified</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="submitVaccinationRecord()">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function submitVaccinationRecord() {
+            const formData = {
+                VaccinationDate: $('#VaccinationDate').val(),
+                NextDueDate: $('#NextDueDate').val(),
+                VaccinatedAt: $('#VaccinatedAt').val(),
+                MedicineId: $('#MedicineId').val(),
+                Verification: $('#Verification').val()
+            };
+
+            $.post('@Url.Page("/VaccinationManagement/Create", "OnPostAsync")', formData)
+                .done(function () {
+                    $('#addVaccinationModal').modal('hide');
+                    location.reload();
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("Error adding vaccination record: " + errorThrown);
+                });
+        }
+    </script>
+}
+@* <div>
     <h4>Pet</h4>
     <hr />
     <dl class="row">
@@ -30,19 +186,26 @@
             @Html.DisplayFor(model => model.Pet.PetAge)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PetHealth.Conditions)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PetHealth.Conditions)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PetHealth.Weight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PetHealth.Weight)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Pet.Customer)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pet.Customer.Password)
+            @Html.DisplayFor(model => @model.Pet.Customer.FirstName)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Pet?.PetId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
-</div>
-
-<div class="d-flex justify-content-between">
-    <a asp-page="/VaccinationManagement/Create" class="btn btn-primary">Create Vaccination</a>
-    <a asp-page="/Doctor/MedicalRecordManagement/Index" class="btn btn-primary">View Medical Records</a>
-</div>
+</div> *@
