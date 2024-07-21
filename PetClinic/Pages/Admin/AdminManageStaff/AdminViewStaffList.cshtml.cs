@@ -20,6 +20,12 @@ namespace PetClinic.Pages.Admin.AdminManageStaff
 		private readonly IUserService userService;
 
 		[BindProperty]
+		public decimal revenue { get; set; }
+		[BindProperty]
+		public int totalCustomers { get; set; }
+		[BindProperty]
+		public int totalBookings { get; set; }
+		[BindProperty]
 		public string newFirstName { get; set; } = null!;
 		[BindProperty]
 		public string newLastName { get; set; } = null!;

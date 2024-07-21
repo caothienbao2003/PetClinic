@@ -41,22 +41,22 @@
 					<tbody>
 						@foreach (var medicine in Model.Medicines)
 						{
-							<tr>
-								<td>@medicine.MedicineId</td>
-								<td>@medicine.MedicineName</td>
-								<td>@medicine.MedicineType.MedicineTypeName</td>
-								<td>@medicine.MedicineDescription</td>
-								<td>@(medicine.ActiveStatus == 1 ? "Active" : "Inactive")</td>
-								<td>
-									<a class="btn-update" asp-page="AdminUpdateMedicine" asp-route-medicineId="@medicine.MedicineId">Update</a>
-								</td>
-							</tr>
+										<tr>
+											<td>@medicine.MedicineId</td>
+											<td>@medicine.MedicineName</td>
+											<td>@medicine.MedicineType.MedicineTypeName</td>
+											<td>@medicine.MedicineDescription</td>
+											<td>@(medicine.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+											<td>
+												<a class="btn-update" asp-page="AdminUpdateMedicine" asp-route-medicineId="@medicine.MedicineId">Update</a>
+											</td>
+										</tr>
 						}
 					</tbody>
 				</table>
 			</div>
 
-			<!-- Create Service Modal -->
+			<!-- Create Medicine Modal -->
 			<div id="createMedicineModal" class="modal">
 				<div class="modal-content">
 					<span class="close" onclick="closeModal('createMedicineModal')">&times;</span>
@@ -64,9 +64,12 @@
 					<form id="createMedicineForm" method="post" asp-page-handler="CreateMedicine">
 						<label for="MedicineName">Medicine Name:</label>
 						<input type="text" id="MedicineName" asp-for="newMedicineName" class="form-control">
-
 						<label for="MedicineDescription">Description:</label>
 						<textarea id="MedicineDescription" asp-for="newMedicineDescription" class="form-control"></textarea>
+						<div class="form-group">
+							<label asp-for="newMedicineTypeId" class="control-label"></label>
+							<select asp-for="newMedicineTypeId" class ="form-control" asp-items="ViewBag.MedicineTypeId"></select>
+						</div>
 
 						<button type="submit" class="btn-create" asp-page-handler="Create">Create</button>
 					</form>
@@ -81,10 +84,10 @@
 	@await Html.PartialAsync("_Footer")
 
 
-	<script>
-		var services = @Html.Raw(Json.Serialize(Model.Services));
-	</script>
+	@*<script>
+		var medicines = @Html.Raw(Json.Serialize(Model.Medicines));
+	</script>*@
 
-	<script src="~/js/adminManageService.js"></script>
+	<script src="~/js/adminManageMedicine.js"></script>
 </body>
 </html>
