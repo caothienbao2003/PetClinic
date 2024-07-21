@@ -28,7 +28,5 @@ namespace PetClinicRepository
         public void UpdatePet(Pet pet) => PetDAO.Instance.UpdatePet(pet);
 
         public void UpdatePetHealth(PetHealth petHealth) => PetDAO.Instance.UpdatePetHealth(petHealth);
-
-        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId) => PetDAO.Instance.GetVaccinationRecordByPetHealthId(petHealthId);
     }
 }

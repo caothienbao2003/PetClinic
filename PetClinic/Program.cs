@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 using PetClinicServices;
@@ -18,13 +19,12 @@ builder.Services.AddScoped<IHospitalizeService, HospitalizeService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IShiftService, ShiftService>();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IMedicineService, MedicineService>();
-
-//builder.Services.AddScoped<IVaccinationDetailService, VaccinationDetailService>();
 builder.Services.AddScoped<IVaccinationRecordService, VaccinationRecordService>();
 
 builder.Services.AddScoped<IEmailService>(provider => 
@@ -64,7 +64,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Customer", policy =>
         policy.Requirements.Add(new RoleRequirement(0)));
-	options.AddPolicy("Staff", policy =>
+    options.AddPolicy("Staff", policy =>
         policy.Requirements.Add(new RoleRequirement(1)));
 	options.AddPolicy("Doctor", policy =>
         policy.Requirements.Add(new RoleRequirement(2)));

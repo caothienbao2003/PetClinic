@@ -24,12 +24,5 @@ namespace PetClinicBussinessObject
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Hospitalize> Hospitalizes { get; set; }
         public virtual ICollection<PetHealth> PetHealths { get; set; }
-
-        [NotMapped]
-        public ActiveStatus? ActiveEnumStatus
-        {
-            get { return (ActiveStatus?)ActiveStatus; }
-            set { ActiveStatus = (int?)value; }
-        }
     }
 }

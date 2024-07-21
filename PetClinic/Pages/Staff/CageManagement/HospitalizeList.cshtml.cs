@@ -91,14 +91,14 @@ namespace PetClinic.Pages.Staff.CageManagement
                     HospitalizeId = HospitalizeId,
                     DateTime = endTime,
                     Description = "End Hospitalization",
-                    ActiveStatus = 1
+                    ActiveStatus = (int)ActiveStatus.Active
                 };
                 hospitalizeService.AddHospitalizeLog(endLog);
 
                 var cage = cageService.GetCageById(hospitalize.CageId!.Value);
                 if (cage != null)
                 {
-                    cage.CageEnumStatus = CageStatus.Available;
+                    cage.CageStatus = (int)CageStatus.Available;
                     cageService.UpdateCage(cage);
                 }
             }

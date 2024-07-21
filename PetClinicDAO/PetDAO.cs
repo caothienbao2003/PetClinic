@@ -68,7 +68,7 @@ namespace PetClinicDAO
             if (pet != null)
             {
                 //pet.ActiveStatus = 0;
-                pet.ActiveEnumStatus = ActiveStatus.UnActive;
+                pet.ActiveStatus = (int)ActiveStatus.UnActive;
                 context.SaveChanges();
             }
         }
@@ -93,13 +93,6 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public VaccinationRecord GetVaccinationRecordByPetHealthId(int petHealthId)
-        {
-            var petHealth = context.PetHealths
-                .Include(ph => ph.VaccinationRecords)
-                .FirstOrDefault(ph => ph.PetHealthId == petHealthId);
 
-            return petHealth!.VaccinationRecords.FirstOrDefault()!;
-        }
     }
 }
