@@ -16,5 +16,6 @@ namespace PetClinicServices.Interface
         public List<Booking> GetBookingListByPetId(int petId);
         public List<Booking> GetBookingListByUserId(int userId);
         public void UpdateBooking(Booking booking);
+        public Booking GetBookingList(int petId, int scheduleId);
     }
 }

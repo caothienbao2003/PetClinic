@@ -18,12 +18,14 @@ namespace PetClinic.Pages.BookingManagement
         private readonly IShiftService shiftService;
         private readonly IDoctorService doctorService;
         private readonly IScheduleService scheduleService;
+        private readonly IBookingService bookingService;
 
-        public ChooseDateShiftDoctorModel(IShiftService _shiftService, IDoctorService _doctorService, IScheduleService _scheduleService)
+        public ChooseDateShiftDoctorModel(IShiftService _shiftService, IDoctorService _doctorService, IScheduleService _scheduleService, IBookingService _bookingService)
         {
             shiftService = _shiftService;
             doctorService = _doctorService;
             scheduleService = _scheduleService;
+            bookingService = _bookingService;
         }
 
         [BindProperty]
@@ -59,6 +61,9 @@ namespace PetClinic.Pages.BookingManagement
 
         [BindProperty]
         public int? SelectedDoctorId { get; set; }
+
+        [BindProperty]
+        public string? Error {  get; set; }
 
 
         public void OnGet()
@@ -258,7 +263,42 @@ namespace PetClinic.Pages.BookingManagement
             TempData["SelectedDate"] = SelectedDate;
             TempData["SelectedShiftId"] = SelectedShiftId;
 
-            if(SelectedDoctorId != null)
+            List<Schedule> scheduleList = null;
+
+            if (SelectedDoctorId == null)
+            {
+                if (SelectedDate != null)
+                {
+                    scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId).ToList();
+                }
+            }
+            else
+            {
+                if (SelectedDate != null)
+                {
+                    scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId, (int)SelectedDoctorId).ToList();
+                }
+            }
+
+            Booking checkExistedBooking;
+            if (scheduleList != null)
+            {
+
+                foreach (Schedule s in scheduleList)
+                {
+                    checkExistedBooking = bookingService.GetBookingList(SelectedPetId, s.ScheduleId);
+                    if(checkExistedBooking != null)
+                    {
+                        LoadCalendar();
+                        LoadShift();
+                        LoadDoctor();
+                        Error = "You've already book this schedule. Please choose another one.";
+                        return;
+                    }
+                }
+            }
+
+            if (SelectedDoctorId != null)
             {
                 TempData["SelectedDoctorId"] = SelectedDoctorId;
             }
