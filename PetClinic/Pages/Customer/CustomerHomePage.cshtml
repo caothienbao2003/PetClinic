@@ -1,6 +1,7 @@
 ﻿@page
 @model PetClinic.Pages.HomePages.CustomerHomePageModel
 @{
+    Layout = null;
     ViewData["Title"] = "Customer Home Page";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -18,6 +19,18 @@
     <title>Pet Clinic Homepage</title>
     <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/PetManagement/Index">Pet List</a>
+    <a asp-page="/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+</nav>
 
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
