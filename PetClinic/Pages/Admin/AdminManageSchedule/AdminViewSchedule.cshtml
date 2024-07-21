@@ -1,4 +1,99 @@
 ﻿@page
+@using PetClinicBussinessObject
 @model PetClinic.Pages.Admin.AdminManageSchedule.AdminViewScheduleModel
 @{
+	Layout = null;
 }
+
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Schedule Management</title>
+
+	<link rel="stylesheet" href="~/css/khoiadminschedule.css" />
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+
+</head>
+<body>
+	@await Html.PartialAsync("_Header", Model)
+
+	<div class="container">
+		<@await Html.PartialAsync("_Sidebar")
+
+		<main class="main-content">
+
+			<div class="schedule-header">
+				<h1>Schedule</h1>
+				<div class="switch">
+					<select asp-for="UserRole">
+						<option value="@UserRole.Doctor">Doctor</option>
+						<option value="@UserRole.Staff">Staff</option>
+					</select>
+
+					@*<button class="doctor active">Doctor</button>
+						<button class="staff">Staff</button>*@
+				</div>
+				<div class="date-range">
+					<label>Start with</label>
+					<input type="date" value="2022-03-05">
+					<label>End with</label>
+					<input type="date" value="2022-12-05">
+				</div>
+				<button class="reschedule">+ Reschedule</button>
+			</div>
+			<table class="schedule-table">
+				<thead>
+					<tr>
+						<th>Shift</th>
+						<th>Monday</th>
+						<th>Tuesday</th>
+						<th>Wednesday</th>
+						<th>Thursday</th>
+						<th>Friday</th>
+						<th>Saturday</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>7:00 - 9:00</td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>9:00 - 11:00</td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>13:00 - 15:00</td>
+						<td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+						<td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+						<td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>15:00 - 17:00</td>
+						<td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+						<td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+						<td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</main>
+	</div>
+	@await Html.PartialAsync("_Footer")
+
+</body>
