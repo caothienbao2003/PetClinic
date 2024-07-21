@@ -15,6 +15,9 @@
     <thead>
         <tr>
             <th>
+                Customer name
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
             </th>
             <th>
@@ -24,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Doctor)
+                Doctor name
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].Pet)
@@ -43,6 +46,9 @@
         {
             <tr>
                 <td>
+                    @item.Pet.Customer.FirstName @item.Pet.Customer.LastName
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.BookingAt)
                 </td>
                 <td>
@@ -58,14 +64,14 @@
                     @Html.DisplayFor(modelItem => item.Pet.PetId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId
+                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
                  </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Service.ServiceId)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
-                    <a asp-page="./BookingDetails" asp-route-id="@item.BookingId">Details</a> |
+                    <a asp-page="./BookingDetail" asp-route-id="@item.BookingId">Details</a> |
                     <a asp-page="./Delete" asp-route-id="@item.BookingId">Delete</a>
                 </td>
             </tr>

@@ -35,6 +35,7 @@ namespace PetClinicDAO
         {
             return context.Bookings
                 .Include(p => p.Pet)
+                .Include(c => c.Pet.Customer)
                 .Include(d => d.Doctor)
                 .Include(s => s.Schedule)
                 .Include(s => s.Service)
@@ -76,5 +77,54 @@ namespace PetClinicDAO
                 .Include(s => s.Service)
                 .FirstOrDefault(b => b.PetId == petId && b.ScheduleId == scheduleId)!;
         }
+
+
+        //public List<Booking> SearchBy(DateTime date, int shiftId, int doctorId)
+        //{
+        //    return context.Bookings
+        //        .Include(p => p.Pet)
+        //        .Include(d => d.Doctor)
+        //        .Include(s => s.Schedule)
+        //        .Include(s => s.Service)
+        //        .Where(b => b.Schedule.Date == date || b.Schedule.ShiftId == shiftId && b.DoctorId == doctorId)
+        //        .ToList();
+        //}
+
+        //public List<Booking> FilterByCustomerName(string customerName)
+        //{
+        //    return context.Bookings
+        //        .Include(p => p.Pet)
+        //        .Include(c => c.Pet.Customer)
+        //        .Include(d => d.Doctor)
+        //        .Include(s => s.Schedule)
+        //        .Include(s => s.Service)
+        //        .Where(b => b.Pet.Customer.FirstName.Contains(customerName))
+        //        .ToList();
+        //}
+
+        //public List<Booking> FilterByDoctorId(int doctorId)
+        //{
+        //    return context.Bookings
+        //        .Include(p => p.Pet)
+        //        .Include(c => c.Pet.Customer)
+        //        .Include(d => d.Doctor)
+        //        .Include(s => s.Schedule)
+        //        .Include(s => s.Service)
+        //        .Where(b => b.DoctorId == doctorId)
+        //        .ToList();
+        //}
+        //public List<Booking> FilterByServiceId(int serviceId)
+        //{
+        //    return context.Bookings
+        //        .Include(p => p.Pet)
+        //        .Include(c => c.Pet.Customer)
+        //        .Include(d => d.Doctor)
+        //        .Include(s => s.Schedule)
+        //        .Include(s => s.Service)
+        //        .Where(b => b.ServiceId == serviceId)
+        //        .ToList();
+        //}
+
+        //public List<>
     }
 }
