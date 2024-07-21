@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\Shared\" />
     <Folder Include="Pages\Service Management\" />
   </ItemGroup>
 

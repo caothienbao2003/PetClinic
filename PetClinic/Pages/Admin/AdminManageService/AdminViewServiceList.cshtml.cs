@@ -25,7 +25,7 @@ namespace PetClinic.Pages.Admin.AdminManageService
         public int newActiveStatus { get; set; }
 
         [BindProperty]
-        public IList<Service> Services { get; set; }
+        public List<Service> Services { get; set; }
 
         private readonly IServiceService serviceService;
 
