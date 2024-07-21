@@ -1,6 +1,8 @@
 ﻿@page
+@using PetClinicBussinessObject
 @model PetClinic.Pages.Doctor.DoctorHomePageModel
 @{
+    Layout = null;
     ViewData["Title"] = "Doctor Home Page";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -22,6 +24,18 @@
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
     <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
 </div>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Doctor/BookingView">Bookings</a>
+    <a asp-page="/Doctor/MedicalRecordManagement/Index">Medical Records</a>
+    <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord">Create Records</a>
+</nav>
 
 <div class="container">
     <!-- About Section -->
