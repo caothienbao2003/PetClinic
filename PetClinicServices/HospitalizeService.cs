@@ -32,6 +32,11 @@ namespace PetClinicServices
             return hospitalizeRepository.GetHospitalizeById(id);
         }
 
+        public HospitalizeLog? GetLogById(int id)
+        {
+            return hospitalizeRepository.GetLogById(id);
+        }
+
         public void AddHospitalize(Hospitalize hospitalize)
         {
             hospitalizeRepository.AddHospitalize(hospitalize);

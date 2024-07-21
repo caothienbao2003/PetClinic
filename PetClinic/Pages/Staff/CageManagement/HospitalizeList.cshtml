@@ -1,4 +1,5 @@
 ﻿@page
+@using PetClinicBussinessObject
 @model PetClinic.Pages.Staff.CageManagement.HospitalizeListModel
 @{
     ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
@@ -61,7 +62,6 @@
                 </td>
                 
                 <td>                  
-                    @*<a asp-page="./Delete" asp-route-id="@item.HospitalizeId"> Delete </a>*@
                     @if (item.OutTime == null)
                     {
                         <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> Enter current Log </a>
@@ -85,17 +85,25 @@
                             <tr>
                                 <th>DateTime</th>
                                 <th>Description</th>
-                                <th>ActiveStatus</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var log in item.HospitalizeLogs)
                             {
-                                <tr>
+                                <tr class="@(log.ActiveStatus == (int)ActiveStatus.UnActive ? "text-decoration-line-through" : "")">
                                     <td>@log.DateTime</td>
                                     <td>@log.Description</td>
-                                    <td>@log.ActiveStatus</td>
-                                    
+                                    <td>
+                                    @if (log.ActiveStatus == (int)ActiveStatus.Active && item.OutTime == null)
+                                    {
+                                        <form method="post" asp-page-handler="ToggleLogStatus">
+                                            <input type="hidden" name="LogId" value="@log.HospitalizeLogId" />
+                                            <input type="hidden" name="CageId" value="@Model.CageId" />
+                                            <button type="submit" class="btn btn-secondary">Delete</button>
+                                        </form>
+                                    }
+                                    </td>
                                 </tr>
                             }
                         </tbody>

@@ -41,6 +41,11 @@ namespace PetClinicDAO
             return context.Hospitalizes.Find(id);
         }
 
+        public HospitalizeLog? GetLogById(int id)
+        {
+            return context.HospitalizeLogs.Find(id);
+        }
+
         public void AddHospitalize(Hospitalize hospitalize)
         {
             context.Hospitalizes.Add(hospitalize);

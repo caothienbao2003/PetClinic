@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.Staff.HospitializeManagement
+namespace PetClinic.Pages.Staff.CageManagement
 {
-    public class CreateModel : PageModel
+    public class CreateHospitalizeModel : PageModel
     {
         private readonly IHospitalizeService hospitalizeService;
         private readonly IUserService userSerivce;
         private readonly ICageService cageService;
         private readonly IPetService petService;
 
-        public CreateModel(IHospitalizeService _hospitalizeService, IUserService _userSerivce, ICageService _cageService, IPetService _petService)
+        public CreateHospitalizeModel(IHospitalizeService _hospitalizeService, IUserService _userSerivce, ICageService _cageService, IPetService _petService)
         {
             hospitalizeService = _hospitalizeService;
             userSerivce = _userSerivce;
@@ -73,17 +69,17 @@ namespace PetClinic.Pages.Staff.HospitializeManagement
                 ModelState.AddModelError(string.Empty, "Unable to find hospitalize record or cage.");
                 return Page();
             }
-            
+
             var cage = cageService.GetCageById(hospitalizeFromDb.CageId.Value);
 
             if (cage != null)
             {
                 cage.CageStatus = (int)CageStatus.Occupied;
-                cage.ActiveStatus = (int)ActiveStatus.Active;    
+                cage.ActiveStatus = (int)ActiveStatus.Active;
                 cageService.UpdateCage(cage);
             }
 
-            return RedirectToPage("/Staff/CageManagement/Index");
+            return RedirectToPage("./Index");
         }
     }
 }

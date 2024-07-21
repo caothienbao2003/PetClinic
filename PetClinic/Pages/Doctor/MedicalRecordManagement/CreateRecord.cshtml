@@ -70,8 +70,14 @@
                                 <td>@record.Verification</td>
                                 <td>@record.MedicineId</td>
                                 <td>
-                                    <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(@record.VaccinationRecordId, @record.Verification)">Toggle Verification</button>
-                                    <button type="button" class="btn btn-danger" onclick="deleteVaccinationRecord(@record.VaccinationRecordId)">Delete</button>
+                                    <form method="post" asp-page-handler="ToggleVerification">
+                                        <input type="hidden" name="vaccinationRecordId" value="@record.VaccinationRecordId" />
+                                        <input type="hidden" name="currentStatus" value="@record.Verification" />
+                                        <input type="hidden" name="bookId" value="@Model.BookId" />
+                                        <button type="submit" class="btn btn-secondary">
+                                            Toggle Verification
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -190,26 +196,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Update the vaccination records table
-                    const tbody = document.querySelector('table tbody');
-                    tbody.innerHTML = ''; // Clear existing rows
-                    data.forEach(record => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                                <td>${record.vaccinationRecordId}</td>
-                                <td>${record.vaccinationDate}</td>
-                                <td>${record.nextDueDate}</td>
-                                <td>${record.vaccinatedAt}</td>
-                                <td>${record.verification}</td>
-                                <td>${record.medicineId}</td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(${record.vaccinationRecordId}, ${record.verification})">Toggle Verification</button>
-                                    <button type="button" class="btn btn-danger" onclick="deleteVaccinationRecord(${record.vaccinationRecordId})">Delete</button>
-                                </td>
-                            `;
-                        tbody.appendChild(row);
-                    });
-
+                    updateVaccinationRecordsTable(data);
                     $('#addVaccinationModal').modal('hide');
                 })
                 .catch(error => {
@@ -217,65 +204,27 @@
                 });
         }
 
-        function toggleVerificationStatus(recordId, currentStatus) {
-            const newStatus = !currentStatus;
-            fetch('@Url.Page("CreateRecord", "UpdateVerification")', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ recordId: recordId, verificationStatus: newStatus })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert("Error updating verification status.");
-                    }
-                })
-                .catch(error => {
-                    alert("Error updating verification status: " + error);
-                });
-        }
-
-        function deleteVaccinationRecord(recordId) {
-            if (!confirm('Are you sure you want to delete this vaccination record?')) {
-                return;
-            }
-
-            fetch('@Url.Page("CreateRecord", "DeleteVaccination")', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ recordId: recordId })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Update the vaccination records table
-                    const tbody = document.querySelector('table tbody');
-                    tbody.innerHTML = ''; // Clear existing rows
-                    data.forEach(record => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${record.vaccinationRecordId}</td>
-                            <td>${record.vaccinationDate}</td>
-                            <td>${record.nextDueDate}</td>
-                            <td>${record.vaccinatedAt}</td>
-                            <td>${record.verification}</td>
-                            <td>${record.medicineId}</td>
-                            <td>
-                                <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(${record.vaccinationRecordId}, ${record.verification})">Toggle Verification</button>
-                                <button type="button" class="btn btn-danger" onclick="deleteVaccinationRecord(${record.vaccinationRecordId})">Delete</button>
-                            </td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+        function updateVaccinationRecordsTable(data) {
+            const tbody = document.querySelector('table tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+            data.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                        <td>${record.vaccinationRecordId}</td>
+                        <td>${record.vaccinationDate}</td>
+                        <td>${record.nextDueDate}</td>
+                        <td>${record.vaccinatedAt}</td>
+                        <td>${record.verification}</td>
+                        <td>${record.medicineId}</td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(${record.vaccinationRecordId}, ${record.verification})">Toggle Verification</button>
+\
+                        </td>
+                    `;
+                tbody.appendChild(row);
+            });
         }
     </script>
 }
+
+
