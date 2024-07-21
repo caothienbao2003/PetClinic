@@ -1,7 +1,17 @@
 ﻿@page
 @model PetClinic.Pages.Customer.BookingManagement.BookingConfirmationModel
 @{
-    ViewData["Title"] = "Booking Confirmation";
+    Layout = null;
+    ViewData["Title"] = "Booking Confirmation Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />

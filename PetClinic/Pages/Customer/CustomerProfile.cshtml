@@ -1,6 +1,16 @@
 ﻿@page
 @model PetClinic.Pages.Customer.CustomerProfileModel
 @{
+    ViewData["Title"] = "Customer Profile Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <head>

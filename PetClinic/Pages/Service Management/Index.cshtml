@@ -2,7 +2,16 @@
 @model PetClinic.Pages.Service_Management.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Service Management View Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Index</h1>

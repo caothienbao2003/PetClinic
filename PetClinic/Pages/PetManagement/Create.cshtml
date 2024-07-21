@@ -1,8 +1,15 @@
 ﻿@page
 @model PetClinic.Pages.PetManagement.CreateModel
-
 @{
     ViewData["Title"] = "Create" + $"{Model.userId}";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Create</h1>

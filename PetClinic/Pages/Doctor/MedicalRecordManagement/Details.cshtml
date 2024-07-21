@@ -2,7 +2,15 @@
 @model PetClinic.Pages.Doctor.MedicalRecordManagement.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Medical Record Details Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Details</h1>

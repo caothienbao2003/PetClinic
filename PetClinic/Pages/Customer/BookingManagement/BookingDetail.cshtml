@@ -3,7 +3,17 @@
 @model PetClinic.Pages.Customer.BookingManagement.BookingDetailModel
 
 @{
-    ViewData["Title"] = "BookingDetail";
+    Layout = null;
+    ViewData["Title"] = "Booking Detail Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>BookingDetail</h1>
