@@ -1,0 +1,69 @@
+﻿@page "{medicineId:int}"
+@model PetClinic.Pages.Admin.AdminManageMedicine.AdminUpdateMedicineModel
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Update Medicine</title>
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body>
+	@await Html.PartialAsync("_Header", Model)
+
+	<div class="container">
+		<@await Html.PartialAsync("_Sidebar")
+
+
+		<main class="main-content">
+			<h1>Update Medicine</h1>
+			<form id="updateMedicineForm" method="post" class="form">
+				<input type="hidden" asp-for="updateMedicineId" />
+				<div class="form-group">
+					<label for="updateMedicineName">Medicine Name:</label>
+					<input type="text" id="updateMedicineName" asp-for="updateMedicineName" class="form-control" />
+					<span asp-validation-for="updateMedicineName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="updateMedicineDescription">Description:</label>
+					<textarea id="updateMedicineDescription" asp-for="updateMedicineDescription" class="form-control"></textarea>
+					<span asp-validation-for="updateMedicineDescription" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="updateMedicineTypeId" class="control-label"></label>
+					<select asp-for="updateMedicineTypeId" class ="form-control" asp-items="ViewBag.MedicineTypeId"></select>
+					<span asp-validation-for="updateMedicineTypeId" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label for="updateActiveStatus">Status:</label>
+					<select id="updateActiveStatus" asp-for="updateActiveStatus" class="form-control">
+						<option value="1">Active</option>
+						<option value="0">Inactive</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-update">Update</button>
+			</form>
+
+			<div class="form-group">
+				<div asp-validation-summary="All" class="text-danger"></div>
+			</div>
+		</main>
+	</div>
+
+	@await Html.PartialAsync("_Footer")
+
+
+	<script>
+		document.getElementById('updateServiceForm').onsubmit = function () {
+			if (!confirm('Are you sure you want to update this service?')) {
+				return false;
+			}
+		};
+	</script>
+</body>
+</html>
+

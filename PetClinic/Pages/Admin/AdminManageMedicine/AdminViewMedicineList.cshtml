@@ -4,7 +4,6 @@
 	Layout = null;
 }
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -41,19 +40,24 @@
 					<tbody>
 						@foreach (var medicine in Model.Medicines)
 						{
-										<tr>
-											<td>@medicine.MedicineId</td>
-											<td>@medicine.MedicineName</td>
-											<td>@medicine.MedicineType.MedicineTypeName</td>
-											<td>@medicine.MedicineDescription</td>
-											<td>@(medicine.ActiveStatus == 1 ? "Active" : "Inactive")</td>
-											<td>
-												<a class="btn-update" asp-page="AdminUpdateMedicine" asp-route-medicineId="@medicine.MedicineId">Update</a>
-											</td>
-										</tr>
+							<tr>
+								<td>@medicine.MedicineId</td>
+								<td>@medicine.MedicineName</td>
+								<td>@medicine.MedicineTypeId</td>
+								<td>@medicine.MedicineDescription</td>
+								<td>@(medicine.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+								<td>
+									<a class="btn-update" asp-page="./AdminUpdateMedicine" asp-route-medicineId="@medicine.MedicineId">Update</a>
+								</td>
+							</tr>
 						}
 					</tbody>
 				</table>
+
+				<!-- Display error messages -->
+				<div class="form-group">
+					<div asp-validation-summary="All" class="text-danger"></div>
+				</div>
 			</div>
 
 			<!-- Create Medicine Modal -->
@@ -71,21 +75,18 @@
 							<select asp-for="newMedicineTypeId" class ="form-control" asp-items="ViewBag.MedicineTypeId"></select>
 						</div>
 
-						<button type="submit" class="btn-create" asp-page-handler="Create">Create</button>
+						<button type="submit" class="btn-create">Create</button>
 					</form>
 				</div>
 			</div>
 		</main>
 	</div>
-	<!-- Display error messages -->
-	<div class="form-group">
-		<div asp-validation-summary="All" class="text-danger"></div>
-	</div>
+	
 	@await Html.PartialAsync("_Footer")
 
 
-	@*<script>
-		var medicines = @Html.Raw(Json.Serialize(Model.Medicines));
+	@*<script>		
+		var medicines = @Html.Raw(Json.Serialize(Model.MedicineListWithoutInlcude));
 	</script>*@
 
 	<script src="~/js/adminManageMedicine.js"></script>

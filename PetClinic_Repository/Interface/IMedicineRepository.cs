@@ -18,5 +18,8 @@ namespace PetClinicRepository.Interface
         public void UpdateMedicine(Medicine medicine);
 
         public void RemoveMedicine(int medicineId);
-    }
+
+        public List<Medicine> GetMedicineListWithoutInclude();
+
+	}
 }
