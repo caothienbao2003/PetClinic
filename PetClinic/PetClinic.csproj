@@ -33,4 +33,9 @@
     <PackageReference Include="QRCoder" Version="1.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Admin\Shared\" />
+    <Folder Include="Pages\Service Management\" />
+  </ItemGroup>
+
 </Project>

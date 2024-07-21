@@ -65,6 +65,11 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
             var booking = bookingService.GetBookingById(bookid);
 
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
             Book = booking;
 
             if(mecId != 0)
@@ -72,11 +77,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                 MecId = mecId;
                 MedicalRecord = medicalRecordService.GetMedicalRecordById(mecId);
             }   
-
-            if(booking == null)
-            {
-                return NotFound();
-            }
 
             PetHealthInfo = petService.GetPetHealthByPetId(booking!.PetId);
 
@@ -111,10 +111,10 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
             medicalRecordService.AddMedicalRecord(MedicalRecord);
 
-            var booking = bookingService.GetBookingById(BookId);
+            //var booking = bookingService.GetBookingById(BookId);
             //if (booking != null)
             //{
-            //    booking.BookingStatus = 2; // Or the desired status
+            //    booking.BookingStatus = (int)BookingStatus.Completed; 
             //    bookingService.UpdateBooking(booking);
             //}
 
@@ -125,10 +125,13 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         {
             if (NewVaccinationRecord != null)
             {
-                NewVaccinationRecord.PetHealthId = PetHealthInfo.PetHealthId;
+                NewVaccinationRecord.Verification = NewVaccinationRecord.Verification;
+
                 vaccinationRecordService.AddVaccinationRecord(NewVaccinationRecord);
             }
-            return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
+
+            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(NewVaccinationRecord!.PetHealthId!.Value);
+            return new JsonResult(updatedRecords);
         }
 
         public IActionResult OnPostUpdateVerification(int recordId, bool verificationStatus)

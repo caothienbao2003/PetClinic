@@ -23,36 +23,11 @@
     <link rel="stylesheet" href="~/css/khoiadminstyle.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-box-container">
-            <div class="header-box">Revenue: $@Model.Revenue</div>
-            <div class="header-box">Total Customers: @Model.TotalCustomers</div>
-            <div class="header-box">Total Bookings: @Model.TotalBookings</div>
-        </div>
-        <div class="header-buttons">
-            <button onclick="location.href='/Admin/AdminProfile'">Profile</button>
-            <button onclick="location.href='/Authentication/Logout'">Logout</button>
-            <button onclick="location.href='/Authentication/Login'">Login</button>
-        </div>
-    </header>
-
+    
+    @await Html.PartialAsync("_Header", Model)
+    
     <div class="container">
-        <aside class="sidebar">
-            <nav>
-                <ul>
-                    <li><a href="/Admin/AdminHomePage">Home</a></li>
-                    <li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
-                    <li><a href="/Admin/AdminManageStaff/AdminViewStaffList">Staff Management</a></li>
-                    <li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
-                    <li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
-                    <li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
-                    <li><a href="/Admin/AdminManageSchedule/ScheduleManagement">Schedule Management</a></li>
-                    <li><a href="/Admin/AdminManageService/AdminViewServiceList">Service Management</a></li>
-                    <li><a href="/Admin/AdminManageCage/CageManagement">Cage Management</a></li>
-                    <li><a href="/Admin/AdminManageMedicine/MedicineManagement">Medicine Management</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <@await Html.PartialAsync("_Sidebar")
 
         <main class="main-content">
             <section class="statistics">
@@ -88,10 +63,7 @@
         </main>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Pet Clinic. All rights reserved.</p>
-        <p>1234 Clinic Address, HCM, Viet Nam</p>
-    </footer>
+    @await Html.PartialAsync("_Footer")
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="~/js/adminHomePage.js"></script>

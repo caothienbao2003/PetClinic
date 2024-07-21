@@ -74,9 +74,12 @@
                     @Html.DisplayFor(modelItem => item.Service.ServiceId)
                 </td>
                 <td>
-                    <form method="post" asp-page-handler="Cancel">
-                        <button type="submit" name="id" value="@item.BookingId">Cancel</button>
-                    </form>
+                    @if (item.BookingStatus != (int)BookingStatus.Canceled)
+                    {
+                        <form method="post" asp-page-handler="Cancel">
+                            <button type="submit" name="id" value="@item.BookingId">Cancel</button>
+                        </form>
+                    }
                     <form method="post" asp-page-handler="Detail">
                         <button type="submit" name="id" value="@item.BookingId">Detail</button>
                     </form>
