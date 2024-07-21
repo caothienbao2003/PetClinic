@@ -2,6 +2,16 @@
 @model PetClinic.Pages.Admin.AdminHomePageModel
 @{
     Layout = null;
+    ViewData["Title"] = "Admin Home Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <!DOCTYPE html>

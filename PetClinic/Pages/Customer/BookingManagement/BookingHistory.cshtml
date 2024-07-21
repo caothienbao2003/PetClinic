@@ -3,7 +3,17 @@
 @model PetClinic.Pages.Customer.BookingManagement.BookingHistoryModel
 
 @{
-    ViewData["Title"] = "BookingHistory";
+    Layout = null;
+    ViewData["Title"] = "Booking History Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>BookingHistory</h1>

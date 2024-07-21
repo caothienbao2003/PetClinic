@@ -102,6 +102,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapRazorPages();
+    endpoints.MapFallbackToPage("/Authentication/Login");
+});
 
 
 app.Run();

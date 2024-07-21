@@ -1,8 +1,16 @@
 ﻿@page
 @model PetClinic.Pages.Staff.CageManagement.HospitalizeListModel
-@{
+@* @{
     ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
-}
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "1")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
+} *@
 
 <h1>History Log</h1>
 

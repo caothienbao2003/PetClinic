@@ -1,8 +1,16 @@
 ﻿@page
 @model PetClinic.Pages.Service_Management.DetailsModel
-
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Service Management Details Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Details</h1>

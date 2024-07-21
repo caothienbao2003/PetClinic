@@ -43,7 +43,8 @@ namespace PetClinic.Pages.Authentication
 
 			if (isAdmin)
 			{
-				Response.Redirect("/Admin/AdminHomePage");
+				HttpContext.Session.SetString("Email", email);
+                Response.Redirect("/Admin/AdminHomePage");
 			}
 			else
 			{
