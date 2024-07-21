@@ -142,7 +142,18 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                 record.Verification = verificationStatus;
                 vaccinationRecordService.UpdateVaccinationRecord(record);
             }
-            return Page();
+            return new JsonResult(new { success = true });
+        }
+
+        public IActionResult OnPostDeleteVaccination(int recordId)
+        {
+            var record = vaccinationRecordService.GetVaccinationRecordById(recordId);
+            if (record != null)
+            {
+                //vaccinationRecordService.DeleteVaccinationRecord(record);
+            }
+            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(record!.PetHealthId!.Value);
+            return new JsonResult(updatedRecords);
         }
 
     }

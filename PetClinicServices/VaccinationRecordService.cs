@@ -46,5 +46,10 @@ namespace PetClinicServices
         {
             vaccinationRecordRepository.UpdateVaccinationRecord(vaccinationRecord);
         }
+
+        public void DeleteVaccinationRecord(int id)
+        {
+            vaccinationRecordRepository.DeleteVaccinationRecord(id);
+        }
     }
 }

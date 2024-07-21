@@ -58,5 +58,10 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
+        public void DeleteVaccinationRecord(int id)
+        {
+            context.VaccinationRecords.Remove(GetVaccinationRecordById(id));
+            context.SaveChanges();
+        }
     }
 }
