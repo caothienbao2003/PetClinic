@@ -106,6 +106,8 @@ namespace PetClinic.Pages.Customer.BookingManagement
 
             bookingService.AddBooking(newBooking);
 
+            TempData["BookingId"] = newBooking.BookingId;
+
             Response.Redirect("/Customer/BookingManagement/PaymentInfo");
         }
     }

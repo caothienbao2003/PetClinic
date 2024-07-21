@@ -11,6 +11,52 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form method="post">
+    <label>Start Date: </label>
+    </><input type="date" asp-for="StartDate" />
+    <label>End Date: </label>
+    <input type="date" asp-for="EndDate" />
+
+    <div>
+        <label>Payment Status:</label>
+        <select asp-for="PaymentStatus">
+            <option value="">--Select--</option>
+            @foreach (var status in Enum.GetValues(typeof(BookingPaymentStatus)))
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label>Booking Status:</label>
+        <select asp-for="BookingStatus">
+            <option value="">--Select--</option>
+            @foreach (var status in Enum.GetValues(typeof(BookingStatus)))
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label>Shift:</label>
+        <select asp-for="ShiftId">
+            <option value="">--Select--</option>
+            @foreach (var shift in Model.ShiftList)
+            {
+                <option value="@shift.ShiftId">@shift.StartTime - @shift.EndTime</option>
+            }
+        </select>
+    </div>
+
+    <input type="text" asp-for="DoctorName" placeholder="Doctor Name" />
+    <input type="text" asp-for="CustomerName" placeholder="Customer Name" />
+    <input type="text" asp-for="PetName" placeholder="Pet Name" />
+    <button type="submit" asp-page-handler="Search">Search</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -65,7 +111,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
-                 </td>
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Service.ServiceId)
                 </td>
