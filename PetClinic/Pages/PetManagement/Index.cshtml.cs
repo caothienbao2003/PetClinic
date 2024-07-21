@@ -21,18 +21,35 @@ namespace PetClinic.Pages.PetManagement
 
         public List<Pet> petList { get;set; } = default!;
 
-        //public async Task OnGetAsync()
-        //{
-        //    if (petList != null)
-        //    {
-        //        petList = petService.GetAll();
-        //    }
-        //}
+        [BindProperty(SupportsGet = true)]
+        public string SearchPetName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchCustomer { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchPetType { get; set; }
 
         public void OnGet()
         {
-            petList = petService.GetAll();
-        }
+            var query = petService.GetAll().AsQueryable();
 
+            if (!string.IsNullOrEmpty(SearchPetName))
+            {
+                query = query.Where(p => p.PetName.Contains(SearchPetName));
+            }
+
+            if (!string.IsNullOrEmpty(SearchCustomer))
+            {
+                query = query.Where(p => p.Customer.FirstName.Contains(SearchCustomer));
+            }
+
+            if (!string.IsNullOrEmpty(SearchPetType) && SearchPetType != "All")
+            {
+                query = query.Where(p => p.PetType == SearchPetType);
+            }
+
+            petList = query.ToList();
+        }
     }
 }
