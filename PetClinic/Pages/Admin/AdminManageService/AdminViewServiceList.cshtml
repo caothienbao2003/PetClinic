@@ -39,16 +39,16 @@
 					<tbody>
 						@foreach (var service in Model.Services)
 						{
-									<tr>
-										<td>@service.ServiceId</td>
-										<td>@service.ServiceName</td>
-										<td>@service.Price</td>
-										<td>@service.ServiceDescription</td>
-										<td>@(service.ActiveStatus == 1 ? "Active" : "Inactive")</td>
-										<td>
-											<a class="btn-update" asp-page="AdminUpdateService" asp-route-serviceId="@service.ServiceId">Update</a>
-										</td>
-									</tr>
+							<tr>
+								<td>@service.ServiceId</td>
+								<td>@service.ServiceName</td>
+								<td>@service.Price</td>
+								<td>@service.ServiceDescription</td>
+								<td>@(service.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+								<td>
+									<a class="btn-update" asp-page="AdminUpdateService" asp-route-serviceId="@service.ServiceId">Update</a>
+								</td>
+							</tr>
 						}
 					</tbody>
 				</table>

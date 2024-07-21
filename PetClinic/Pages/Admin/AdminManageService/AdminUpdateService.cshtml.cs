@@ -7,7 +7,13 @@ namespace PetClinic.Pages.Admin.AdminManageService
 {
     public class AdminUpdateServiceModel : PageModel
     {
-        [BindProperty]
+		[BindProperty]
+		public decimal revenue { get; set; }
+		[BindProperty]
+		public int totalCustomers { get; set; }
+		[BindProperty]
+		public int totalBookings { get; set; }
+		[BindProperty]
         public int updateServiceId { get; set; }
         [BindProperty]
         public string updateServiceName { get; set; }

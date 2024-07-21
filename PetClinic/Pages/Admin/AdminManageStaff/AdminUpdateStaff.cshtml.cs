@@ -10,7 +10,14 @@ namespace PetClinic.Pages.Admin.AdminManageStaff
 {
     public class AdminUpdateStaffModel : PageModel
     {
-        [BindProperty]
+
+		[BindProperty]
+		public decimal revenue { get; set; }
+		[BindProperty]
+		public int totalCustomers { get; set; }
+		[BindProperty]
+		public int totalBookings { get; set; }
+		[BindProperty]
         public int updateUserId { get; set; }
         [BindProperty]
         public string updateFirstName { get; set; } = null!;

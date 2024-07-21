@@ -33,21 +33,25 @@ namespace PetClinicDAO
 
         public List<Medicine> GetMedicineList()
         {
-            return context.Medicines.ToList();
+            return context.Medicines
+                .Include(m => m.MedicineType)
+				.ToList();
         }
 
         public Medicine GetMedicineById(int medicineId)
         {
-            return context.Medicines.FirstOrDefault(m => m.MedicineId == medicineId);
+            return context.Medicines
+				.Include(m => m.MedicineType)
+				.FirstOrDefault(m => m.MedicineId == medicineId);
         }
 
-        public void AddMedicine(Medicine medicine)
-        {
-            context.Medicines.Add(medicine);
-            context.SaveChanges();
-        }
+		public void AddMedicine(Medicine medicine)
+		{
+			context.Entry(medicine).State = EntityState.Added;
+			context.SaveChanges();
+		}
 
-        public void UpdateMedicine(Medicine medicine)
+		public void UpdateMedicine(Medicine medicine)
         {
             context.Medicines.Update(medicine);
             context.SaveChanges();

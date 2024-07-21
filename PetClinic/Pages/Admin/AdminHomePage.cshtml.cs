@@ -7,9 +7,9 @@ namespace PetClinic.Pages.Admin
 {
     public class AdminHomePageModel : PageModel
     {
-        public decimal Revenue { get; set; }
-        public int TotalCustomers { get; set; }
-        public int TotalBookings { get; set; }
+        public decimal revenue { get; set; }
+        public int totalCustomers { get; set; }
+        public int totalBookings { get; set; }
         public double AverageRating { get; set; }
 
         public List<decimal> RevenueData { get; set; }
@@ -19,9 +19,9 @@ namespace PetClinic.Pages.Admin
         public async Task OnGet()
         {
             // Placeholder data, replace with actual data retrieval logic
-            Revenue = 10000m;
-            TotalCustomers = 500;
-            TotalBookings = 200;
+            revenue = 10000m;
+            totalCustomers = 500;
+            totalBookings = 200;
             AverageRating = 4.5;
 
             RevenueData = new List<decimal> { 1000, 2000, 3000, 4000, 5000 };
