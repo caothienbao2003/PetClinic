@@ -1,0 +1,235 @@
+﻿@page
+@model PetClinic.Pages.Doctor.MedicalRecordManagement.CreateRecordModel
+
+@{
+    ViewData["Title"] = "Create Medical Record for" + $" Booking {Model.BookId}";
+}
+
+<h1>Medical Record</h1>
+
+<h4>@ViewData["Title"]</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Pet Details -->
+            <div class="form-group">
+                <label asp-for="Book.Pet.PetName" class="control-label">Pet Name</label>
+                <input type="text" class="form-control" value="@Model.Book.Pet.PetName" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Pet.PetAge" class="control-label">Age</label>
+                <input type="text" class="form-control" value="@Model.Book.Pet.PetAge" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Pet.PetType" class="control-label">Type</label>
+                <input type="text" class="form-control" value="@Model.Book.Pet.PetType" readonly />
+            </div>
+
+            <!-- Pet Health Information -->
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.Conditions" class="control-label">Conditions</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.Conditions" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.Weight" class="control-label">Weight</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.Weight" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.WeightMeasurementDate" class="control-label">Weight Measurement Date</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.WeightMeasurementDate" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealthInfo.OverallHealth" class="control-label">Overall Health</label>
+                <input type="text" class="form-control" value="@Model.PetHealthInfo.OverallHealth" readonly />
+            </div>
+
+            <!-- Vaccination Record -->
+            <h3>Vaccination Record</h3>
+            @if (Model.records != null && Model.records.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Vaccination Record ID</th>
+                            <th>Vaccination Date</th>
+                            <th>Next Due Date</th>
+                            <th>Vaccinated At</th>
+                            <th>Verification</th>
+                            <th>Medicine Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in Model.records)
+                        {
+                            <tr>
+                                <td>@record.VaccinationRecordId</td>
+                                <td>@record.VaccinationDate</td>
+                                <td>@record.NextDueDate</td>
+                                <td>@record.VaccinatedAt</td>
+                                <td>@record.Verification</td>
+                                <td>@record.MedicineId</td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(@record.VaccinationRecordId, @record.Verification)">Toggle Verification</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No vaccination records available.</p>
+            }
+
+            <!-- Medical Information -->
+            <div class="form-group">
+                <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label"></label>
+                <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
+                <span asp-validation-for="MedicalRecord.MedicalRecordDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MedicalRecord.DoctorId" class="control-label"></label>
+                <select asp-for="MedicalRecord.DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MedicalRecord.ServiceId" class="control-label"></label>
+                <select asp-for="MedicalRecord.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @if (Model.IsMedicalRecordCreated)
+    {
+        <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecord.MedicalRecordId" class="btn btn-success">Create Prescription</a>
+        <a href="Index" class="btn btn-success">Back to List</a>
+    }
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+<!-- Button to trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVaccinationModal">
+    Add Vaccination Record
+</button>
+
+<!-- Modal for adding a new vaccination record -->
+<div class="modal fade" id="addVaccinationModal" tabindex="-1" role="dialog" aria-labelledby="addVaccinationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVaccinationModalLabel">Add Vaccination Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addVaccinationForm" method="post" asp-page-handler="AddVaccination" onsubmit="submitVaccinationRecord(event)">
+                    <!-- Form fields -->
+                    <input type="hidden" name="NewVaccinationRecord.PetHealthId" value="@Model.PetHealthInfo.PetHealthId" />
+                    <div class="form-group">
+                        <label for="VaccinationDate">Vaccination Date</label>
+                        <input type="date" class="form-control" id="VaccinationDate" name="NewVaccinationRecord.VaccinationDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="NextDueDate">Next Due Date</label>
+                        <input type="date" class="form-control" id="NextDueDate" name="NewVaccinationRecord.NextDueDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="VaccinatedAt">Vaccinated At</label>
+                        <input type="text" class="form-control" id="VaccinatedAt" name="NewVaccinationRecord.VaccinatedAt" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="MedicineId">Medicine Name</label>
+                        <select class="form-control" id="MedicineId" name="NewVaccinationRecord.MedicineId" required>
+                            @foreach (var medicine in Model.MedicineList)
+                            {
+                                <option value="@medicine.MedicineId">@medicine.MedicineName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Verification">Verification</label>
+                        <select class="form-control" id="Verification" name="NewVaccinationRecord.Verification" required>
+                            <option value="true">Verified</option>
+                            <option value="false">Not Verified</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function submitVaccinationRecord(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            const formData = new FormData(document.getElementById('addVaccinationForm'));
+
+            fetch('@Url.Page("CreateRecord", "AddVaccination")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the vaccination records table
+                    const tbody = document.querySelector('table tbody');
+                    tbody.innerHTML = ''; // Clear existing rows
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${record.vaccinationRecordId}</td>
+                        <td>${record.vaccinationDate}</td>
+                        <td>${record.nextDueDate}</td>
+                        <td>${record.vaccinatedAt}</td>
+                        <td>${record.verification}</td>
+                        <td>${record.medicineId}</td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" onclick="toggleVerificationStatus(${record.vaccinationRecordId}, ${record.verification})">Toggle Verification</button>
+                        </td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+
+                    $('#addVaccinationModal').modal('hide');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // function toggleVerificationStatus(recordId, currentStatus) {
+        //     const newStatus = currentStatus === 1 ? 2 : 1;
+        //     $.post('@Url.//Page("/Doctor/MedicalRecordManagement/CreateRecord", "OnPostUpdateVerification")', 
+        //     { 
+        //         recordId: recordId, 
+        //         verificationStatus: newStatus 
+        //     })
+        //     .done(function () {
+        //         location.reload();
+        //     })
+        //     .fail(function (jqXHR, textStatus, errorThrown) {
+        //         alert("Error updating verification status: " + errorThrown);
+        //     });
+        // }
+
+    </script>
+}
+

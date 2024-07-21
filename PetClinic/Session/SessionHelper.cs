@@ -7,12 +7,7 @@ namespace PetClinic.Session
     {
         public static void SetObjectAsJson(this ISession session, string key, object value)
         {
-            var options = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.Preserve
-            };
-
-            session.SetString(key, JsonSerializer.Serialize(value, options));
+            session.SetString(key, JsonSerializer.Serialize(value));
         }
 
         public static T? GetObjectFromJson<T>(this ISession session, string key)

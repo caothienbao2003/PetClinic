@@ -16,19 +16,5 @@ namespace PetClinicBussinessObject
         public int? ActiveStatus { get; set; }
 
         public virtual ICollection<Hospitalize> Hospitalizes { get; set; }
-
-        [NotMapped]
-        public CageStatus? CageEnumStatus
-        {
-            get { return (CageStatus?)CageStatus; }
-            set { CageStatus = (int?)value; }
-        }
-
-        [NotMapped]
-        public ActiveStatus? ActiveEnumStatus
-        {
-            get { return (ActiveStatus?)ActiveStatus; }
-            set { ActiveStatus = (int?)value; }
-        }
     }
 }

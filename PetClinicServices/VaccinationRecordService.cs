@@ -31,5 +31,20 @@ namespace PetClinicServices
         {
             return vaccinationRecordRepository.GetVaccinationRecordById(id);
         }
+
+        public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId)
+        {
+            return vaccinationRecordRepository.GetVaccinationRecordsByPetHealthId(petHealthId);
+        }
+
+        public void AddVaccinationRecord(VaccinationRecord vaccinationRecord)
+        {
+            vaccinationRecordRepository.AddVaccinationRecord(vaccinationRecord);
+        }
+
+        public void UpdateVaccinationRecord(VaccinationRecord vaccinationRecord)
+        {
+            vaccinationRecordRepository.UpdateVaccinationRecord(vaccinationRecord);
+        }
     }
 }

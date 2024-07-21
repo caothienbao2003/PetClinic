@@ -1,0 +1,78 @@
+﻿@page "{medicalRecordId:int}"
+@model PetClinic.Pages.Doctor.MedicalRecordManagement.ConfirmationFormModel
+
+@{
+    ViewData["Title"] = "Confirmation Form";
+}
+
+<h1>Confirmation Form</h1>
+
+<h4>Medical Record</h4>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Description
+        </dt>
+        <dd class="col-sm-10">
+            @Model.MedicalRecord.MedicalRecordDescription
+        </dd>
+        <dt class="col-sm-2">
+            Doctor
+        </dt>
+        <dd class="col-sm-10">
+            @Model.MedicalRecord.Doctor!.FirstName
+        </dd>
+        <dt class="col-sm-2">
+            Service
+        </dt>
+        <dd class="col-sm-10">
+            @Model.MedicalRecord.Service!.ServiceName
+        </dd>
+    </dl>
+</div>
+
+<h4>Prescription</h4>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Prescription Id
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prescription.PrescriptionId
+        </dd>
+        <dt class="col-sm-2">
+            Medical Record Id
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prescription.MedicalRecordId
+        </dd>
+    </dl>
+</div>
+
+<h4>Prescription Medicines</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Medicine ID</th>
+            <th>Medicine Quantity</th>
+            <th>Dosage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PrescriptionMedicines)
+        {
+            <tr>
+                <td>@item.MedicineId</td>
+                <td>@item.MedicineQuantity</td>
+                <td>@item.Dosage</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
