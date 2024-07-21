@@ -12,24 +12,25 @@
         <h1>INFORMATION</h1>
         <div class="content">
             <div class="left">
-                
                 <div class="info-box">
-                    <p><strong>Account Number: </strong> @Model.BankAccountNumber</p>
+                    <p><strong>Account Number: </strong>@Model.BankAccountNumber</p>
                 </div>
                 <div class="info-box">
-                    <p><strong>Account Name: </strong> @Model.BankAccountOwnerName</p>
+                    <p><strong>Account Name: </strong>@Model.BankAccountOwnerName</p>
                 </div>
                 <div class="info-box">
-                    <p><strong>Bank: </strong> @Model.BankName</p>
+                    <p><strong>Bank: </strong>@Model.BankName</p>
                     <div class="bank-img">
                         <img src="@Model.BankImage" alt="Bank Logo">
                     </div>
                 </div>
             </div>
-            
             <div class="right">
                 <img src="@Model.QrCodeImage" alt="QR Code">
             </div>
         </div>
+        <form method="post">
+            <button type="submit" asp-page-handler="Pay">Pay</button>
+        </form>
     </div>
 </body>
