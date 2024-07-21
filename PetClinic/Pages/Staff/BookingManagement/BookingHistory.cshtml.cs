@@ -6,30 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Staff.BookingManagement
 {
     public class BookingHistoryModel : PageModel
     {
-        private readonly PetClinicBussinessObject.PetClinicContext _context;
+        private readonly IBookingService bookingService;
 
-        public BookingHistoryModel(PetClinicBussinessObject.PetClinicContext context)
+        public BookingHistoryModel(IBookingService _bookingService)
         {
-            _context = context;
+            bookingService = _bookingService;
         }
 
-        public IList<Booking> Booking { get;set; } = default!;
+        [BindProperty]
+        public List<Booking> BookingList { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            if (_context.Bookings != null)
-            {
-                Booking = await _context.Bookings
-                .Include(b => b.Doctor)
-                .Include(b => b.Pet)
-                .Include(b => b.Schedule)
-                .Include(b => b.Service).ToListAsync();
-            }
+            BookingList = bookingService.GetAll();
         }
     }
 }

@@ -7,17 +7,19 @@ using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Admin.AdminManageMedicine
 {
-    public class AdminViewMedicineListModel : PageModel
-    {
-        private readonly IMedicineService medicineService;
+	public class AdminViewMedicineListModel : PageModel
+	{
+		private readonly IMedicineService medicineService;
 		private readonly IMedicineTypeService medicineTypeService;
 		public AdminViewMedicineListModel(IMedicineService _medicineService, IMedicineTypeService _medicineTypeService)
-        {
+		{
 			medicineService = _medicineService;
 			medicineTypeService = _medicineTypeService;
 		}
 		[BindProperty]
 		public List<Medicine> Medicines { get; set; }
+		[BindProperty]
+		public List<Medicine> MedicineListWithoutInlcude { get; set; }
 
 		[BindProperty]
 		public decimal revenue { get; set; }
@@ -37,60 +39,59 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 		public int ActiveStatus { get; set; }
 
 		public void OnGet()
-        {
+		{
 			InitializePage();
+			LoadMedicineListWithoutInclude();
 
 			Console.WriteLine(medicineTypeService.GetMedicineTypeList());
 
 			ViewData["MedicineTypeId"] = new SelectList(medicineTypeService.GetMedicineTypeList(), "MedicineTypeId", "MedicineTypeName");
 		}
 
-		public IActionResult OnPostCreateMedicine()
+		public void OnPostCreateMedicine()
 		{
 			if (!ModelState.IsValid)
 			{
 				InitializePage();
+				LoadMedicineListWithoutInclude();
+
 				ModelState.Clear();
 				ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
-				return Page(); // Stay on the page with validation errors
+				return; // Stay on the page with validation errors
 			}
 
 			try
 			{
-				Medicine Medicine = medicineService.GetMedicineById(newMedicineTypeId);
-				if (Medicine == null)
+				var newMedicine = new Medicine
 				{
-					var newMedicine = new Medicine
-					{
-						MedicineName = newMedicineName,
-						MedicineDescription = newMedicineDescription,
-						MedicineTypeId = newMedicineTypeId,
-						ActiveStatus = 1
-					};
+					MedicineName = newMedicineName,
+					MedicineDescription = newMedicineDescription,
+					MedicineTypeId = newMedicineTypeId,
+					ActiveStatus = 1
+				};
 
-					medicineService.AddMedicine(newMedicine);
-					InitializePage();
-					return Page();
-				}
-				else
-				{
-					ModelState.AddModelError(string.Empty, "Medicine already exists.");
-					ViewData["MedicineTypeId"] = new SelectList(medicineTypeService.GetMedicineTypeList(), "MedicineTypeId", "MedicineTypeName");
-					return Page();
-				}
-
+				medicineService.AddMedicine(newMedicine);
+				InitializePage();
+				LoadMedicineListWithoutInclude();
 			}
 			catch (Exception ex)
 			{
-				InitializePage();
 				ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
-				return Page();
+				InitializePage();
+				LoadMedicineListWithoutInclude();
+
 			}
 		}
+			
 
 		private void InitializePage()
 		{
 			Medicines = medicineService.GetMedicineList();
+		}
+
+		private void LoadMedicineListWithoutInclude()
+		{
+			MedicineListWithoutInlcude = medicineService.GetMedicineListWithoutInclude();
 		}
 	}
 }

@@ -8,15 +8,7 @@
         createMedicineModal.style.display = 'block';
     });
 
-    // Redirect to AdminUpdateService page for updating
-    window.openUpdateModal = function (serviceId) {
-        var selectedService = services.find(s => s.serviceId == serviceId);
-        if (selectedService) {
-            window.location.href = `/Admin/AdminManageService/AdminUpdateService/${serviceId}`;
-        } else {
-            console.error('Service not found for ID:', serviceId);
-        }
-    };
+    
 
     // Close modals when clicking on close buttons
     closeButtons.forEach(function (button) {
