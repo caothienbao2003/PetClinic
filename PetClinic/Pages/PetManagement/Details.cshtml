@@ -68,7 +68,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var record in Model.VaccinationRecordList)
+                        @foreach (var record in Model.VaccinationRecordList)
                     {
                         <tr>
                             <td>@record.VaccinationRecordId</td>
@@ -109,22 +109,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addVaccinationForm">
+                <form id="addVaccinationForm" method="post" asp-page-handler="AddVaccination" onsubmit="submitVaccinationRecord(event)">
+
+                    <input type="hidden" name="NewVaccinationRecord.PetHealthId" value="@Model.PetHealth.PetHealthId" />
                     <div class="form-group">
                         <label for="VaccinationDate">Vaccination Date</label>
-                        <input type="date" class="form-control" id="VaccinationDate" name="VaccinationDate" required />
+                        <input type="date" class="form-control" id="VaccinationDate" name="NewVaccinationRecord.VaccinationDate" required/>
                     </div>
                     <div class="form-group">
                         <label for="NextDueDate">Next Due Date</label>
-                        <input type="date" class="form-control" id="NextDueDate" name="NextDueDate" required />
+                        <input type="date" class="form-control" id="NextDueDate" name="NewVaccinationRecord.NextDueDate" required />
                     </div>
                     <div class="form-group">
                         <label for="VaccinatedAt">Vaccinated At</label>
-                        <input type="text" class="form-control" id="VaccinatedAt" name="VaccinatedAt" required />
+                        <input type="text" class="form-control" id="VaccinatedAt" name="NewVaccinationRecord.VaccinatedAt" required />
                     </div>
                     <div class="form-group">
                         <label for="MedicineId">Medicine Name</label>
-                        <select class="form-control" id="MedicineId" name="MedicineId" required>
+                        <select class="form-control" id="MedicineId" name="NewVaccinationRecord.MedicineId" required>
                             @foreach (var medicine in Model.MedicineList)
                             {
                                 <option value="@medicine.MedicineId">@medicine.MedicineName</option>
@@ -133,86 +135,54 @@
                     </div>
                     <div class="form-group">
                         <label for="Verification">Verification</label>
-                        <select class="form-control" id="Verification" name="Verification" required>
-                            <option value="1">Verified</option>
-                            <option value="2">Not Verified</option>
+                        <select class="form-control" id="Verification" name="NewVaccinationRecord.Verification" required>
+                            @* <option value="true">Verified</option> *@
+                            <option value="false">Not Verified</option>
                         </select>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="submitVaccinationRecord()">Add</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        function submitVaccinationRecord() {
-            const formData = {
-                VaccinationDate: $('#VaccinationDate').val(),
-                NextDueDate: $('#NextDueDate').val(),
-                VaccinatedAt: $('#VaccinatedAt').val(),
-                MedicineId: $('#MedicineId').val(),
-                Verification: $('#Verification').val()
-            };
+        function submitVaccinationRecord(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
 
-            $.post('@Url.Page("/VaccinationManagement/Create", "OnPostAsync")', formData)
-                .done(function () {
+            const formData = new FormData(document.getElementById('addVaccinationForm'));
+
+            fetch('@Url.Page("Details", "AddVaccination")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the vaccination records table
+                    const tbody = document.querySelector('table tbody');
+                    tbody.innerHTML = ''; // Clear existing rows
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${record.vaccinationRecordId}</td>
+                        <td>${record.vaccinationDate}</td>
+                        <td>${record.nextDueDate}</td>
+                        <td>${record.vaccinatedAt}</td>
+                        <td>${record.verification}</td>
+                        <td>${record.medicineId}</td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+
                     $('#addVaccinationModal').modal('hide');
-                    location.reload();
                 })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert("Error adding vaccination record: " + errorThrown);
+                .catch(error => {
+                    console.error('Error:', error);
                 });
         }
     </script>
 }
-@* <div>
-    <h4>Pet</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pet.PetName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pet.PetName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pet.PetType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pet.PetType)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pet.PetAge)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pet.PetAge)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PetHealth.Conditions)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PetHealth.Conditions)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PetHealth.Weight)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PetHealth.Weight)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pet.Customer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => @model.Pet.Customer.FirstName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Pet?.PetId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div> *@
