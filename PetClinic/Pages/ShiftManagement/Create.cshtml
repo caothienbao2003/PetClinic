@@ -1,8 +1,16 @@
 ﻿@page
 @model PetClinic.Pages.ShiftManager.CreateModel
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Shift Management Create Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Create</h1>

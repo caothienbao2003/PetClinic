@@ -2,7 +2,15 @@
 @model PetClinic.Pages.PetHealthManagement.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Pet Health Management Edit Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2" || role != "1" || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Edit</h1>

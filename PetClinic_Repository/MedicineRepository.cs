@@ -20,5 +20,10 @@ namespace PetClinicRepository
         public void UpdateMedicine(Medicine medicine) => MedicineDAO.Instance.UpdateMedicine(medicine);
 
         public void RemoveMedicine(int medicineId) => MedicineDAO.Instance.RemoveMedicine(medicineId);
-    }
+
+		public List<Medicine> GetMedicineListWithoutInclude()
+		{
+			return MedicineDAO.Instance.GetMedicineListWithoutInclude();
+		}
+	}
 }

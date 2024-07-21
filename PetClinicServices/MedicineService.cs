@@ -45,5 +45,10 @@ namespace PetClinicServices
         {
             medicineRepository.RemoveMedicine(medicineId);
         }
-    }
+
+		public List<Medicine> GetMedicineListWithoutInclude()
+		{
+			return medicineRepository.GetMedicineListWithoutInclude();
+		}
+	}
 }

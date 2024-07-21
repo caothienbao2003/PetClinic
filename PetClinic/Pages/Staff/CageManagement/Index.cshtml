@@ -1,8 +1,15 @@
 ﻿@page
 @model PetClinic.Pages.Staff.CageManagement.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cage Management View Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "1")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Cage Management</h1>

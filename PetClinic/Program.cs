@@ -103,6 +103,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapRazorPages();
+    endpoints.MapFallbackToPage("/Public/PublicHomePage");
+});
 
 
 app.Run();

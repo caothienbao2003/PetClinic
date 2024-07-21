@@ -2,7 +2,15 @@
 @model PetClinic.Pages.ScheduleManagement.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Schedule Management View Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2" || role !="1")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Index</h1>
