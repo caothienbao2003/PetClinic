@@ -104,11 +104,11 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             medicalRecordService.AddMedicalRecord(MedicalRecord);
 
             var booking = bookingService.GetBookingById(BookId);
-            //if (booking != null)
-            //{
-            //    booking.BookingStatus = (int)BookingStatus.Completed;
-            //    bookingService.UpdateBooking(booking);
-            //}
+            if (booking != null)
+            {
+                booking.BookingStatus = (int)BookingStatus.Completed;
+                bookingService.UpdateBooking(booking);
+            }
 
             return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
         }

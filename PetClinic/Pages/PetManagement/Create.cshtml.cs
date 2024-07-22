@@ -59,7 +59,7 @@ namespace PetClinic.Pages.PetManagement
 
             PetId = Pet.PetId;
 
-            Response.Redirect("/PetHealthManagement/Create");
+            RedirectToPage("/PetHealthManagement/Create", new { petId = PetId });
         }
     }
 }

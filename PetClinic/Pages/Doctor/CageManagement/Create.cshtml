@@ -1,8 +1,15 @@
 ﻿@page
 @model PetClinic.Pages.Doctor.CageManagement.CreateModel
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Cage Management Create Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Create</h1>

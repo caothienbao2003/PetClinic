@@ -31,7 +31,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Hospitalizes[0].ActiveStatus)
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
@@ -60,8 +60,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ActiveStatus)
                 </td>
-                
-                <td>                  
+
+                <td>
                     @if (item.OutTime == null)
                     {
                         <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> Enter current Log </a>
@@ -95,14 +95,14 @@
                                     <td>@log.DateTime</td>
                                     <td>@log.Description</td>
                                     <td>
-                                    @if (log.ActiveStatus == (int)ActiveStatus.Active && item.OutTime == null)
-                                    {
-                                        <form method="post" asp-page-handler="ToggleLogStatus">
-                                            <input type="hidden" name="LogId" value="@log.HospitalizeLogId" />
-                                            <input type="hidden" name="CageId" value="@Model.CageId" />
-                                            <button type="submit" class="btn btn-secondary">Delete</button>
-                                        </form>
-                                    }
+                                        @if (log.ActiveStatus == (int)ActiveStatus.Active && item.OutTime == null)
+                                        {
+                                            <form method="post" asp-page-handler="ToggleLogStatus">
+                                                <input type="hidden" name="LogId" value="@log.HospitalizeLogId" />
+                                                <input type="hidden" name="CageId" value="@Model.CageId" />
+                                                <button type="submit" class="btn btn-secondary">Delete</button>
+                                            </form>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -122,10 +122,10 @@
                             </div>
                         </form>
                     }
-                    
+
                 </td>
             </tr>
-        
+
         }
     </tbody>
 </table>

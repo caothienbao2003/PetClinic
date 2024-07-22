@@ -55,7 +55,7 @@ namespace PetClinic.Pages.Doctor.CageManagement
                 HospitalizeId = HospitalizeId,
                 DateTime = DateTime.Now,
                 Description = Description,
-                ActiveStatus = 1 
+                ActiveStatus = 1
             };
             hospitalizeService.AddHospitalizeLog(newLog);
 

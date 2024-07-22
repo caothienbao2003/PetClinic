@@ -33,7 +33,7 @@ namespace PetClinic.Pages.Doctor.CageManagement
                 return RedirectToPage("/Error"); // Handle the case where UserId is not found in session
             }
 
-            ViewData["DoctorId"] = new SelectList(userSerivce.GetUserListWithRole(UserRole.Doctor), "UserId", "FirstName", userId);
+            ViewData["DoctorId"] = userId;
             ViewData["PetId"] = new SelectList(petService.GetAll(), "PetId", "PetName");
 
             if (cageId.HasValue)
