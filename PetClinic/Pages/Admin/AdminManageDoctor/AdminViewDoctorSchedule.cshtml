@@ -48,6 +48,16 @@
                     @foreach (var shift in Model.ShiftList)
                     {
                         <tr>
+                            <td> @shift.StartTime - @shift.EndTime </td>
+                            @for(DateTime i = Model.MondayDate; i <= Model.SundayDate; i = i.AddDays(1))
+                            {
+                                var schedule = Model.ScheduleList.Find(d => d.Date == i && d.ShiftId == shift.ShiftId);
+                                
+                                if(schedule != null)
+                                {
+                                   <td><div class="shift">@schedule</div></td>
+                                }
+                            }
                         </tr>
                     }
 
