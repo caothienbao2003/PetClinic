@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.PetHealthManagement
+namespace PetClinic.Pages.Customer.PetHealthManagement
 {
     public class CreateModel : PageModel
     {
@@ -29,48 +29,43 @@ namespace PetClinic.Pages.PetHealthManagement
         public PetHealth PetHealth { get; set; } = default!;
 
         [BindProperty]
-        public int PetId { get; set; } = default!;
+        public int newPetId { get; set; } = default!;
 
         [BindProperty]
         public User user { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int petId)
+        public IActionResult OnGet(int petId)
         {
             userIdString = HttpContext.Session.GetString("UserId");
             if (userIdString.IsNullOrEmpty())
             {
                 Response.Redirect("/Authentication/Login");
             }
-            else
-            {
-                userId = int.Parse(userIdString);
-            }
+            //else
+            //{
+            //    userId = int.Parse(userIdString);
+            //}
 
-            PetId = petId;
-            PetHealth = petHealthService.GetPetHealthByPetId(PetId);
+            newPetId = petId;
+            PetHealth = new PetHealth { PetId = newPetId };
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             userIdString = HttpContext.Session.GetString("UserId");
             if (userIdString.IsNullOrEmpty())
             {
                 Response.Redirect("/Authentication/Login");
             }
-            else
-            {
-                userId = int.Parse(userIdString);
-            }
+            //else
+            //{
+            //    userId = int.Parse(userIdString);
+            //}
 
-
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
             petHealthService.AddPetHealth(PetHealth);
 
-            return RedirectToPage("/PetManagement/Index") ;
+            return RedirectToPage("/Customer/PetManagement/Index") ;
         }
     }
 }

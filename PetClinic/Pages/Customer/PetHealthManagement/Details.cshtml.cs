@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.PetHealthManagement
+namespace PetClinic.Pages.Customer.PetHealthManagement
 {
     public class DetailsModel : PageModel
     {

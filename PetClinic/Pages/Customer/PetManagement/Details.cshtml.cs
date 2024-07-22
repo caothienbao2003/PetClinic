@@ -10,7 +10,7 @@ using Microsoft.Identity.Client;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.PetManagement
+namespace PetClinic.Pages.Customer.PetManagement
 {
     public class DetailsModel : PageModel
     {
