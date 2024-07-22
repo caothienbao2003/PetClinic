@@ -42,51 +42,38 @@
                         <th>Thursday</th>
                         <th>Friday</th>
                         <th>Saturday</th>
+                        <th>Sunday</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var shift in Model.ShiftList)
                     {
                         <tr>
+                            <td> @shift.StartTime - @shift.EndTime </td>
+                            @for (DateTime i = Model.MondayDate; i <= Model.SundayDate; i = i.AddDays(1))
+                            {
+                                <td>
+                                    @{
+                                        Console.WriteLine("Date :" + i);
+                                        var schedule = Model.ScheduleList.FirstOrDefault(d => d.Date == i && d.ShiftId == shift.ShiftId);
+
+                                        if (schedule != null)
+                                        {
+                                            <div class="shift">
+                                                <div>
+                                                    @schedule.Employee.FirstName @schedule.Employee.LastName
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    @schedule.Date.Value.ToString("dd/MM/yyyy")
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </td>
+                            }
                         </tr>
                     }
-
-                    <tr>
-                        <td>7:00 - 9:00</td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>9:00 - 11:00</td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>13:00 - 15:00</td>
-                        <td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                        <td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                        <td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>15:00 - 17:00</td>
-                        <td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                        <td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                        <td><div class="shift">DR. ETHAN WINGATE</div><div class="shift">DR. MARY JOHNSON</div></td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
 
