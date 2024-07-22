@@ -54,7 +54,6 @@
                             {
                                 <td>
                                     @{
-                                        Console.WriteLine("Date :" + i);
                                         var schedule = Model.ScheduleList.FirstOrDefault(d => d.Date == i && d.ShiftId == shift.ShiftId);
 
                                         if (schedule != null)
@@ -68,6 +67,17 @@
                                                     @schedule.Date.Value.ToString("dd/MM/yyyy")
                                                 </div>
                                             </div>
+                                        }
+                                        else
+                                        {
+                                            <form method="post">
+                                                <input type="hidden" asp-for="DateToAdd" value="@i" />
+                                                <input type="hidden" asp-for="DoctorIdToAdd"  value="@Model.DoctorId"/>
+                                                <input type="hidden" asp-for="ShiftIdToAdd" value="@shift.ShiftId" />
+                                                <input type="hidden" asp-for="SelectedDate">
+                                                <input type="hidden" asp-for="DoctorId">
+                                                <button type="submit" asp-page-handler="AddSchedule">+</button>
+                                            </form>
                                         }
                                     }
                                 </td>

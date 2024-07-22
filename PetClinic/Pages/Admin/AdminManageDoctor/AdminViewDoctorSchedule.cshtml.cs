@@ -29,8 +29,13 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         public List<Schedule> ScheduleList { get; set; }
         [BindProperty]
         public int DoctorId { get; set; }
+
         [BindProperty]
-        public ScheduleBlockModel BlockModel { get; set; }
+        public DateTime DateToAdd {  get; set; }
+        [BindProperty]
+        public int DoctorIdToAdd { get; set; }
+        [BindProperty]
+        public int ShiftIdToAdd { get; set; }
 
         public void OnGet(int doctorid)
         {
@@ -65,6 +70,25 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         {
             MondayDate = GetMonday(SelectedDate);
             SundayDate = MondayDate.AddDays(6);
+        }
+
+        public void OnPostAddSchedule()
+        {
+           
+            Console.WriteLine(DateToAdd.ToString() + " " + DoctorIdToAdd + " " + ShiftIdToAdd);
+
+            Schedule newSchedule = new Schedule
+            {
+                Date = DateToAdd,
+                EmployeeId = DoctorIdToAdd,
+                ShiftId = ShiftIdToAdd
+            };
+
+            scheduleService.AddSchedule(newSchedule);
+
+            ShiftList = shiftService.GetAllDoctorShifts();
+            LoadMondayAndSunday();
+            ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(DoctorId, MondayDate, SundayDate);
         }
     }
 }
