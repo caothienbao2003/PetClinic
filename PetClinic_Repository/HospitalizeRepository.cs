@@ -26,5 +26,7 @@ namespace PetClinicRepository
         public void AddHospitalizeLog(HospitalizeLog log) => HospitalizeDAO.Instance.AddHospitalizeLog(log);
 
         public void UpdateHospitalizeLog(HospitalizeLog log) => HospitalizeDAO.Instance.UpdateHospitalizeLog(log);
+
+        public List<Hospitalize> GetHospitalizeByPetId(int petId) => HospitalizeDAO.Instance.GetHospitalizeByPetId(petId);
     }
 }

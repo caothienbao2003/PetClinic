@@ -1,0 +1,101 @@
+﻿@page
+@model PetClinic.Pages.Customer.HospitalizationView.HospitalizationViewModel
+@{
+    ViewData["Title"] = "Hospitalization View";
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
+}
+
+<h1>History Log</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].InTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].OutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].ActiveStatus)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Hospitalizes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor!.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                </td>
+
+                <td>
+                    <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> History Logs </a>
+                </td>
+            </tr>
+            <tr class="collapse" id="collapseLog_@item.HospitalizeId">
+                <td colspan="7">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>DateTime</th>
+                                <th>Description</th>
+                                <th>ActiveStatus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var log in item.HospitalizeLogs)
+                            {
+                                <tr>
+                                    <td>@log.DateTime</td>
+                                    <td>@log.Description</td>
+                                    <td>@log.ActiveStatus</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
