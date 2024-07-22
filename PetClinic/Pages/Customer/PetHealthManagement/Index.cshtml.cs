@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.PetHealthManagement
+namespace PetClinic.Pages.Customer.PetHealthManagement
 {
     public class IndexModel : PageModel
     {

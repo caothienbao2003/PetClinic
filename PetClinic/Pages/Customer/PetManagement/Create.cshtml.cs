@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.PetManagement
+namespace PetClinic.Pages.Customer.PetManagement
 {
     public class CreateModel : PageModel
     {
@@ -46,13 +46,13 @@ namespace PetClinic.Pages.PetManagement
         public Pet Pet { get; set; } = default!;
 
         [BindProperty]
-        public int PetId { get; set; } = default!;
+        public int newPetId { get; set; } = default!;
 
         [BindProperty]
         public PetHealth PetHealth { get; set; } = default!;
 
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             userIdString = HttpContext.Session.GetString("UserId");
             if (userIdString.IsNullOrEmpty())
@@ -68,9 +68,9 @@ namespace PetClinic.Pages.PetManagement
             Pet.ActiveStatus = 1;
             petService.AddPet(Pet);
 
-            PetId = Pet.PetId;
+            newPetId = Pet.PetId;
 
-            return RedirectToPage("/PetHealthManagement/Create", new { petId = PetId });
+            return RedirectToPage("/Customer/PetHealthManagement/Create", new { id = newPetId });
         }
     }
 }

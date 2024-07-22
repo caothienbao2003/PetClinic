@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.PetManagement
+namespace PetClinic.Pages.Customer.PetHealthManagement
 {
     public class EditModel : PageModel
     {
@@ -20,22 +20,23 @@ namespace PetClinic.Pages.PetManagement
         }
 
         [BindProperty]
-        public Pet Pet { get; set; } = default!;
+        public PetHealth PetHealth { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Pets == null)
+            if (id == null || _context.PetHealths == null)
             {
                 return NotFound();
             }
 
-            var pet =  await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
-            if (pet == null)
+            var pethealth =  await _context.PetHealths.FirstOrDefaultAsync(m => m.PetHealthId == id);
+            if (pethealth == null)
             {
                 return NotFound();
             }
-            Pet = pet;
-           ViewData["CustomerId"] = new SelectList(_context.Users, "UserId", "Password");
+            PetHealth = pethealth;
+           ViewData["PetId"] = new SelectList(_context.Pets, "PetId", "PetId");
+           ViewData["VaccinationRecordsId"] = new SelectList(_context.VaccinationRecords, "VaccinationRecordsId", "VaccinationRecordsId");
             return Page();
         }
 
@@ -48,7 +49,7 @@ namespace PetClinic.Pages.PetManagement
                 return Page();
             }
 
-            _context.Attach(Pet).State = EntityState.Modified;
+            _context.Attach(PetHealth).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +57,7 @@ namespace PetClinic.Pages.PetManagement
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PetExists(Pet.PetId))
+                if (!PetHealthExists(PetHealth.PetHealthId))
                 {
                     return NotFound();
                 }
@@ -69,9 +70,9 @@ namespace PetClinic.Pages.PetManagement
             return RedirectToPage("./Index");
         }
 
-        private bool PetExists(int id)
+        private bool PetHealthExists(int id)
         {
-          return (_context.Pets?.Any(e => e.PetId == id)).GetValueOrDefault();
+          return (_context.PetHealths?.Any(e => e.PetHealthId == id)).GetValueOrDefault();
         }
     }
 }

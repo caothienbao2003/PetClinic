@@ -1,0 +1,106 @@
+﻿@page
+@model PetClinic.Pages.Customer.PetHealthManagement.CreateModel
+
+@{
+    ViewData["Title"] = "Pet Health Management Create Page" + $"{Model.newPetId}";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null)
+    {
+        Response.Redirect("/Authentication/Login");
+    }
+}
+
+<style>
+    .container {
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+    .btn {
+        padding: 5px 10px;
+        margin: 2px;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<h1>Create</h1>
+
+<h4>PetHealth</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PetHealth.PetId" class="control-label"></label>
+                <input type="hidden" asp-for="PetHealth.PetId" value="@Model.newPetId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.OverallHealth" class="control-label"></label>
+                <input asp-for="PetHealth.OverallHealth" class="form-control" />
+                <span asp-validation-for="PetHealth.OverallHealth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.Conditions" class="control-label"></label>
+                <input asp-for="PetHealth.Conditions" class="form-control" />
+                <span asp-validation-for="PetHealth.Conditions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.Weight" class="control-label"></label>
+                <input asp-for="PetHealth.Weight" class="form-control" />
+                <span asp-validation-for="PetHealth.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.WeightMeasurementDate" class="control-label"></label>
+                <input asp-for="PetHealth.WeightMeasurementDate" class="form-control" type="date"/>
+                <span asp-validation-for="PetHealth.WeightMeasurementDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.PetManagement
+namespace PetClinic.Pages.Customer.PetHealthManagement
 {
     public class DeleteModel : PageModel
     {
@@ -19,40 +19,40 @@ namespace PetClinic.Pages.PetManagement
         }
 
         [BindProperty]
-      public Pet Pet { get; set; } = default!;
+      public PetHealth PetHealth { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Pets == null)
+            if (id == null || _context.PetHealths == null)
             {
                 return NotFound();
             }
 
-            var pet = await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
+            var pethealth = await _context.PetHealths.FirstOrDefaultAsync(m => m.PetHealthId == id);
 
-            if (pet == null)
+            if (pethealth == null)
             {
                 return NotFound();
             }
             else 
             {
-                Pet = pet;
+                PetHealth = pethealth;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Pets == null)
+            if (id == null || _context.PetHealths == null)
             {
                 return NotFound();
             }
-            var pet = await _context.Pets.FindAsync(id);
+            var pethealth = await _context.PetHealths.FindAsync(id);
 
-            if (pet != null)
+            if (pethealth != null)
             {
-                Pet = pet;
-                _context.Pets.Remove(Pet);
+                PetHealth = pethealth;
+                _context.PetHealths.Remove(PetHealth);
                 await _context.SaveChangesAsync();
             }
 
