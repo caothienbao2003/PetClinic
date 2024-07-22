@@ -36,28 +36,19 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         {
             DoctorId = doctorid;
 
-            Console.WriteLine("Doctor id: " + doctorid);
-
             ShiftList = shiftService.GetAllDoctorShifts();
             SelectedDate = DateTime.Now;
             LoadMondayAndSunday();
+            ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(DoctorId, MondayDate, SundayDate);
         }
 
         public void OnPostChangeWeek(int offset)
         {
-            Console.WriteLine("Doctor id: " + DoctorId);
-
             ShiftList = shiftService.GetAllDoctorShifts();
-            SelectedDate = SelectedDate.AddDays(6 * offset);
+            DateTime tempDate = SelectedDate.AddDays(6 * offset);
+            SelectedDate = tempDate;
             LoadMondayAndSunday();
-
-            Console.WriteLine(SelectedDate);
-
             ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(DoctorId, MondayDate, SundayDate);
-
-            Console.WriteLine(ScheduleList.Count);
-
-
         }
 
         public DateTime GetMonday(DateTime selectedDate)
@@ -74,17 +65,6 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         {
             MondayDate = GetMonday(SelectedDate);
             SundayDate = MondayDate.AddDays(6);
-        }
-
-        private void LoadSchedule()
-        {
-            foreach(var shift in ShiftList)
-            {
-                for(int i = 0; i <7; i++)
-                {
-                    
-                }
-            }
         }
     }
 }
