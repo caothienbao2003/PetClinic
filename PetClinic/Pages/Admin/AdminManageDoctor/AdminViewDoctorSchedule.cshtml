@@ -1,6 +1,16 @@
 ﻿@page
 @model PetClinic.Pages.Admin.AdminManageDoctor.AdminViewDoctorScheduleModel
 @{
+    ViewData["Title"] = "Admin Manage Doctor";
+    Layout = null;
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <head>
@@ -12,7 +22,11 @@
 
 </head>
 <body>
+    @await Html.PartialAsync("_Header", Model)
+
     <div class="container">
+        <@await Html.PartialAsync("_Sidebar")
+
         <main class="main-content">
 
             <div class="schedule-header">
