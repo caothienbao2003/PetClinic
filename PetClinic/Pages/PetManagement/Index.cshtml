@@ -3,6 +3,7 @@
 @using PetClinicBussinessObject
 @model PetClinic.Pages.PetManagement.IndexModel
 @{
+    Layout = null;
     ViewData["Title"] = "Pet Management View Page";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -14,15 +15,78 @@
     }
 }
 
-<h1>Pet List</h1>
+<style>
+    .container {
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+    }
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
+        .table th, .table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+    .btn {
+        padding: 5px 10px;
+        margin: 2px;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/PetManagement/Index">My Pets</a>
+    <a asp-page="/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+</nav>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Customer/CustomerProfile"><button>View Profile</button></a>
+</div>
+
+<h1 align="center">Pet List</h1>
+
+<div align="center">
+    <button class="btn btn-primary"><a asp-page="Create">Create New Pet</a></button>
+</div>
+<div class="container">
 <form asp-page="/Index" method="get">
     <div class="form-actions no-color">
-        <p>
+        <p align="center">
             Find by Pet Name:
             <input type="text" name="searchPetName" value="@ViewData["searchPetName"]" />
             
@@ -87,3 +151,4 @@
     }
     </tbody>
 </table>
+</div>
