@@ -35,7 +35,11 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 		[BindProperty]
 		public string newSocialNumber { get; set; } = null!;
 		[BindProperty]
-		public int? Role { get; set; }
+		public int? newRole { get; set; }
+
+		[BindProperty]
+		public int newDoctorCapacity { get; set; }
+
 		[BindProperty]
 		public int? ActiveStatus { get; set; }
 
@@ -84,6 +88,7 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 					Gender = newGender,
 					SocialNumber = newSocialNumber,
 					DoctorRank = newDoctorRank,
+					DoctorCapacity = newDoctorCapacity,
 					Role = 2, // 2 is the role for a doctor
 					ActiveStatus = 1
 				};
