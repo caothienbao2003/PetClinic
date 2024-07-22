@@ -110,7 +110,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             //    bookingService.UpdateBooking(booking);
             //}
 
-
             return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
         }
 

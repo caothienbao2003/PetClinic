@@ -1,0 +1,48 @@
+﻿@page
+@using PetClinicBussinessObject
+@model PetClinic.Pages.Doctor.CageManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cage Management</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cage[0].CageId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Cage) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CageId)
+            </td>
+            <td>
+                <a asp-page="./HospitalizeList" asp-route-CageId="@item.CageId">Hospitalize List</a> |
+                @if (item.CageStatus == (int)CageStatus.Occupied)
+                {
+                    <span>Already Hospitalized</span>
+                }
+                else
+                {
+                    @if (item.ActiveStatus == (int)ActiveStatus.Active)
+                    {
+                        <a asp-page="./CreateHospitalize" asp-route-CageId="@item.CageId">Hospitalize</a>
+                    }
+                    <form method="post" asp-page-handler="ToggleActiveStatus" style="display:inline;">
+                        <input type="hidden" name="cageId" value="@item.CageId" />
+                        <input type="hidden" name="currentStatus" value="@item.ActiveStatus" />
+                        <button type="submit" class="btn btn-primary">Change Cage Availability</button>
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

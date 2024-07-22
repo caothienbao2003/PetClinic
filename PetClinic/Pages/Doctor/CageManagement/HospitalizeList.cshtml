@@ -1,0 +1,134 @@
+﻿@page
+@using PetClinicBussinessObject
+@model PetClinic.Pages.Doctor.CageManagement.HospitalizeListModel
+@{
+    ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
+}
+
+<h1>History Log</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Pet!.PetType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].InTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].OutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].ActiveStatus)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Hospitalizes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet!.PetType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor!.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                </td>
+                
+                <td>                  
+                    @if (item.OutTime == null)
+                    {
+                        <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> Enter current Log </a>
+                        <form method="post" asp-page-handler="EndHospitalize">
+                            <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
+                            <input type="hidden" name="CageId" value="@Model.CageId" />
+                            <input type="submit" value="End Hospitalize" class="btn btn-primary" />
+                        </form>
+                    }
+                    else
+                    {
+                        <a data-bs-toggle="collapse" href="#collapseLog_@item.HospitalizeId"> History Logs </a>
+                    }
+
+                </td>
+            </tr>
+            <tr class="collapse" id="collapseLog_@item.HospitalizeId">
+                <td colspan="7">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>DateTime</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var log in item.HospitalizeLogs)
+                            {
+                                <tr class="@(log.ActiveStatus == (int)ActiveStatus.UnActive ? "text-decoration-line-through" : "")">
+                                    <td>@log.DateTime</td>
+                                    <td>@log.Description</td>
+                                    <td>
+                                    @if (log.ActiveStatus == (int)ActiveStatus.Active && item.OutTime == null)
+                                    {
+                                        <form method="post" asp-page-handler="ToggleLogStatus">
+                                            <input type="hidden" name="LogId" value="@log.HospitalizeLogId" />
+                                            <input type="hidden" name="CageId" value="@Model.CageId" />
+                                            <button type="submit" class="btn btn-secondary">Delete</button>
+                                        </form>
+                                    }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (item.OutTime == null)
+                    {
+                        <form method="post" asp-page-handler="CreateLog">
+                            <input type="hidden" name="HospitalizeId" value="@item.HospitalizeId" />
+                            <input type="hidden" name="CageId" value="@Model.CageId" />
+                            <div class="form-group">
+                                <label for="Description">Description</label>
+                                <input type="text" name="Description" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Add Log" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    }
+                    
+                </td>
+            </tr>
+        
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-page="Index">Back to Cage List</a>
+</div>

@@ -1,0 +1,40 @@
+﻿@page
+@model PetClinic.Pages.Doctor.CageManagement.CreateHospitalizeModel
+@{
+    ViewData["Title"] = $"Cage {Model.CageId}";
+}
+
+<h1>Hospitalize</h1>
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CageId" />
+            <div class="form-group">
+                <label asp-for="Hospitalize.PetId" class="control-label">Pet Name</label>
+                <select asp-for="Hospitalize.PetId" class="form-control" asp-items="ViewBag.PetId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hospitalize.DoctorId" class="control-label">Doctor Name</label>
+                <input type="text" asp-for="Hospitalize.DoctorId" class="form-control" value="@ViewData["DoctorId"]" readonly /> <!-- Read-only field for DoctorId -->
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to Cage</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

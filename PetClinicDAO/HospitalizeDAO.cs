@@ -84,5 +84,6 @@ namespace PetClinicDAO
             context.HospitalizeLogs.Update(log);
             context.SaveChanges();
         }
+
     }
 }
