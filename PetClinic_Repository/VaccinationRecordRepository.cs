@@ -20,5 +20,7 @@ namespace PetClinicRepository
         public void AddVaccinationRecord(VaccinationRecord vaccinationRecord) => VaccinationRecordDAO.Instance.AddVaccinationRecord(vaccinationRecord);
 
         public void UpdateVaccinationRecord(VaccinationRecord vaccinationRecord) => VaccinationRecordDAO.Instance.UpdateVaccinationRecord(vaccinationRecord);
+
+        public void DeleteVaccinationRecord(int id) => VaccinationRecordDAO.Instance.DeleteVaccinationRecord(id);
     }
 }

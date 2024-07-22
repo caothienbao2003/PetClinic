@@ -11,6 +11,7 @@ namespace PetClinicServices.Interface
     {
         public List<Hospitalize> GetAllHospitalize();
         public Hospitalize? GetHospitalizeById(int id);
+        public HospitalizeLog? GetLogById(int id);
         public void AddHospitalize(Hospitalize hospitalize);
         public void UpdateHospitalize(Hospitalize hospitalize);
         public List<Hospitalize> GetListByCageId(int cageId);

@@ -18,5 +18,7 @@ namespace PetClinicServices.Interface
         public void AddVaccinationRecord(VaccinationRecord vaccinationRecord);
 
         public void UpdateVaccinationRecord(VaccinationRecord vaccinationRecord);
+
+        public void DeleteVaccinationRecord(int id);
     }
 }

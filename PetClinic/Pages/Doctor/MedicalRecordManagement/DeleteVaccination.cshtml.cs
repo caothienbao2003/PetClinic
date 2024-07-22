@@ -7,52 +7,52 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
 
-namespace PetClinic.Pages.Staff.LogManagement
+namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 {
-    public class DeleteModel : PageModel
+    public class DeleteVaccinationModel : PageModel
     {
         private readonly PetClinicBussinessObject.PetClinicContext _context;
 
-        public DeleteModel(PetClinicBussinessObject.PetClinicContext context)
+        public DeleteVaccinationModel(PetClinicBussinessObject.PetClinicContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-      public HospitalizeLog HospitalizeLog { get; set; } = default!;
+      public VaccinationRecord VaccinationRecord { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.HospitalizeLogs == null)
+            if (id == null || _context.VaccinationRecords == null)
             {
                 return NotFound();
             }
 
-            var hospitalizelog = await _context.HospitalizeLogs.FirstOrDefaultAsync(m => m.HospitalizeLogId == id);
+            var vaccinationrecord = await _context.VaccinationRecords.FirstOrDefaultAsync(m => m.VaccinationRecordId == id);
 
-            if (hospitalizelog == null)
+            if (vaccinationrecord == null)
             {
                 return NotFound();
             }
             else 
             {
-                HospitalizeLog = hospitalizelog;
+                VaccinationRecord = vaccinationrecord;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.HospitalizeLogs == null)
+            if (id == null || _context.VaccinationRecords == null)
             {
                 return NotFound();
             }
-            var hospitalizelog = await _context.HospitalizeLogs.FindAsync(id);
+            var vaccinationrecord = await _context.VaccinationRecords.FindAsync(id);
 
-            if (hospitalizelog != null)
+            if (vaccinationrecord != null)
             {
-                HospitalizeLog = hospitalizelog;
-                _context.HospitalizeLogs.Remove(HospitalizeLog);
+                VaccinationRecord = vaccinationrecord;
+                _context.VaccinationRecords.Remove(VaccinationRecord);
                 await _context.SaveChangesAsync();
             }
 

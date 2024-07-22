@@ -27,30 +27,25 @@ namespace PetClinic.Pages.Staff.CageManagement
 
         public void OnGet()
         {
-            Cage = cageService.GetAllCage();
+            Cage = cageService.GetAllCage()
+                .OrderByDescending(c => c.ActiveStatus == (int)ActiveStatus.Active)
+                .ThenByDescending(c => c.CageStatus == (int)CageStatus.Occupied)
+                .ThenBy(c => c.CageId)
+                .ToList();
+        }
 
-            //UserRole role = (UserRole)Enum.Parse(typeof(UserRole),HttpContext.Session.GetString("Role") ?? "");
-            //if (role == null)
-            //{
-            //    Response.Redirect("/Authentication/Login");
-            //}
-            //else
-            //{
-            //    switch (role)
-            //    {
-            //        case UserRole.Customer:
-            //            Response.Redirect("/Customer/CustomerHomePage");
-            //            break;
-            //        case UserRole.Staff:
-            //            break;
-            //        case UserRole.Doctor:
-            //            Response.Redirect("/Doctor/DoctorHomePage");
-            //            break;
-            //        default:
-            //            Response.Redirect("/Admin/AdminHomePage");
-            //            break;
-            //    }
-            //}
+        public IActionResult OnPostToggleActiveStatus(int cageId, int currentStatus)
+        {
+            var cage = cageService.GetCageById(cageId);
+            if (cage == null)
+            {
+                return NotFound();
+            }
+
+            cage.ActiveStatus = currentStatus == (int)ActiveStatus.UnActive ? (int)ActiveStatus.Active : (int)ActiveStatus.UnActive;
+            cageService.UpdateCage(cage);
+
+            return RedirectToPage();
         }
     }
 }
