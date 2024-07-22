@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.Doctor.ScheduleManagement
+namespace PetClinic.Pages.Admin.AdminManageDoctor
 {
-    public class ViewScheduleModel : PageModel
+    public class AdminViewDoctorScheduleModel : PageModel
     {
         private readonly IScheduleService scheduleService;
         private readonly IShiftService shiftService;
-        public ViewScheduleModel(IScheduleService scheduleService, IShiftService shiftService)
+        public AdminViewDoctorScheduleModel(IScheduleService scheduleService, IShiftService shiftService)
         {
             this.scheduleService = scheduleService;
             this.shiftService = shiftService;
@@ -26,9 +26,15 @@ namespace PetClinic.Pages.Doctor.ScheduleManagement
 
         [BindProperty]
         public List<Schedule> ScheduleList { get; set; }
+        [BindProperty]
+        public int DoctorId { get; set; }
 
-        public void OnGet()
+        public void OnGet(int doctorid)
         {
+            DoctorId = doctorid;
+
+            Console.WriteLine("Doctor id: " + doctorid);
+
             ShiftList = shiftService.GetAllDoctorShifts();
             SelectedDate = DateTime.Now;
             LoadMondayAndSunday();
@@ -36,21 +42,19 @@ namespace PetClinic.Pages.Doctor.ScheduleManagement
 
         public void OnPostChangeWeek(int offset)
         {
-            string userIdString = HttpContext.Session.GetString("UserId");
+            Console.WriteLine("Doctor id: " + DoctorId);
 
-            if (userIdString != null)
-            {
-                int userId = int.Parse(userIdString);
+            ShiftList = shiftService.GetAllDoctorShifts();
+            SelectedDate = SelectedDate.AddDays(6 * offset);
+            LoadMondayAndSunday();
 
-                ShiftList = shiftService.GetAllDoctorShifts();
-                SelectedDate = SelectedDate.AddDays(6 * offset);
+            Console.WriteLine(SelectedDate);
 
-                ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(userId, MondayDate, SundayDate);
+            ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(DoctorId, MondayDate, SundayDate);
 
-                Console.WriteLine(ScheduleList.Count);
+            Console.WriteLine(ScheduleList.Count);
 
-                LoadMondayAndSunday();
-            }
+
         }
 
         public DateTime GetMonday(DateTime selectedDate)
@@ -67,6 +71,14 @@ namespace PetClinic.Pages.Doctor.ScheduleManagement
         {
             MondayDate = GetMonday(SelectedDate);
             SundayDate = MondayDate.AddDays(6);
+        }
+
+        private void LoadSchedule()
+        {
+            foreach(var shift in ShiftList)
+            {
+                
+            }
         }
     }
 }

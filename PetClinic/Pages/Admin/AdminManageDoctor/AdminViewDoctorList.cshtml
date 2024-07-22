@@ -2,3 +2,147 @@
 @model PetClinic.Pages.Admin.AdminManageDoctor.AdminViewDoctorListModel
 @{
 }
+
+@{
+	ViewData["Title"] = "Admin Manage Doctor";
+	Layout = null;
+	var userId = HttpContext.Session.GetString("UserId");
+	var role = HttpContext.Session.GetString("Role");
+	var email = HttpContext.Session.GetString("Email");
+
+	if (email != "admin@petclinic.com")
+	{
+		Response.Redirect("/Authentication/Login");
+	}
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Staff Management</title>
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body>
+	@await Html.PartialAsync("_Header", Model)
+
+
+	<div class="container">
+		<@await Html.PartialAsync("_Sidebar")
+
+		<main class="main-content">
+			<h1>Staff Management</h1>
+
+			<p>
+				<button id="addStaffBtn" class="btn-create">Add New Doctor</button>
+			</p>
+			<table class="service-table">
+				<thead>
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Phone Number</th>
+						<th>Address</th>
+						<th>Email</th>
+						<th>Gender</th>
+						<th>Social Number</th>
+						<th>ActiveStatus</th>
+						<!-- Add other relevant fields -->
+						<th>Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var doctor in Model.DoctorList)
+					{
+							<tr>
+								<td>@doctor.FirstName</td>
+								<td>@doctor.LastName</td>
+								<td>@doctor.PhoneNumber</td>
+								<td>@doctor.Address</td>
+								<td>@doctor.Email</td>
+								<th>@doctor.Gender</th>
+								<td>@doctor.SocialNumber</td>
+								<th>@doctor.ActiveStatus</th>
+								<!-- Add other relevant fields -->
+								<td>
+									<a class="btn-update" asp-page="AdminUpdateStaff" asp-route-doctorid="@doctor.UserId">Update</a>
+									<a class="btn-update" asp-page="AdminViewDoctorSchedule" asp-route-doctorid="@doctor.UserId">Schedule</a>
+								</td>
+							</tr>
+					}
+				</tbody>
+			</table>
+
+			<!-- Create User Modal -->
+			<div id="createUserModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal('createUserModal')">&times;</span>
+					<h2>Add New User</h2>
+					<div class="modal-body">
+						<form id="createServiceForm" method="post" asp-page-handler="CreateUser">
+							<label for="FirstName">First Name:</label>
+							<input type="text" id="FirstName" asp-for="newFirstName" class="form-control">
+							<span asp-validation-for="newFirstName" class="text-danger"></span>
+
+							<label for="LastName">Last Name:</label>
+							<input type="text" id="LastName" asp-for="newLastName" class="form-control">
+							<span asp-validation-for="newLastName" class="text-danger"></span>
+
+							<label for="PhoneNumber">Phone Number:</label>
+							<input type="text" id="PhoneNumber" asp-for="newPhoneNumber" class="form-control">
+							<span asp-validation-for="newPhoneNumber" class="text-danger"></span>
+
+							<label for="Address">Address:</label>
+							<input type="text" id="Address" asp-for="newAddress" class="form-control">
+							<span asp-validation-for="newAddress" class="text-danger"></span>
+
+							<label for="Email">Email:</label>
+							<input type="text" id="Email" asp-for="newEmail" class="form-control">
+							<span asp-validation-for="newEmail" class="text-danger"></span>
+
+							<label for="Password">Password:</label>
+							<input type="text" id="Password" asp-for="newPassword" class="form-control">
+							<span asp-validation-for="newPassword" class="text-danger"></span>
+
+							<label>Gender</label>
+							<select asp-for="newGender" class="form-control">
+								<option value="" disabled selected hidden>Select Gender</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+								<option value="Other">Other</option>
+							</select>
+							<span asp-validation-for="newGender" class="text-danger"></span>
+
+							<label for="SocialNumber">Social Number:</label>
+							<input type="text" id="SocialNumber" asp-for="newSocialNumber" class="form-control">
+							<span asp-validation-for="newSocialNumber" class="text-danger"></span>
+
+							</br>
+							<hr />
+							</br>
+							<div class="form-group form-submit-button">
+								<button type="submit" class="btn btn-create btn-block" asp-page-handler="CreateUser">Create</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!-- Display error messages -->
+			<div class="form-group">
+				<div asp-validation-summary="All" class="text-danger"></div>
+			</div>
+		</main>
+	</div>
+
+	@await Html.PartialAsync("_Footer")
+
+
+	<script>
+		var services = @Html.Raw(Json.Serialize(Model.User));
+	</script>
+
+	<script src="~/js/adminManageUser.js"></script>
+</body>
+</html>
