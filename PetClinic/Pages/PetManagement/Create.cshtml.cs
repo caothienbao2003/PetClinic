@@ -14,13 +14,15 @@ namespace PetClinic.Pages.PetManagement
     public class CreateModel : PageModel
     {
         private readonly IPetService petService;
+        private readonly IPetHealthService petHealthService;
 
         public int userId = 0;
         public string? userIdString;
 
-        public CreateModel(IPetService _petService)
+        public CreateModel(IPetService _petService, IPetHealthService _petHealthService)
         {
             petService = _petService;
+            petHealthService = _petHealthService;
         }
 
         public void OnGet()
@@ -31,6 +33,12 @@ namespace PetClinic.Pages.PetManagement
         [BindProperty]
         public Pet Pet { get; set; } = default!;
 
+        [BindProperty]
+        public int PetId { get; set; } = default!;
+
+        [BindProperty]
+        public PetHealth PetHealth { get; set; } = default!;
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public void OnPost()
@@ -38,7 +46,7 @@ namespace PetClinic.Pages.PetManagement
             userIdString = HttpContext.Session.GetString("UserId");
             if (userIdString.IsNullOrEmpty())
             {
-                Response.Redirect("/Privacy");
+                Response.Redirect("/Authentication/Login");
             }
             else
             {
@@ -49,7 +57,9 @@ namespace PetClinic.Pages.PetManagement
             Pet.ActiveStatus = 1;
             petService.AddPet(Pet);
 
-            Response.Redirect("/PetManagement/Index");
+            PetId = Pet.PetId;
+
+            Response.Redirect("/PetHealthManagement/Create");
         }
     }
 }

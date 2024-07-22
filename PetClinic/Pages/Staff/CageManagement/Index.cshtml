@@ -1,4 +1,5 @@
 ﻿@page
+@using PetClinicBussinessObject
 @model PetClinic.Pages.Staff.CageManagement.IndexModel
 @{
     ViewData["Title"] = "Cage Management View Page";
@@ -14,52 +15,42 @@
 
 <h1>Cage Management</h1>
 
-@*<p>
+<p>
     <a asp-page="Create">Create New</a>
-</p>*@
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Cage[0].CageId)
             </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Cage[0].CageStatus)
-            </th>
-            
-            @*<th>
-                @Html.DisplayNameFor(model => model.Cage[0].ActiveStatus)
-            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Cage) {
+    @foreach (var item in Model.Cage) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CageId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CageStatus)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ActiveStatus)
-            </td>*@
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CageId">Edit Staus</a> |
-                <a asp-page="./Details" asp-route-id="@item.CageId">Details</a> |
                 <a asp-page="./HospitalizeList" asp-route-CageId="@item.CageId">Hospitalize List</a> |
-                @*<a asp-page="./Delete" asp-route-id="@item.CageId">Delete</a> |S*@
-                @if (item.CageStatus == 0)
+                @if (item.CageStatus == (int)CageStatus.Occupied)
                 {
                     <span>Already Hospitalized</span>
                 }
                 else
                 {
-                    <a asp-page="/Staff/HospitalizeManagement/Create" asp-route-CageId="@item.CageId">Hospitalize</a>
+                    @if (item.ActiveStatus == (int)ActiveStatus.Active)
+                    {
+                        <a asp-page="./CreateHospitalize" asp-route-CageId="@item.CageId">Hospitalize</a>
+                    }
+                    <form method="post" asp-page-handler="ToggleActiveStatus" style="display:inline;">
+                        <input type="hidden" name="cageId" value="@item.CageId" />
+                        <input type="hidden" name="currentStatus" value="@item.ActiveStatus" />
+                        <button type="submit" class="btn btn-primary">Change Cage Availability</button>
+                    </form>
                 }
-
             </td>
         </tr>
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetClinicBussinessObject;
+using PetClinicServices;
 using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Staff.CageManagement
@@ -40,31 +41,11 @@ namespace PetClinic.Pages.Staff.CageManagement
 
         public IActionResult OnPost()
         {
-            //var hospitalize = hospitalizeService.GetHospitalizeById(HospitalizeId);
-            //if (hospitalize != null)
-            //{
-            //    hospitalize.OutTime = DateTime.Now;
-            //    hospitalizeService.UpdateHospitalize(hospitalize);
-
-            //    var cage = cageService.GetCageById(hospitalize.CageId!.Value);
-            //    if (cage != null)
-            //    {
-            //        cage.CageEnumStatus = CageStatus.Available;
-            //        cageService.UpdateCage(cage);
-            //    }
-            //}
-
             return RedirectToPage("/Staff/CageManagement/Index");
         }
 
         public IActionResult OnPostCreateLog(int HospitalizeId, string Description)
         {
-            //var hospitalize = hospitalizeService.GetHospitalizeById(HospitalizeId);
-            //if (hospitalize == null || hospitalize.OutTime != null)
-            //{
-            //    return RedirectToPage("/Error");
-            //}
-
             var newLog = new HospitalizeLog
             {
                 HospitalizeId = HospitalizeId,
@@ -106,6 +87,18 @@ namespace PetClinic.Pages.Staff.CageManagement
             return RedirectToPage(new { cageId = CageId });
         }
 
+        public IActionResult OnPostToggleLogStatus(int logId, int hospitalizeId)
+        {
+            var log = hospitalizeService.GetLogById(logId);
+            if (log == null)
+            {
+                return NotFound();
+            }
 
+            log.ActiveStatus = log.ActiveStatus == (int)ActiveStatus.Active ? (int)ActiveStatus.UnActive : (int)ActiveStatus.Active;
+            hospitalizeService.UpdateHospitalizeLog(log);
+
+            return RedirectToPage(new { cageId = CageId });
+        }
     }
 }

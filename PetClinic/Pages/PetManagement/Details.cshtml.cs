@@ -41,7 +41,7 @@ namespace PetClinic.Pages.PetManagement
         public PetHealth? PetHealth { get; set; } = default!;
 
         [BindProperty]
-        public List<VaccinationRecord> VaccinationRecordList { get; set; } = default!;
+        public List<VaccinationRecord>? VaccinationRecordList { get; set; } = default!;
 
         [BindProperty]
         public List<Medicine> MedicineList { get; set; } = new List<Medicine>();
@@ -66,6 +66,11 @@ namespace PetClinic.Pages.PetManagement
             Pet = pet;
 
             PetHealth = petService.GetPetHealthByPetId(Pet.PetId);
+
+            if (PetHealth == null)
+            {
+                PetHealth = new PetHealth();
+            }
 
             VaccinationRecordList = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(PetHealth.PetHealthId);
 

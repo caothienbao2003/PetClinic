@@ -44,7 +44,8 @@ namespace PetClinic.Pages.Authentication
 			if (isAdmin)
 			{
 				HttpContext.Session.SetString("Email", email);
-                Response.Redirect("/Admin/AdminHomePage");
+				HttpContext.Session.SetString("Role", "Admin");
+				Response.Redirect("/Admin/AdminHomePage");
 			}
 			else
 			{
@@ -53,6 +54,7 @@ namespace PetClinic.Pages.Authentication
 				if (user != null && DAOUtilities.Instance.VerifyPassword(password, user.Password))
 				{
 					HttpContext.Session.SetString("UserId", user.UserId.ToString());
+					HttpContext.Session.SetString("Email", email);
 					HttpContext.Session.SetString("Role", user.Role.ToString());
 
 					if (user.Role == 0)

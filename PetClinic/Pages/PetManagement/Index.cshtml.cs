@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,10 +14,12 @@ namespace PetClinic.Pages.PetManagement
     public class IndexModel : PageModel
     {
         private readonly IPetService petService;
+        private readonly IUserService userService;
 
-        public IndexModel(IPetService _petService)
+        public IndexModel(IPetService _petService, IUserService _userService)
         {
             petService = _petService;
+            userService = _userService;
         }
 
         public List<Pet> petList { get;set; } = default!;
@@ -25,23 +28,29 @@ namespace PetClinic.Pages.PetManagement
         public string SearchPetName { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string SearchCustomer { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string SearchPetType { get; set; }
+
+        [BindProperty]
+        public User user { get; set; } = default!;
 
         public void OnGet()
         {
-            var query = petService.GetAll().AsQueryable();
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+                petList = new List<Pet>();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
+
+            var query = petService.GetAll().Where(p => p.CustomerId == user.UserId).AsQueryable();
 
             if (!string.IsNullOrEmpty(SearchPetName))
             {
                 query = query.Where(p => p.PetName.Contains(SearchPetName));
-            }
-
-            if (!string.IsNullOrEmpty(SearchCustomer))
-            {
-                query = query.Where(p => p.Customer.FirstName.Contains(SearchCustomer));
             }
 
             if (!string.IsNullOrEmpty(SearchPetType) && SearchPetType != "All")
