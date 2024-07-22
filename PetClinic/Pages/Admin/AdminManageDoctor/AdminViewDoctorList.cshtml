@@ -49,7 +49,8 @@
 						<th>Social Number</th>
 						<th>ActiveStatus</th>
 						<!-- Add other relevant fields -->
-						<th>Details</th>
+						<th>Update</th>
+						<th>Schedule</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -66,7 +67,9 @@
 								<th>@doctor.ActiveStatus</th>
 								<!-- Add other relevant fields -->
 								<td>
-									<a class="btn-update" asp-page="AdminUpdateStaff" asp-route-doctorid="@doctor.UserId">Update</a>
+									<a class="btn-update" asp-page="AdminUpdateStaff" asp-route-doctorid="@doctor.UserId">Update</a>\
+								</td>
+								<td>
 									<a class="btn-update" asp-page="AdminViewDoctorSchedule" asp-route-doctorid="@doctor.UserId">Schedule</a>
 								</td>
 							</tr>
@@ -122,6 +125,9 @@
 							<input type="text" id="SocialNumber" asp-for="newSocialNumber" class="form-control">
 							<span asp-validation-for="newSocialNumber" class="text-danger"></span>
 
+							<label for="Capacity">Capacity</label>
+							<input type="text" id="Capacity" asp-for="newDoctorCapacity" class="form-control">
+							<span asp-validation-for="newDoctorCapacity" class="text-danger"></span>
 							</br>
 							<hr />
 							</br>
