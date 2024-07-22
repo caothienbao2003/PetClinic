@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
@@ -14,21 +15,32 @@ namespace PetClinic.Pages.PetManagement
     public class CreateModel : PageModel
     {
         private readonly IPetService petService;
-        private readonly IPetHealthService petHealthService;
+        private readonly IUserService userService;
 
         public int userId = 0;
         public string? userIdString;
 
-        public CreateModel(IPetService _petService, IPetHealthService _petHealthService)
+        public CreateModel(IPetService _petService, IUserService _userService)
         {
             petService = _petService;
-            petHealthService = _petHealthService;
+            userService = _userService;
         }
 
         public void OnGet()
         {
-            
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
         }
+
+        [BindProperty]
+        public User user { get; set; } = default!;
 
         [BindProperty]
         public Pet Pet { get; set; } = default!;
@@ -40,8 +52,7 @@ namespace PetClinic.Pages.PetManagement
         public PetHealth PetHealth { get; set; } = default!;
 
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             userIdString = HttpContext.Session.GetString("UserId");
             if (userIdString.IsNullOrEmpty())
@@ -59,7 +70,7 @@ namespace PetClinic.Pages.PetManagement
 
             PetId = Pet.PetId;
 
-            Response.Redirect("/PetHealthManagement/Create");
+            return RedirectToPage("/PetHealthManagement/Create", new { petId = PetId });
         }
     }
 }
