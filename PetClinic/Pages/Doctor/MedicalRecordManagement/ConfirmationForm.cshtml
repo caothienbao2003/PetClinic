@@ -2,7 +2,15 @@
 @model PetClinic.Pages.Doctor.MedicalRecordManagement.ConfirmationFormModel
 
 @{
-    ViewData["Title"] = "Confirmation Form";
+    ViewData["Title"] = "Confirmation Form Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Confirmation Form</h1>

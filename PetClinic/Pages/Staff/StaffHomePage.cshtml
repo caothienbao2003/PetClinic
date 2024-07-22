@@ -1,6 +1,16 @@
 ﻿@page
 @model StaffHomePageModel
 @{
+    Layout = null;
+    ViewData["Title"] = "Staff Home Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "1")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 <head>
     <meta charset="utf-8" />
@@ -8,6 +18,20 @@
     <title>Pet Clinic Homepage</title>
     <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    @* <a asp-page="/Staff/BookingManagement/">Booking System</a> *@
+    <a asp-page="/Staff/BookingManagement/BookingHistory">Bookings</a>
+    <a asp-page="/Staff/CageManagement/Index">Cages</a>
+    <a asp-page="/Staff/HospitalizeManagement/Index">Hospitalizations</a>
+    <a asp-page="/Staff/LogManagement/Index">Logs</a>
+</nav>
 
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>

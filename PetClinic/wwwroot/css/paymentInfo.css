@@ -1,15 +1,20 @@
 ﻿body {
     font-family: Arial, sans-serif;
-    background-color: #fff;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    text-align: center;
     margin-top: 50px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 h1 {
@@ -21,10 +26,9 @@ h1 {
 .content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    max-width: 1200px;
-    margin: 20px;
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
 }
 
 .left, .right {
@@ -36,20 +40,37 @@ h1 {
     text-align: left;
 }
 
-    .left p {
+    .left p, .right p {
         font-size: 18px;
         margin: 10px 0;
     }
 
     .left img, .right img {
         max-width: 100%;
+        border-radius: 5px;
     }
 
 .info-box {
-    padding: 10px;
+    margin-bottom: 20px;
 }
 
-.bank-img{
-    height:50%;
-    width: 50%;
+.bank-img {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
+
+button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+    button:hover {
+        background-color: #45a049;
+    }

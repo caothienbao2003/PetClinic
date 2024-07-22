@@ -16,5 +16,7 @@ namespace PetClinicServices.Interface
         public List<Booking> GetBookingListByPetId(int petId);
         public List<Booking> GetBookingListByUserId(int userId);
         public void UpdateBooking(Booking booking);
+        public Booking GetBookingList(int petId, int scheduleId);
+        public List<Booking> SearchBy(DateTime? startDate, DateTime? endDate, int? paymentStatus, int? bookingStatus, int? shiftId, string doctorName, string customerName, string petName);
     }
 }

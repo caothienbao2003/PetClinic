@@ -3,7 +3,17 @@
 @model PetClinic.Pages.Customer.BookingManagement.BookingHistoryModel
 
 @{
-    ViewData["Title"] = "BookingHistory";
+    Layout = null;
+    ViewData["Title"] = "Booking History Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>BookingHistory</h1>
@@ -64,9 +74,12 @@
                     @Html.DisplayFor(modelItem => item.Service.ServiceId)
                 </td>
                 <td>
-                    <form method="post" asp-page-handler="Cancel">
-                        <button type="submit" name="id" value="@item.BookingId">Cancel</button>
-                    </form>
+                    @if (item.BookingStatus != (int)BookingStatus.Canceled)
+                    {
+                        <form method="post" asp-page-handler="Cancel">
+                            <button type="submit" name="id" value="@item.BookingId">Cancel</button>
+                        </form>
+                    }
                     <form method="post" asp-page-handler="Detail">
                         <button type="submit" name="id" value="@item.BookingId">Detail</button>
                     </form>

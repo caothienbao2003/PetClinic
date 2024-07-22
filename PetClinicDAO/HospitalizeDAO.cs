@@ -85,5 +85,9 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
+        public List<Hospitalize> GetHospitalizeByPetId(int petId)
+        {
+            return context.Hospitalizes.Include(c => c.Cage).Include(d => d.Doctor).Include(p => p.Pet).Where(h => h.PetId == petId).ToList();
+        }
     }
 }

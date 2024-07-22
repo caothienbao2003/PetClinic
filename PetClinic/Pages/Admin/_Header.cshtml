@@ -1,0 +1,13 @@
+﻿@* Admin/_Header.cshtml *@
+<header class="header">
+    <div class="header-box-container">
+        <div class="header-box">Revenue: $@Model.revenue</div>
+        <div class="header-box">Total Customers: @Model.totalCustomers</div>
+        <div class="header-box">Total Bookings: @Model.totalBookings</div>
+    </div>
+    <div class="header-buttons">
+        <button onclick="location.href='/Admin/AdminProfile'">Profile</button>
+        <button onclick="location.href='/Authentication/Logout'">Logout</button>
+        <button onclick="location.href='/Authentication/Login'">Login</button>
+    </div>
+</header>

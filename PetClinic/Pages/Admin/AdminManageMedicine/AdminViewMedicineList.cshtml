@@ -1,4 +1,102 @@
 ﻿@page
 @model PetClinic.Pages.Admin.AdminManageMedicine.AdminViewMedicineListModel
 @{
+	Layout = null;
+	var userId = HttpContext.Session.GetString("UserId");
+	var role = HttpContext.Session.GetString("Role");
+	var email = HttpContext.Session.GetString("Email");
+
+	if (email != "admin@petclinic.com")
+	{
+		Response.Redirect("/Authentication/Login");
+	}
 }
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Service Management</title>
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body>
+
+	@await Html.PartialAsync("_Header", Model)
+
+
+	<div class="container">
+		<@await Html.PartialAsync("_Sidebar")
+
+
+		<main class="main-content">
+			<h1>Medicine Management</h1>
+
+			<div class="service-management">
+				<button id="createMedicineBtn" class="btn-create">Create New Medicine</button>
+
+				<table class="service-table">
+					<thead>
+						<tr>
+							<th>Medicine ID</th>
+							<th>Medicine Name</th>
+							<th>Medicine Type</th>
+							<th>Description</th>
+							<th>Status</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var medicine in Model.Medicines)
+						{
+							<tr>
+								<td>@medicine.MedicineId</td>
+								<td>@medicine.MedicineName</td>
+								<td>@medicine.MedicineTypeId</td>
+								<td>@medicine.MedicineDescription</td>
+								<td>@(medicine.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+								<td>
+									<a class="btn-update" asp-page="./AdminUpdateMedicine" asp-route-medicineId="@medicine.MedicineId">Update</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+
+				<!-- Display error messages -->
+				<div class="form-group">
+					<div asp-validation-summary="All" class="text-danger"></div>
+				</div>
+			</div>
+
+			<!-- Create Medicine Modal -->
+			<div id="createMedicineModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal('createMedicineModal')">&times;</span>
+					<h2>Create New Medicine</h2>
+					<form id="createMedicineForm" method="post" asp-page-handler="CreateMedicine">
+						<label for="MedicineName">Medicine Name:</label>
+						<input type="text" id="MedicineName" asp-for="newMedicineName" class="form-control">
+						<label for="MedicineDescription">Description:</label>
+						<textarea id="MedicineDescription" asp-for="newMedicineDescription" class="form-control"></textarea>
+						<div class="form-group">
+							<label asp-for="newMedicineTypeId" class="control-label"></label>
+							<select asp-for="newMedicineTypeId" class ="form-control" asp-items="ViewBag.MedicineTypeId"></select>
+						</div>
+
+						<button type="submit" class="btn-create">Create</button>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
+	
+	@await Html.PartialAsync("_Footer")
+
+
+	@*<script>		
+		var medicines = @Html.Raw(Json.Serialize(Model.MedicineListWithoutInlcude));
+	</script>*@
+
+	<script src="~/js/adminManageMedicine.js"></script>
+</body>
+</html>

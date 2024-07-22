@@ -1,6 +1,17 @@
 ﻿@page
 @model PetClinic.Pages.Customer.CustomerProfileModel
 @{
+    Layout = null;
+    ViewData["Title"] = "Customer Profile Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <head>
@@ -10,20 +21,33 @@
     <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
 
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/PetManagement/Index">My Pets</a>
+    <a asp-page="/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+</nav>
+
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
     <a asp-page="/Customer/CustomerHomePage"><button>Back to Home</button></a>
 </div>
 
-<h1>Customer Profile</h1>
+<h1 align="center">Customer Profile</h1>
 
 <div class="row">
     <div class="profile-info">
         <h2>View Profile</h2>
-        <div class="text-center">
-            <img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" style="width: 200px">
+        <div align="center">
+            <img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" style="width: 400px">
         </div>
-        <dl class="row">
+        <dl class="profile-info">
             <dt class="col-sm-3">First Name</dt>
             <dd class="col-sm-9">@Model.user.FirstName</dd>
             <dt class="col-sm-3">Last Name</dt>
@@ -35,11 +59,11 @@
             <dt class="col-sm-3">Gender</dt>
             <dd class="col-sm-9">@Model.user.Gender</dd>
         </dl>
-        <button class="btn btn-primary" id="editProfileBtn">Edit Profile</button>
+        <button class="profile-info" id="editProfileBtn">Edit Profile</button>
     </div>
     <div class="profile-info" id="editProfileForm" style="display: none;">
         <h2>Edit Profile</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="edit-profile-form">
             <div class="form-group">
                 <label asp-for="updateImage" class="control-label">Profile Picture</label>
                 <input asp-for="updateImage" class="form-control" type="file" id="updateImage" name="updateImage" />

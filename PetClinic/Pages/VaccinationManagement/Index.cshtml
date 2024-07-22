@@ -2,7 +2,15 @@
 @model PetClinic.Pages.VaccinationManagement.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vaccination Management View Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null)
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Index</h1>

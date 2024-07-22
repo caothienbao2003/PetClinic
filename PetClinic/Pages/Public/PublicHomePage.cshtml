@@ -1,6 +1,7 @@
 ﻿@page
 @model PetClinic.Pages.Public.PublicHomePageModel
 @{
+    Layout = null;
 }
 
 <head>
@@ -9,6 +10,17 @@
     <title>Pet Clinic Homepage</title>
     <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a href="#">Home</a>
+    <a href="#">Service</a>
+    <a href="#">Blog</a>
+    <a href="#">About us</a>
+</nav>
 
 <div class="top-right-buttons">
     <a asp-page="/Authentication/Login"><button>Login</button></a>

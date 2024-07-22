@@ -4,39 +4,92 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.PetManagement
 {
     public class DetailsModel : PageModel
     {
-        private readonly PetClinicBussinessObject.PetClinicContext _context;
+        private readonly IMedicalRecordService medicalRecordService;
+        private readonly IBookingService bookingService;
+        private readonly IUserService userService;
+        private readonly IPetService petService;
+        private readonly IVaccinationRecordService vaccinationRecordService;
+        private readonly IMedicineService medicineService;
+        private readonly IServiceService serviceService;
 
-        public DetailsModel(PetClinicBussinessObject.PetClinicContext context)
+        public DetailsModel(IMedicalRecordService _medicalRecordService, IBookingService _bookingService, IUserService _userService,
+            IPetService _petService, IVaccinationRecordService _vaccinationRecordService, IMedicineService _medicineService, IServiceService _serviceService)
         {
-            _context = context;
+            medicalRecordService = _medicalRecordService;
+            bookingService = _bookingService;
+            userService = _userService;
+            petService = _petService;
+            vaccinationRecordService = _vaccinationRecordService;
+            medicineService = _medicineService;
+            serviceService = _serviceService;
         }
 
-      public Pet Pet { get; set; } = default!; 
+        [BindProperty]
+        public Pet Pet { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty]
+        public PetHealth? PetHealth { get; set; } = default!;
+
+        [BindProperty]
+        public List<VaccinationRecord>? VaccinationRecordList { get; set; } = default!;
+
+        [BindProperty]
+        public List<Medicine> MedicineList { get; set; } = new List<Medicine>();
+
+        [BindProperty]
+        public VaccinationRecord NewVaccinationRecord { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int PetId { get; set; }
+
+        public IActionResult OnGet(int id)
         {
-            if (id == null || _context.Pets == null)
-            {
-                return NotFound();
-            }
+            PetId = id;
 
-            var pet = await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
+            var pet = petService.GetPetById(id);
+
             if (pet == null)
             {
                 return NotFound();
             }
-            else 
+
+            Pet = pet;
+
+            PetHealth = petService.GetPetHealthByPetId(Pet.PetId);
+
+            if (PetHealth == null)
             {
-                Pet = pet;
+                PetHealth = new PetHealth();
             }
+
+            VaccinationRecordList = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(PetHealth.PetHealthId);
+
+            MedicineList = medicineService.GetMedicineList();
+
             return Page();
+        }
+
+        public IActionResult OnPostAddVaccination()
+        {
+            if (NewVaccinationRecord != null)
+            {
+                NewVaccinationRecord.Verification = NewVaccinationRecord.Verification;
+
+                vaccinationRecordService.AddVaccinationRecord(NewVaccinationRecord);
+            }
+
+            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(NewVaccinationRecord!.PetHealthId!.Value);
+            return new JsonResult(updatedRecords);
         }
     }
 }

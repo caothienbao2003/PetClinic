@@ -2,7 +2,15 @@
 @model PetClinic.Pages.PetHealthManagement.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Pet Health Management Delete Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null)
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Delete</h1>

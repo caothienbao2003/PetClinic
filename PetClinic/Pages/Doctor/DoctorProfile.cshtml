@@ -1,6 +1,16 @@
 ﻿@page
 @model PetClinic.Pages.Doctor.DoctorProfileModel
 @{
+    Layout = null;
+    ViewData["Title"] = "Doctor Profile Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <head>
@@ -9,6 +19,18 @@
     <title>Pet Clinic Homepage</title>
     <link rel="stylesheet" href="~/css/luongDoctorStyle.css" />
 </head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Doctor/BookingView">Bookings</a>
+    <a asp-page="/Doctor/MedicalRecordManagement/Index">Medical Records</a>
+    <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord">Create Records</a>
+</nav>
 
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
@@ -20,10 +42,10 @@
 <div class="row">
     <div class="profile-info">
         <h2>View Profile</h2>
-        <div class="text-center">
-            <img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" style="width: 200px">
+        <div align="center">
+            <img src="@(Model.user?.Image ?? "/img/default-profile.png")" alt="Profile Picture" style="width: 400px">
         </div>
-        <dl class="row">
+        <dl class="profile-info">
             <dt class="col-sm-3">First Name</dt>
             <dd class="col-sm-9">@Model.user.FirstName</dd>
             <dt class="col-sm-3">Last Name</dt>
@@ -35,11 +57,11 @@
             <dt class="col-sm-3">Gender</dt>
             <dd class="col-sm-9">@Model.user.Gender</dd>
         </dl>
-        <button class="btn btn-primary" id="editProfileBtn">Edit Profile</button>
+        <button class="profile-info" id="editProfileBtn">Edit Profile</button>
     </div>
     <div class="profile-info" id="editProfileForm" style="display: none;">
         <h2>Edit Profile</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="edit-profile-form">
             <div class="form-group">
                 <label asp-for="updateImage" class="control-label">Profile Picture</label>
                 <input asp-for="updateImage" class="form-control" type="file" id="updateImage" name="updateImage" />
@@ -121,98 +143,3 @@
         this.style.display = 'none';
     });
 </script>
-
-@* <div class="profile">
-    <div class="profile-item">
-        <label>First Name</label>
-        <div>
-            <label asp-for="user.FirstName" class="control-label">First Name</label>
-            <input asp-for="user.FirstName" class="form-control" />
-            <span asp-validation-for="user.FirstName" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div class="profile-item">
-        <label>Last Name</label>
-        <div>
-            <label asp-for="user.LastName" class="control-label">Last Name</label>
-            <input asp-for="user.LastName" class="form-control" />
-            <span asp-validation-for="user.LastName" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div class="profile-item">
-        <label>Gender</label>
-        <div>
-            <label asp-for="user.Gender" class="control-label">Gender</label>
-            <select asp-for="user.Gender" class="form-control">
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-            </select>
-            <span asp-validation-for="user.Gender" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div class="profile-item">
-        <label>Email</label>
-        <div>
-            <label asp-for="user.Email" class="control-label">Email</label>
-            <input type="email" asp-for="user.Email" class="form-control" />
-            <span asp-validation-for="user.Email" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div class="profile-item">
-        <label>Password</label>
-        <div>
-            <label asp-for="user.Password" class="control-label">Password</label>
-            <input type="password" asp-for="user.Password" class="form-control" />
-            <span asp-validation-for="user.Password" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div class="profile-item">
-        <label>Phone</label>
-        <div>
-            <label asp-for="user.PhoneNumber" class="control-label">Phone Number</label>
-            <input asp-for="user.PhoneNumber" class="form-control" />
-            <span asp-validation-for="user.PhoneNumber" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div class="profile-item">
-        <label>Address</label>
-        <div>
-            <label asp-for="user.Address" class="control-label">Address</label>
-            <input asp-for="user.Address" class="form-control" />
-            <span asp-validation-for="user.Address" class="text-danger"></span>
-            <button class="change">Change</button>
-        </div>
-    </div>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="user.UserId" />
-    <div class="form-group">
-        <input type="hidden" asp-for="user.DoctorRank" />
-    </div>
-    <div class="form-group">
-        <input type="hidden" asp-for="user.DoctorCapacity" />
-    </div>
-    <div class="form-group">
-        <input type="hidden" asp-for="user.EmployeeSalary" />
-    </div>
-    <div class="form-group">
-        <input type="hidden" asp-for="user.Role" />
-    </div>
-    <div class="form-group">
-        <input type="hidden" asp-for="user.ActiveStatus" />
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-    </div>
-</div> *@
-
-<footer>
-    <p>&copy; 2024 Pet Clinic. All rights reserved.</p>
-</footer>

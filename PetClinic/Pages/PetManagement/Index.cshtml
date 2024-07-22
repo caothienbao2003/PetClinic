@@ -2,9 +2,16 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PetClinicBussinessObject
 @model PetClinic.Pages.PetManagement.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pet Management View Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Pet List</h1>
@@ -18,9 +25,6 @@
         <p>
             Find by Pet Name:
             <input type="text" name="searchPetName" value="@ViewData["searchPetName"]" />
-
-            Customer:
-            <input type="text" name="searchCustomer" value="@ViewData["searchCustomer"]" />
             
             Pet Type:
             <select name="searchPetType">
@@ -83,8 +87,3 @@
     }
     </tbody>
 </table>
-
-<div>
-    <button>Show Vaccination Records</button>
-    <button>Show Medications Records</button>
-</div>

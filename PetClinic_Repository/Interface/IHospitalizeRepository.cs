@@ -18,5 +18,6 @@ namespace PetClinicRepository.Interface
         public List<HospitalizeLog> GetLogListByHospitalizeId(int hospitalizeId);
         public void AddHospitalizeLog(HospitalizeLog log);
         public void UpdateHospitalizeLog(HospitalizeLog log);
+        public List<Hospitalize> GetHospitalizeByPetId(int petId);
     }
 }

@@ -2,6 +2,14 @@
 @model PetClinic.Pages.Admin.AdminManageStaff.AdminUpdateStaffModel
 @{
 	Layout = null;
+	var userId = HttpContext.Session.GetString("UserId");
+	var role = HttpContext.Session.GetString("Role");
+	var email = HttpContext.Session.GetString("Email");
+
+	if (email != "admin@petclinic.com")
+	{
+		Response.Redirect("/Authentication/Login");
+	}
 }
 
 <!DOCTYPE html>
@@ -13,32 +21,12 @@
 	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
 </head>
 <body class="admin-update-staff">
-	<header class="header">
-		<div class="header-box-container"></div>
-		<div class="header-buttons">
-			<button onclick="location.href='/Admin/AdminProfile'">Profile</button>
-			<button onclick="location.href='/Authentication/Logout'">Logout</button>
-			<button onclick="location.href='/Authentication/Login'">Login</button>
-		</div>
-	</header>
+	@await Html.PartialAsync("_Header", Model)
+
 
 	<div class="container">
-		<aside class="sidebar">
-			<nav>
-				<ul>
-					<li><a href="/Admin/AdminHomePage">Home</a></li>
-					<li><a href="/Admin/AdminManagePet/AdminViewPetList">Pet Management</a></li>
-					<li><a href="/Admin/AdminManageStaff/AdminViewStaffList">Staff Management</a></li>
-					<li><a href="/Admin/AdminManageDoctor/DoctorManagement">Doctor Management</a></li>
-					<li><a href="/Admin/AdminManageCustomer/CustomerManagement">Customer Management</a></li>
-					<li><a href="/Admin/AdminManageBooking/BookingManagement">Booking Management</a></li>
-					<li><a href="/Admin/AdminManageSchedule/ScheduleManagement">Schedule Management</a></li>
-					<li><a href="/Admin/AdminManageService/AdminViewServiceList">Service Management</a></li>
-					<li><a href="/Admin/AdminManageCage/CageManagement">Cage Management</a></li>
-					<li><a href="/Admin/AdminManageMedicine/MedicineManagement">Medicine Management</a></li>
-				</ul>
-			</nav>
-		</aside>
+		<@await Html.PartialAsync("_Sidebar")
+
 
 		<main class="main-content">
 			<div class="profile-container">
@@ -165,10 +153,8 @@
 		</main>
 	</div>
 
-	<footer>
-		<p>&copy; 2024 Pet Clinic. All rights reserved.</p>
-		<p>1234 Clinic Address, HCM, Viet Nam</p>
-	</footer>
+	@await Html.PartialAsync("_Footer")
+
 
 	<script>
 		var services = @Html.Raw(Json.Serialize(Model.User));

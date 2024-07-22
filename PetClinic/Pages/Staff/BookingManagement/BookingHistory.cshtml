@@ -1,0 +1,126 @@
+﻿@page
+@using PetClinicBussinessObject
+@model PetClinic.Pages.Staff.BookingManagement.BookingHistoryModel
+
+@{
+    ViewData["Title"] = "BookingHistory";
+}
+
+<h1>BookingHistory</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form method="post">
+    <label>Start Date: </label>
+    </><input type="date" asp-for="StartDate" />
+    <label>End Date: </label>
+    <input type="date" asp-for="EndDate" />
+
+    <div>
+        <label>Payment Status:</label>
+        <select asp-for="PaymentStatus">
+            <option value="">--Select--</option>
+            @foreach (var status in Enum.GetValues(typeof(BookingPaymentStatus)))
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label>Booking Status:</label>
+        <select asp-for="BookingStatus">
+            <option value="">--Select--</option>
+            @foreach (var status in Enum.GetValues(typeof(BookingStatus)))
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label>Shift:</label>
+        <select asp-for="ShiftId">
+            <option value="">--Select--</option>
+            @foreach (var shift in Model.ShiftList)
+            {
+                <option value="@shift.ShiftId">@shift.StartTime - @shift.EndTime</option>
+            }
+        </select>
+    </div>
+
+    <input type="text" asp-for="DoctorName" placeholder="Doctor Name" />
+    <input type="text" asp-for="CustomerName" placeholder="Customer Name" />
+    <input type="text" asp-for="PetName" placeholder="Pet Name" />
+    <button type="submit" asp-page-handler="Search">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Customer name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
+            </th>
+            <th>
+                Doctor name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Pet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Service)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BookingList)
+        {
+            <tr>
+                <td>
+                    @item.Pet.Customer.FirstName @item.Pet.Customer.LastName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingAt)
+                </td>
+                <td>
+                    @((BookingPaymentStatus)item.PaymentStatus)
+                </td>
+                <td>
+                    @((BookingStatus)item.BookingStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pet.PetId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
+                    <a asp-page="./BookingDetail" asp-route-id="@item.BookingId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.BookingId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

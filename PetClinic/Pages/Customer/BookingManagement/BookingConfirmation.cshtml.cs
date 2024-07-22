@@ -93,12 +93,6 @@ namespace PetClinic.Pages.Customer.BookingManagement
                 schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId).First();
             }
 
-            //int noOfOccupation = (int) schedule.NoOfOccupation;
-            //noOfOccupation++;
-            //schedule.NoOfOccupation = noOfOccupation;
-
-            //scheduleService.UpdateSchedule(schedule);
-
             Booking newBooking = new Booking
             {
                 PetId = SelectedPetId,
@@ -111,6 +105,8 @@ namespace PetClinic.Pages.Customer.BookingManagement
             };
 
             bookingService.AddBooking(newBooking);
+
+            TempData["BookingId"] = newBooking.BookingId;
 
             Response.Redirect("/Customer/BookingManagement/PaymentInfo");
         }

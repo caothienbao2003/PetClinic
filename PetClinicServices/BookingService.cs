@@ -28,5 +28,55 @@ namespace PetClinicServices
         public List<Booking> GetBookingListByPetId(int petId) => bookingRepository.GetBookingListByPetId(petId);
         public List<Booking> GetBookingListByUserId(int userId) => bookingRepository.GetBookingByUserId(userId);
         public void UpdateBooking(Booking booking) => bookingRepository.Update(booking);
+        public Booking GetBookingList(int petId, int scheduleId) => bookingRepository.GetBooking(petId, scheduleId);
+        public List<Booking> SearchBy(DateTime? startDate, DateTime? endDate, int? paymentStatus, int? bookingStatus, int? shiftId, string doctorName, string customerName, string petName)
+        {
+            var bookings = bookingRepository.GetAll().AsQueryable();
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                bookings = bookings.Where(b => b.Schedule.Date >= startDate.Value.Date && b.Schedule.Date <= endDate.Value.Date);
+            }
+            else if (startDate.HasValue)
+            {
+                bookings = bookings.Where(b => b.Schedule.Date >= startDate.Value.Date);
+            }
+            else if (endDate.HasValue)
+            {
+                bookings = bookings.Where(b => b.Schedule.Date <= endDate.Value.Date);
+            }
+
+            if (paymentStatus.HasValue)
+            {
+                bookings = bookings.Where(b => b.PaymentStatus == paymentStatus);
+            }
+
+            if (bookingStatus.HasValue)
+            {
+                bookings = bookings.Where(b => b.BookingStatus == bookingStatus);
+            }
+
+            if (shiftId.HasValue)
+            {
+                bookings = bookings.Where(b => b.Schedule.ShiftId == shiftId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(doctorName))
+            {
+                bookings = bookings.Where(b => b.Doctor.FirstName.Contains(doctorName) || b.Doctor.LastName.Contains(doctorName));
+            }
+
+            if (!string.IsNullOrEmpty(customerName))
+            {
+                bookings = bookings.Where(b => b.Pet.Customer.FirstName.Contains(customerName) || b.Pet.Customer.LastName.Contains(customerName));
+            }
+
+            if (!string.IsNullOrEmpty(petName))
+            {
+                bookings = bookings.Where(b => b.Pet.PetName.Contains(petName));
+            }
+
+            return bookings.ToList();
+        }
     }
 }

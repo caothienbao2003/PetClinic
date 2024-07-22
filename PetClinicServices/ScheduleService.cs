@@ -28,5 +28,6 @@ namespace PetClinicServices
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId) => scheduleRepository.GetAvailableScheduleList(date, shiftId, doctorId);
         public List<Schedule> GetScheduleList(DateTime date, int shiftId) => scheduleRepository.GetScheduleList(date, shiftId);
         public void UpdateSchedule(Schedule schedule) => scheduleRepository.UpdateSchedule(schedule);
+        public List<Schedule> GetByEmployeeIdBetweenDate(int employeeId, DateTime startDate, DateTime endDate)=> scheduleRepository.GetByEmployeeIdBetweenDate(employeeId, startDate, endDate);
     }
 }

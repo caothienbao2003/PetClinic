@@ -1,8 +1,15 @@
 ﻿@page
 @model PetClinic.Pages.VaccinationManagement.EditModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Vaccination Management Edit Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null)
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Edit</h1>

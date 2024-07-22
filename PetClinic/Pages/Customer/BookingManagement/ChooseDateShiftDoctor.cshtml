@@ -1,7 +1,17 @@
 ﻿@page
 @model PetClinic.Pages.BookingManagement.ChooseDateShiftDoctorModel
 @{
-    ViewData["Title"] = "Choose Date, Shift, and Doctor";
+    Layout = null;
+    ViewData["Title"] = "Choose Date Shift Doctor Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <head>
@@ -94,7 +104,7 @@
                         <div>
                             <button type="submit" name="shiftId" value="@shift.ShiftId" class="shift @(shift.IsAvailable ? "" : "unavailable") @(shift.IsSelected ? "selected" : "")" @(shift.IsAvailable ? "" : "disabled")>
                                 @shift.ShiftDisplay
-                                <br/>
+                                <br />
                                 @shift.OccupationDisplay
                             </button>
                         </div>
@@ -144,6 +154,13 @@
 
                     <input type="submit" value="Next" class="btn btn-primary" />
                 </form>
+            </div>
+        }
+
+        @if (Model.Error != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.Error
             </div>
         }
     </div>

@@ -1,8 +1,15 @@
 ﻿@page
 @model PetClinic.Pages.VaccinationManagement.DetailsModel
-
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Vaccination Management Details Page";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null)
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Details</h1>

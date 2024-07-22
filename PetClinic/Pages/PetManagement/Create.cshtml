@@ -1,8 +1,15 @@
 ﻿@page
 @model PetClinic.Pages.PetManagement.CreateModel
-
 @{
     ViewData["Title"] = "Create" + $"{Model.userId}";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>Create</h1>
@@ -29,8 +36,9 @@
                 <span asp-validation-for="Pet.PetAge" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input asp-route-PetId="@Model.PetId" type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <h6>You will be redirected to provide the pet's health information.</h6>
         </form>
     </div>
 </div>
