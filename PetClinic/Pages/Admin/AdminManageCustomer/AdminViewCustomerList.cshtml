@@ -1,4 +1,80 @@
 ﻿@page
 @model PetClinic.Pages.Admin.AdminManageCustomer.AdminViewCustomerListModel
 @{
+	Layout = null;
+	var userId = HttpContext.Session.GetString("UserId");
+	var role = HttpContext.Session.GetString("Role");
+	var email = HttpContext.Session.GetString("Email");
+
+	if (email != "admin@petclinic.com")
+	{
+		Response.Redirect("/Authentication/Login");
+	}
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Customer Management</title>
+	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body>
+	@await Html.PartialAsync("_Header", Model)
+
+
+	<div class="container">
+		<@await Html.PartialAsync("_Sidebar")
+
+		<main class="main-content">
+			<h1>Customer Management</h1>
+
+			<div class="service-management">
+				<table class="service-table">
+					<thead>
+						<tr>
+							<th>Customer ID</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Address</th>
+							<th>Social Number</th>
+							<th>Gender</th>
+							<th>Status</th>
+							<th>Update</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var customer in Model.Customers)
+						{
+							<tr>
+								<td>@customer.UserId</td>
+								<td>@customer.FirstName</td>
+								<td>@customer.LastName</td>
+								<td>@customer.Email</td>
+								<td>@customer.PhoneNumber</td>
+								<td>@customer.Address</td>
+								<td>@customer.SocialNumber</td>
+								<td>@customer.Gender</td>
+								<td>@(customer.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+								<td>
+									<a class="btn-update" asp-page="AdminUpdateCustomer" asp-route-customerId="@customer.UserId">Update</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</main>
+	</div>
+	<!-- Display error messages -->
+	<div class="form-group">
+		<div asp-validation-summary="All" class="text-danger"></div>
+	</div>
+
+
+	@await Html.PartialAsync("_Footer")
+</body>
+</html>
