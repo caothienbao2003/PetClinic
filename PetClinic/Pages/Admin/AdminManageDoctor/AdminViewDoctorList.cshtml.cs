@@ -29,6 +29,8 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 		[BindProperty]
 		public string newPassword { get; set; } = null!;
 		[BindProperty]
+		public string newDoctorRank { get; set; } = null!;
+		[BindProperty]
 		public string? newGender { get; set; } = null!;
 		[BindProperty]
 		public string newSocialNumber { get; set; } = null!;
@@ -81,6 +83,7 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 					Password = DAOUtilities.Instance.HashPassword(newPassword),
 					Gender = newGender,
 					SocialNumber = newSocialNumber,
+					DoctorRank = newDoctorRank,
 					Role = 2, // 2 is the role for a doctor
 					ActiveStatus = 1
 				};
@@ -92,7 +95,7 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 			catch (Exception ex)
 			{
 				InitializePage();
-				ModelState.AddModelError(string.Empty, "Error occurred while creating staff.");
+				ModelState.AddModelError(string.Empty, "Error occurred while creating doctor.");
 				return;
 			}
 		}

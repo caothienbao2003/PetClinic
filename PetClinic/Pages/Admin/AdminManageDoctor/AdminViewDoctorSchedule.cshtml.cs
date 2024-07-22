@@ -8,6 +8,13 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 {
     public class AdminViewDoctorScheduleModel : PageModel
     {
+        [BindProperty]
+        public decimal revenue { get; set; }
+        [BindProperty]
+        public int totalCustomers { get; set; }
+        [BindProperty]
+        public int totalBookings { get; set; }
+
         private readonly IScheduleService scheduleService;
         private readonly IShiftService shiftService;
         public AdminViewDoctorScheduleModel(IScheduleService scheduleService, IShiftService shiftService)

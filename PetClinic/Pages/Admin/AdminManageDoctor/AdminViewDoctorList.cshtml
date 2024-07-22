@@ -80,7 +80,7 @@
 					<span class="close" onclick="closeModal('createUserModal')">&times;</span>
 					<h2>Add New User</h2>
 					<div class="modal-body">
-						<form id="createServiceForm" method="post" asp-page-handler="CreateUser">
+						<form id="createUserForm" method="post" asp-page-handler="CreateUser">
 							<label for="FirstName">First Name:</label>
 							<input type="text" id="FirstName" asp-for="newFirstName" class="form-control">
 							<span asp-validation-for="newFirstName" class="text-danger"></span>
@@ -104,6 +104,10 @@
 							<label for="Password">Password:</label>
 							<input type="text" id="Password" asp-for="newPassword" class="form-control">
 							<span asp-validation-for="newPassword" class="text-danger"></span>
+
+							<label for="DoctorRank">Doctor Rank:</label>
+							<input type="text" id="DoctorRank" asp-for="newDoctorRank" class="form-control">
+							<span asp-validation-for="newDoctorRank" class="text-danger"></span>
 
 							<label>Gender</label>
 							<select asp-for="newGender" class="form-control">
@@ -137,11 +141,6 @@
 	</div>
 
 	@await Html.PartialAsync("_Footer")
-
-
-	<script>
-		var services = @Html.Raw(Json.Serialize(Model.User));
-	</script>
 
 	<script src="~/js/adminManageUser.js"></script>
 </body>

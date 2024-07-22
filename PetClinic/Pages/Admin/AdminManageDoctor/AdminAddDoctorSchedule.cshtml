@@ -1,4 +1,14 @@
 ﻿@page
 @model PetClinic.Pages.Admin.AdminManageDoctor.AdminAddDoctorScheduleModel
 @{
+	ViewData["Title"] = "Admin Manage Doctor";
+	Layout = null;
+	var userId = HttpContext.Session.GetString("UserId");
+	var role = HttpContext.Session.GetString("Role");
+	var email = HttpContext.Session.GetString("Email");
+
+	if (email != "admin@petclinic.com")
+	{
+		Response.Redirect("/Authentication/Login");
+	}
 }
