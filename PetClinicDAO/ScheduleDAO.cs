@@ -1,4 +1,5 @@
-﻿using PetClinicBussinessObject;
+﻿using Microsoft.EntityFrameworkCore;
+using PetClinicBussinessObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,30 +47,41 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public List<Schedule> GetScheduleList(DateTime date, int shiftId)
+        public List<Schedule> GetDoctorScheduleList(DateTime date, int shiftId)
         {
             return context.Schedules
-                .Where(s => s.Date == date && s.ShiftId == shiftId)
+                .Include(s => s.Employee)
+                .Where(s => s.Date == date && s.Employee.Role == (int)UserRole.Doctor && s.ShiftId == shiftId)
                 .ToList();
         }
 
-        public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId)
+        public List<Schedule> GetAvailableDoctorScheduleList(DateTime date, int shiftId)
         {
             return context.Schedules
-                .Where(s => s.Date == date && s.ShiftId == shiftId && s.ScheduleStatus == (int)ScheduleStatus.Available)
+                .Include(s => s.Employee)
+                .Where(s => s.Date == date && s.ShiftId == shiftId && s.Employee.Role == (int)UserRole.Doctor && s.ScheduleStatus == (int)ScheduleStatus.Available)
                 .ToList();
         }
 
-        public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId)
+        public List<Schedule> GetAvailableDoctorScheduleList(DateTime date, int shiftId, int doctorId)
         {
             return context.Schedules
-                .Where(s => s.Date == date && s.ShiftId == shiftId && s.EmployeeId == doctorId && s.ScheduleStatus == (int)ScheduleStatus.Available)
+                .Include(s => s.Employee)
+                .Where(s => s.Date == date && s.ShiftId == shiftId && s.EmployeeId == doctorId && s.Employee.Role == (int)UserRole.Doctor && s.ScheduleStatus == (int)ScheduleStatus.Available)
                 .ToList();
         }
 
         public Schedule GetOneScheduleByDate(DateTime date)
         {
-            return context.Schedules.FirstOrDefault(s=>s.Date == date);
+            return context.Schedules.FirstOrDefault(s => s.Date == date);
+        }
+
+        public List<Schedule> GetByEmployeeIdBetweenDate(int employeeId, DateTime startDate, DateTime endDate)
+        {
+            return context.Schedules
+                .Include(s => s.Employee)
+                .Where(s => s.EmployeeId == employeeId && s.Date >= startDate && s.Date <= endDate)
+                .ToList();
         }
     }
 }

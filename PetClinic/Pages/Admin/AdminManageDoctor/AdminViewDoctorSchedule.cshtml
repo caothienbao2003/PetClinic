@@ -1,16 +1,6 @@
 ﻿@page
-@using PetClinicBussinessObject
-@model PetClinic.Pages.Admin.AdminManageSchedule.AdminViewScheduleModel
+@model PetClinic.Pages.Admin.AdminManageDoctor.AdminViewDoctorScheduleModel
 @{
-	Layout = null;
-    var userId = HttpContext.Session.GetString("UserId");
-    var role = HttpContext.Session.GetString("Role");
-    var email = HttpContext.Session.GetString("Email");
-
-    if (email != "admin@petclinic.com")
-    {
-        Response.Redirect("/Authentication/Login");
-    }
 }
 
 <head>
@@ -22,26 +12,26 @@
 
 </head>
 <body>
-    @await Html.PartialAsync("_Header", Model)
-
     <div class="container">
-        <@await Html.PartialAsync("_Sidebar")
-
         <main class="main-content">
 
             <div class="schedule-header">
                 <h1>Schedule</h1>
 
                 <div class="date-range">
-                    <label>Start with</label>
-                    <input type="date" value="2022-03-05">
-                    <label>End with</label>
-                    <input type="date" value="2022-12-05">
+                    <div> Start Date: @Model.MondayDate.Date </div>
+                    <div> End Date: @Model.SundayDate.Date </div>
                 </div>
                 <button class="reschedule">+ Reschedule</button>
             </div>
 
-            
+            <form method="post" asp-page-handler="ChangeWeek">
+                <button type="submit" name="offset" value="-1">Prev</button>
+                <button type="submit" name="offset" value="1">Next</button>
+                <input type="hidden" asp-for="SelectedDate" value="@Model.SelectedDate" />
+                <input type="hidden" asp-for="DoctorId" value="@Model.DoctorId" />
+            </form>
+
             <table class="schedule-table">
                 <thead>
                     <tr>
@@ -55,6 +45,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach (var shift in Model.ShiftList)
+                    {
+                        <tr>
+                        </tr>
+                    }
+
                     <tr>
                         <td>7:00 - 9:00</td>
                         <td><div class="shift">DR. OLIVIA FEATHERSTONE</div><div class="shift">DR. MARY JOHNSON</div></td>
@@ -96,6 +92,4 @@
 
         </main>
     </div>
-    @await Html.PartialAsync("_Footer")
-
 </body>
