@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PetClinic.Custom_Model;
 using PetClinicBussinessObject;
 using PetClinicServices.Interface;
 
@@ -28,6 +29,8 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         public List<Schedule> ScheduleList { get; set; }
         [BindProperty]
         public int DoctorId { get; set; }
+        [BindProperty]
+        public ScheduleBlockModel BlockModel { get; set; }
 
         public void OnGet(int doctorid)
         {
@@ -77,7 +80,10 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         {
             foreach(var shift in ShiftList)
             {
-                
+                for(int i = 0; i <7; i++)
+                {
+                    
+                }
             }
         }
     }
