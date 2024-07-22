@@ -68,9 +68,9 @@ namespace PetClinic.Pages.Customer.PetManagement
             Pet.ActiveStatus = 1;
             petService.AddPet(Pet);
 
-            newPetId = Pet.PetId;
+            var newPetId = Pet.PetId;
 
-            return RedirectToPage("/Customer/PetHealthManagement/Create", new { id = newPetId });
+            return RedirectToPage("/Customer/PetHealthManagement/Create", new { petId = newPetId });
         }
     }
 }

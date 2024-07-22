@@ -44,7 +44,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         public PetHealth? PetHealthInfo { get; set; } = default!;
 
         [BindProperty]
-        public List<VaccinationRecord> records { get; set; } = new List<VaccinationRecord>();
+        public List<VaccinationRecord>? records { get; set; } = default!;
 
         [BindProperty(SupportsGet = true)]
         public int MecId { get; set; }
@@ -137,7 +137,8 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             record.Verification = !record.Verification;  // Toggle the status
             vaccinationRecordService.UpdateVaccinationRecord(record);
 
-            return RedirectToPage(new { bookid = bookId });
+            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(bookId);
+            return new JsonResult(updatedRecords);
         }
     }
 }

@@ -60,16 +60,12 @@
 
 <h1>Create</h1>
 
-<h4>PetHealth</h4>
+<h4>Pet Health</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PetHealth.PetId" class="control-label"></label>
-                <input type="hidden" asp-for="PetHealth.PetId" value="@Model.newPetId" />
-            </div>
             <div class="form-group">
                 <label asp-for="PetHealth.OverallHealth" class="control-label"></label>
                 <input asp-for="PetHealth.OverallHealth" class="form-control" />
@@ -89,6 +85,9 @@
                 <label asp-for="PetHealth.WeightMeasurementDate" class="control-label"></label>
                 <input asp-for="PetHealth.WeightMeasurementDate" class="form-control" type="date"/>
                 <span asp-validation-for="PetHealth.WeightMeasurementDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PetHealth.PetId" value="@Model.newPetId" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
