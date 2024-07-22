@@ -1,0 +1,61 @@
+﻿@page
+@model PetClinic.Pages.Admin.AdminManageCustomer.AdminUpdateCustomerModel
+@{
+    Layout = null;
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Service</title>
+    <link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body>
+    @await Html.PartialAsync("_Header", Model)
+
+    <div class="container">
+        <@await Html.PartialAsync("_Sidebar")
+
+
+        <main class="main-content">
+            <h1>Update Customer</h1>
+            <form id="updateCustomerForm" method="post" class="form">
+                <input type="hidden" asp-for="updateCustomerId" />
+                <div class="form-group">
+                    <label for="updateActiveStatus">Status:</label>
+                    <select id="updateActiveStatus" asp-for="updateActiveStatus" class="form-control">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-update">Update</button>
+            </form>
+
+            <div class="form-group">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+        </main>
+    </div>
+
+    @await Html.PartialAsync("_Footer")
+
+
+    <script>
+        document.getElementById('updateServiceForm').onsubmit = function () {
+            if (!confirm('Are you sure you want to update this service?')) {
+                return false;
+            }
+        };
+    </script>
+</body>
+</html>
