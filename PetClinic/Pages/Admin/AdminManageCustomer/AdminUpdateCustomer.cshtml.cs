@@ -36,22 +36,26 @@ namespace PetClinic.Pages.Admin.AdminManageCustomer
             if (existingCustomer != null)
             {
                 updateActiveStatus = (int)existingCustomer.ActiveStatus;
+                updateCustomerId = existingCustomer.UserId;
             }
         }
 
-        public IActionResult OnPost()
+        public void OnPostUpdate()
         {
-
+            Console.WriteLine(updateActiveStatus);
+            User updateCustomer = userService.GetUserById(updateCustomerId);
+            Console.WriteLine("User ID: " + updateCustomer.UserId);
             if (ModelState.IsValid)
             {
-                existingCustomer.ActiveStatus = updateActiveStatus;
-                userService.UpdateUser(existingCustomer);
-                return RedirectToPage("/Admin/AdminManageCustomer/AdminViewCustomerList");
+                Console.WriteLine(updateActiveStatus);
+                updateCustomer.ActiveStatus = updateActiveStatus;
+                userService.UpdateUser(updateCustomer);
+                Response.Redirect("/Admin/AdminManageCustomer/AdminViewCustomerList");
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Error occurred while updating customer active status.");
-                return Page();
+                return;
             }
         }
     }

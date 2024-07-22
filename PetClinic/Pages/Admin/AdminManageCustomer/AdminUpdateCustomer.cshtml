@@ -38,7 +38,7 @@
                         <option value="0">Inactive</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-update">Update</button>
+                <button type="submit" class="btn btn-update" asp-page-handler="Update">Update</button>
             </form>
 
             <div class="form-group">
@@ -51,7 +51,7 @@
 
 
     <script>
-        document.getElementById('updateServiceForm').onsubmit = function () {
+        document.getElementById('updateCustomerForm').onsubmit = function () {
             if (!confirm('Are you sure you want to update this service?')) {
                 return false;
             }
