@@ -116,48 +116,48 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             return RedirectToPage(null, new { bookid = BookId, IsMedicalRecordCreated = true, mecId = MedicalRecord.MedicalRecordId });
         }
 
-        public IActionResult OnPostAddVaccination()
-        {
-            if (NewVaccinationRecord != null)
-            {
-                NewVaccinationRecord.Verification = NewVaccinationRecord.Verification;
+        //public IActionResult OnPostAddVaccination()
+        //{
+        //    if (NewVaccinationRecord != null)
+        //    {
+        //        NewVaccinationRecord.Verification = NewVaccinationRecord.Verification;
 
-                vaccinationRecordService.AddVaccinationRecord(NewVaccinationRecord);
-            }
+        //        vaccinationRecordService.AddVaccinationRecord(NewVaccinationRecord);
+        //    }
 
-            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(NewVaccinationRecord!.PetHealthId!.Value);
-            return new JsonResult(updatedRecords);
-        }
+        //    var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(NewVaccinationRecord!.PetHealthId!.Value);
+        //    return new JsonResult(updatedRecords);
+        //}
 
-        public IActionResult OnGetVaccinationRecord(int vaccinationRecordId)
-        {
-            var record = vaccinationRecordService.GetVaccinationRecordById(vaccinationRecordId);
-            if (record == null)
-            {
-                return NotFound();
-            }
-            return new JsonResult(record);
-        }
+        //public IActionResult OnGetVaccinationRecord(int vaccinationRecordId)
+        //{
+        //    var record = vaccinationRecordService.GetVaccinationRecordById(vaccinationRecordId);
+        //    if (record == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return new JsonResult(record);
+        //}
 
-        public IActionResult OnPostEditVaccination()
-        {
-            var record = vaccinationRecordService.GetVaccinationRecordById(EditVaccinationRecord.VaccinationRecordId);
-            if (record == null)
-            {
-                return NotFound();
-            }
+        //public IActionResult OnPostEditVaccination()
+        //{
+        //    var record = vaccinationRecordService.GetVaccinationRecordById(EditVaccinationRecord.VaccinationRecordId);
+        //    if (record == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            record.VaccinationDate = EditVaccinationRecord.VaccinationDate;
-            record.NextDueDate = EditVaccinationRecord.NextDueDate;
-            record.VaccinatedAt = EditVaccinationRecord.VaccinatedAt;
-            record.MedicineId = EditVaccinationRecord.MedicineId;
-            record.Verification = EditVaccinationRecord.Verification;
+        //    record.VaccinationDate = EditVaccinationRecord.VaccinationDate;
+        //    record.NextDueDate = EditVaccinationRecord.NextDueDate;
+        //    record.VaccinatedAt = EditVaccinationRecord.VaccinatedAt;
+        //    record.MedicineId = EditVaccinationRecord.MedicineId;
+        //    record.Verification = EditVaccinationRecord.Verification;
 
-            vaccinationRecordService.UpdateVaccinationRecord(record);
+        //    vaccinationRecordService.UpdateVaccinationRecord(record);
 
-            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(EditVaccinationRecord.PetHealthId.Value);
-            return new JsonResult(updatedRecords);
-        }
+        //    var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(EditVaccinationRecord.PetHealthId.Value);
+        //    return new JsonResult(updatedRecords);
+        //}
 
     }
 }
