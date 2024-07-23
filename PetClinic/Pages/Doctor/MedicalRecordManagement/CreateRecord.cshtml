@@ -71,11 +71,11 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
 
-            <!-- Vaccination Record -->
+            <!-- Vaccination Record List -->
             <h3>Vaccination Record</h3>
             @if (Model.PetHealthInfo != null && Model.records != null && Model.records.Count > 0)
             {
-                <table class="table">
+                <table class="table" id="vaccinationTable">
                     <thead>
                         <tr>
                             <th>Vaccination Record ID</th>
@@ -255,6 +255,7 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log('Updated Records:', data); // Log the returned data
                     updateVaccinationTable(data);
                     $('#addVaccinationModal').modal('hide');
                     document.getElementById('addVaccinationForm').reset();
@@ -266,7 +267,7 @@
         }
 
         function updateVaccinationTable(records) {
-            const tableBody = document.querySelector('table tbody');
+            const tableBody = document.querySelector('#vaccinationTable tbody');
             tableBody.innerHTML = '';
 
             records.forEach(record => {
@@ -276,24 +277,19 @@
                     <td>${new Date(record.vaccinationDate).toLocaleDateString()}</td>
                     <td>${new Date(record.nextDueDate).toLocaleDateString()}</td>
                     <td>${record.vaccinatedAt}</td>
-                    <td>${record.verification}</td>
+                    <td>${record.verification ? 'Verified' : 'Not Verified'}</td>
                     <td>${record.medicine.medicineName}</td>
                     <td>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editVaccinationModal" onclick="loadVaccinationRecord(${record.vaccinationRecordId})">
-                            Details
-                        </button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editVaccinationModal" onclick="loadVaccinationRecord(${record.vaccinationRecordId})">Details</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
             });
-
-            // Update the "No vaccination records available" message if it exists
-            const noRecordsMessage = document.querySelector('p:contains("No vaccination records available.")');
-            if (noRecordsMessage) {
-                noRecordsMessage.style.display = records.length === 0 ? 'block' : 'none';
-            }
         }
+
+
     </script>
 }
+
 
 

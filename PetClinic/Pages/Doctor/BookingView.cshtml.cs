@@ -20,7 +20,7 @@ namespace PetClinic.Pages.Doctor
         [BindProperty]
         public List<Booking> BookingList { get; set; } = default!;
         [BindProperty]
-        public User CurrentUser { get; set; } = default!;
+        public User user { get; set; } = default!;
 
         public IActionResult OnGet()
         {
@@ -30,7 +30,7 @@ namespace PetClinic.Pages.Doctor
             if (userIdString != null)
             {
                 int userId = int.Parse(userIdString);
-                CurrentUser = userService.GetUserById(userId);
+                user = userService.GetUserById(userId);
 
 
                 BookingList = bookingService.GetAll()
@@ -38,7 +38,6 @@ namespace PetClinic.Pages.Doctor
                         .OrderBy(b => (int)b.BookingStatus)
                         .ToList();
             }
-
 
             return Page();
         }

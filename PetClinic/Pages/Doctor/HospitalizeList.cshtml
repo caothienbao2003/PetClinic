@@ -1,11 +1,38 @@
 ﻿@page
 @using PetClinicBussinessObject
-@model PetClinic.Pages.Doctor.CageManagement.HospitalizeListModel
+@model HospitalizeListModel
 @{
-    ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
+    ViewData["Title"] = "Hospitalize List";
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
-<h1>History Log</h1>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
+</div>
+
+<header>
+    <h1>History Log</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Doctor/BookingView">Bookings</a>
+    <a asp-page="/Doctor/HospitalizeList">Hospitalization</a>
+    <a asp-page="/Doctor/ScheduleManagement/ViewSchedule">View Schedule</a>
+</nav>
 
 <table class="table">
     <thead>
@@ -26,12 +53,11 @@
                 @Html.DisplayNameFor(model => model.Hospitalizes[0].OutTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hospitalizes[0].Doctor)
+                @Html.DisplayNameFor(model => model.Hospitalizes[0].CageId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Hospitalizes[0].ActiveStatus)
             </th>
-
             <th></th>
         </tr>
     </thead>
@@ -55,7 +81,7 @@
                     @Html.DisplayFor(modelItem => item.OutTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Doctor!.FirstName)
+                    @Html.DisplayFor(modelItem => item.CageId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ActiveStatus)
@@ -130,5 +156,5 @@
     </tbody>
 </table>
 <div>
-    <a asp-page="Index">Back to Cage List</a>
+    <a asp-page="DoctorHomePage">Back to Home</a>
 </div>

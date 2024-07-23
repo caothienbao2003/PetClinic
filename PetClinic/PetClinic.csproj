@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Doctor\CageManagement\" />
     <Folder Include="Pages\Service Management\" />
   </ItemGroup>
 
@@ -39,19 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Pages\Doctor\CageManagement\Create.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Pages\Doctor\CageManagement\CreateHospitalize.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Pages\Doctor\CageManagement\HospitalizeList.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Pages\Doctor\CageManagement\Index.cshtml">
+    <Content Update="Pages\Doctor\HospitalizeList.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

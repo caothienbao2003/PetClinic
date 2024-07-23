@@ -13,6 +13,28 @@
     }
 }
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
+</div>
+
+<header>
+    <h1>History Log</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Doctor/BookingView">Bookings</a>
+    <a asp-page="/Doctor/HospitalizeList">Hospitalization</a>
+    <a asp-page="/Doctor/ScheduleManagement/ViewSchedule">View Schedule</a>
+</nav>
+
 <table class="table">
     <thead>
         <tr>
