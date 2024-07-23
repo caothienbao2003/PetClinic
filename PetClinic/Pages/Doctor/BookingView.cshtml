@@ -1,22 +1,23 @@
 ﻿@page
+@using PetClinicBussinessObject
 @model PetClinic.Pages.Doctor.BookingViewModel
 @{
     ViewData["Title"] = "Booking View Page";
 
-    // var userId = HttpContext.Session.GetString("UserId");
-    // var role = HttpContext.Session.GetString("Role");
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
 
-    // if (userId == null || role != "2")
-    // {
-    //     Response.Redirect("/Authentication/Login");
-    // }
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Pet.Customer.FirstName)
+                @Html.DisplayNameFor(model => model.BookingList[0].Pet.Customer)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].Pet)
@@ -26,9 +27,6 @@
             </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Service)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
@@ -50,20 +48,21 @@
                     @Html.DisplayFor(modelItem => item.BookingAt)
                 </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.Shift.ShiftName)
+                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                    @((BookingStatus)item.BookingStatus)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BookingStatus)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
                     <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> |
                     @*<a asp-page="./Details" asp-route-id="@item.BookingId">Delete</a>*@
                     <a asp-page="/Doctor/MedicalRecordManagement/Index" asp-route-bookid="@item.BookingId">View Medical Records</a> |
                     <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord" asp-route-bookid="@item.BookingId">Create Medical Records</a>
+                    @if (item.BookingStatus == (int)BookingStatus.Pending)
+                    {
+                        
+                    }
+                    
 
                 </td>
             </tr>

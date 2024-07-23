@@ -43,9 +43,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         [BindProperty]
         public PetHealth? PetHealthInfo { get; set; } = default!;
 
-        [BindProperty]
-        public List<VaccinationRecord>? records { get; set; } = default!;
-
         [BindProperty(SupportsGet = true)]
         public int MecId { get; set; }
 
@@ -53,7 +50,13 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         public VaccinationRecord NewVaccinationRecord { get; set; } = new VaccinationRecord();
 
         [BindProperty]
+        public VaccinationRecord EditVaccinationRecord { get; set; }
+
+        [BindProperty]
         public List<Medicine> MedicineList { get; set; } = new List<Medicine>();
+
+        [BindProperty]
+        public List<VaccinationRecord>? records { get; set; } = default!;
 
         public bool IsMedicalRecordCreated { get; set; } = false;
 
@@ -84,7 +87,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                           .Where(s => !undesiredServiceNames.Contains(s.ServiceName!))
                           .ToList();
 
-            ViewData["DoctorId"] = new SelectList(userService.GetAllUsers(), "UserId", "FirstName");
+            //ViewData["DoctorId"] = booking.Doctor.FirstName;
             ViewData["ServiceId"] = new SelectList(filteredService, "ServiceId", "ServiceName");
             ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
 
@@ -126,19 +129,35 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             return new JsonResult(updatedRecords);
         }
 
-        public IActionResult OnPostToggleVerification(int vaccinationRecordId, int bookId)
+        public IActionResult OnGetVaccinationRecord(int vaccinationRecordId)
         {
             var record = vaccinationRecordService.GetVaccinationRecordById(vaccinationRecordId);
             if (record == null)
             {
                 return NotFound();
             }
+            return new JsonResult(record);
+        }
 
-            record.Verification = !record.Verification;  // Toggle the status
+        public IActionResult OnPostEditVaccination()
+        {
+            var record = vaccinationRecordService.GetVaccinationRecordById(EditVaccinationRecord.VaccinationRecordId);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            record.VaccinationDate = EditVaccinationRecord.VaccinationDate;
+            record.NextDueDate = EditVaccinationRecord.NextDueDate;
+            record.VaccinatedAt = EditVaccinationRecord.VaccinatedAt;
+            record.MedicineId = EditVaccinationRecord.MedicineId;
+            record.Verification = EditVaccinationRecord.Verification;
+
             vaccinationRecordService.UpdateVaccinationRecord(record);
 
-            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(bookId);
+            var updatedRecords = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(EditVaccinationRecord.PetHealthId.Value);
             return new JsonResult(updatedRecords);
         }
+
     }
 }

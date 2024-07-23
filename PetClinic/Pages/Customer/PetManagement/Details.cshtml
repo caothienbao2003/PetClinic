@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" value="@Model.PetHealth.Conditions" readonly />
             </div>
             <div class="form-group">
-                <label asp-for="PetHealth.Weight" class="control-label">Weight</label>
+                <label asp-for="PetHealth.Weight" class="control-label">Weight(kg)</label>
                 <input type="text" class="form-control" value="@Model.PetHealth.Weight" readonly />
             </div>
             <div class="form-group">
@@ -80,7 +80,6 @@
                                 <td>@record.VaccinatedAt</td>
                                 <td>@record.Verification</td>
                                 <td>@record.MedicineId</td>
-                                <td>
                             </tr>
                         }
                     </tbody>
@@ -96,7 +95,7 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addVaccinationModal">
             Add Vaccination Record
         </button>
-        <a asp-page="/PetManagement/Index"><button class="btn btn-primary">Back to List</button></a>
+        <a asp-page="./Index"><button class="btn btn-primary">Back to List</button></a>
 
         <!-- Add Vaccination Modal -->
         <div class="modal fade" id="addVaccinationModal" tabindex="-1" role="dialog" aria-labelledby="addVaccinationModalLabel" aria-hidden="true">
