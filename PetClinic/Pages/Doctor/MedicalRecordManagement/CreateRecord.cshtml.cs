@@ -19,7 +19,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         private readonly IServiceService serviceService;
 
         public CreateRecordModel(IMedicalRecordService _medicalRecordService, IBookingService _bookingService,
-            IPetService _petService, IPetHealthService _petHealthService ,IMedicineService _medicineService, IServiceService _serviceService)
+            IPetService _petService, IPetHealthService _petHealthService, IMedicineService _medicineService, IServiceService _serviceService)
         {
             medicalRecordService = _medicalRecordService;
             bookingService = _bookingService;
@@ -59,7 +59,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                 return NotFound();
             }
 
-
             Book = booking;
 
             if (mecId != 0)
@@ -69,7 +68,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             }
 
             PetHealthInfo = petService.GetPetHealthByPetId(booking.PetId);
-            if(petHealthId != 0)
+            if (petHealthId != 0)
             {
                 PetHealthInfo = petHealthService.GetPetHealthById(petHealthId);
             }
@@ -79,7 +78,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                           .Where(s => !undesiredServiceNames.Contains(s.ServiceName!))
                           .ToList();
 
-            //ViewData["DoctorId"] = booking.Doctor.FirstName;
             ViewData["ServiceId"] = new SelectList(filteredService, "ServiceId", "ServiceName");
             ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
 
@@ -110,17 +108,29 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         {
             var existingPetHealth = petHealthService.GetPetHealthById(PetHealthInfo.PetHealthId);
 
-            existingPetHealth.Conditions = PetHealthInfo.Conditions;
-            existingPetHealth.Weight = PetHealthInfo.Weight;
-            existingPetHealth.WeightMeasurementDate = PetHealthInfo.WeightMeasurementDate;
-            existingPetHealth.OverallHealth = PetHealthInfo.OverallHealth;
+            if (existingPetHealth == null)
+            {
+                existingPetHealth = new PetHealth
+                {
+                    PetId = PetHealthInfo.PetId
+                };
+            }
+
+            existingPetHealth.Conditions = PetHealthInfo.Conditions ?? existingPetHealth.Conditions;
+            existingPetHealth.Weight = PetHealthInfo.Weight ?? existingPetHealth.Weight;
+            existingPetHealth.WeightMeasurementDate = PetHealthInfo.WeightMeasurementDate ?? existingPetHealth.WeightMeasurementDate;
+            existingPetHealth.OverallHealth = PetHealthInfo.OverallHealth ?? existingPetHealth.OverallHealth;
+
 
             petHealthService.UpdatePetHealth(existingPetHealth);
 
-            int? mecId = MedicalRecord?.MedicalRecordId > 0 ? MedicalRecord.MedicalRecordId : (int?)null;
+            if (MedicalRecord.MedicalRecordId > 0)
+            {
+                MedicalRecord = medicalRecordService.GetMedicalRecordById(MedicalRecord.MedicalRecordId);
+                IsMedicalRecordCreated = true;
+            }
 
-            return RedirectToPage(new { bookid = BookId, IsMedicalRecordCreated, mecId, petHealthId = PetHealthInfo.PetHealthId});
+            return RedirectToPage(new { bookid = BookId, IsMedicalRecordCreated, mecId = MedicalRecord.MedicalRecordId, petHealthId = PetHealthInfo.PetHealthId });
         }
-
     }
 }

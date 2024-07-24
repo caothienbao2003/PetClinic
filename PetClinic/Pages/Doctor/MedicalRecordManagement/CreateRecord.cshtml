@@ -51,6 +51,7 @@
                 <input type="text" class="form-control" asp-for="PetHealthInfo.OverallHealth" />
             </div>
             <div class="form-group">
+                <input type="hidden" asp-for="MedicalRecord.MedicalRecordId" />
                 <input type="hidden" asp-for="BookId" value="@Model.BookId" />
                 <input type="hidden" asp-for="PetHealthInfo.PetHealthId" />
                 <input type="submit" value="Update Pet Health" asp-page-handler="UpdatePetHealth" class="btn btn-secondary" />
