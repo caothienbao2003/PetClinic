@@ -63,7 +63,7 @@ namespace PetClinic.Pages.BookingManagement
         public int? SelectedDoctorId { get; set; }
 
         [BindProperty]
-        public string? Error {  get; set; }
+        public string? Error { get; set; }
 
 
         public void OnGet()
@@ -265,19 +265,9 @@ namespace PetClinic.Pages.BookingManagement
 
             List<Schedule> scheduleList = null;
 
-            if (SelectedDoctorId == null)
+            if (SelectedDate != null)
             {
-                if (SelectedDate != null)
-                {
-                    scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId).ToList();
-                }
-            }
-            else
-            {
-                if (SelectedDate != null)
-                {
-                    scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId, (int)SelectedDoctorId).ToList();
-                }
+                scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId).ToList();
             }
 
             Booking checkExistedBooking;
@@ -287,7 +277,7 @@ namespace PetClinic.Pages.BookingManagement
                 foreach (Schedule s in scheduleList)
                 {
                     checkExistedBooking = bookingService.GetBookingList(SelectedPetId, s.ScheduleId);
-                    if(checkExistedBooking != null)
+                    if (checkExistedBooking != null)
                     {
                         LoadCalendar();
                         LoadShift();

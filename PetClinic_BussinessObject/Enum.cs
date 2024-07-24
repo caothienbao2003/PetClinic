@@ -60,6 +60,7 @@ namespace PetClinicBussinessObject
     public enum ScheduleStatus
     {
         Occupied,
-        Available
+        Available,
+        Deleted
     }
 }

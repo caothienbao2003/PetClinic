@@ -1,0 +1,99 @@
+﻿/* Customer Booking Detail Page Styles */
+.booking-detail-page {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+    .booking-detail-page .booking-header h1 {
+        color: #343a40;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Detail section styling */
+    .booking-detail-page .detail-section {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        /* Heading for detail section */
+        .booking-detail-page .detail-section h4 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        /* Horizontal line styling */
+        .booking-detail-page .detail-section hr {
+            border: 0;
+            border-top: 1px solid #dee2e6;
+            margin: 10px 0;
+        }
+
+        /* Description list styling */
+        .booking-detail-page .detail-section dl.row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+
+        .booking-detail-page .detail-section dt {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .booking-detail-page .detail-section dd {
+            margin-bottom: 10px;
+        }
+
+        /* Link styling */
+        .booking-detail-page .detail-section a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+            .booking-detail-page .detail-section a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+
+        /* Additional styling for action links */
+        .booking-detail-page .detail-section .action-links a {
+            margin-right: 15px;
+        }
+
+        /* Button styling */
+        .booking-detail-page .detail-section button {
+            font-size: 14px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            /* Styling for specific buttons */
+            .booking-detail-page .detail-section button.btn-danger {
+                background-color: #dc3545;
+                color: white;
+            }
+
+                .booking-detail-page .detail-section button.btn-danger:hover {
+                    background-color: #c82333;
+                }
+
+            .booking-detail-page .detail-section button.btn-success {
+                background-color: #28a745;
+                color: white;
+            }
+
+                .booking-detail-page .detail-section button.btn-success:hover {
+                    background-color: #218838;
+                }

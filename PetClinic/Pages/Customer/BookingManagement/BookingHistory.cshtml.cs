@@ -23,7 +23,7 @@ namespace PetClinic.Pages.Customer.BookingManagement
 
         public void OnGet()
         {
-            
+
             LoadBookingList();
             Console.WriteLine("Get");
         }
@@ -31,9 +31,8 @@ namespace PetClinic.Pages.Customer.BookingManagement
         public void OnPostCancel(int id)
         {
             Booking cancelBooking = bookingService.GetBookingById(id);
-            Console.WriteLine(id);
 
-            if(cancelBooking == null)
+            if (cancelBooking == null)
             {
                 return;
             }
@@ -42,13 +41,15 @@ namespace PetClinic.Pages.Customer.BookingManagement
             bookingService.UpdateBooking(cancelBooking);
 
             LoadBookingList();
-            Response.Redirect("/Customer/BookingManagement/BookingHistory");
         }
-        public void OnPostDetail(int id)
-        {
-            TempData["BookingId"] = id;
 
+        public void OnPostDetail(int detail)
+        {
+            Console.WriteLine("Detail id: " + detail);
+            
+            TempData["BookingId"] = detail;
             LoadBookingList();
+
             Response.Redirect("/Customer/BookingManagement/BookingDetail");
         }
 
@@ -65,6 +66,8 @@ namespace PetClinic.Pages.Customer.BookingManagement
             int userId = int.Parse(userIdString);
 
             BookingList = bookingService.GetBookingListByUserId(userId);
+
+            Console.WriteLine("Count: " + BookingList.Count);
         }
 
     }
