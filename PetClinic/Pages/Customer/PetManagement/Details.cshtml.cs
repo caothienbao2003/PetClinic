@@ -15,24 +15,23 @@ namespace PetClinic.Pages.Customer.PetManagement
     public class DetailsModel : PageModel
     {
         private readonly IMedicalRecordService medicalRecordService;
-        private readonly IBookingService bookingService;
         private readonly IUserService userService;
         private readonly IPetService petService;
         private readonly IVaccinationRecordService vaccinationRecordService;
         private readonly IMedicineService medicineService;
-        private readonly IServiceService serviceService;
 
-        public DetailsModel(IMedicalRecordService _medicalRecordService, IBookingService _bookingService, IUserService _userService,
-            IPetService _petService, IVaccinationRecordService _vaccinationRecordService, IMedicineService _medicineService, IServiceService _serviceService)
+        public DetailsModel(IMedicalRecordService _medicalRecordService, IUserService _userService,
+            IPetService _petService, IVaccinationRecordService _vaccinationRecordService, IMedicineService _medicineService)
         {
             medicalRecordService = _medicalRecordService;
-            bookingService = _bookingService;
             userService = _userService;
             petService = _petService;
             vaccinationRecordService = _vaccinationRecordService;
             medicineService = _medicineService;
-            serviceService = _serviceService;
         }
+
+        [BindProperty]
+        public User user { get; set; } = default!;
 
         [BindProperty]
         public Pet Pet { get; set; } = default!;
@@ -49,11 +48,23 @@ namespace PetClinic.Pages.Customer.PetManagement
         [BindProperty]
         public VaccinationRecord NewVaccinationRecord { get; set; }
 
+        public List<VaccinationRecordViewModel> VaccinationRecordViewModelList { get; set; }
+        
         [BindProperty(SupportsGet = true)]
         public int PetId { get; set; }
 
         public IActionResult OnGet(int id)
         {
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
+
             PetId = id;
 
             var pet = petService.GetPetById(id);

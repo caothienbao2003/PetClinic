@@ -42,6 +42,16 @@ namespace PetClinic.Pages.Customer.PetManagement
 
         public IActionResult OnGet(int id)
         {
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
+
             PetId = id;
 
             var pet = petService.GetPetById(id);
