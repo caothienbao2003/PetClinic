@@ -79,32 +79,30 @@ namespace PetClinic.Pages.Customer.BookingManagement
         {
             Schedule schedule;
 
+            int scheduleId;
+
             if (SelectedDoctorId != null)
             {
                 schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId, (int)SelectedDoctorId).First();
+                scheduleId = schedule.ScheduleId;
             }
             else
             {
-                schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId).First();
+                List<Schedule> scheduleList = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId);
+
+                scheduleId = scheduleService.GetRandomScheduleIdFromScheduleList(scheduleList);
             }
-
-            //Update schedule number of occupation
-            int occupation = schedule.NoOfOccupation ?? default(int);
-            occupation++;
-            schedule.NoOfOccupation = occupation;
-
-            scheduleService.UpdateSchedule(schedule);
 
             //Create booking
             Booking newBooking = new Booking
             {
                 PetId = SelectedPetId,
                 DoctorId = SelectedDoctorId,
-                ScheduleId = schedule.ScheduleId,
+                ScheduleId = scheduleId,
                 BookingAt = DateTime.Now,
                 ServiceId = 1,
                 PaymentStatus = (int)BookingPaymentStatus.Unpaid,
-                BookingStatus = (int)BookingStatus.Pending,
+                BookingStatus = (int)BookingStatus.Unconfirmed,
             };
 
             bookingService.AddBooking(newBooking);

@@ -73,13 +73,39 @@ namespace PetClinicDAO
         public Booking GetBooking(int petId, int scheduleId)
         {
             return context.Bookings
+                .Include(b => b.Pet)
+                .Include(b => b.Pet.Customer)
+                .Include(b => b.Doctor)
+                .Include(b => b.Schedule)
+                .Include(b => b.Service)
+                .Include(b => b.Schedule.Shift)
+                .Include(b => b.Doctor)
+                .FirstOrDefault(b => b.PetId == petId && b.ScheduleId == scheduleId)!;
+        }
+
+        public Booking GetExistedBookingList(int petId, DateTime date, int shiftId)
+        {
+            return context.Bookings
+                .Include(b => b.Pet)
+                .Include(b => b.Pet.Customer)
+                .Include(b => b.Doctor)
+                .Include(b => b.Schedule)
+                .Include(b => b.Service)
+                .Include(b => b.Schedule.Shift)
+                .Include(b => b.Doctor)
+                .FirstOrDefault(b => b.PetId == petId && b.Schedule.Date == date && b.Schedule.ShiftId == shiftId && b.BookingStatus == (int)BookingStatus.Pending)!;
+        }
+
+        public List<Booking> GetBookingListByDateAndShiftId(DateTime date, int shiftId)
+        {
+            return context.Bookings
                 .Include(p => p.Pet)
                 .Include(d => d.Doctor)
                 .Include(s => s.Schedule)
                 .Include(s => s.Service)
-                .FirstOrDefault(b => b.PetId == petId && b.ScheduleId == scheduleId)!;
+                .Where(b => b.Schedule.Date == date && b.Schedule.ShiftId == shiftId && b.BookingStatus == (int)BookingStatus.Pending)
+                .ToList();
         }
-
 
         //public List<Booking> SearchBy(DateTime date, int shiftId, int doctorId)
         //{

@@ -19,5 +19,7 @@ namespace PetClinicRepository
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId) => ScheduleDAO.Instance.GetAvailableDoctorScheduleList(date, shiftId, doctorId);
         public void UpdateSchedule(Schedule schedule) => ScheduleDAO.Instance.UpdateSchedule(schedule);
         public List<Schedule> GetByEmployeeIdBetweenDate(int employeeId, DateTime startDate, DateTime endDate)=> ScheduleDAO.Instance.GetByEmployeeIdBetweenDate(employeeId, startDate, endDate);
+        public void DeleteSchedule(Schedule schedule) => ScheduleDAO.Instance.DeleteSchedule(schedule);
+        public Schedule GetById(int id) => ScheduleDAO.Instance.GetById(id);
     }
 }

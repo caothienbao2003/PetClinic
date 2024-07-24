@@ -80,6 +80,14 @@
                                                 <div>
                                                     @schedule.Date.Value.ToString("dd/MM/yyyy")
                                                 </div>
+                                                <form method="post" asp-page-handler="Remove" asp-route-id="@schedule.ScheduleId">
+                                                    <input type="hidden" asp-for="DateToAdd" value="@i" />
+                                                    <input type="hidden" asp-for="DoctorIdToAdd"  value="@Model.DoctorId"/>
+                                                    <input type="hidden" asp-for="ShiftIdToAdd" value="@shift.ShiftId" />
+                                                    <input type="hidden" asp-for="SelectedDate">
+                                                    <input type="hidden" asp-for="DoctorId">
+                                                    <input type="submit" value="-"/>
+                                                </form>
                                             </div>
                                         }
                                         else

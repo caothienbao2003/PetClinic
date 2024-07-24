@@ -28,7 +28,7 @@ namespace PetClinicServices
         public List<Booking> GetBookingListByPetId(int petId) => bookingRepository.GetBookingListByPetId(petId);
         public List<Booking> GetBookingListByUserId(int userId) => bookingRepository.GetBookingByUserId(userId);
         public void UpdateBooking(Booking booking) => bookingRepository.Update(booking);
-        public Booking GetBookingList(int petId, int scheduleId) => bookingRepository.GetBooking(petId, scheduleId);
+        public Booking GetBooking(int petId, int scheduleId) => bookingRepository.GetBooking(petId, scheduleId);
         public List<Booking> SearchBy(DateTime? startDate, DateTime? endDate, int? paymentStatus, int? bookingStatus, int? shiftId, string doctorName, string customerName, string petName)
         {
             var bookings = bookingRepository.GetAll().AsQueryable();
@@ -77,6 +77,13 @@ namespace PetClinicServices
             }
 
             return bookings.ToList();
+        }
+        public Booking GetExistedBookingList(int petId, DateTime date, int shiftId) => bookingRepository.GetExistedBookingList(petId, date, shiftId);
+        public List<Booking> GetBookingListByDateAndShiftId(DateTime date, int shiftId) => bookingRepository.GetBookingListByDateAndShiftId(date, shiftId);
+        public int GetNoOfOccupationByDateAndShiftId(DateTime date, int shiftId)
+        {
+            List<Booking> bookingList = GetBookingListByDateAndShiftId(date, shiftId);
+            return bookingList.Count;
         }
     }
 }

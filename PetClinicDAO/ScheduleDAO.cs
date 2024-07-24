@@ -35,6 +35,11 @@ namespace PetClinicDAO
             return context.Schedules.ToList();
         }
 
+        public Schedule GetById(int id)
+        {
+            return context.Schedules.FirstOrDefault(s => s.ScheduleId == id);
+        }
+
         public void AddSchedule(Schedule schedule)
         {
             schedule.ScheduleStatus = (int)ScheduleStatus.Available;
@@ -55,6 +60,13 @@ namespace PetClinicDAO
 
             context.Entry(schedule).State = EntityState.Modified;
             context.SaveChanges();
+        }
+
+        public void DeleteSchedule(Schedule schedule)
+        {
+            schedule.ScheduleStatus = (int)ScheduleStatus.Deleted;
+
+            UpdateSchedule(schedule);
         }
 
         public List<Schedule> GetDoctorScheduleList(DateTime date, int shiftId)
@@ -90,7 +102,7 @@ namespace PetClinicDAO
         {
             return context.Schedules
                 .Include(s => s.Employee)
-                .Where(s => s.EmployeeId == employeeId && s.Date >= startDate && s.Date <= endDate)
+                .Where(s => s.EmployeeId == employeeId && s.Date >= startDate && s.Date <= endDate && s.ScheduleStatus == (int)ScheduleStatus.Available)
                 .ToList();
         }
     }
