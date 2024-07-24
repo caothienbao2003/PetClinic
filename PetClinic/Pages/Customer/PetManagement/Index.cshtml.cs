@@ -50,7 +50,7 @@ namespace PetClinic.Pages.Customer.PetManagement
 
             if (!string.IsNullOrEmpty(SearchPetName))
             {
-                query = query.Where(p => p.PetName.Contains(SearchPetName));
+                query = query.Where(p => p.PetName.Contains(SearchPetName, StringComparison.OrdinalIgnoreCase));
             }
 
             if (!string.IsNullOrEmpty(SearchPetType) && SearchPetType != "All")
