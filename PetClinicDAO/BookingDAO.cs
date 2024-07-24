@@ -34,11 +34,13 @@ namespace PetClinicDAO
         public List<Booking> GetAllBooking()
         {
             return context.Bookings
-                .Include(p => p.Pet)
-                .Include(c => c.Pet.Customer)
-                .Include(d => d.Doctor)
-                .Include(s => s.Schedule)
-                .Include(s => s.Service)
+                .Include(b => b.Pet)
+                .Include(b => b.Pet.Customer)
+                .Include(b => b.Doctor)
+                .Include(b => b.Schedule)
+                .Include(b => b.Service)
+                .Include(b => b.Schedule.Shift)
+                .Include(b => b.Doctor)
                 .ToList();
         }
 
