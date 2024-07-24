@@ -28,13 +28,6 @@
                 <input asp-for="VaccinationRecord.VaccinatedAt" class="form-control" />
                 <span asp-validation-for="VaccinationRecord.VaccinatedAt" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
-                <label for="Verification">Verification</label>
-                <select class="form-control" id="Verification" name="NewVaccinationRecord.Verification" required>
-                    <option value="true">Verified</option>
-                    <option value="false">Not Verified</option>
-                </select>
-            </div> *@
             <div class="form-group">
                 <input type="hidden" asp-for="VaccinationRecord.PetHealthId" value="@ViewData["PetHealthIdValue"]" />
             </div>

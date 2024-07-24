@@ -15,17 +15,15 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         private readonly IBookingService bookingService;
         private readonly IPetService petService;
         private readonly IPetHealthService petHealthService;
-        private readonly IMedicineService medicineService;
         private readonly IServiceService serviceService;
 
         public CreateRecordModel(IMedicalRecordService _medicalRecordService, IBookingService _bookingService,
-            IPetService _petService, IPetHealthService _petHealthService, IMedicineService _medicineService, IServiceService _serviceService)
+            IPetService _petService, IPetHealthService _petHealthService,IServiceService _serviceService)
         {
             medicalRecordService = _medicalRecordService;
             bookingService = _bookingService;
             petService = _petService;
             petHealthService = _petHealthService;
-            medicineService = _medicineService;
             serviceService = _serviceService;
         }
 
@@ -79,7 +77,6 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
                           .ToList();
 
             ViewData["ServiceId"] = new SelectList(filteredService, "ServiceId", "ServiceName");
-            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
 
             if (isMedicalRecordCreated.HasValue)
             {
