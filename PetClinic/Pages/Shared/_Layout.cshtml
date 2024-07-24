@@ -9,45 +9,45 @@
     <link rel="stylesheet" href="~/PetClinic.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">PetClinic</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-page="/index">petclinic</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarsupportedcontent"
+                        aria-expanded="false" aria-label="toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/index">home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/privacy">privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/login">login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Customer/BookingManagement/ChoosePet">New Booking</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/customer/bookingmanagement/choosepet">new booking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Customer/BookingManagement/BookingHistory">Booking History</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/customer/bookingmanagement/bookinghistory">booking history</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ShiftManagement/Index">Shift</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/shiftmanagement/index">shift</a>
                         </li>
                         <li>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Staff/CageManagement/Index">Cage(Temp)</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/staff/cagemanagement/index">cage(temp)</a>
                             </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Doctor/BookingView">DoctorBookingView(Temp)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/doctor/bookingview">doctorbookingview(temp)</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-    </header>
+    </header> *@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

@@ -51,7 +51,7 @@
 							<tr>
 								<td>@medicine.MedicineId</td>
 								<td>@medicine.MedicineName</td>
-								<td>@medicine.MedicineTypeId</td>
+								<td>@medicine.MedicineType?.MedicineTypeName</td>
 								<td>@medicine.MedicineDescription</td>
 								<td>@(medicine.ActiveStatus == 1 ? "Active" : "Inactive")</td>
 								<td>

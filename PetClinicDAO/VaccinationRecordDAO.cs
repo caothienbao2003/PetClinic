@@ -33,7 +33,7 @@ namespace PetClinicDAO
 
         public List<VaccinationRecord> GetVaccinationRecordsList()
         {
-            return context.VaccinationRecords.ToList();
+            return context.VaccinationRecords.Include(v => v.Medicine).ToList();
         }
 
         public VaccinationRecord GetVaccinationRecordById(int id)
@@ -43,7 +43,7 @@ namespace PetClinicDAO
 
         public List<VaccinationRecord> GetVaccinationRecordsByPetHealthId(int petHealthId)
         {
-            return context.VaccinationRecords.Where(v => v.PetHealthId == petHealthId).ToList();
+            return context.VaccinationRecords.Include(v => v.Medicine).Where(v => v.PetHealthId == petHealthId).ToList();
         }
 
         public void AddVaccinationRecord(VaccinationRecord vaccinationRecord)

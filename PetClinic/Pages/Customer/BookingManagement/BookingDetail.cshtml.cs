@@ -28,6 +28,7 @@ namespace PetClinic.Pages.Customer.BookingManagement
             if (TempData.ContainsKey("BookingId"))
             {
                 bookingId = (int)TempData["BookingId"];
+                Console.WriteLine("Booking Id: " + bookingId);
                 TempData.Keep("BookingId");
             }
             else
@@ -39,7 +40,6 @@ namespace PetClinic.Pages.Customer.BookingManagement
             if (booking == null)
             {
                 Response.Redirect("/Error");
-                return;
             }
             else
             {

@@ -71,18 +71,13 @@ namespace PetClinic.Pages.Customer.BookingManagement
                 SelectedDoctor = doctorService.GetDoctorById((int)SelectedDoctorId);
             }
             SelectedShift = shiftService.GetShiftById(SelectedShiftId);
+
             PetOwner = Pet.Customer;
+
         }
         public void OnPost()
         {
-            Console.WriteLine("Cf SelectedPetId: " + SelectedPetId);
-            Console.WriteLine("Cf SelectedDate: " + SelectedDate);
-            Console.WriteLine("Cf SelectedShiftId: " + SelectedShiftId);
-            Console.WriteLine("Cf SelectedDoctorId: " + SelectedDoctorId);
-
             Schedule schedule;
-
-            Console.WriteLine(SelectedDoctorId + " " + SelectedDoctorId == null);
 
             if (SelectedDoctorId != null)
             {
@@ -93,6 +88,14 @@ namespace PetClinic.Pages.Customer.BookingManagement
                 schedule = scheduleService.GetAvailableScheduleList(SelectedDate, SelectedShiftId).First();
             }
 
+            //Update schedule number of occupation
+            int occupation = schedule.NoOfOccupation ?? default(int);
+            occupation++;
+            schedule.NoOfOccupation = occupation;
+
+            scheduleService.UpdateSchedule(schedule);
+
+            //Create booking
             Booking newBooking = new Booking
             {
                 PetId = SelectedPetId,
@@ -107,6 +110,16 @@ namespace PetClinic.Pages.Customer.BookingManagement
             bookingService.AddBooking(newBooking);
 
             TempData["BookingId"] = newBooking.BookingId;
+
+            //Assign data so that not bug when reload
+            Pet = petService.GetPetById(SelectedPetId);
+            if (SelectedDoctorId != null)
+            {
+                SelectedDoctor = doctorService.GetDoctorById((int)SelectedDoctorId);
+            }
+            SelectedShift = shiftService.GetShiftById(SelectedShiftId);
+
+            PetOwner = Pet.Customer;
 
             Response.Redirect("/Customer/BookingManagement/PaymentInfo");
         }

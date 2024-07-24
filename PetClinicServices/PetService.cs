@@ -61,10 +61,5 @@ namespace PetClinicServices
         {
             petRepository.UpdatePet(pet);
         }
-
-        public void UpdatePetHealth(PetHealth petHealth)
-        {
-            petRepository.UpdatePetHealth(petHealth);
-        }
     }
 }

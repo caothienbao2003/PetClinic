@@ -37,13 +37,23 @@ namespace PetClinicDAO
 
         public void AddSchedule(Schedule schedule)
         {
+            schedule.ScheduleStatus = (int)ScheduleStatus.Available;
+            schedule.NoOfOccupation = 0;
+
             context.Schedules.Add(schedule);
             context.SaveChanges();
         }
 
         public void UpdateSchedule(Schedule schedule)
         {
-            context.Schedules.Update(schedule);
+            var existedSchedule = context.Schedules.FirstOrDefault(s => s.ScheduleId == schedule.ScheduleId);
+
+            if (existedSchedule != null)
+            {
+                context.Entry(existedSchedule).State = EntityState.Detached;
+            }
+
+            context.Entry(schedule).State = EntityState.Modified;
             context.SaveChanges();
         }
 

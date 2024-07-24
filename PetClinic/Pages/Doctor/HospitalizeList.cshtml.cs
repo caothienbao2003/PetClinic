@@ -4,31 +4,42 @@ using PetClinicBussinessObject;
 using PetClinicServices;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.Doctor.CageManagement
+namespace PetClinic.Pages.Doctor
 {
     public class HospitalizeListModel : PageModel
     {
         private readonly IHospitalizeService hospitalizeService;
         private readonly ICageService cageService;
+        private readonly IUserService userService;
 
-        public HospitalizeListModel(IHospitalizeService _hospitalizeService, ICageService _cageService)
+        public HospitalizeListModel(IHospitalizeService _hospitalizeService, ICageService _cageService, IUserService _userService)
         {
             hospitalizeService = _hospitalizeService;
             cageService = _cageService;
+            userService = _userService;
         }
 
         [BindProperty(SupportsGet = true)]
         public int CageId { get; set; }
 
+        [BindProperty]
+        public User user { get; set; } = default!;
+
         public List<Hospitalize> Hospitalizes { get; set; } = default!;
 
-        public IActionResult OnGet(int cageId)
+        public IActionResult OnGet()
         {
             var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
 
-            CageId = cageId;
-
-            var hospitalizes = hospitalizeService.GetListByCageId(CageId) ?? new List<Hospitalize>();
+            var hospitalizes = hospitalizeService.GetAllHospitalize() ?? new List<Hospitalize>();
 
             Hospitalizes = hospitalizes.Where(h => h.DoctorId.ToString() == userId).ToList();
 

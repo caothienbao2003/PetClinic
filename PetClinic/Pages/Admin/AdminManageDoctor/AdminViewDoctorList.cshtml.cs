@@ -39,7 +39,8 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 
 		[BindProperty]
 		public int newDoctorCapacity { get; set; }
-
+		[BindProperty]
+		public decimal newEmployeeSalary { get; set; }
 		[BindProperty]
 		public int? ActiveStatus { get; set; }
 
@@ -89,6 +90,7 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 					SocialNumber = newSocialNumber,
 					DoctorRank = newDoctorRank,
 					DoctorCapacity = newDoctorCapacity,
+					EmployeeSalary = newEmployeeSalary,
 					Role = 2, // 2 is the role for a doctor
 					ActiveStatus = 1
 				};
