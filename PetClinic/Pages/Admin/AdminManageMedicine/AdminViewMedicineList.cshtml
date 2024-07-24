@@ -41,15 +41,7 @@
 					</div>
 					<div class="form-group">
 						<label for="searchMedicineType">Medicine Type:</label>
-						<select id="searchMedicineType" name="searchMedicineType" class="form-control">
-						<option value="">All</option>
-						@foreach (var type in Model.MedicineTypes)
-						{
-							<option value="@type.MedicineTypeId"
-								selected="@(Model.searchMedicineType == type.MedicineTypeId ? "selected" : "")">@type.MedicineTypeName
-							</option>
-						}
-						</select>
+						@Html.DropDownList("searchMedicineType", (SelectList)ViewData["MedicineTypeId"], "All", new { @class = "form-control" })
 					</div>
 					<button type="submit" class="btn btn-primary">Search</button>
 				</form>
