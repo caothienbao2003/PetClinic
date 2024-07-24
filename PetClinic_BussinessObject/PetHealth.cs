@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetClinicBussinessObject
 {
@@ -10,6 +11,7 @@ namespace PetClinicBussinessObject
             VaccinationRecords = new HashSet<VaccinationRecord>();
         }
 
+        [Required]
         public int PetHealthId { get; set; }
         public string? OverallHealth { get; set; }
         public string? Conditions { get; set; }

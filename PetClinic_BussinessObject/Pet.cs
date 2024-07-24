@@ -14,12 +14,13 @@ namespace PetClinicBussinessObject
             PetHealths = new HashSet<PetHealth>();
         }
 
+        [Required]
         public int PetId { get; set; }
         public int? CustomerId { get; set; }
         [Required]
         public string? PetName { get; set; }
         [Required]
-        [MaxLength(30)]
+        [MaxLength(10)]
         public string? PetType { get; set; }
         [Range(1,20)]
         public int? PetAge { get; set; }
