@@ -53,9 +53,8 @@ namespace PetClinic.Pages.Customer.BookingManagement
             }
             else
             {
-                booking.BookingAt = DateTime.Now;
-                booking.BookingStatus = (int)BookingStatus.Pending;
                 booking.PaymentStatus = (int)BookingPaymentStatus.Paid;
+                Response.Redirect("/Customer/BookingManagement/BookingHistory");
             }
 
         }
