@@ -13,46 +13,170 @@
     }
 }
 
-<h1>Cage Management</h1>
+<header>
+    <h1>Pet Clinic</h1>
+</header>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cage[0].CageId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Cage) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CageId)
-            </td>
-            <td>
-                <a asp-page="./HospitalizeList" asp-route-CageId="@item.CageId">Hospitalize List</a> |
-                @if (item.CageStatus == (int)CageStatus.Occupied)
-                {
-                    <span>Already Hospitalized</span>
-                }
-                else
-                {
-                    @if (item.ActiveStatus == (int)ActiveStatus.Active)
-                    {
-                        <a asp-page="./CreateHospitalize" asp-route-CageId="@item.CageId">Hospitalize</a>
-                    }
-                    <form method="post" asp-page-handler="ToggleActiveStatus" style="display:inline;">
-                        <input type="hidden" name="cageId" value="@item.CageId" />
-                        <input type="hidden" name="currentStatus" value="@item.ActiveStatus" />
-                        <button type="submit" class="btn btn-primary">Change Cage Availability</button>
-                    </form>
-                }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Staff/BookingManagement/BookingHistory">Bookings</a>
+    <a asp-page="/Staff/CageManagement/Index">Cages</a>
+</nav>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Staff/StaffProfile"><button>View Profile</button></a>
+    <a asp-page="/Authentication/Logout"><button>Logout</button></a>
+</div>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-primary:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-danger {
+            background-color: #f44336;
+            border-color: #f44336;
+        }
+
+            .btn-danger:hover {
+                background-color: #d32f2f;
+                border-color: #d32f2f;
+            }
+
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-success:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .cage-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .cage-box h3 {
+                margin-top: 0;
+                color: #4CAF50;
+            }
+
+        .cage-actions {
+            margin-top: 10px;
+        }
+
+            .cage-actions form {
+                display: inline;
+            }
+
+            .cage-actions a,
+            .cage-actions button {
+                margin-bottom: 5px;
+            }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+    <div class="content">
+        <p>
+            <a asp-page="Create" class="btn btn-success">Create New</a>
+        </p>
+
+        <div class="row">
+            @foreach (var item in Model.Cage)
+            {
+                <div class="col-md-3">
+                    <div class="cage-box">
+                        <h3>@item.CageId</h3>
+                        <div class="cage-actions">
+                            <a asp-page="./HospitalizeList" asp-route-CageId="@item.CageId" class="btn btn-info">Hospitalize List</a>
+                            @if (item.CageStatus == (int)CageStatus.Occupied)
+                            {
+                                <span class="badge badge-secondary">Already Hospitalized</span>
+                            }
+                            else
+                            {
+                                @if (item.ActiveStatus == (int)ActiveStatus.Active)
+                                {
+                                    <a asp-page="./CreateHospitalize" asp-route-CageId="@item.CageId" class="btn btn-warning">Hospitalize</a>
+                                }
+                                <form method="post" asp-page-handler="ToggleActiveStatus">
+                                    <input type="hidden" name="cageId" value="@item.CageId" />
+                                    <input type="hidden" name="currentStatus" value="@item.ActiveStatus" />
+                                    <button type="submit" class="btn btn-primary">Change Availability</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <footer>
+        © 2024 - PetClinic - <a href="/Privacy" style="color: white;">Privacy</a>
+    </footer>
+</body>
+</html>

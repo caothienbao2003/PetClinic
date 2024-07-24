@@ -17,16 +17,31 @@ namespace PetClinic.Pages.Staff.CageManagement
     public class IndexModel : PageModel
     {
         private readonly ICageService cageService;
+        private readonly IUserService userService;
 
-        public IndexModel(ICageService _cageService)
+        public IndexModel(ICageService _cageService, IUserService _userService)
         {
             cageService = _cageService;
+            userService = _userService;
         }
+
+        [BindProperty]
+        public User user { get; set; } = default!;
 
         public List<Cage> Cage { get;set; } = default!;
 
         public void OnGet()
         {
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
+
             Cage = cageService.GetAllCage()
                 .OrderByDescending(c => c.ActiveStatus == (int)ActiveStatus.Active)
                 .ThenByDescending(c => c.CageStatus == (int)CageStatus.Occupied)
