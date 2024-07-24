@@ -194,49 +194,42 @@ body {
     justify-content: center;
     margin-bottom: 20px;
     max-width: 300px;
-    margin: 0 auto 20px;
     width: 100%;
+    /* Centering the container horizontally */
+    margin: 0 auto;
 }
-
-    .navigation-buttons button.disabled {
-        color: #ccc;
-        cursor: not-allowed;
-        pointer-events: none;
-    }
-
-.month-year-wrapper {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 18px;
-    color: #333;
-}
-
-.navigation-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    max-width: 300px;
-    width: 100%;
-}
-
-    .navigation-buttons i:hover {
-        color: #45a049;
-    }
 
     .navigation-buttons button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        color: #4CAF50;
-        font-size: 24px;
-        transition: color 0.3s;
+        background-color: #4CAF50; /* Button background color */
+        border: none; /* Remove default border */
+        color: white; /* Text color */
+        font-size: 20px; /* Font size for icons */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 15px; /* Padding around the icon */
+        margin: 0 10px; /* Space between buttons */
+        cursor: pointer; /* Pointer cursor */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
     }
 
         .navigation-buttons button:hover {
-            color: #45a049;
+            background-color: #45a049; /* Slightly darker green on hover */
+            transform: scale(1.1); /* Slightly enlarge button on hover */
         }
+
+        .navigation-buttons button:disabled {
+            background-color: #ccc; /* Light gray background for disabled */
+            border: none; /* Remove border for disabled */
+            color: #666; /* Darker gray text for disabled */
+            cursor: not-allowed; /* Not-allowed cursor for disabled */
+        }
+
+.month-year-wrapper {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    /* Ensure it takes available space and centers content */
+    flex-grow: 1;
+}
 
 .selected-date {
     background-color: #ffeeba;
@@ -244,4 +237,27 @@ body {
 
 .hidden {
     display: none;
+}
+
+.fas {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    visibility: visible;
+}
+
+.fa-arrow-left, .fa-arrow-right {
+    visibility: visible;
+    display: inline-block;
+}
+
+.selected-date-info {
+    font-size: 18px; /* Adjust font size for readability */
+    color: #333; /* Text color */
+    text-align: center; /* Center the text */
+    margin: 20px 0; /* Space around the element */
+    padding: 10px; /* Padding for better spacing */
+    background-color: #f1f1f1; /* Light background color */
+    border: 1px solid #ddd; /* Border to define the area */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }

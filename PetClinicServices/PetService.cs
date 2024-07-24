@@ -61,5 +61,15 @@ namespace PetClinicServices
         {
             petRepository.UpdatePet(pet);
         }
+
+        public List<Pet> SearchPets(string? petName, string? customer, string? petType)
+        {
+            return petRepository.SearchPets(petName, customer, petType);
+        }
+
+        public List<string> GetAllPetTypes()
+        {
+            return petRepository.GetAllPetTypes();
+        }
     }
 }

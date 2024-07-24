@@ -34,6 +34,26 @@
 			<div class="service-management">
 				<button id="createMedicineBtn" class="btn-create">Create New Medicine</button>
 
+				<form method="get">
+					<div class="form-group">
+						<label for="searchMedicineName">Search by Medicine Name:</label>
+						<input type="text" id="searchMedicineName" name="searchMedicineName" value="@Model.searchMedicineName" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="searchMedicineType">Medicine Type:</label>
+						<select id="searchMedicineType" name="searchMedicineType" class="form-control">
+						<option value="">All</option>
+						@foreach (var type in Model.MedicineTypes)
+						{
+							<option value="@type.MedicineTypeId"
+								selected="@(Model.searchMedicineType == type.MedicineTypeId ? "selected" : "")">@type.MedicineTypeName
+							</option>
+						}
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Search</button>
+				</form>
+
 				<table class="service-table">
 					<thead>
 						<tr>

@@ -1,99 +1,110 @@
-﻿/* Customer Booking Detail Page Styles */
+﻿/* Booking Detail Page Specific Styles */
 .booking-detail-page {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
     margin: 0;
     padding: 20px;
+    background-color: white;
+    max-width: 1200px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-    .booking-detail-page .booking-header h1 {
-        color: #343a40;
+    .booking-detail-page header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
         text-align: center;
-        margin-bottom: 20px;
+        border-radius: 8px 8px 0 0;
     }
 
-    /* Detail section styling */
-    .booking-detail-page .detail-section {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-        /* Heading for detail section */
-        .booking-detail-page .detail-section h4 {
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        /* Horizontal line styling */
-        .booking-detail-page .detail-section hr {
-            border: 0;
-            border-top: 1px solid #dee2e6;
-            margin: 10px 0;
-        }
-
-        /* Description list styling */
-        .booking-detail-page .detail-section dl.row {
-            display: flex;
-            flex-wrap: wrap;
+        .booking-detail-page header h1 {
             margin: 0;
         }
 
-        .booking-detail-page .detail-section dt {
-            font-weight: bold;
-            color: #495057;
-            margin-bottom: 5px;
-        }
+    .booking-detail-page .navbar {
+        background-color: #333;
+        overflow: hidden;
+        border-radius: 0 0 8px 8px;
+        margin-bottom: 20px;
+    }
 
-        .booking-detail-page .detail-section dd {
-            margin-bottom: 10px;
-        }
-
-        /* Link styling */
-        .booking-detail-page .detail-section a {
-            color: #007bff;
+        .booking-detail-page .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
             text-decoration: none;
-            transition: color 0.3s;
         }
 
-            .booking-detail-page .detail-section a:hover {
-                color: #0056b3;
-                text-decoration: underline;
+            .booking-detail-page .navbar a:hover {
+                background-color: #ddd;
+                color: black;
             }
 
-        /* Additional styling for action links */
-        .booking-detail-page .detail-section .action-links a {
-            margin-right: 15px;
+    .booking-detail-page .booking-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .booking-detail-page .detail-section h4 {
+        color: #4CAF50;
+        font-size: 1.5em;
+    }
+
+    .booking-detail-page .detail-section hr {
+        border: 1px solid #4CAF50;
+        margin-bottom: 20px;
+    }
+
+    .booking-detail-page dl.row {
+        margin: 0;
+        padding: 0;
+    }
+
+    .booking-detail-page dt, .booking-detail-page dd {
+        padding: 10px;
+    }
+
+    .booking-detail-page dt {
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+    }
+
+    .booking-detail-page dd {
+        background-color: #fafafa;
+        border: 1px solid #ddd;
+        margin: 0;
+        word-break: break-word;
+    }
+
+    .booking-detail-page .action-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .booking-detail-page .action-links .btn {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 1em;
         }
 
-        /* Button styling */
-        .booking-detail-page .detail-section button {
-            font-size: 14px;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        .booking-detail-page .action-links .btn-success {
+            background-color: #4CAF50;
         }
 
-            /* Styling for specific buttons */
-            .booking-detail-page .detail-section button.btn-danger {
-                background-color: #dc3545;
-                color: white;
+            .booking-detail-page .action-links .btn-success:hover {
+                background-color: #45a049;
             }
 
-                .booking-detail-page .detail-section button.btn-danger:hover {
-                    background-color: #c82333;
-                }
+        .booking-detail-page .action-links .btn-primary {
+            background-color: #007BFF;
+        }
 
-            .booking-detail-page .detail-section button.btn-success {
-                background-color: #28a745;
-                color: white;
+            .booking-detail-page .action-links .btn-primary:hover {
+                background-color: #0069d9;
             }
-
-                .booking-detail-page .detail-section button.btn-success:hover {
-                    background-color: #218838;
-                }

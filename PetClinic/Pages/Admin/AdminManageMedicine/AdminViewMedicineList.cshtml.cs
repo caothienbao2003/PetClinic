@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
+using PetClinicDAO;
 using PetClinicServices;
 using PetClinicServices.Interface;
 
@@ -16,9 +17,21 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 			medicineService = _medicineService;
 			medicineTypeService = _medicineTypeService;
 		}
-		[BindProperty]
+
+
+        [BindProperty(SupportsGet = true)]
+        public string searchMedicineName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+		public int? searchMedicineType { get; set; }
+
+        [BindProperty]
 		public List<Medicine> Medicines { get; set; }
-		[BindProperty]
+        public List<MedicineType> MedicineTypes { get; set; }
+
+
+
+        [BindProperty]
 		public List<Medicine> MedicineListWithoutInlcude { get; set; }
 
 		[BindProperty]
@@ -28,8 +41,10 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 		[BindProperty]
 		public int totalBookings { get; set; }
 
+        
 
-		[BindProperty]
+
+        [BindProperty]
 		public string newMedicineName { get; set; }
 		[BindProperty]
 		public string newMedicineDescription { get; set; }
@@ -42,8 +57,6 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 		{
 			InitializePage();
 			LoadMedicineListWithoutInclude();
-
-			Console.WriteLine(medicineTypeService.GetMedicineTypeList());
 
 			ViewData["MedicineTypeId"] = new SelectList(medicineTypeService.GetMedicineTypeList(), "MedicineTypeId", "MedicineTypeName");
 		}
@@ -86,8 +99,9 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 
 		private void InitializePage()
 		{
-			Medicines = medicineService.GetMedicineList();
-		}
+            Medicines = medicineService.SearchMedicines(searchMedicineName, searchMedicineType);
+            MedicineTypes = medicineTypeService.GetMedicineTypeList();
+        }
 
 		private void LoadMedicineListWithoutInclude()
 		{
