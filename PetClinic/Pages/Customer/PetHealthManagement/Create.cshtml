@@ -2,6 +2,8 @@
 @model PetClinic.Pages.Customer.PetHealthManagement.CreateModel
 
 @{
+    ViewData["Title"] = "Pet Health Management Create Page";
+
     var userId = HttpContext.Session.GetString("UserId");
     var role = HttpContext.Session.GetString("Role");
 
