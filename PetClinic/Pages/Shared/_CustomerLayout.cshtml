@@ -1,26 +1,26 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
+﻿<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PetClinic</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PetClinic.styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" href="~/PetClinic.styles.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
+
 <body>
     <header>
         <h1>Pet Clinic</h1>
-        <nav class="navbar navbar-expand-sm">
-            <a asp-page="/Customer/CustomerHomePage">Home</a>
-            <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
-            <a asp-page="/Customer/PetManagement/Index">My Pets</a>
-            <a asp-page="/Customer/PetHealthManagement/Index">Pet Healths</a>
-            <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
-            <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
-        </nav>
     </header>
     
+    <nav class="navbar navbar-expand-sm">
+        <a asp-page="/Customer/CustomerHomePage">Home</a>
+        <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+        <a asp-page="/Customer/PetManagement/Index">My Pets</a>
+        <a asp-page="/Customer/PetHealthManagement/Index">Pet Healths</a>
+        <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+        <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+    </nav>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -40,4 +40,3 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>

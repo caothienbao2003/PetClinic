@@ -113,6 +113,7 @@ button {
     .create-new-button:hover {
         background-color: #0056b3;
         transform: scale(1.05);
+        color: white;
     }
 
 /* Form styling */
@@ -123,5 +124,16 @@ form {
 
 /* Centering paragraph text */
 p {
+    text-align: center;
+}
+
+.no-booking-message {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+    font-size: 18px;
     text-align: center;
 }

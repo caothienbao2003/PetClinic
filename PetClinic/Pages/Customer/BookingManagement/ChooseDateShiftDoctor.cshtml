@@ -15,8 +15,26 @@
 }
 
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
     <link rel="stylesheet" href="~/css/chooseDateShiftDoctor.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWMd+18JsE0ASdP9D1EF/CVt/8Kv8G2xfMbS4kTF+AI9uF27WQ/MI00L8HIy8" crossorigin="anonymous">
 </head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/Customer/PetManagement/Index">My Pets</a>
+    <a asp-page="/Customer/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+</nav>
 
 <div class="booking-container">
     <div class="calendar-container">
@@ -25,16 +43,15 @@
         <form method="post" asp-page-handler="ChangeMonth">
             <div class="navigation-buttons">
                 <button type="submit" name="offset" value="-1" class="btn-transparent @(Model.CurrentMonth == DateTime.Today.Month && Model.CurrentYear == DateTime.Today.Year ? "disabled" : "")" @(Model.CurrentMonth == DateTime.Today.Month && Model.CurrentYear == DateTime.Today.Year ? "disabled" : "")>
-                    <i class="fas fa-arrow-left"></i>
+                    Prev
                 </button>
                 <div class="month-year-wrapper">
                     <span id="monthYearDisplay">@Model.CurrentMonthYearDisplay</span>
                 </div>
                 <button type="submit" name="offset" value="1" class="btn-transparent">
-                    <i class="fas fa-arrow-right"></i>
+                    Next
                 </button>
             </div>
-            <div>Date selected: @Model.SelectedDate?.ToString("dd/MM/yyyy")</div>
 
             <input type="hidden" asp-for="SelectedShiftId" value="@Model.SelectedShiftId" />
             <input type="hidden" name="currentMonth" value="@Model.CurrentMonth" />
@@ -87,6 +104,10 @@
                 </form>
             </tbody>
         </table>
+        <div class="selected-date-info">
+            Date selected: @Model.SelectedDate?.ToString("dd/MM/yyyy")
+        </div>
+
 
         <div class="form-group text-center">
             <a asp-page="ChoosePet" class="back-link"><i class="fas fa-arrow-left"></i> Back to Choose Pet</a>
