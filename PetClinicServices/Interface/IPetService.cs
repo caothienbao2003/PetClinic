@@ -24,7 +24,5 @@ namespace PetClinicServices.Interface
         public void RemovePet(int petId);
 
         public void UpdatePet(Pet pet);
-
-        public void UpdatePetHealth(PetHealth petHealth);
     }
 }

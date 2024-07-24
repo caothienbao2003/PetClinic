@@ -29,22 +29,26 @@ namespace PetClinic.Pages.Customer.PetHealthManagement
         public PetHealth PetHealth { get; set; } = default!;
 
         [BindProperty]
-        public int PetId { get; set; } = default!;
+        public int newPetId { get; set; } = default!;
 
         [BindProperty]
         public User user { get; set; } = default!;
 
-        public void OnGet()
-        { 
-            if (TempData["PetId"] is int petId)
+        public IActionResult OnGet(int petId)
+        {
+            userIdString = HttpContext.Session.GetString("UserId");
+            if (userIdString.IsNullOrEmpty())
             {
-                PetId = petId;
+                Response.Redirect("/Authentication/Login");
             }
             else
             {
-                Response.Redirect("/Customer/PetManagement/Create");
+                userId = int.Parse(userIdString);
             }
 
+            newPetId = petId;
+            PetHealth = new PetHealth { PetId = newPetId };
+            return Page();
         }
 
         public IActionResult OnPost()
@@ -59,9 +63,8 @@ namespace PetClinic.Pages.Customer.PetHealthManagement
                 userId = int.Parse(userIdString);
             }
 
-            PetHealth.PetId = PetId;
             petHealthService.AddPetHealth(PetHealth);
-
+            
             return RedirectToPage("/Customer/PetManagement/Index") ;
         }
     }

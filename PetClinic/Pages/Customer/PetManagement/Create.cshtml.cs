@@ -46,7 +46,7 @@ namespace PetClinic.Pages.Customer.PetManagement
         public Pet Pet { get; set; } = default!;
 
         [BindProperty]
-        public int PetId { get; set; } = default!;
+        public int newPetId { get; set; } = default!;
 
         [BindProperty]
         public PetHealth PetHealth { get; set; } = default!;
@@ -68,9 +68,9 @@ namespace PetClinic.Pages.Customer.PetManagement
             Pet.ActiveStatus = 1;
             petService.AddPet(Pet);
 
-            TempData["PetId"] = Pet.PetId;
+            var newPetId = Pet.PetId;
 
-            return RedirectToPage("/Customer/PetHealthManagement/Create", new { id = newPetId });
+            return RedirectToPage("/Customer/PetHealthManagement/Create", new { petId = newPetId });
         }
     }
 }
