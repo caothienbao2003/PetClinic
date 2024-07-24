@@ -2,108 +2,234 @@
 @model PetClinic.Pages.Doctor.MedicalRecordManagement.CreateVaccinationModel
 
 @{
-    ViewData["Title"] = "CreateVaccination";
+    ViewData["Title"] = "Create Vaccination";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
-<h1>CreateVaccination</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-<h4>VaccinationRecord</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" onsubmit="return validateForm()">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="VaccinationRecord.VaccinationDate" class="control-label"></label>
-                <input asp-for="VaccinationRecord.VaccinationDate" class="form-control" />
-                <span asp-validation-for="VaccinationRecord.VaccinationDate" class="text-danger"></span>
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        .form-group label {
+            color: #4CAF50;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-primary:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-success:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-warning {
+            background-color: #ff9800;
+            border-color: #ff9800;
+        }
+
+            .btn-warning:hover {
+                background-color: #e68900;
+                border-color: #e68900;
+            }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+            .form-group:last-child {
+                margin-right: 0;
+            }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+    <div class="content">
+        <h4>Vaccination Record</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" onsubmit="return validateForm()">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="VaccinationRecord.VaccinationDate" class="control-label">Vaccination Date</label>
+                            <input asp-for="VaccinationRecord.VaccinationDate" class="form-control" />
+                            <span asp-validation-for="VaccinationRecord.VaccinationDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="VaccinationRecord.NextDueDate" class="control-label">Next Due Date</label>
+                            <input asp-for="VaccinationRecord.NextDueDate" class="form-control" />
+                            <span asp-validation-for="VaccinationRecord.NextDueDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="VaccinationRecord.VaccinatedAt" class="control-label">Vaccinated At</label>
+                            <input asp-for="VaccinationRecord.VaccinatedAt" class="form-control" value="Pet Health Clinic" />
+                            <span asp-validation-for="VaccinationRecord.VaccinatedAt" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="VaccinationRecord.PetHealthId" value="@ViewData["PetHealthIdValue"]" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="VaccinationRecord.MedicineId" class="control-label">Vaccine</label>
+                            <select asp-for="VaccinationRecord.MedicineId" class="form-control" asp-items="ViewBag.MedicineId"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="VaccinationRecord.NextDueDate" class="control-label"></label>
-                <input asp-for="VaccinationRecord.NextDueDate" class="form-control" />
-                <span asp-validation-for="VaccinationRecord.NextDueDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VaccinationRecord.VaccinatedAt" class="control-label"></label>
-                <input asp-for="VaccinationRecord.VaccinatedAt" class="form-control" />
-                <span asp-validation-for="VaccinationRecord.VaccinatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="VaccinationRecord.PetHealthId" value="@ViewData["PetHealthIdValue"]" />
-            </div>
-            <div class="form-group">
-                <label asp-for="VaccinationRecord.MedicineId" class="control-label"></label>
-                <select asp-for="VaccinationRecord.MedicineId" class ="form-control" asp-items="ViewBag.MedicineId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        <hr />
+        <h4>Vaccination Records</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Vaccination Date</th>
+                    <th>Next Due Date</th>
+                    <th>Vaccinated At</th>
+                    <th>Verification</th>
+                    <th>Medicine</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.VaccinationRecordsList)
+                {
+                    <tr>
+                        <td>@record.VaccinationDate</td>
+                        <td>@record.NextDueDate</td>
+                        <td>@record.VaccinatedAt</td>
+                        <td>@(record.Verification.HasValue && record.Verification.Value ? "Verified" : "Not Verified")</td>
+                        <td>@record.Medicine.MedicineName</td>
+                        <td>
+                            @if (!record.Verification.HasValue || !record.Verification.Value)
+                            {
+                                <form method="post" asp-page-handler="ToggleVerification">
+                                    <input type="hidden" name="recordId" value="@record.VaccinationRecordId" />
+                                    <input type="hidden" name="petHealthId" value="@ViewData["PetHealthIdValue"]" />
+                                    <button type="submit" class="btn btn-sm btn-warning">Confirm the verification</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div>
+            <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecordId" class="btn btn-success">Create Prescription</a>
+        </div>
     </div>
-</div>
 
-<hr />
-<h4>Vaccination Records</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Vaccination Date</th>
-            <th>Next Due Date</th>
-            <th>Vaccinated At</th>
-            <th>Verification</th>
-            <th>Medicine</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var record in Model.VaccinationRecordsList)
-        {
-            <tr>
-                <td>@record.VaccinationDate</td>
-                <td>@record.NextDueDate</td>
-                <td>@record.VaccinatedAt</td>
-                <td>@(record.Verification.HasValue && record.Verification.Value ? "Verified" : "Not Verified")</td>
-                <td>@record.Medicine.MedicineName</td>
-                <td>
-                    @if (!record.Verification.HasValue || !record.Verification.Value)
-                    {
-                        <form method="post" asp-page-handler="ToggleVerification">
-                            <input type="hidden" name="recordId" value="@record.VaccinationRecordId" />
-                            <input type="hidden" name="petHealthId" value="@ViewData["PetHealthIdValue"]" />
-                            <button type="submit" class="btn btn-sm btn-warning">Confirm the verification</button>
-                        </form>
-                    }
-                </td>
-            </tr>
+    <footer>
+        © 2024 - PetClinic - <a href="/Privacy" style="color: white;">Privacy</a>
+    </footer>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
-    </tbody>
-</table>
+        <script>
+            function validateForm() {
+                var vaccinationDate = new Date(document.querySelector('[name="VaccinationRecord.VaccinationDate"]').value);
+                var nextDueDate = new Date(document.querySelector('[name="VaccinationRecord.NextDueDate"]').value);
+                var currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
 
+                if (vaccinationDate > currentDate) {
+                    alert("Vaccination date must not be in the future.");
+                    return false;
+                }
 
-<div>
-    <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecordId" class="btn btn-success">Create Prescription</a>
-</div>
+                if (nextDueDate <= currentDate) {
+                    alert("Next due date must at least one day in the future.");
+                    return false;
+                }
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        function validateForm() {
-            var vaccinationDate = new Date(document.querySelector('[name="VaccinationRecord.VaccinationDate"]').value);
-            var nextDueDate = new Date(document.querySelector('[name="VaccinationRecord.NextDueDate"]').value);
-            var currentDate = new Date();
-            currentDate.setHours(0, 0, 0, 0);
-
-            if (vaccinationDate > currentDate) {
-                alert("Vaccination date must not be in the future.");
-                return false;
+                return true;
             }
-
-            if (nextDueDate <= currentDate) {
-                alert("Next due date must at least one day in the future.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
-}
+        </script>
+    }
+</body>
+</html>

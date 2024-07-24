@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinicBussinessObject;
+using PetClinicServices;
 using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Doctor.MedicalRecordManagement
@@ -14,12 +15,14 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
     {
         private readonly IPetService petService;
         private readonly IMedicineService medicineService;
+        private readonly IMedicineTypeService medicineTypeService;
         private readonly IVaccinationRecordService vaccinationRecordService;
 
-        public CreateVaccinationModel(IPetService _petService, IMedicineService _medicineService, IVaccinationRecordService _vaccinationRecordService)
+        public CreateVaccinationModel(IPetService _petService, IMedicineService _medicineService, IMedicineTypeService _medicineTypeService, IVaccinationRecordService _vaccinationRecordService)
         {
             petService = _petService;
             medicineService = _medicineService;
+            medicineTypeService = _medicineTypeService;
             vaccinationRecordService = _vaccinationRecordService;
         }
 
@@ -31,13 +34,16 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
         [BindProperty]
         public List<VaccinationRecord>? VaccinationRecordsList { get; set; } = default!;
-        
+
+        [BindProperty]
+        public int? MedicineTypeId { get; set; }
+
         public int MedicalRecordId { get; set; }
         
         public IActionResult OnGet(int petHealthId, int medicalRecordId)
         {
-            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
-            ViewData["PetHealthIdValue"] = petHealthId;
+            var medicines = medicineService.GetMedicineList().Where(m => m.MedicineType.MedicineTypeName == "Vaccine").ToList();
+            ViewData["MedicineId"] = new SelectList(medicines, "MedicineId", "MedicineName");
 
             MedicalRecordId = medicalRecordId;
             VaccinationRecordsList = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(petHealthId);

@@ -61,7 +61,8 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Doctor</th>
-                    <th>Cancel</th>
+                    <th>Detail</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,7 +92,16 @@
                                 }
                             </td>
                             <td>
-                                @if (item.BookingStatus != (int)BookingStatus.Canceled)
+                                <form method="post" asp-page-handler="Detail" asp-route-detail="@item.BookingId">
+                                    <button type="submit" name="id">Detail</button>
+                                </form>
+                            </td>
+                            <td>
+                                @if (item.BookingStatus == (int)BookingStatus.Completed)
+                                {
+                                    <a asp-page="/Customer/BookingManagement/MedicalRecordDetails" asp-route-bookid="@item.BookingId">View Medical Records</a>
+                                }
+                                else if (item.BookingStatus != (int)BookingStatus.Canceled)
                                 {
                                     <form method="post" asp-page-handler="Cancel" asp-route-id="@item.BookingId">
                                         <button type="submit" name="cancel">Cancel</button>

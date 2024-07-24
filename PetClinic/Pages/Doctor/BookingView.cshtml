@@ -2,6 +2,7 @@
 @using PetClinicBussinessObject
 @model PetClinic.Pages.Doctor.BookingViewModel
 @{
+    Layout = null;
     ViewData["Title"] = "Booking View Page";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -18,14 +19,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pet Clinic Homepage</title>
     <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <style>
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #4CAF50;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+            .navbar a {
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                .navbar a:hover {
+                    background-color: #45a049;
+                    color: black;
+                }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+            .user-info span {
+                color: white;
+                margin-right: 10px;
+            }
+
+            .user-info button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+                .user-info button:hover {
+                    background-color: #45a049;
+                }
+
+        table.table th, table.table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table.table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table.table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table.table tr:hover {
+            background-color: #ddd;
+        }
+
+        table.table td a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+            table.table td a:hover {
+                color: #45a049;
+            }
+    </style>
 </head>
 
 <header>
-    <h1>Pet Clinic</h1>
-</header>
-
-<header>
-    <h1>History Log</h1>
+    <h1>Booking List</h1>
 </header>
 
 <nav class="navbar navbar-expand-sm">
@@ -34,54 +114,53 @@
     <a asp-page="/Doctor/ScheduleManagement/ViewSchedule">View Schedule</a>
 </nav>
 
-
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
     <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
+    <a asp-page="/Authentication/Logout"><button>Logout</button></a>
 </div>
 
-<table class="table">
+<form method="post" style="margin-top: 20px;">
+    <label>Start Date: </label>
+    <input type="date" asp-for="StartDate" />
+    <label>End Date: </label>
+    <input type="date" asp-for="EndDate" />
+    <div style="margin-top: 10px;">
+        <label>Booking Status:</label>
+        <select asp-for="BookingStatus">
+            <option value="">--Select--</option>
+            @foreach (var status in Enum.GetValues(typeof(BookingStatus)))
+            {
+                <option value="@status">@status</option>
+            }
+        </select>
+        <input type="text" asp-for="CustomerName" placeholder="Customer Name" />
+        <input type="text" asp-for="PetName" placeholder="Pet Name" />
+        <button type="submit" asp-page-handler="Search">Search</button>
+    </div>
+</form>
+
+<table class="table" style="width: 100%; margin-top: 20px;">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Pet.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Pet)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.BookingList[0].Pet!.Customer)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingList[0].Pet)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingList[0].Schedule!.Date)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingList[0].Schedule!.Shift)</th>
+            <th>@Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.BookingList)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.Pet!.Customer!.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Pet!.PetName)</td>
+                <td>@item.Schedule!.Date!.Value.ToString("dd/MM/yyyy")</td>
+                <td>@item.Schedule.Shift!.StartTime - @item.Schedule.Shift.EndTime</td>
+                <td>@((BookingStatus)item.BookingStatus!)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pet.Customer.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pet.PetName)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.BookingAt)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
-                </td>
-                <td>
-                    @((BookingStatus)item.BookingStatus)
-                </td>
-                <td>
-                    @* <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> | *@
                     @if (item.BookingStatus == (int)BookingStatus.Pending)
                     {
                         <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord" asp-route-bookid="@item.BookingId">Create Medical Records</a>
@@ -90,9 +169,12 @@
                     {
                         <a asp-page="/Doctor/MedicalRecordManagement/MedicalRecordDetails" asp-route-bookid="@item.BookingId">View Medical Records</a>
                     }
-
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<footer>
+    © 2024 - PetClinic - <a href="/Privacy" style="color: white;">Privacy</a>
+</footer>
