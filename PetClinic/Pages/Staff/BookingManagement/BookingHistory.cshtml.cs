@@ -59,14 +59,14 @@ namespace PetClinic.Pages.Staff.BookingManagement
             Console.WriteLine("Search");
         }
 
-        public void OnPostConfirm(int? id)
+        public void OnPostConfirm(int? detail)
         {
-            if (id == null)
+            if (detail == null)
             {
                 return;
             }
 
-            var booking = bookingService.GetBookingById(id.Value);
+            var booking = bookingService.GetBookingById(detail.Value);
 
             if (booking != null)
             {
@@ -75,7 +75,7 @@ namespace PetClinic.Pages.Staff.BookingManagement
                 bookingService.UpdateBooking(booking);
             }
 
-            Response.Redirect("./BookingHistory");
+			Response.Redirect("./BookingHistory");
         }
 
         public void OnPostCancel(int? id)

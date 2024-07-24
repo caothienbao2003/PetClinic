@@ -46,10 +46,7 @@ namespace PetClinic.Pages.Customer.PetManagement
         public List<Medicine> MedicineList { get; set; } = new List<Medicine>();
 
         [BindProperty]
-        public VaccinationRecord NewVaccinationRecord { get; set; }
-
-        public List<VaccinationRecordViewModel> VaccinationRecordViewModelList { get; set; }
-        
+        public VaccinationRecord NewVaccinationRecord { get; set; }        
         [BindProperty(SupportsGet = true)]
         public int PetId { get; set; }
 

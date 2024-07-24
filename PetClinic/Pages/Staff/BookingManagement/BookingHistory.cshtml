@@ -137,7 +137,7 @@ else
                             }
                         </td>
                         <td>
-                            @if (item.BookingStatus != (int)BookingStatus.Canceled)
+                            @if (item.BookingStatus == (int)BookingStatus.Unconfirmed)
                             {
                                 <form method="post" asp-page-handler="Cancel" asp-route-id="@item.BookingId">
                                     <button type="submit" name="cancel">Cancel</button>

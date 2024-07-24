@@ -30,7 +30,7 @@ namespace PetClinic.Pages.Doctor
         public DateTime? EndDate { get; set; }
 
         [BindProperty]
-        public BookingStatus? BookingStatus { get; set; }
+        public BookingStatus? BookingStatusFilter { get; set; }
 
         [BindProperty]
         public string? CustomerName { get; set; }
@@ -50,7 +50,7 @@ namespace PetClinic.Pages.Doctor
 
 
                 BookingList = bookingService.GetAll()
-                        .Where(b => b.DoctorId == userId)
+                        .Where(b => b.DoctorId == userId && (b.BookingStatus == (int) BookingStatus.Pending || b.BookingStatus == (int) BookingStatus.Completed))
                         .OrderBy(b => (int)b.BookingStatus!)
                         .ToList();
             }
@@ -60,7 +60,7 @@ namespace PetClinic.Pages.Doctor
 
         public void OnPostSearch()
         {
-            BookingList = bookingService.SearchBy(StartDate, EndDate, null, (int?)BookingStatus, null, null, CustomerName, PetName);
+            BookingList = bookingService.SearchBy(StartDate, EndDate, null, (int?)BookingStatusFilter, null, null, CustomerName, PetName);
 
             Console.WriteLine("Search");
         }

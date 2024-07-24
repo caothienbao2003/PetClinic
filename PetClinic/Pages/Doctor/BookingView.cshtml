@@ -127,7 +127,7 @@
     <input type="date" asp-for="EndDate" />
     <div style="margin-top: 10px;">
         <label>Booking Status:</label>
-        <select asp-for="BookingStatus">
+        <select asp-for="BookingStatusFilter">
             <option value="">--Select--</option>
             @foreach (var status in Enum.GetValues(typeof(BookingStatus)))
             {

@@ -89,17 +89,17 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Pet.PetName" class="control-label">Name of your Pet</label>
-                    <input asp-for="Pet.PetName" class="form-control" />
+                    <input asp-for="Pet.PetName" class="form-control" required/>
                     <span asp-validation-for="Pet.PetName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Pet.PetType" class="control-label">Animal Type</label>
-                    <input asp-for="Pet.PetType" class="form-control" />
+                    <input asp-for="Pet.PetType" class="form-control" required />
                     <span asp-validation-for="Pet.PetType" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Pet.PetAge" class="control-label">Age</label>
-                    <input asp-for="Pet.PetAge" class="form-control" />
+                    <input asp-for="Pet.PetAge" class="form-control" required />
                     <span asp-validation-for="Pet.PetAge" class="text-danger"></span>
                 </div>
                 <div class="form-group">
