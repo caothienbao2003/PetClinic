@@ -74,3 +74,44 @@
     margin-bottom: 20px;
     text-align: center;
 }
+
+.empty-pet-list-message {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    color: #856404;
+    font-size: 18px;
+    text-align: center;
+}
+
+    .empty-pet-list-message a {
+        color: #004085;
+        text-decoration: underline;
+    }
+
+        .empty-pet-list-message a:hover {
+            color: #002752;
+            text-decoration: none;
+        }
+
+.back-to-list-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-to-list-link {
+    font-size: 18px;
+    color: #4CAF50;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+    .back-to-list-link:hover {
+        background-color: #007bff;
+        color: #fff;
+    }

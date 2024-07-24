@@ -14,23 +14,41 @@
     }
 }
 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
     <link rel="stylesheet" href="~/css/customerBookingChoosePet.css" />
+
 </head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/Customer/PetManagement/Index">My Pets</a>
+    <a asp-page="/Customer/PetHealthManagement/Index">Pet Healths</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+</nav>
 
 <div class="choose-pet-container">
     <h1 class="choose-pet-header">Choose Pet</h1>
 
     @if (Model.PetList == null || Model.PetList.Count == 0)
     {
-        <div>Your pet list is empty <a asp-page="/Customer/PetManagement/Create">Click here to create pet</a></div>
+        <div class="empty-pet-list-message">
+            Your pet list is empty <a asp-page="/Customer/PetManagement/Create">Click here to create a pet</a>
+        </div>
     }
     else
     {
         <div class="form-container">
-            <h4 class="information">Pet Information</h4>
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -45,7 +63,7 @@
         </div>
     }
 
-    <div>
-        <a asp-page="BookingHistory">Back to List</a>
+    <div class="back-to-list-container">
+        <a asp-page="BookingHistory" class="back-to-list-link">Back to List</a>
     </div>
 </div>

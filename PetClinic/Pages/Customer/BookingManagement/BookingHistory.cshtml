@@ -37,6 +37,8 @@
     <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
 </nav>
 
+
+
 <body>
     <h1>Booking History</h1>
 
@@ -44,62 +46,70 @@
         <a asp-page="ChoosePet" class="create-new-button">Create New</a>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.BookingList[0].BookingAt)</th>
-                <th>@Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.BookingList[0].Pet)</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Doctor</th>
-                <th>Detail</th>
-                <th>Cancel</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.BookingList != null && Model.BookingList.Count > 0)
-            {
-                foreach (var item in Model.BookingList)
+
+    @if (Model.BookingList == null || Model.BookingList.Count == 0)
+    {
+        <div class="no-booking-message">There's no booking yet</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.BookingList[0].BookingAt)</th>
+                    <th>@Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.BookingList[0].Pet)</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Doctor</th>
+                    <th>Detail</th>
+                    <th>Cancel</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.BookingList != null && Model.BookingList.Count > 0)
                 {
-                    <tr>
-                        <td>@item.BookingAt</td>
-                        <td>@((BookingPaymentStatus)item.PaymentStatus)</td>
-                        <td>@((BookingStatus)item.BookingStatus)</td>
-                        <td>@item.Pet.PetName</td>
-                        <td>@item.Schedule.Date.Value.ToString("dd/MM/yyyy")</td>
-                        <td>@item.Schedule.Shift.StartTime - @item.Schedule.Shift.EndTime</td>
-                        <td>
-                            @if (item.Doctor != null)
-                            {
-                                <div>
-                                    @item.Doctor.FirstName @item.Doctor.LastName
-                                </div>
-                            }
-                            else
-                            {
-                                <div>
-                                    No doctor selected!
-                                </div>
-                            }
-                        </td>
-                        <td>
-                            <form method="post" asp-page-handler="Detail" asp-route-detail="@item.BookingId">
-                                <button type="submit" name="id">Detail</button>
-                            </form>
-                        </td>
-                        <td>
-                            @if (item.BookingStatus != (int)BookingStatus.Canceled)
-                            {
-                                <form method="post" asp-page-handler="Cancel" asp-route-id="@item.BookingId">
-                                    <button type="submit" name="cancel">Cancel</button>
+                    foreach (var item in Model.BookingList)
+                    {
+                        <tr>
+                            <td>@item.BookingAt</td>
+                            <td>@((BookingPaymentStatus)item.PaymentStatus)</td>
+                            <td>@((BookingStatus)item.BookingStatus)</td>
+                            <td>@item.Pet.PetName</td>
+                            <td>@item.Schedule.Date.Value.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Schedule.Shift.StartTime - @item.Schedule.Shift.EndTime</td>
+                            <td>
+                                @if (item.Doctor != null)
+                                {
+                                    <div>
+                                        @item.Doctor.FirstName @item.Doctor.LastName
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        No doctor selected!
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                <form method="post" asp-page-handler="Detail" asp-route-detail="@item.BookingId">
+                                    <button type="submit" name="id">Detail</button>
                                 </form>
-                            }
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                @if (item.BookingStatus != (int)BookingStatus.Canceled)
+                                {
+                                    <form method="post" asp-page-handler="Cancel" asp-route-id="@item.BookingId">
+                                        <button type="submit" name="cancel">Cancel</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    }
 </body>
