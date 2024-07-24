@@ -47,46 +47,46 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.BookingAt)
+                BookingAt
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Booking.BookingAt)
+                @Model.Booking.BookingAt)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.PaymentStatus)
+                Payment Status
             </dt>
             <dd class="col-sm-10">
                 @((BookingPaymentStatus)Model.Booking.PaymentStatus)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.BookingStatus)
+                BookingStatus
             </dt>
             <dd class="col-sm-10">
                 @((BookingStatus)Model.Booking.BookingStatus)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.Doctor)
+                Doctor
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Booking.Doctor.FirstName)
+                @Model.Booking.Doctor.FirstName
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.Pet)
+                Pet
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Booking.Pet.PetId)
+                @Model.Booking.Pet.PetName
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.Schedule)
+                Schedule
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Booking.Schedule.ScheduleId)
+                @Model.Booking.Schedule.ScheduleId
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Booking.Service)
+                Service
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Booking.Service.ServiceId)
+                @Model.Booking.Service.ServiceId)
             </dd>
         </dl>
     </div>
