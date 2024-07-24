@@ -107,7 +107,7 @@ namespace PetClinic.Pages.Authentication
 					HttpContext.Session.SetString("UserId", user.UserId.ToString());
 					HttpContext.Session.SetString("Role", user.Role.ToString());
 
-					return RedirectToPage("/Privacy");
+					return RedirectToPage("/Customer/CustomerHomePage");
 				}
 				else
 				{
