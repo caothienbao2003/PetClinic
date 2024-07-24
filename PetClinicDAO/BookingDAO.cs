@@ -46,7 +46,13 @@ namespace PetClinicDAO
 
         public Booking? GetBookingById(int id)
         {
-            return context.Bookings.Include(p => p.Pet).FirstOrDefault(b => b.BookingId == id);
+            return context.Bookings.Include(p => p.Pet)
+                .Include(b => b.Pet.Customer)
+                .Include(b => b.Doctor)
+                .Include(b => b.Schedule)
+                .Include(b => b.Service)
+                .Include(b => b.Schedule.Shift)
+                .Include(b => b.Doctor).FirstOrDefault(b => b.BookingId == id);
         }
 
         public void Add(Booking booking)

@@ -17,7 +17,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         private readonly IMedicineTypeService medicineTypeService;
         private readonly IPrescriptionService prescriptionService;
 
-        public CreatePrescriptionModel(IMedicineService _medicineService, IMedicineTypeService _medicineTypeService ,IPrescriptionService _prescriptionService)
+        public CreatePrescriptionModel(IMedicineService _medicineService, IMedicineTypeService _medicineTypeService, IPrescriptionService _prescriptionService)
         {
             medicineService = _medicineService;
             medicineTypeService = _medicineTypeService;
@@ -31,6 +31,9 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         public int MedicalRecordId { get; set; }
 
         [BindProperty]
+        public int? MedicineTypeId { get; set; }
+
+        [BindProperty]
         public Prescription Prescription { get; set; }
 
         [BindProperty]
@@ -39,8 +42,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         public IActionResult OnGet(int medicalRecordId)
         {
             MedicalRecordId = medicalRecordId;
-            ViewData["MedicineTypeId"] = medicineTypeService.GetMedicineTypeList();
-            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
+            SetViewBags();
             LoadPrescriptionMedicinesFromSession();
             return Page();
         }
@@ -49,7 +51,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         {
             UpdatePrescriptionMedicinesInSession();
             LoadPrescriptionMedicinesFromSession();
-            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
+            SetViewBags();
             return Page();
         }
 
@@ -57,8 +59,16 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         {
             RemoveMedicineFromSession(medicineId);
             LoadPrescriptionMedicinesFromSession();
-            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
+            SetViewBags();
             return Page();
+        }
+
+        private void SetViewBags()
+        {
+            var medicineTypes = medicineTypeService.GetMedicineTypeList();
+            ViewData["MedicineTypeId"] = new SelectList(medicineTypes ?? new List<MedicineType>(), "MedicineTypeId", "MedicineTypeName");
+
+            ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
         }
 
         public IActionResult OnPostSave()

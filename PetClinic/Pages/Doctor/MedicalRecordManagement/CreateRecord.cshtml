@@ -61,18 +61,19 @@
             <form method="post">
             <!-- Medical Information -->
             <div class="form-group">
-                <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label"></label>
-                <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
-                <span asp-validation-for="MedicalRecord.MedicalRecordDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label class="control-label">Doctor</label>
                 <input type="text" class="form-control" value="@Model.Book.Doctor.FirstName" readonly />
                 <input type="hidden" asp-for="MedicalRecord.DoctorId" value="@Model.Book.DoctorId" />
             </div>
 
             <div class="form-group">
-                <label asp-for="MedicalRecord.ServiceId" class="control-label"></label>
+                <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label">Medical Record Description</label>
+                <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
+                <span asp-validation-for="MedicalRecord.MedicalRecordDescription" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="MedicalRecord.ServiceId" class="control-label">Service</label>
                 <select asp-for="MedicalRecord.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
             </div>
             <div class="form-group">
@@ -95,7 +96,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="/Doctor/BookingView">Back to Booking List</a>
 </div>
 
 @section Scripts {

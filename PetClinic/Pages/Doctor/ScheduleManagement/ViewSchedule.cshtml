@@ -11,6 +11,24 @@
     <link rel="stylesheet" href="~/css/khoiadminstyle.css" />
 
 </head>
+
+<header>
+    <h1>Schedule</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Doctor/BookingView">Bookings</a>
+    <a asp-page="/Doctor/HospitalizeList">Hospitalization</a>
+    <a asp-page="/Doctor/ScheduleManagement/ViewSchedule">View Schedule</a>
+</nav>
+
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName</span>
+    <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
+    <a asp-page="/Authentication/Logout"><button>Logout</button></a>
+</div>
+
 <body>
     <div class="container">
         <main class="main-content">

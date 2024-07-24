@@ -25,7 +25,7 @@ namespace PetClinic.Pages.Doctor
         public IActionResult OnGet()
         {
             BookingList = bookingService.GetAll();
-            string userIdString = HttpContext.Session.GetString("UserId");
+            string userIdString = HttpContext.Session.GetString("UserId")!;
 
             if (userIdString != null)
             {
@@ -35,7 +35,7 @@ namespace PetClinic.Pages.Doctor
 
                 BookingList = bookingService.GetAll()
                         .Where(b => b.DoctorId == userId)
-                        .OrderBy(b => (int)b.BookingStatus)
+                        .OrderBy(b => (int)b.BookingStatus!)
                         .ToList();
             }
 

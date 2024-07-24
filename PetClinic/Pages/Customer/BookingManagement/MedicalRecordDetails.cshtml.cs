@@ -10,7 +10,7 @@ using PetClinicBussinessObject;
 using PetClinicServices;
 using PetClinicServices.Interface;
 
-namespace PetClinic.Pages.Doctor.MedicalRecordManagement
+namespace PetClinic.Pages.Customer.BookingManagement.MedicalRecordManagement
 {
     public class MedicalRecordDetailsModel : PageModel
     {

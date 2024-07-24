@@ -1,16 +1,8 @@
 ﻿@page
-@model PetClinic.Pages.Doctor.MedicalRecordManagement.MedicalRecordDetailsModel
+@model PetClinic.Pages.Customer.BookingManagement.MedicalRecordManagement.MedicalRecordDetailsModel
 
 @{
     ViewData["Title"] = "MedicalRecordDetails";
-
-    var userId = HttpContext.Session.GetString("UserId");
-    var role = HttpContext.Session.GetString("Role");
-
-    if (userId == null || role != "2")
-    {
-        Response.Redirect("/Authentication/Login");
-    }
 }
 
 <h1>Medical Record Details</h1>
@@ -100,5 +92,5 @@
         }
 
         <div>
-            <a asp-page="/Doctor/BookingView">Back to Booking</a>
+            <a asp-page="/Customer/BookingManagement/BookingHistory">Back to Booking</a>
         </div>

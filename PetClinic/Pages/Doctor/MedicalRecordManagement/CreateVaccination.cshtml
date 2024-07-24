@@ -3,6 +3,14 @@
 
 @{
     ViewData["Title"] = "CreateVaccination";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "2")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
 <h1>CreateVaccination</h1>
@@ -14,25 +22,25 @@
         <form method="post" onsubmit="return validateForm()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="VaccinationRecord.VaccinationDate" class="control-label"></label>
+                <label asp-for="VaccinationRecord.VaccinationDate" class="control-label">Vaccination Date</label>
                 <input asp-for="VaccinationRecord.VaccinationDate" class="form-control" />
                 <span asp-validation-for="VaccinationRecord.VaccinationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VaccinationRecord.NextDueDate" class="control-label"></label>
+                <label asp-for="VaccinationRecord.NextDueDate" class="control-label">Next Due Date</label>
                 <input asp-for="VaccinationRecord.NextDueDate" class="form-control" />
                 <span asp-validation-for="VaccinationRecord.NextDueDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VaccinationRecord.VaccinatedAt" class="control-label"></label>
-                <input asp-for="VaccinationRecord.VaccinatedAt" class="form-control" />
+                <label asp-for="VaccinationRecord.VaccinatedAt" class="control-label">Vaccinated At</label>
+                <input asp-for="VaccinationRecord.VaccinatedAt" class="form-control" value="Pet Health Clinic" />
                 <span asp-validation-for="VaccinationRecord.VaccinatedAt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="hidden" asp-for="VaccinationRecord.PetHealthId" value="@ViewData["PetHealthIdValue"]" />
             </div>
             <div class="form-group">
-                <label asp-for="VaccinationRecord.MedicineId" class="control-label"></label>
+                <label asp-for="VaccinationRecord.MedicineId" class="control-label">Vaccine</label>
                 <select asp-for="VaccinationRecord.MedicineId" class ="form-control" asp-items="ViewBag.MedicineId"></select>
             </div>
             <div class="form-group">

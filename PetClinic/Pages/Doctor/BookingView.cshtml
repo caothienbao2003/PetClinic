@@ -21,11 +21,7 @@
 </head>
 
 <header>
-    <h1>Pet Clinic</h1>
-</header>
-
-<header>
-    <h1>History Log</h1>
+    <h1>Booking List</h1>
 </header>
 
 <nav class="navbar navbar-expand-sm">
@@ -38,22 +34,23 @@
 <div class="user-info">
     <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
     <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
+    <a asp-page="/Authentication/Logout"><button>Logout</button></a>
 </div>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Pet.Customer)
+                @Html.DisplayNameFor(model => model.BookingList[0].Pet!.Customer)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].Pet)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
-            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
+                @Html.DisplayNameFor(model => model.BookingList[0].Schedule!.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingList[0].Schedule!.Shift)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
@@ -66,22 +63,21 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pet.Customer.FirstName)
+                    @Html.DisplayFor(modelItem => item.Pet!.Customer!.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pet.PetName)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.BookingAt)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
+                    @Html.DisplayFor(modelItem => item.Pet!.PetName)
                 </td>
                 <td>
-                    @((BookingStatus)item.BookingStatus)
+                    @item.Schedule!.Date!.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>        
+                    @item.Schedule.Shift!.StartTime - @item.Schedule.Shift.EndTime
                 </td>
                 <td>
-                    @* <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> | *@
+                    @((BookingStatus)item.BookingStatus!)
+                </td>
+                <td>
                     @if (item.BookingStatus == (int)BookingStatus.Pending)
                     {
                         <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord" asp-route-bookid="@item.BookingId">Create Medical Records</a>

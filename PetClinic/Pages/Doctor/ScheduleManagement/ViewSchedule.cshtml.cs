@@ -9,6 +9,7 @@ namespace PetClinic.Pages.Doctor.ScheduleManagement
     {
         private readonly IScheduleService scheduleService;
         private readonly IShiftService shiftService;
+
         public ViewScheduleModel(IScheduleService scheduleService, IShiftService shiftService)
         {
             this.scheduleService = scheduleService;
@@ -23,7 +24,8 @@ namespace PetClinic.Pages.Doctor.ScheduleManagement
         public DateTime SelectedDate { get; set; }
         [BindProperty]
         public List<Shift> ShiftList { get; set; }
-
+        [BindProperty]
+        public User user { get; set; } = default!;
         [BindProperty]
         public List<Schedule> ScheduleList { get; set; }
 

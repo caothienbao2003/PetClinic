@@ -23,9 +23,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MedicalRecordId" value="@Model.MedicalRecordId" />
             <input type="hidden" asp-for="Prescription.PrescriptionId" />
+
             <div class="form-group">
-                <label asp-for="PrescriptionMedicine.MedicineId" class="control-label"></label>
-                <select asp-for="PrescriptionMedicine.MedicineId" class="form-control" asp-items="ViewBag.MedicineId"></select>
+                <label asp-for="MedicineTypeId" class="control-label">Medicine Type</label>
+                <select asp-for="MedicineTypeId" class="form-control" onchange="filterMedicines()">
+                    <option value="">Select Medicine Type</option>
+                    @if (ViewBag.MedicineTypeId != null)
+                    {
+                        foreach (var type in ViewBag.MedicineTypeId)
+                        {
+                            <option value="@type.Value">@type.Text</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PrescriptionMedicine.MedicineId" class="control-label">Medicine</label>
+                <select asp-for="PrescriptionMedicine.MedicineId" class="form-control" asp-items="@(new SelectList(ViewBag.MedicineId, "Value", "Text"))"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PrescriptionMedicine.MedicineQuantity" class="control-label"></label>
@@ -75,13 +90,26 @@
     <input type="submit" value="Save Prescription" class="btn btn-success" />
 </form>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        function filterMedicines() {
+            var typeId = $('#MedicineTypeId').val();
+            $.ajax({
+                url: '@Url.Page("/Doctor/MedicalRecordManagement/CreatePrescription", "FilterMedicines")',
+                type: 'GET',
+                data: { typeId: typeId },
+                success: function (data) {
+                    var $dropdown = $('#PrescriptionMedicine_MedicineId');
+                    $dropdown.empty();
+                    $.each(data, function (key, value) {
+                        $dropdown.append($('<option></option>').attr('value', value.medicineId).text(value.medicineName));
+                    });
+                }
+            });
+        }
+    </script>
 
 }
