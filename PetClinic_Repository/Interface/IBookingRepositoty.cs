@@ -17,6 +17,8 @@ namespace PetClinicRepository.Interface
         public List<Booking> GetBookingByUserId(int userId);
         public void Update(Booking booking);
         public Booking GetBooking(int petId, int scheduleId);
+        public Booking GetExistedBookingList(int petId, DateTime date, int shiftId);
+        public List<Booking> GetBookingListByDateAndShiftId(DateTime date, int shiftId);
 
     }
 }

@@ -89,11 +89,11 @@ namespace PetClinic.Pages.Customer.BookingManagement
             }
 
             //Update schedule number of occupation
-            int occupation = schedule.NoOfOccupation ?? default(int);
-            occupation++;
-            schedule.NoOfOccupation = occupation;
+            //int occupation = schedule.NoOfOccupation ?? default(int);
+            //occupation++;
+            //schedule.NoOfOccupation = occupation;
 
-            scheduleService.UpdateSchedule(schedule);
+            //scheduleService.UpdateSchedule(schedule);
 
             //Create booking
             Booking newBooking = new Booking

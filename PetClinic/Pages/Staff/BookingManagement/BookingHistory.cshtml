@@ -3,20 +3,42 @@
 @model PetClinic.Pages.Staff.BookingManagement.BookingHistoryModel
 
 @{
+    Layout = null;
     ViewData["Title"] = "BookingHistory";
 }
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <link rel="stylesheet" href="~/css/staffBookingHistory.css" />
+</head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/Customer/PetManagement/Index">My Pets</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+</nav>
+
 <h1>BookingHistory</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-
-<form method="post">
-    <label>Start Date: </label>
-    </><input type="date" asp-for="StartDate" />
-    <label>End Date: </label>
-    <input type="date" asp-for="EndDate" />
+<form method="post" class="search-form">
+    <div class="date-range">
+        <div>
+            <label>Start Date: </label>
+            <input type="date" asp-for="StartDate" />
+        </div>
+        <div>
+            <label>End Date: </label>
+            <input type="date" asp-for="EndDate" />
+        </div>
+    </div>
 
     <div>
         <label>Payment Status:</label>
@@ -57,70 +79,79 @@
     <button type="submit" asp-page-handler="Search">Search</button>
 </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Customer name
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
-            </th>
-            <th>
-                Doctor name
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Pet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingList[0].Service)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.BookingList)
-        {
+@if (Model.BookingList.Count == 0 || Model.BookingList == null)
+{
+    <div class="no-booking-message">
+        No booking found
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @item.Pet.Customer.FirstName @item.Pet.Customer.LastName
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookingAt)
-                </td>
-                <td>
-                    @((BookingPaymentStatus)item.PaymentStatus)
-                </td>
-                <td>
-                    @((BookingStatus)item.BookingStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Doctor.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pet.PetId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Service.ServiceId)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
-                    <a asp-page="./BookingDetail" asp-route-id="@item.BookingId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.BookingId">Delete</a>
-                </td>
+                <th>
+                    Customer name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingList[0].BookingAt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingList[0].PaymentStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingList[0].BookingStatus)
+                </th>
+                <th>
+                    Doctor name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingList[0].Pet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingList[0].Schedule)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingList[0].Service)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BookingList)
+            {
+                <tr>
+                    <td>
+                        @item.Pet.Customer.FirstName @item.Pet.Customer.LastName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingAt)
+                    </td>
+                    <td>
+                        @((BookingPaymentStatus)item.PaymentStatus)
+                    </td>
+                    <td>
+                        @((BookingStatus)item.BookingStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pet.PetId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.BookingId">Edit</a> |
+                        <a asp-page="./BookingDetail" asp-route-id="@item.BookingId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.BookingId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
