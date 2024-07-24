@@ -42,6 +42,9 @@ namespace PetClinic.Pages.Admin.AdminManageStaff
 		[BindProperty]
 		public string newSocialNumber { get; set; } = null!;
 		[BindProperty]
+		public decimal newEmployeeSalary { get; set; }
+
+		[BindProperty]
 		public int? Role { get; set; }
 		[BindProperty]
 		public int? ActiveStatus { get; set; }
@@ -90,6 +93,7 @@ namespace PetClinic.Pages.Admin.AdminManageStaff
 					Password = DAOUtilities.Instance.HashPassword(newPassword),
 					Gender = newGender,
 					SocialNumber = newSocialNumber,
+					EmployeeSalary = newEmployeeSalary,
 					Role = 1, // 1 is the role for a staff
 					ActiveStatus = 1
 				};
