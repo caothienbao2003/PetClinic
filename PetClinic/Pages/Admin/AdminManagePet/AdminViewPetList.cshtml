@@ -1,89 +1,91 @@
 ﻿@page
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using PetClinicBussinessObject
-@model AdminViewPetListModel
+@model PetClinic.Pages.Admin.AdminManagePet.AdminViewPetListModel
 @{
+    Layout = null;
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+    var email = HttpContext.Session.GetString("Email");
+
+    if (email != "admin@petclinic.com")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
-<h1>Pet List</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Pet Management</title>
+    <link rel="stylesheet" href="~/css/khoiadminstyle.css" />
+</head>
+<body>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+    @await Html.PartialAsync("_Header", Model)
 
-<form asp-page="/AdminViewPetList" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by Pet Name:
-            <input type="text" name="searchPetName" value="@ViewData["searchPetName"]" />
+    <div class="container">
+        @await Html.PartialAsync("_Sidebar")
 
-            Customer:
-            <input type="text" name="searchCustomer" value="@ViewData["searchCustomer"]" />
+        <main class="main-content">
+            <h1>Pet Management</h1>
 
-            Pet Type:
-            <select name="searchPetType">
-                <option value="">All</option>
-                @foreach (var petType in Model.petList)
-                {
-                    <option value="@petType.PetType">@petType.PetType</option>
-                }
-            </select>
+            <div class="service-management">
 
-            <input type="submit" value="Search" class="btn btn-primary" />
-        </p>
+                <form asp-page="/AdminViewPetList" method="get" class="form-inline">
+                    <div class="form-group">
+                        <label for="searchPetName">Find by Pet Name:</label>
+                        <input type="text" id="searchPetName" name="searchPetName" value="@Model.searchPetName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="searchCustomer">Customer:</label>
+                        <input type="text" id="searchCustomer" name="searchCustomer" value="@Model.searchCustomer" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="searchPetType">Pet Type:</label>
+                        <select id="searchPetType" name="searchPetType" class="form-control">
+                            <option value="">All</option>
+                            @foreach (var petType in Model.petTypes)
+                            {
+                                <option value="@petType">@petType</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+
+                <table class="service-table">
+                    <thead>
+                        <tr>
+                            <th>Pet ID</th>
+                            <th>Pet Name</th>
+                            <th>Pet Type</th>
+                            <th>Pet Age</th>
+                            <th>Customer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pet in Model.petList)
+                        {
+                            <tr>
+                                <td>@pet.PetId</td>
+                                <td>@pet.PetName</td>
+                                <td>@pet.PetType</td>
+                                <td>@pet.PetAge</td>
+                                <td>@pet.Customer?.FirstName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!-- Display error messages -->
+                <div class="form-group">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </div>
+            </div>
+            
+        </main>
     </div>
-</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.petList[0].PetId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.petList[0].PetName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.petList[0].PetType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.petList[0].PetAge)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.petList[0].Customer)
-            </th>
-            <th>
-                Update
-            </th>
-            <th>
-				Delete
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.petList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PetId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PetName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PetType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PetAge)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.PetId">Edit</a>
-                    <a asp-page="./Delete" asp-route-id="@item.PetId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    @await Html.PartialAsync("_Footer")
+</body>
+</html>

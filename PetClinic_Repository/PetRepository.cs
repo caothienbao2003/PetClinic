@@ -26,5 +26,15 @@ namespace PetClinicRepository
         public void RemovePet(int petId) => PetDAO.Instance.RemovePet(petId);
 
         public void UpdatePet(Pet pet) => PetDAO.Instance.UpdatePet(pet);
+
+        public List<Pet> SearchPets(string? petName, string? customer, string? petType)
+        {
+            return PetDAO.Instance.SearchPets(petName, customer, petType);
+        }
+
+        public List<string> GetAllPetTypes()
+        {
+            return PetDAO.Instance.GetAllPetTypes();
+        }
     }
 }

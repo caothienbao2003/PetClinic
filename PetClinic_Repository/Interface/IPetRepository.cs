@@ -17,5 +17,9 @@ namespace PetClinicRepository.Interface
         public void RemovePet(int petId);
         public void AddPet(Pet pet);
         public void UpdatePet(Pet pet);
+        public List<Pet> SearchPets(string? petName, string? customer, string? petType);
+
+        public List<string> GetAllPetTypes();
+
     }
 }
