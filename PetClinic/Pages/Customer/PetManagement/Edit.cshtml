@@ -20,7 +20,11 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Pet.PetId" />
+            <input type="hidden" asp-for="PetId" />
+            <input type="hidden" asp-for="Pet.CustomerId" />
+            <input type="hidden" asp-for="Pet.ActiveStatus" />
+            <input type="hidden" asp-for="PetHealth.PetHealthId" />
+            <input type="hidden" asp-for="PetHealth.PetId" />
             <div class="form-group">
                 <label asp-for="Pet.PetName" class="control-label"></label>
                 <input asp-for="Pet.PetName" class="form-control" />
@@ -35,6 +39,26 @@
                 <label asp-for="Pet.PetAge" class="control-label"></label>
                 <input asp-for="Pet.PetAge" class="form-control" />
                 <span asp-validation-for="Pet.PetAge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.OverallHealth" class="control-label"></label>
+                <input asp-for="PetHealth.OverallHealth" class="form-control" />
+                <span asp-validation-for="PetHealth.OverallHealth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.Conditions" class="control-label"></label>
+                <input asp-for="PetHealth.Conditions" class="form-control" />
+                <span asp-validation-for="PetHealth.Conditions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.Weight" class="control-label">Weight(kg)</label>
+                <input asp-for="PetHealth.Weight" class="form-control" />
+                <span asp-validation-for="PetHealth.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetHealth.WeightMeasurementDate" class="control-label"></label>
+                <input asp-for="PetHealth.WeightMeasurementDate" class="form-control" />
+                <span asp-validation-for="PetHealth.WeightMeasurementDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
