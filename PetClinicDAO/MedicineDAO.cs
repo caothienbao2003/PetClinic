@@ -73,7 +73,7 @@ namespace PetClinicDAO
 			}
 		}
 
-        public List<Medicine> SearchMedicines(string name, string description, string type)
+        public List<Medicine> SearchMedicines(string name, int? medicineTypeId)
         {
             var query = context.Medicines.AsQueryable();
 
@@ -82,17 +82,12 @@ namespace PetClinicDAO
                 query = query.Where(m => m.MedicineName.Contains(name));
             }
 
-            if (!string.IsNullOrEmpty(description))
-            {
-                query = query.Where(m => m.MedicineDescription.Contains(description));
-            }
+			if (medicineTypeId.HasValue)
+			{
+				query = query.Where(m => m.MedicineTypeId == medicineTypeId.Value);
+			}
 
-            if (!string.IsNullOrEmpty(type))
-            {
-                query = query.Where(m => m.MedicineType.MedicineTypeName.Contains(type));
-            }
-
-            return query.Include(m => m.MedicineType).ToList();
+			return query.Include(m => m.MedicineType).ToList();
         }
     }
 }

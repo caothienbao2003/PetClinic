@@ -52,9 +52,9 @@ namespace PetClinicServices
 			return medicineRepository.GetMedicineListWithoutInclude();
 		}
 
-        public List<Medicine> SearchMedicines(string name, string description, string type)
+        public List<Medicine> SearchMedicines(string name, int? medicineTypeId)
         {
-            return medicineRepository.SearchMedicines(name, description, type);
+            return medicineRepository.SearchMedicines(name, medicineTypeId);
         }
     }
 }
