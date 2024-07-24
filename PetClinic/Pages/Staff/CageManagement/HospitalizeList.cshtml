@@ -1,7 +1,7 @@
 ﻿@page
 @using PetClinicBussinessObject
 @model PetClinic.Pages.Staff.CageManagement.HospitalizeListModel
-@* @{
+@{
     ViewData["Title"] = "Hospitalize List for " + $"Cage {Model.CageId}";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -11,7 +11,29 @@
     {
         Response.Redirect("/Authentication/Login");
     }
-} *@
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Staff/BookingManagement/BookingHistory">Bookings</a>
+    <a asp-page="/Staff/CageManagement/Index">Cages</a>
+</nav>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Staff/StaffHomePage"><button>Back to Home</button></a>
+    <a asp-page="/Authentication/Logout"><button>Logout</button></a>
+</div>
 
 <h1>History Log</h1>
 

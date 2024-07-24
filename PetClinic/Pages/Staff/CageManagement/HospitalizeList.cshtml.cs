@@ -10,20 +10,35 @@ namespace PetClinic.Pages.Staff.CageManagement
     {
         private readonly IHospitalizeService hospitalizeService;
         private readonly ICageService cageService;
+        private readonly IUserService userService;
 
-        public HospitalizeListModel(IHospitalizeService _hospitalizeService, ICageService _cageService)
+        public HospitalizeListModel(IHospitalizeService _hospitalizeService, ICageService _cageService, IUserService _userService)
         {
             hospitalizeService = _hospitalizeService;
             cageService = _cageService;
+            userService = _userService;
         }
 
         [BindProperty(SupportsGet = true)]
         public int CageId { get; set; }
 
+        [BindProperty]
+        public User user { get; set; } = default!;
+
         public List<Hospitalize> Hospitalizes { get; set; } = default!;
 
         public IActionResult OnGet(int cageId)
         {
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
+            }
+        
             CageId = cageId;
 
             Hospitalizes = hospitalizeService.GetListByCageId(CageId) ?? new List<Hospitalize>();
