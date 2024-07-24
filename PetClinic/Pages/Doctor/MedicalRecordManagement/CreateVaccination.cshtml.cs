@@ -31,15 +31,16 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
         [BindProperty]
         public List<VaccinationRecord>? VaccinationRecordsList { get; set; } = default!;
-
-        public IActionResult OnGet(int petHealthId)
+        
+        public int MedicalRecordId { get; set; }
+        
+        public IActionResult OnGet(int petHealthId, int medicalRecordId)
         {
             ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
             ViewData["PetHealthIdValue"] = petHealthId;
 
+            MedicalRecordId = medicalRecordId;
             VaccinationRecordsList = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(petHealthId);
-
-            //ViewData["PetHealthId"] = new SelectList(petService.GetPetHealthsList(), "PetHealthId", "PetHealthId");
             return Page();
         }
 
@@ -53,7 +54,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             // Refresh the list of vaccination records
             VaccinationRecordsList = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(petHealthId);
 
-            return RedirectToPage(new { petHealthId = petHealthId });
+            return RedirectToPage(new { petHealthId = petHealthId, medicalRecordId = MedicalRecordId });
         }
 
         public IActionResult OnPostToggleVerification(int recordId, int petHealthId)
@@ -67,7 +68,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 
             VaccinationRecordsList = vaccinationRecordService.GetVaccinationRecordsByPetHealthId(petHealthId);
 
-            return RedirectToPage(new { petHealthId = petHealthId });
+            return RedirectToPage(new { petHealthId = petHealthId, medicalRecordId = MedicalRecordId });
         }
     }
 }

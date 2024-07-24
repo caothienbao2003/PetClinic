@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" onsubmit="return validateForm()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="VaccinationRecord.VaccinationDate" class="control-label"></label>
@@ -28,13 +28,13 @@
                 <input asp-for="VaccinationRecord.VaccinatedAt" class="form-control" />
                 <span asp-validation-for="VaccinationRecord.VaccinatedAt" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label for="Verification">Verification</label>
                 <select class="form-control" id="Verification" name="NewVaccinationRecord.Verification" required>
                     <option value="true">Verified</option>
                     <option value="false">Not Verified</option>
                 </select>
-            </div>
+            </div> *@
             <div class="form-group">
                 <input type="hidden" asp-for="VaccinationRecord.PetHealthId" value="@ViewData["PetHealthIdValue"]" />
             </div>
@@ -72,11 +72,14 @@
                 <td>@(record.Verification.HasValue && record.Verification.Value ? "Verified" : "Not Verified")</td>
                 <td>@record.Medicine.MedicineName</td>
                 <td>
-                    <form method="post" asp-page-handler="ToggleVerification">
-                        <input type="hidden" name="recordId" value="@record.VaccinationRecordId" />
-                        <input type="hidden" name="petHealthId" value="@ViewData["PetHealthIdValue"]" />
-                        <button type="submit" class="btn btn-sm btn-warning">Toggle Verification</button>
-                    </form>
+                    @if (!record.Verification.HasValue || !record.Verification.Value)
+                    {
+                        <form method="post" asp-page-handler="ToggleVerification">
+                            <input type="hidden" name="recordId" value="@record.VaccinationRecordId" />
+                            <input type="hidden" name="petHealthId" value="@ViewData["PetHealthIdValue"]" />
+                            <button type="submit" class="btn btn-sm btn-warning">Confirm the verification</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }
@@ -85,9 +88,29 @@
 
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecordId" class="btn btn-success">Create Prescription</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function validateForm() {
+            var vaccinationDate = new Date(document.querySelector('[name="VaccinationRecord.VaccinationDate"]').value);
+            var nextDueDate = new Date(document.querySelector('[name="VaccinationRecord.NextDueDate"]').value);
+            var currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+
+            if (vaccinationDate > currentDate) {
+                alert("Vaccination date must not be in the future.");
+                return false;
+            }
+
+            if (nextDueDate <= currentDate) {
+                alert("Next due date must at least one day in the future.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 }
