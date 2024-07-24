@@ -43,5 +43,8 @@ namespace PetClinicServices
             int index = random.Next(count);
             return scheduleIdList[index];
         }
+
+        public void DeleteSchedule(Schedule schedule) => scheduleRepository.DeleteSchedule(schedule);
+        public Schedule GetById(int id) => scheduleRepository.GetById(id);
     }
 }
