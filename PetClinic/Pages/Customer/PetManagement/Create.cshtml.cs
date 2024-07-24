@@ -70,7 +70,7 @@ namespace PetClinic.Pages.Customer.PetManagement
 
             TempData["PetId"] = Pet.PetId;
 
-            return RedirectToPage("/Customer/PetHealthManagement/Create", new { id = newPetId });
+            return RedirectToPage("/Customer/PetHealthManagement/Create");
         }
     }
 }
