@@ -115,7 +115,7 @@
     </div>
 
     <div class="details-container">
-        @if (Model.ShiftSelectionList != null && Model.ShiftSelectionList.Count > 0)
+        @if (Model.ShiftSelectionList != null && Model.ShiftSelectionList.Count > 0 && Model.SelectedDate != null)
         {
             <form method="post" asp-page-handler="ChooseShift">
                 <h2>Available slots</h2>
