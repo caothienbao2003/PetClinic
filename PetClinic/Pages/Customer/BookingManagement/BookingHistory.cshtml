@@ -62,7 +62,6 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Doctor</th>
-                    <th>Detail</th>
                     <th>Cancel</th>
                 </tr>
             </thead>
@@ -91,11 +90,6 @@
                                         No doctor selected!
                                     </div>
                                 }
-                            </td>
-                            <td>
-                                <form method="post" asp-page-handler="Detail" asp-route-detail="@item.BookingId">
-                                    <button type="submit" name="id">Detail</button>
-                                </form>
                             </td>
                             <td>
                                 @if (item.BookingStatus != (int)BookingStatus.Canceled)
