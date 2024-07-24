@@ -18,5 +18,7 @@ namespace PetClinicRepository
         public List<Booking> GetBookingByUserId(int userId) => BookingDAO.Instance.GetAllBooking().Where(x => x.Pet.CustomerId == userId).ToList();
         public void Update(Booking booking) => BookingDAO.Instance.Update(booking);
         public Booking GetBooking(int petId, int scheduleId) => BookingDAO.Instance.GetBooking(petId, scheduleId);
+        public Booking GetExistedBookingList(int petId, DateTime date, int shiftId) => BookingDAO.Instance.GetExistedBookingList(petId, date, shiftId);
+        public List<Booking> GetBookingListByDateAndShiftId(DateTime date, int shiftId) => BookingDAO.Instance.GetBookingListByDateAndShiftId(date, shiftId);
     }
 }

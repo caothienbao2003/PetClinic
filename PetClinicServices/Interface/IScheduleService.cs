@@ -17,7 +17,8 @@ namespace PetClinicServices.Interface
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId);
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId);
         public List<Schedule> GetByEmployeeIdBetweenDate(int employeeId, DateTime startDate, DateTime endDate);
-
-
+        public int GetRandomScheduleIdFromScheduleList(List<Schedule> scheduleList);
+        public void DeleteSchedule(Schedule schedule);
+        public Schedule GetById(int id);
     }
 }

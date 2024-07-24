@@ -13,10 +13,12 @@ namespace PetClinic.Pages.Customer.BookingManagement
     public class BookingHistoryModel : PageModel
     {
         private readonly IBookingService bookingService;
+        private readonly IScheduleService scheduleService;
 
-        public BookingHistoryModel(IBookingService _bookingService)
+        public BookingHistoryModel(IBookingService _bookingService, IScheduleService scheduleService)
         {
             bookingService = _bookingService;
+            this.scheduleService = scheduleService;
         }
 
         public List<Booking> BookingList { get; set; } = default!;
@@ -38,6 +40,16 @@ namespace PetClinic.Pages.Customer.BookingManagement
             }
 
             cancelBooking.BookingStatus = (int)BookingStatus.Canceled;
+
+
+            //Schedule schedule = cancelBooking.Schedule;
+
+            //Update schedule number of occupation
+            //int occupation = schedule.NoOfOccupation ?? default(int);
+            //occupation--;
+            //schedule.NoOfOccupation = occupation;
+
+            //scheduleService.UpdateSchedule(schedule);
             bookingService.UpdateBooking(cancelBooking);
 
             LoadBookingList();

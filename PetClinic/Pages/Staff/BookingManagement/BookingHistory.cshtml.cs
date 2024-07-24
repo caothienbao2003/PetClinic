@@ -37,7 +37,7 @@ namespace PetClinic.Pages.Staff.BookingManagement
         [BindProperty]
         public BookingPaymentStatus? PaymentStatus { get; set; }
         [BindProperty]
-        public BookingStatus? BookingStatus { get; set; }
+        public BookingStatus? BookingStatusFilter { get; set; }
 
         [BindProperty]
         public List<Booking> BookingList { get; set; } = default!;
@@ -54,9 +54,58 @@ namespace PetClinic.Pages.Staff.BookingManagement
         public void OnPostSearch()
         {
             ShiftList = shiftService.GetAllDoctorShifts();
-            BookingList = bookingService.SearchBy(StartDate, EndDate, (int?)PaymentStatus, (int?)BookingStatus, ShiftId, DoctorName, CustomerName, PetName);
+            BookingList = bookingService.SearchBy(StartDate, EndDate, (int?)PaymentStatus, (int?)BookingStatusFilter, ShiftId, DoctorName, CustomerName, PetName);
 
             Console.WriteLine("Search");
+        }
+
+        public void OnPostConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return;
+            }
+
+            var booking = bookingService.GetBookingById(id.Value);
+
+            if (booking != null)
+            {
+                booking.BookingStatus = (int)BookingStatus.Pending;
+
+                bookingService.UpdateBooking(booking);
+            }
+
+            Response.Redirect("./BookingHistory");
+        }
+
+        public void OnPostCancel(int? id)
+        {
+            if (id == null)
+            {
+                return;
+            }
+
+            var booking = bookingService.GetBookingById(id.Value);
+
+            if (booking != null)
+            {
+                booking.BookingStatus = (int)BookingStatus.Canceled;
+
+                bookingService.UpdateBooking(booking);
+            }
+
+            Response.Redirect("./BookingHistory");
+        }
+        public void OnPostChooseDoctor(int? id)
+        {
+            if (id == null)
+            {
+                return;
+            }
+
+            TempData["BookingId"] = id.Value;
+
+            Response.Redirect("/ChooseDoctor");
         }
     }
 }

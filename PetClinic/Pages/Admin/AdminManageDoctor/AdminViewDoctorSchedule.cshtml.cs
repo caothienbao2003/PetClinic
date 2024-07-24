@@ -38,7 +38,7 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         public int DoctorId { get; set; }
 
         [BindProperty]
-        public DateTime DateToAdd {  get; set; }
+        public DateTime DateToAdd { get; set; }
         [BindProperty]
         public int DoctorIdToAdd { get; set; }
         [BindProperty]
@@ -47,11 +47,8 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
         public void OnGet(int doctorid)
         {
             DoctorId = doctorid;
-
-            ShiftList = shiftService.GetAllDoctorShifts();
             SelectedDate = DateTime.Now;
-            LoadMondayAndSunday();
-            ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(DoctorId, MondayDate, SundayDate);
+            LoadSchedule();
         }
 
         public void OnPostChangeWeek(int offset)
@@ -81,9 +78,6 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 
         public void OnPostAddSchedule()
         {
-           
-            Console.WriteLine(DateToAdd.ToString() + " " + DoctorIdToAdd + " " + ShiftIdToAdd);
-
             Schedule newSchedule = new Schedule
             {
                 Date = DateToAdd,
@@ -93,6 +87,29 @@ namespace PetClinic.Pages.Admin.AdminManageDoctor
 
             scheduleService.AddSchedule(newSchedule);
 
+            LoadSchedule();
+        }
+
+        public void OnPostRemove(int? id)
+        {
+            if (id == null)
+            {
+                return;
+            }
+
+            Schedule schedule = scheduleService.GetById(id.Value);
+            if (schedule == null)
+            {
+                return;
+            }
+
+            scheduleService.DeleteSchedule(schedule);
+
+            LoadSchedule();
+        }
+
+        private void LoadSchedule()
+        {
             ShiftList = shiftService.GetAllDoctorShifts();
             LoadMondayAndSunday();
             ScheduleList = scheduleService.GetByEmployeeIdBetweenDate(DoctorId, MondayDate, SundayDate);

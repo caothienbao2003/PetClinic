@@ -28,6 +28,23 @@ namespace PetClinicServices
         public List<Schedule> GetAvailableScheduleList(DateTime date, int shiftId, int doctorId) => scheduleRepository.GetAvailableScheduleList(date, shiftId, doctorId);
         public List<Schedule> GetScheduleList(DateTime date, int shiftId) => scheduleRepository.GetScheduleList(date, shiftId);
         public void UpdateSchedule(Schedule schedule) => scheduleRepository.UpdateSchedule(schedule);
-        public List<Schedule> GetByEmployeeIdBetweenDate(int employeeId, DateTime startDate, DateTime endDate)=> scheduleRepository.GetByEmployeeIdBetweenDate(employeeId, startDate, endDate);
+        public List<Schedule> GetByEmployeeIdBetweenDate(int employeeId, DateTime startDate, DateTime endDate) => scheduleRepository.GetByEmployeeIdBetweenDate(employeeId, startDate, endDate);
+        public int GetRandomScheduleIdFromScheduleList(List<Schedule> scheduleList)
+        {
+            int count = 0;
+            List<int> scheduleIdList = new List<int>();
+            foreach (Schedule schedule in scheduleList)
+            {
+                count++;
+                scheduleIdList.Add(schedule.ScheduleId);
+            }
+
+            Random random = new Random();
+            int index = random.Next(count);
+            return scheduleIdList[index];
+        }
+
+        public void DeleteSchedule(Schedule schedule) => scheduleRepository.DeleteSchedule(schedule);
+        public Schedule GetById(int id) => scheduleRepository.GetById(id);
     }
 }

@@ -172,11 +172,12 @@ namespace PetClinic.Pages.BookingManagement
                 int noOfOccupation = 0;
                 List<Schedule> schedule = scheduleService.GetAvailableScheduleList(selectedDate, shift.ShiftId);
 
+                noOfOccupation = bookingService.GetNoOfOccupationByDateAndShiftId(SelectedDate ?? default, shift.ShiftId);
+
                 foreach (Schedule s in schedule)
                 {
                     User doctor = doctorService.GetDoctorById((int)s.EmployeeId);
                     capacity += (int)doctor.DoctorCapacity;
-                    noOfOccupation += (int)s.NoOfOccupation;
                 }
 
 
@@ -270,13 +271,13 @@ namespace PetClinic.Pages.BookingManagement
                 scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId).ToList();
             }
 
+
             Booking checkExistedBooking;
             if (scheduleList != null)
             {
-
                 foreach (Schedule s in scheduleList)
                 {
-                    checkExistedBooking = bookingService.GetBookingList(SelectedPetId, s.ScheduleId);
+                    checkExistedBooking = bookingService.GetExistedBookingList(SelectedPetId, (DateTime) SelectedDate, SelectedShiftId);
                     if (checkExistedBooking != null)
                     {
                         LoadCalendar();
