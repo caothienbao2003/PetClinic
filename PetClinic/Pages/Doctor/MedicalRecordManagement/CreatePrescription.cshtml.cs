@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetClinic.Session;
 using PetClinicBussinessObject;
+using PetClinicServices;
 using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Doctor.MedicalRecordManagement
@@ -13,11 +14,13 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
     public class CreatePrescriptionModel : PageModel
     {
         private readonly IMedicineService medicineService;
+        private readonly IMedicineTypeService medicineTypeService;
         private readonly IPrescriptionService prescriptionService;
 
-        public CreatePrescriptionModel(IMedicineService _medicineService, IPrescriptionService _prescriptionService)
+        public CreatePrescriptionModel(IMedicineService _medicineService, IMedicineTypeService _medicineTypeService ,IPrescriptionService _prescriptionService)
         {
             medicineService = _medicineService;
+            medicineTypeService = _medicineTypeService;
             prescriptionService = _prescriptionService;
         }
 
@@ -36,6 +39,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         public IActionResult OnGet(int medicalRecordId)
         {
             MedicalRecordId = medicalRecordId;
+            ViewData["MedicineTypeId"] = medicineTypeService.GetMedicineTypeList();
             ViewData["MedicineId"] = new SelectList(medicineService.GetMedicineList(), "MedicineId", "MedicineName");
             LoadPrescriptionMedicinesFromSession();
             return Page();
@@ -62,6 +66,13 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
             SavePrescription();
             ClearPrescriptionMedicinesFromSession();
             return RedirectToPage("/Doctor/MedicalRecordManagement/ConfirmationForm", new { medicalRecordId = MedicalRecordId });
+        }
+
+        public JsonResult OnGetFilterMedicines(int typeId)
+        {
+            var medicines = typeId == 0 ? medicineService.GetMedicineList() : medicineService.GetMedicineList().Where(m => m.MedicineTypeId == typeId).ToList();
+            var result = medicines.Select(m => new { m.MedicineId, m.MedicineName }).ToList();
+            return new JsonResult(result);
         }
 
         private void LoadPrescriptionMedicinesFromSession()

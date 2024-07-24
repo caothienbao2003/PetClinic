@@ -23,7 +23,6 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MedicalRecordId" value="@Model.MedicalRecordId" />
             <input type="hidden" asp-for="Prescription.PrescriptionId" />
-
             <div class="form-group">
                 <label asp-for="PrescriptionMedicine.MedicineId" class="control-label"></label>
                 <select asp-for="PrescriptionMedicine.MedicineId" class="form-control" asp-items="ViewBag.MedicineId"></select>
@@ -84,4 +83,5 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
 }

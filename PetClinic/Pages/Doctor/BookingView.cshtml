@@ -20,10 +20,9 @@
     <link rel="stylesheet" href="~/css/luongstyle.css" />
 </head>
 
-<div class="user-info">
-    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
-    <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
-</div>
+<header>
+    <h1>Pet Clinic</h1>
+</header>
 
 <header>
     <h1>History Log</h1>
@@ -34,6 +33,12 @@
     <a asp-page="/Doctor/HospitalizeList">Hospitalization</a>
     <a asp-page="/Doctor/ScheduleManagement/ViewSchedule">View Schedule</a>
 </nav>
+
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Doctor/DoctorProfile"><button>View Profile</button></a>
+</div>
 
 <table class="table">
     <thead>
@@ -76,15 +81,15 @@
                     @((BookingStatus)item.BookingStatus)
                 </td>
                 <td>
-                    <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> |
-                    @*<a asp-page="./Details" asp-route-id="@item.BookingId">Delete</a>*@
-                    <a asp-page="/Doctor/MedicalRecordManagement/Index" asp-route-bookid="@item.BookingId">View Medical Records</a> |
-                    <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord" asp-route-bookid="@item.BookingId">Create Medical Records</a>
+                    @* <a asp-page="./Details" asp-route-id="@item.BookingId">Details</a> | *@
                     @if (item.BookingStatus == (int)BookingStatus.Pending)
                     {
-                        
+                        <a asp-page="/Doctor/MedicalRecordManagement/CreateRecord" asp-route-bookid="@item.BookingId">Create Medical Records</a>
                     }
-                    
+                    @if (item.BookingStatus == (int)BookingStatus.Completed)
+                    {
+                        <a asp-page="/Doctor/MedicalRecordManagement/MedicalRecordDetails" asp-route-bookid="@item.BookingId">View Medical Records</a>
+                    }
 
                 </td>
             </tr>
