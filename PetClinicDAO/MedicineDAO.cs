@@ -72,5 +72,22 @@ namespace PetClinicDAO
 				context.SaveChanges();
 			}
 		}
-	}
+
+        public List<Medicine> SearchMedicines(string name, int? medicineTypeId)
+        {
+            var query = context.Medicines.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(m => m.MedicineName.Contains(name));
+            }
+
+			if (medicineTypeId.HasValue)
+			{
+				query = query.Where(m => m.MedicineTypeId == medicineTypeId.Value);
+			}
+
+			return query.Include(m => m.MedicineType).ToList();
+        }
+    }
 }

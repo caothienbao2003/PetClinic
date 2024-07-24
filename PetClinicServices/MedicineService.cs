@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PetClinicBussinessObject;
+using PetClinicDAO;
 using PetClinicRepository;
 using PetClinicRepository.Interface;
 using PetClinicServices.Interface;
@@ -50,5 +51,10 @@ namespace PetClinicServices
 		{
 			return medicineRepository.GetMedicineListWithoutInclude();
 		}
-	}
+
+        public List<Medicine> SearchMedicines(string name, int? medicineTypeId)
+        {
+            return medicineRepository.SearchMedicines(name, medicineTypeId);
+        }
+    }
 }

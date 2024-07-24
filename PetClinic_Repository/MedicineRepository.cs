@@ -25,5 +25,10 @@ namespace PetClinicRepository
 		{
 			return MedicineDAO.Instance.GetMedicineListWithoutInclude();
 		}
-	}
+
+        public List<Medicine> SearchMedicines(string name, int? medicineTypeId)
+        {
+            return MedicineDAO.Instance.SearchMedicines(name, medicineTypeId);
+        }
+    }
 }
