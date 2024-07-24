@@ -43,7 +43,7 @@ namespace PetClinicDAO
 
         public Pet GetPetById(int petId)
         {
-            return context.Pets.Include(p => p.Customer).FirstOrDefault(p => p.PetId == petId);
+            return context.Pets.Include(p => p.Customer).FirstOrDefault(p => p.PetId == petId)!;
         }
 
         public List<PetHealth> GetPetHealthsList()

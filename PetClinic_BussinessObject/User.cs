@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetClinicBussinessObject
 {
@@ -15,10 +16,19 @@ namespace PetClinicBussinessObject
             Schedules = new HashSet<Schedule>();
         }
 
+        [Required]
         public int UserId { get; set; }
+        [Required]
+        [RegularExpression("^[A-Z][a-zA-Z]*$", ErrorMessage = "First name must start with a capital letter and contain only letters.")]
         public string FirstName { get; set; } = null!;
+        [Required]
+        [RegularExpression("^[A-Z][a-zA-Z]*$", ErrorMessage = "First name must start with a capital letter and contain only letters.")]
         public string LastName { get; set; } = null!;
+        [Required]
+        [RegularExpression("^[0-9]{10,12}$", ErrorMessage = "Social number must be 10 or 12 digits.")]
         public string SocialNumber { get; set; } = null!;
+        [Required]
+        [RegularExpression("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "Password must be at least 8 characters long, contain at least one capital letter, one number, and one special character.")]
         public string Password { get; set; } = null!;
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }

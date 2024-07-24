@@ -1,6 +1,7 @@
 ﻿@page
 @model PetClinic.Pages.Customer.PetManagement.EditModel
 @{
+    Layout = null;
     ViewData["Title"] = "Pet Management Edit Page";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -12,39 +13,118 @@
     }
 }
 
-<h1>Edit</h1>
+<style>
+    .container {
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+    }
 
-<h4>Pet</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Pet.PetId" />
-            <div class="form-group">
-                <label asp-for="Pet.PetName" class="control-label"></label>
-                <input asp-for="Pet.PetName" class="form-control" />
-                <span asp-validation-for="Pet.PetName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pet.PetType" class="control-label"></label>
-                <input asp-for="Pet.PetType" class="form-control" />
-                <span asp-validation-for="Pet.PetType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pet.PetAge" class="control-label"></label>
-                <input asp-for="Pet.PetAge" class="form-control" />
-                <span asp-validation-for="Pet.PetAge" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        margin: 2px;
+    }
+
+    .btn-primary {
+        background-color: green;
+        color: white;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+</head>
+
+<header>
+    <h1>Pet Clinic</h1>
+</header>
+
+<nav class="navbar navbar-expand-sm">
+    <a asp-page="/Customer/CustomerHomePage">Home</a>
+    <a asp-page="/Customer/BookingManagement/BookingHistory">View Bookings</a>
+    <a asp-page="/PetManagement/Index">My Pets</a>
+    <a asp-page="/VaccinationManagement/Index">Vaccinations</a>
+    <a asp-page="/Customer/HospitalizationView/HospitalizationView">Hospitalizations</a>
+</nav>
+
+<div class="user-info">
+    <span>Welcome, @Model.user.FirstName @Model.user.LastName!</span>
+    <a asp-page="/Customer/CustomerProfile"><button>View Profile</button></a>
+    <a asp-page="/Authentication/Logout"><button>Logout</button></a>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
+<h1 align="center">Edit Pet</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PetId" />
+                <input type="hidden" asp-for="Pet.CustomerId" />
+                <input type="hidden" asp-for="Pet.ActiveStatus" />
+                <input type="hidden" asp-for="PetHealth.PetHealthId" />
+                <input type="hidden" asp-for="PetHealth.PetId" />
+                <div class="form-group">
+                    <label asp-for="Pet.PetName" class="control-label">Name of your Pet</label>
+                    <input asp-for="Pet.PetName" class="form-control" />
+                    <span asp-validation-for="Pet.PetName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pet.PetType" class="control-label">Animal Type</label>
+                    <input asp-for="Pet.PetType" class="form-control" />
+                    <span asp-validation-for="Pet.PetType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Pet.PetAge" class="control-label">Age</label>
+                    <input asp-for="Pet.PetAge" class="form-control" />
+                    <span asp-validation-for="Pet.PetAge" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PetHealth.OverallHealth" class="control-label">Overall Health</label>
+                    <input asp-for="PetHealth.OverallHealth" class="form-control" />
+                    <span asp-validation-for="PetHealth.OverallHealth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PetHealth.Conditions" class="control-label">Health Condition</label>
+                    <input asp-for="PetHealth.Conditions" class="form-control" />
+                    <span asp-validation-for="PetHealth.Conditions" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PetHealth.Weight" class="control-label">Weight(kg)</label>
+                    <input asp-for="PetHealth.Weight" class="form-control" />
+                    <span asp-validation-for="PetHealth.Weight" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PetHealth.WeightMeasurementDate" class="control-label">When was the measurement</label>
+                    <input asp-for="PetHealth.WeightMeasurementDate" class="form-control" />
+                    <span asp-validation-for="PetHealth.WeightMeasurementDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <a asp-page="./Index"><button class="btn btn-primary">Back to List</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
