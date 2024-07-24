@@ -156,6 +156,7 @@ footer {
         display: inline-block;
         font-size: 16px;
         margin-left: 10px;
+        margin-right: 10px;
         cursor: pointer;
     }
 
@@ -187,6 +188,7 @@ footer {
         display: inline-block;
         font-size: 16px;
         cursor: pointer;
+        gap: 10px;
     }
 
         .user-info button:hover {
