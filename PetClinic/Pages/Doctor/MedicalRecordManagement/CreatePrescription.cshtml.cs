@@ -75,7 +75,7 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
         {
             SavePrescription();
             ClearPrescriptionMedicinesFromSession();
-            return RedirectToPage("/Doctor/MedicalRecordManagement/ConfirmationForm", new { medicalRecordId = MedicalRecordId });
+            return RedirectToPage("/Doctor/BookingView");
         }
 
         public JsonResult OnGetFilterMedicines(int typeId)

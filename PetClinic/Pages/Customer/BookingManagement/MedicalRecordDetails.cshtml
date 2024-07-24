@@ -1,96 +1,143 @@
 ﻿@page
 @model PetClinic.Pages.Customer.BookingManagement.MedicalRecordManagement.MedicalRecordDetailsModel
 
+
 @{
     ViewData["Title"] = "MedicalRecordDetails";
+
+    var userId = HttpContext.Session.GetString("UserId");
+    var role = HttpContext.Session.GetString("Role");
+
+    if (userId == null || role != "0")
+    {
+        Response.Redirect("/Authentication/Login");
+    }
 }
 
-<h1>Medical Record Details</h1>
-
-<div>
-    <h4>Medical Record</h4>
-    <hr />
-    <dl class="row">
-        <!-- Pet Health Information -->
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PetHealth.Conditions)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PetHealth.Conditions)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PetHealth.Weight)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PetHealth.Weight)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PetHealth.WeightMeasurementDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PetHealth.WeightMeasurementDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PetHealth.OverallHealth)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PetHealth.OverallHealth)
-        </dd>
-
-        <!-- Medical Information -->
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicalRecord.MedicalRecordDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MedicalRecord.MedicalRecordDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicalRecord.Booking)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MedicalRecord.Booking!.BookingId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicalRecord.Doctor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MedicalRecord.Doctor!.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MedicalRecord.Service)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MedicalRecord.Service!.ServiceName)
-        </dd>
-
-        <!-- Prescriptions -->
-        @if (Model.PrescriptionMedicines != null && Model.PrescriptionMedicines.Count > 0)
-        {
-            <div>
-                <h4>Prescription Medicines</h4>
-                <hr />
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Medicine ID</th>
-                            <th>Medicine Quantity</th>
-                            <th>Dosage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.PrescriptionMedicines)
-                        {
-                            <tr>
-                                <td>@item.MedicineId</td>
-                                <td>@item.MedicineQuantity</td>
-                                <td>@item.Dosage</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pet Clinic</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
         }
 
-        <div>
-            <a asp-page="/Customer/BookingManagement/BookingHistory">Back to Booking</a>
+        h1, h4 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .record-details, .prescriptions {
+            margin: 20px auto;
+            padding: 10px;
+            max-width: 800px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+            .record-details dt, .prescriptions th {
+                font-weight: bold;
+            }
+
+            .record-details dd, .prescriptions td {
+                margin-bottom: 10px;
+            }
+
+            .record-details dt, .record-details dd {
+                display: inline-block;
+                width: 49%;
+            }
+
+            .prescriptions table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .prescriptions th, .prescriptions td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
+            .prescriptions th {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .back-link a {
+                text-decoration: none;
+                color: #4CAF50;
+            }
+    </style>
+</head>
+<body>
+    <h1>Medical Record Details</h1>
+
+    <div class="record-details">
+        <h4>Medical Record</h4>
+        <hr />
+        <dl>
+            <!-- Pet Health Information -->
+            <dt>Condition:</dt>
+            <dd>@Html.DisplayFor(model => model.PetHealth.Conditions)</dd>
+            <dt>Weight:</dt>
+            <dd>@Html.DisplayFor(model => model.PetHealth.Weight)</dd>
+            <dt>Weight Measurement Date:</dt>
+            <dd>@Html.DisplayFor(model => model.PetHealth.WeightMeasurementDate)</dd>
+            <dt>Overall Health:</dt>
+            <dd>@Html.DisplayFor(model => model.PetHealth.OverallHealth)</dd>
+
+            <!-- Medical Information -->
+            <dt>Medical Record Description:</dt>
+            <dd>@Html.DisplayFor(model => model.MedicalRecord.MedicalRecordDescription)</dd>
+            <dt>Booking:</dt>
+            <dd>@Html.DisplayFor(model => model.MedicalRecord.Booking!.BookingId)</dd>
+            <dt>Doctor:</dt>
+            <dd>@Html.DisplayFor(model => model.MedicalRecord.Doctor!.FirstName)</dd>
+            <dt>Service:</dt>
+            <dd>@Html.DisplayFor(model => model.MedicalRecord.Service!.ServiceName)</dd>
+        </dl>
+    </div>
+
+    @if (Model.PrescriptionMedicines != null && Model.PrescriptionMedicines.Count > 0)
+    {
+        <div class="prescriptions">
+            <h4>Prescription Medicines</h4>
+            <hr />
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medicine ID</th>
+                        <th>Medicine Quantity</th>
+                        <th>Dosage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PrescriptionMedicines)
+                    {
+                        <tr>
+                            <td>@item.MedicineId</td>
+                            <td>@item.MedicineQuantity</td>
+                            <td>@item.Dosage</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
+    }
+
+    <div class="back-link">
+        <a asp-page="/Customer/BookingManagement/BookingHistory">Back to Booking</a>
+    </div>
+</body>
+</html>
+
+        
