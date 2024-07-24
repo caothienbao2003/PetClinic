@@ -20,5 +20,7 @@ namespace PetClinicServices.Interface
         public void RemoveMedicine(int medicineId);
 
         public List<Medicine> GetMedicineListWithoutInclude();
-	}
+
+        public List<Medicine> SearchMedicines(string name, string description, string type);
+    }
 }

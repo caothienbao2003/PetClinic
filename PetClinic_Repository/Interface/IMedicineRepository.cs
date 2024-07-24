@@ -21,5 +21,6 @@ namespace PetClinicRepository.Interface
 
         public List<Medicine> GetMedicineListWithoutInclude();
 
-	}
+        public List<Medicine> SearchMedicines(string name, string description, string type);
+    }
 }

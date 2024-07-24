@@ -75,7 +75,7 @@ namespace PetClinicDAO
 
         public void UpdatePet(Pet pet)
         {
-            if(GetPetById(pet.PetId) == null)
+            if (GetPetById(pet.PetId) == null)
             {
                 return;
             }
@@ -83,6 +83,32 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
+        public List<string> GetAllPetTypes()
+        {
+            return context.Pets.Select(p => p.PetType).Distinct().ToList();
+        }
+
+        public List<Pet> SearchPets(string? petName, string? customer, string? petType)
+        {
+            var query = context.Pets.Include(p => p.Customer).AsQueryable();
+
+            if (!string.IsNullOrEmpty(petName))
+            {
+                query = query.Where(p => p.PetName.Contains(petName));
+            }
+
+            if (!string.IsNullOrEmpty(customer))
+            {
+                query = query.Where(p => p.Customer.FirstName.Contains(customer));
+            }
+
+            if (!string.IsNullOrEmpty(petType))
+            {
+                query = query.Where(p => p.PetType == petType);
+            }
+
+            return query.ToList();
+        }
 
     }
 }
