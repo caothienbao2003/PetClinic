@@ -2,7 +2,7 @@
 @model PetClinic.Pages.Doctor.MedicalRecordManagement.CreateRecordModel
 
 @{
-    ViewData["Title"] = "Create Medical Record for" + $" Booking {Model.BookId}";
+    ViewData["Title"] = "Create Medical Record for Booking " + Model.BookId;
 
     var userId = HttpContext.Session.GetString("UserId");
     var role = HttpContext.Session.GetString("Role");
@@ -13,97 +13,208 @@
     }
 }
 
-<h1>Medical Record</h1>
-<h4>@ViewData["Title"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <!-- Pet Details -->
-            <div class="form-group">
-                <label class="control-label">Pet Name</label>
-                <input type="text" class="form-control" value="@Model.Book.Pet.PetName" readonly />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Age</label>
-                <input type="text" class="form-control" value="@Model.Book.Pet.PetAge" readonly />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Type</label>
-                <input type="text" class="form-control" value="@Model.Book.Pet.PetType" readonly />
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-            <!-- Pet Health Information -->
-            <div class="form-group">
-                <label class="control-label">Conditions</label>
-                <input type="text" class="form-control" asp-for="PetHealthInfo.Conditions" />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Weight (kg)</label>
-                <input type="text" class="form-control" asp-for="PetHealthInfo.Weight" />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Weight Measurement Date</label>
-                <input type="date" class="form-control" asp-for="PetHealthInfo.WeightMeasurementDate" />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Overall Health</label>
-                <input type="text" class="form-control" asp-for="PetHealthInfo.OverallHealth" />
-            </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="MedicalRecord.MedicalRecordId" />
-                <input type="hidden" asp-for="BookId" value="@Model.BookId" />
-                <input type="hidden" asp-for="PetHealthInfo.PetHealthId" />
-                <input type="submit" value="Update Pet Health" asp-page-handler="UpdatePetHealth" class="btn btn-secondary" />
-            </div>
-            </form>
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
 
-            <form method="post">
-            <!-- Medical Information -->
-            <div class="form-group">
-                <label class="control-label">Doctor</label>
-                <input type="text" class="form-control" value="@Model.Book.Doctor.FirstName" readonly />
-                <input type="hidden" asp-for="MedicalRecord.DoctorId" value="@Model.Book.DoctorId" />
-            </div>
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
 
-            <div class="form-group">
-                <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label">Medical Record Description</label>
-                <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
-                <span asp-validation-for="MedicalRecord.MedicalRecordDescription" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="MedicalRecord.ServiceId" class="control-label">Service</label>
-                <select asp-for="MedicalRecord.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
-            </div>
-            <div class="form-group">
-                @if (Model.IsMedicalRecordCreated ?? true)
-                {
-                    <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecord.MedicalRecordId" class="btn btn-success">Create Prescription</a>
-                    @if (Model.MedicalRecord.ServiceId == 3)
-                    {
-                        <a asp-page="/Doctor/MedicalRecordManagement/CreateVaccination" asp-route-petHealthId="@Model.PetHealthInfo.PetHealthId" asp-route-medicalRecordId="@Model.MedicalRecord.MedicalRecordId" class="btn btn-success">Create Vaccination</a>
-                    }
-                }
-                else
-                {
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                }
-            </div>
+        h1 {
+            color: #4CAF50;
+        }
 
-        </form>
+        .form-group label {
+            color: #4CAF50;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-primary:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-success:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #545b62;
+            }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+            .form-group:last-child {
+                margin-right: 0;
+            }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+    <div class="content">
+        <h4>@ViewData["Title"]</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <!-- Pet Details -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="control-label">Pet Name</label>
+                            <input type="text" class="form-control" value="@Model.Book.Pet.PetName" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Age</label>
+                            <input type="text" class="form-control" value="@Model.Book.Pet.PetAge" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Type</label>
+                            <input type="text" class="form-control" value="@Model.Book.Pet.PetType" readonly />
+                        </div>
+                    </div>
+
+                    <!-- Pet Health Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="control-label">Conditions</label>
+                            <input type="text" class="form-control" asp-for="PetHealthInfo.Conditions" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Weight (kg)</label>
+                            <input type="text" class="form-control" asp-for="PetHealthInfo.Weight" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Weight Measurement Date</label>
+                            <input type="date" class="form-control" asp-for="PetHealthInfo.WeightMeasurementDate" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="control-label">Overall Health</label>
+                            <input type="text" class="form-control" asp-for="PetHealthInfo.OverallHealth" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="MedicalRecord.MedicalRecordId" />
+                        <input type="hidden" asp-for="BookId" value="@Model.BookId" />
+                        <input type="hidden" asp-for="PetHealthInfo.PetHealthId" />
+                        <input type="submit" value="Update Pet Health" asp-page-handler="UpdatePetHealth" class="btn btn-secondary" />
+                    </div>
+                </form>
+
+                <form method="post">
+                    <!-- Medical Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="control-label">Doctor</label>
+                            <input type="text" class="form-control" value="@Model.Book.Doctor.FirstName" readonly />
+                            <input type="hidden" asp-for="MedicalRecord.DoctorId" value="@Model.Book.DoctorId" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MedicalRecord.MedicalRecordDescription" class="control-label">Medical Record Description</label>
+                            <input asp-for="MedicalRecord.MedicalRecordDescription" class="form-control" />
+                            <span asp-validation-for="MedicalRecord.MedicalRecordDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MedicalRecord.ServiceId" class="control-label">Service</label>
+                            <select asp-for="MedicalRecord.ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @if (Model.IsMedicalRecordCreated ?? true)
+                        {
+                            <a asp-page="/Doctor/MedicalRecordManagement/CreatePrescription" asp-route-medicalRecordId="@Model.MedicalRecord.MedicalRecordId" class="btn btn-success">Create Prescription</a>
+                            @if (Model.MedicalRecord.ServiceId == 3)
+                            {
+                                <a asp-page="/Doctor/MedicalRecordManagement/CreateVaccination" asp-route-petHealthId="@Model.PetHealthInfo.PetHealthId" asp-route-medicalRecordId="@Model.MedicalRecord.MedicalRecordId" class="btn btn-success">Create Vaccination</a>
+                            }
+                        }
+                        else
+                        {
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-page="/Doctor/BookingView">Back to Booking List</a>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="/Doctor/BookingView">Back to Booking List</a>
-</div>
+    <footer>
+        © 2024 - PetClinic - <a href="/Privacy" style="color: white;">Privacy</a>
+    </footer>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-}
-
-
-
+</body>
+</html>

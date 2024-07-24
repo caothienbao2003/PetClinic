@@ -13,103 +13,222 @@
     }
 }
 
-<h1>Create Prescription</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-<h4>Prescription Medicine</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MedicalRecordId" value="@Model.MedicalRecordId" />
-            <input type="hidden" asp-for="Prescription.PrescriptionId" />
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
 
-            <div class="form-group">
-                <label asp-for="MedicineTypeId" class="control-label">Medicine Type</label>
-                <select asp-for="MedicineTypeId" class="form-control" onchange="filterMedicines()">
-                    <option value="">Select Medicine Type</option>
-                    @if (ViewBag.MedicineTypeId != null)
-                    {
-                        foreach (var type in ViewBag.MedicineTypeId)
-                        {
-                            <option value="@type.Value">@type.Text</option>
-                        }
-                    }
-                </select>
-            </div>
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
 
-            <div class="form-group">
-                <label asp-for="PrescriptionMedicine.MedicineId" class="control-label">Medicine</label>
-                <select asp-for="PrescriptionMedicine.MedicineId" class="form-control" asp-items="@(new SelectList(ViewBag.MedicineId, "Value", "Text"))"></select>
+        h1 {
+            color: #4CAF50;
+        }
+
+        .form-group label {
+            color: #4CAF50;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-primary:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+            .btn-success:hover {
+                background-color: #45a049;
+                border-color: #45a049;
+            }
+
+        .btn-danger {
+            background-color: #f44336;
+            border-color: #f44336;
+        }
+
+            .btn-danger:hover {
+                background-color: #d32f2f;
+                border-color: #d32f2f;
+            }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+            .form-group:last-child {
+                margin-right: 0;
+            }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+    <div class="content">
+        <h4>Prescription Medicine</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="MedicalRecordId" value="@Model.MedicalRecordId" />
+                    <input type="hidden" asp-for="Prescription.PrescriptionId" />
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="MedicineTypeId" class="control-label">Medicine Type</label>
+                            <select asp-for="MedicineTypeId" class="form-control" onchange="filterMedicines()">
+                                <option value="">Select Medicine Type</option>
+                                @if (ViewBag.MedicineTypeId != null)
+                                {
+                                    foreach (var type in ViewBag.MedicineTypeId)
+                                    {
+                                        <option value="@type.Value">@type.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PrescriptionMedicine.MedicineId" class="control-label">Medicine</label>
+                            <select asp-for="PrescriptionMedicine.MedicineId" class="form-control" asp-items="@(new SelectList(ViewBag.MedicineId, "Value", "Text"))"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="PrescriptionMedicine.MedicineQuantity" class="control-label">Medicine Quantity</label>
+                            <input asp-for="PrescriptionMedicine.MedicineQuantity" class="form-control" type="number" min="1" />
+                            <span asp-validation-for="PrescriptionMedicine.MedicineQuantity" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PrescriptionMedicine.Dosage" class="control-label">Dosage</label>
+                            <input asp-for="PrescriptionMedicine.Dosage" class="form-control" value="Breakfast ... pill, Afternoon .... pill, Night .... pill" />
+                            <span asp-validation-for="PrescriptionMedicine.Dosage" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Add Medicine" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="PrescriptionMedicine.MedicineQuantity" class="control-label"></label>
-                <input asp-for="PrescriptionMedicine.MedicineQuantity" class="form-control" type="number" min="1" />
-                <span asp-validation-for="PrescriptionMedicine.MedicineQuantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrescriptionMedicine.Dosage" class="control-label"></label>
-                <input asp-for="PrescriptionMedicine.Dosage" class="form-control" value="Breakfast ... pill, Afternoon .... pill, Night .... pill" />
-                <span asp-validation-for="PrescriptionMedicine.Dosage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add Medicine" class="btn btn-primary" />
-            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Medicine Quantity</th>
+                    <th>Dosage</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PrescriptionMedicines)
+                {
+                    <tr>
+                        <td>@item.Medicine.MedicineName</td>
+                        <td>@item.MedicineQuantity</td>
+                        <td>@item.Dosage</td>
+                        <td>
+                            <form method="post" asp-page-handler="Delete">
+                                <input type="hidden" name="medicineId" value="@item.MedicineId" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <form method="post" asp-page-handler="Save">
+            <input type="submit" value="Finish" class="btn btn-success" />
         </form>
     </div>
-</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Medicine Name</th>
-            <th>Medicine Quantity</th>
-            <th>Dosage</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.PrescriptionMedicines)
-        {
-            <tr>
-                <td>@item.Medicine.MedicineName</td>
-                <td>@item.MedicineQuantity</td>
-                <td>@item.Dosage</td>
-                <td>
-                    <form method="post" asp-page-handler="Delete">
-                        <input type="hidden" name="medicineId" value="@item.MedicineId" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
+    <footer>
+        © 2024 - PetClinic - <a href="/Privacy" style="color: white;">Privacy</a>
+    </footer>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
-    </tbody>
-</table>
-
-<form method="post" asp-page-handler="Save">
-    <input type="submit" value="Finish" class="btn btn-success" />
-</form>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script>
+            function filterMedicines() {
+                var typeId = $('#MedicineTypeId').val();
+                $.ajax({
+                    url: '@Url.Page("/Doctor/MedicalRecordManagement/CreatePrescription", "FilterMedicines")',
+                    type: 'GET',
+                    data: { typeId: typeId },
+                    success: function (data) {
+                        var $dropdown = $('#PrescriptionMedicine_MedicineId');
+                        $dropdown.empty();
+                        $.each(data, function (key, value) {
+                            $dropdown.append($('<option></option>').attr('value', value.medicineId).text(value.medicineName));
+                        });
+                    }
+                });
+            }
+        </script>
     }
-    <script>
-        function filterMedicines() {
-            var typeId = $('#MedicineTypeId').val();
-            $.ajax({
-                url: '@Url.Page("/Doctor/MedicalRecordManagement/CreatePrescription", "FilterMedicines")',
-                type: 'GET',
-                data: { typeId: typeId },
-                success: function (data) {
-                    var $dropdown = $('#PrescriptionMedicine_MedicineId');
-                    $dropdown.empty();
-                    $.each(data, function (key, value) {
-                        $dropdown.append($('<option></option>').attr('value', value.medicineId).text(value.medicineName));
-                    });
-                }
-            });
-        }
-    </script>
-
-}
+</body>
+</html>
