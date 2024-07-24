@@ -35,24 +35,16 @@
 				<button id="createMedicineBtn" class="btn-create">Create New Medicine</button>
 
 				<form method="get">
-                    <div class="form-group">
-                        <label for="searchMedicineName">Search by Medicine Name:</label>
-                        <input type="text" id="searchMedicineName" name="searchMedicineName" value="@Model.searchMedicineName" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="searchMedicineType">Medicine Type:</label>
-                        <select id="searchMedicineType" name="searchMedicineType" class="form-control">
-                            <option value="">All</option>
-                            @foreach (var type in ViewData["MedicineTypeId"] as SelectList)
-                            {
-                                <option value="@type.Value" @(type.Value == Model.searchMedicineType.ToString() ? "selected" : "")>
-                                    @type.Text
-                                </option>
-                            }
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
+					<div class="form-group">
+						<label for="searchMedicineName">Search by Medicine Name:</label>
+						<input type="text" id="searchMedicineName" name="searchMedicineName" value="@Model.searchMedicineName" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="searchMedicineType">Medicine Type:</label>
+						@Html.DropDownList("searchMedicineType", (SelectList)ViewData["MedicineTypeId"], "All", new { @class = "form-control" })
+					</div>
+					<button type="submit" class="btn btn-primary">Search</button>
+				</form>
 
 				<table class="service-table">
 					<thead>
