@@ -45,8 +45,7 @@
 						<th>Email</th>
 						<th>Gender</th>
 						<th>Social Number</th>
-						<th>ActiveStatus</th>
-						<!-- Add other relevant fields -->
+						<th>Active Status</th>
 						<th>Details</th>
 					</tr>
 				</thead>
@@ -61,8 +60,7 @@
 							<td>@staff.Email</td>
 							<th>@staff.Gender</th>
 							<td>@staff.SocialNumber</td>
-							<th>@staff.ActiveStatus</th>
-							<!-- Add other relevant fields -->
+							<td>@(staff.ActiveStatus == 1 ? "Active" : "Inactive")</td>
 							<td>
 								<a class="btn-update" asp-page="AdminUpdateStaff" asp-route-staffid="@staff.UserId">Update</a>
 							</td>
@@ -114,6 +112,11 @@
 							<label for="SocialNumber">Social Number:</label>
 							<input type="text" id="SocialNumber" asp-for="newSocialNumber" class="form-control">
 							<span asp-validation-for="newSocialNumber" class="text-danger"></span>
+
+							<label for="EmployeeSalary">Salary:</label>
+							<input type="number" id="EmployeeSalary" asp-for="newEmployeeSalary" class="form-control">
+							<span asp-validation-for="newEmployeeSalary" class="text-danger"></span>
+
 
 							</br>
 							<hr />
