@@ -2,6 +2,7 @@
 @model PetClinic.Pages.Customer.PetHealthManagement.EditModel
 
 @{
+    Layout = null;
     ViewData["Title"] = "Pet Health Management Edit Page";
 
     var userId = HttpContext.Session.GetString("UserId");
@@ -12,6 +13,14 @@
         Response.Redirect("/Authentication/Login");
     }
 }
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Clinic Homepage</title>
+    <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <link rel="stylesheet" href="~/css/petInformation.css" />
+</head>
 
 <h1>Edit</h1>
 

@@ -2,7 +2,7 @@
 @model PetClinic.Pages.Customer.PetHealthManagement.CreateModel
 
 @{
-    ViewData["Title"] = "Pet Health Management Create Page";
+    ViewData["Title"] = "Pet Health Management Create Page" + $"{Model.PetId}";
 
     var userId = HttpContext.Session.GetString("UserId");
     var role = HttpContext.Session.GetString("Role");
@@ -13,49 +13,12 @@
     }
 }
 
-<style>
-    .container {
-        margin: 0 auto;
-        padding: 20px;
-        max-width: 800px;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-        .table th, .table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-    .btn {
-        padding: 5px 10px;
-        margin: 2px;
-    }
-
-    .btn-info {
-        background-color: #17a2b8;
-        color: white;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        color: white;
-    }
-</style>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pet Clinic Homepage</title>
     <link rel="stylesheet" href="~/css/luongstyle.css" />
+    <link rel="stylesheet" href="~/css/petInformation.css" />
 </head>
 
 <h1>Create</h1>
@@ -87,7 +50,7 @@
                 <span asp-validation-for="PetHealth.WeightMeasurementDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="PetHealth.PetId" value="@Model.newPetId" />
+                <input type="hidden" asp-for="PetId"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
