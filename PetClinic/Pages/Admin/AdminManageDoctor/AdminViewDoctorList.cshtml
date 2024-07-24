@@ -21,7 +21,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin Staff Management</title>
+	<title>Admin Doctor Management</title>
 	<link rel="stylesheet" href="~/css/khoiadminstyle.css" />
 </head>
 <body>
@@ -32,7 +32,7 @@
 		<@await Html.PartialAsync("_Sidebar")
 
 		<main class="main-content">
-			<h1>Staff Management</h1>
+			<h1>Doctor Management</h1>
 
 			<p>
 				<button id="addStaffBtn" class="btn-create">Add New Doctor</button>
@@ -47,8 +47,7 @@
 						<th>Email</th>
 						<th>Gender</th>
 						<th>Social Number</th>
-						<th>ActiveStatus</th>
-						<!-- Add other relevant fields -->
+						<th>Active Status</th>
 						<th>Update</th>
 						<th>Schedule</th>
 					</tr>
@@ -56,23 +55,22 @@
 				<tbody>
 					@foreach (var doctor in Model.DoctorList)
 					{
-							<tr>
-								<td>@doctor.FirstName</td>
-								<td>@doctor.LastName</td>
-								<td>@doctor.PhoneNumber</td>
-								<td>@doctor.Address</td>
-								<td>@doctor.Email</td>
-								<th>@doctor.Gender</th>
-								<td>@doctor.SocialNumber</td>
-								<th>@doctor.ActiveStatus</th>
-								<!-- Add other relevant fields -->
-								<td>
-									<a class="btn-update" asp-page="AdminUpdateDoctor" asp-route-doctorid="@doctor.UserId">Update</a>
-								</td>
-								<td>
-									<a class="btn-update" asp-page="AdminViewDoctorSchedule" asp-route-doctorid="@doctor.UserId">Schedule</a>
-								</td>
-							</tr>
+						<tr>
+							<td>@doctor.FirstName</td>
+							<td>@doctor.LastName</td>
+							<td>@doctor.PhoneNumber</td>
+							<td>@doctor.Address</td>
+							<td>@doctor.Email</td>
+							<th>@doctor.Gender</th>
+							<td>@doctor.SocialNumber</td>
+							<td>@(doctor.ActiveStatus == 1 ? "Active" : "Inactive")</td>
+							<td>
+								<a class="btn-update" asp-page="AdminUpdateDoctor" asp-route-doctorid="@doctor.UserId">Update</a>
+							</td>
+							<td>
+								<a class="btn-update" asp-page="AdminViewDoctorSchedule" asp-route-doctorid="@doctor.UserId">Schedule</a>
+							</td>
+						</tr>
 					}
 				</tbody>
 			</table>
@@ -125,10 +123,14 @@
 							<input type="text" id="SocialNumber" asp-for="newSocialNumber" class="form-control">
 							<span asp-validation-for="newSocialNumber" class="text-danger"></span>
 
-							<label for="Capacity">Capacity</label>
+							<label for="Capacity">Doctor Capacity</label>
 							<input type="text" id="Capacity" asp-for="newDoctorCapacity" class="form-control">
 							<span asp-validation-for="newDoctorCapacity" class="text-danger"></span>
-							</br>
+							
+							<label for="EmployeeSalary">Salary:</label>
+							<input type="number" id="EmployeeSalary" asp-for="newEmployeeSalary" class="form-control">
+							<span asp-validation-for="newEmployeeSalary" class="text-danger"></span>
+						</br>
 							<hr />
 							</br>
 							<div class="form-group form-submit-button">

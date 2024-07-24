@@ -41,10 +41,10 @@ namespace PetClinic.Pages.Customer.PetHealthManagement
             {
                 Response.Redirect("/Authentication/Login");
             }
-            //else
-            //{
-            //    userId = int.Parse(userIdString);
-            //}
+            else
+            {
+                userId = int.Parse(userIdString);
+            }
 
             newPetId = petId;
             PetHealth = new PetHealth { PetId = newPetId };
@@ -58,13 +58,13 @@ namespace PetClinic.Pages.Customer.PetHealthManagement
             {
                 Response.Redirect("/Authentication/Login");
             }
-            //else
-            //{
-            //    userId = int.Parse(userIdString);
-            //}
+            else
+            {
+                userId = int.Parse(userIdString);
+            }
 
             petHealthService.AddPetHealth(PetHealth);
-
+            
             return RedirectToPage("/Customer/PetManagement/Index") ;
         }
     }

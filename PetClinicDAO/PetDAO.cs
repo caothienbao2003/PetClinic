@@ -83,16 +83,6 @@ namespace PetClinicDAO
             context.SaveChanges();
         }
 
-        public void UpdatePetHealth(PetHealth petHealth)
-        {
-            if (GetPetHealthByPetId(petHealth.PetHealthId) == null)
-            {
-                return;
-            }
-            context.PetHealths.Update(petHealth);
-            context.SaveChanges();
-        }
-
 
     }
 }
