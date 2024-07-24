@@ -271,6 +271,7 @@ namespace PetClinic.Pages.BookingManagement
                 scheduleList = scheduleService.GetAvailableScheduleList((DateTime)SelectedDate, SelectedShiftId).ToList();
             }
 
+
             Booking checkExistedBooking;
             if (scheduleList != null)
             {

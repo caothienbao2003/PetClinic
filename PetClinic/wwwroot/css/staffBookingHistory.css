@@ -107,6 +107,17 @@ h1 {
             color: #45a049;
         }
 
+    /* Aligning customer name, doctor name, and pet name */
+    .table .name-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        .table .name-column div {
+            display: inline-block;
+        }
+
 /* Links */
 a {
     color: #4CAF50;

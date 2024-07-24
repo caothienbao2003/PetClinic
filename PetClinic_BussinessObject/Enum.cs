@@ -24,7 +24,8 @@ namespace PetClinicBussinessObject
         Pending,
         Canceled,
         Missed,
-        Completed
+        Completed, 
+        Unconfirmed
     }
 
     public enum BookingPaymentStatus
