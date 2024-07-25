@@ -58,21 +58,11 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 			InitializePage();
 			LoadMedicineListWithoutInclude();
 
-			ViewData["MedicineTypeId"] = new SelectList(medicineTypeService.GetMedicineTypeList(), "MedicineTypeId", "MedicineTypeName");
+			//ViewData["MedicineTypeId"] = new SelectList(medicineTypeService.GetMedicineTypeList(), "MedicineTypeId", "MedicineTypeName");
 		}
 
 		public void OnPostCreateMedicine()
 		{
-			if (!ModelState.IsValid)
-			{
-				InitializePage();
-				LoadMedicineListWithoutInclude();
-
-				ModelState.Clear();
-				ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
-				return; // Stay on the page with validation errors
-			}
-
 			try
 			{
 				var newMedicine = new Medicine
@@ -89,7 +79,7 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 			}
 			catch (Exception ex)
 			{
-				ModelState.AddModelError(string.Empty, "Error occurred while creating service.");
+				ModelState.AddModelError(string.Empty, "Error occurred while creating medicine (2).");
 				InitializePage();
 				LoadMedicineListWithoutInclude();
 
@@ -99,8 +89,9 @@ namespace PetClinic.Pages.Admin.AdminManageMedicine
 
 		private void InitializePage()
 		{
-            Medicines = medicineService.SearchMedicines(searchMedicineName, searchMedicineType);
+			Medicines = medicineService.SearchMedicines(searchMedicineName, searchMedicineType);
             MedicineTypes = medicineTypeService.GetMedicineTypeList();
+			ViewData["MedicineTypeId"] = new SelectList(medicineTypeService.GetMedicineTypeList(), "MedicineTypeId", "MedicineTypeName");
         }
 
 		private void LoadMedicineListWithoutInclude()
