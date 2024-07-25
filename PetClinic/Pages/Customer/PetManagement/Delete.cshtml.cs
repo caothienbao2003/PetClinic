@@ -6,57 +6,69 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBussinessObject;
+using PetClinicServices.Interface;
 
 namespace PetClinic.Pages.Customer.PetManagement
 {
     public class DeleteModel : PageModel
     {
-        private readonly PetClinicBussinessObject.PetClinicContext _context;
+        private readonly IPetService petService;
+        private readonly IUserService userService;
 
-        public DeleteModel(PetClinicBussinessObject.PetClinicContext context)
+        public DeleteModel(IPetService _petService, IUserService _userService)
         {
-            _context = context;
+            petService = _petService;
+            userService = _userService;
         }
 
         [BindProperty]
-      public Pet Pet { get; set; } = default!;
+        public Pet Pet { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty]
+        public User user { get; set; } = default!;
+
+        [BindProperty(SupportsGet = true)]
+        public int PetId { get; set; }
+
+        public IActionResult OnGet(int id)
         {
-            if (id == null || _context.Pets == null)
+            string userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
             {
-                return NotFound();
+                user = new User();
+            }
+            else
+            {
+                user = userService.GetUserById(int.Parse(userId));
             }
 
-            var pet = await _context.Pets.FirstOrDefaultAsync(m => m.PetId == id);
+            PetId = id;
+
+            var pet = petService.GetPetById(PetId);
 
             if (pet == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Pet = pet;
-            }
+
+            Pet = pet;
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int id)
         {
-            if (id == null || _context.Pets == null)
-            {
-                return NotFound();
-            }
-            var pet = await _context.Pets.FindAsync(id);
+            PetId = id;
+
+            var pet = petService.GetPetById(PetId);
 
             if (pet != null)
             {
                 Pet = pet;
-                _context.Pets.Remove(Pet);
-                await _context.SaveChangesAsync();
+                petService.RemovePet(Pet.PetId);
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

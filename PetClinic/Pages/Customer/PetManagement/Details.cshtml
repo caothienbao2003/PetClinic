@@ -49,7 +49,7 @@
         margin: 2px;
     }
 
-    .btn-info {
+    .btn-info, .btn-success, .btn-primary {
         background-color: green;
         color: white;
     }
@@ -59,10 +59,14 @@
         color: white;
     }
 
-    .btn-success {
-        background-color: #28a745;
-        color: white;
+    .navbar {
+        display: flex;
+        justify-content: center;
     }
+
+        .navbar a {
+            margin: 0 10px;
+        }
 </style>
 
 <head>
@@ -94,7 +98,6 @@
 
 <body>
     <div class="container">
-        <h2 align="center">PET INFORMATION</h2>
 
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -143,7 +146,7 @@
                             <th>Next Due Date</th>
                             <th>Vaccinated At</th>
                             <th>Verification</th>
-                            <th>Medicine Name</th>                            
+                            <th>Medicine Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -231,36 +234,36 @@
 <script src="~/js/site.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function submitVaccinationRecord(event) {
-            event.preventDefault(); // Prevent the form from submitting the traditional way
+<script>
+    function submitVaccinationRecord(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
 
-            if (!confirm('Are you sure you want to add this vaccination record?')) {
-                return;
-            }
-
-            const formData = new FormData(document.getElementById('addVaccinationForm'));
-
-            fetch('@Url.Page("Details", "AddVaccination")', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    updateVaccinationRecordsTable(data);
-                    $('#addVaccinationModal').modal('hide');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+        if (!confirm('Are you sure you want to add this vaccination record?')) {
+            return;
         }
 
-        function updateVaccinationRecordsTable(data) {
-            const tbody = document.querySelector('table tbody');
-            tbody.innerHTML = ''; // Clear existing rows
-            data.forEach(record => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        const formData = new FormData(document.getElementById('addVaccinationForm'));
+
+        fetch('@Url.Page("Details", "AddVaccination")', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                updateVaccinationRecordsTable(data);
+                $('#addVaccinationModal').modal('hide');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function updateVaccinationRecordsTable(data) {
+        const tbody = document.querySelector('table tbody');
+        tbody.innerHTML = ''; // Clear existing rows
+        data.forEach(record => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
                             <td>${record.vaccinationRecordId}</td>
                             <td>${record.vaccinationDate}</td>
                             <td>${record.nextDueDate}</td>
@@ -268,9 +271,7 @@
                             <td>${record.verification}</td>
                             <td>${record.medicineId}</td>
                         `;
-                tbody.appendChild(row);
-            });
-        }
-    </script>
-}
-
+            tbody.appendChild(row);
+        });
+    }
+</script>
