@@ -38,7 +38,8 @@ namespace PetClinic.Pages.Doctor.MedicalRecordManagement
 		[BindProperty]
 		public int? MedicineTypeId { get; set; }
 
-		public int MedicalRecordId { get; set; }
+        [BindProperty]
+        public int MedicalRecordId { get; set; }
 
 		public IActionResult OnGet(int petHealthId, int medicalRecordId)
 		{
